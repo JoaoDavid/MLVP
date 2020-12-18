@@ -15,7 +15,8 @@ interface AppProps {
 type MyProps = {  };
 type MyState = {
   engine: DiagramEngine,
-  nodes: DefaultNodeModel[]
+  nodes: DefaultNodeModel[],
+  model: DiagramModel
 };
 
 class App extends React.Component<MyProps, MyState> {
@@ -24,39 +25,43 @@ class App extends React.Component<MyProps, MyState> {
     super(props);
     this.state = {
       engine: createEngine(),
+      model: new DiagramModel(),
       nodes: []
     }
 
     // node 1
-    const node1 = new DefaultNodeModel({
+    this.state.nodes[0] = new DefaultNodeModel({
       name: 'Node 1',
       color: 'rgb(0,192,255)',
-    });
-    const node3 = new DefaultNodeModel({
-      /*name: 'afawf',
-      color: 'rgb(0,192,255)'*/
-    });
-    node3.setPosition(200,200);
-    node1.setPosition(100, 100);
-    this.state.nodes[0] = node1;
 
-    const node2 = new DefaultNodeModel({
-      name: 'Node 1',
+    });
+
+    this.state.nodes[0].setPosition(100, 100);
+
+    this.state.nodes[1] = new DefaultNodeModel({
+      name: 'Node 2',
       color: 'rgb(0,192,255)',
     });
-    node2.setPosition(100, 100);
-    this.state.nodes[1] = node2;
+    //this.state.nodes[1].setPosition(100, 100);
 
-    let port1 = node1.addOutPort('Out');
-    let port2 = node2.addOutPort('Out');
+    let port1 = this.state.nodes[0].addOutPort('Out');
+    let port2 = this.state.nodes[1].addInPort('In');
 
     // link them and add a label to the link
     const link = port1.link<DefaultLinkModel>(port2);
 
-    const model = new DiagramModel();
-    model.addAll(node1, node2, link, node3);
-    this.state.engine.setModel(model);
 
+    this.state.model.addAll(this.state.nodes[0], this.state.nodes[1], link);
+    this.state.engine.setModel(this.state.model);
+
+  }
+
+  addNode = () => {
+    const node = new DefaultNodeModel({
+      name: 'Node 3',
+      color: 'rgb(0,192,255)',
+    });
+    this.state.model.addNode(node);
   }
 
 
@@ -64,7 +69,11 @@ class App extends React.Component<MyProps, MyState> {
 
 
     return (
-        <CanvasWidget className="diagram-container"  engine={this.state.engine} />
+        <div>
+          <button onClick={this.addNode}>Toggle</button>
+          <CanvasWidget className="diagram-container"  engine={this.state.engine}  />
+
+        </div>
 
 
     );
