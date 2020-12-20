@@ -6,7 +6,7 @@ import { DiagramEngine } from '@projectstorm/react-diagrams-core';
 
 export class CSVNodeFactory extends AbstractReactFactory<CSVNodeModel, DiagramEngine> {
     constructor() {
-        super('default');
+        super('csv');
     }
 
     generateReactWidget(event: GenerateWidgetEvent<any>): JSX.Element {

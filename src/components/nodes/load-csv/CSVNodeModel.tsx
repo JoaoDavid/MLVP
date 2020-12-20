@@ -26,8 +26,8 @@ export class CSVNodeModel extends NodeModel<DefaultNodeModelGenerics> {
             };
         }
         super({
-            type: 'default',
-            name: 'Untitled',
+            type: 'csv',
+            name: 'Import from CSV',
             color: 'rgb(0,192,255)',
             ...options
         });

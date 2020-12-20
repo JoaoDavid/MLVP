@@ -3,30 +3,12 @@ import * as _ from 'lodash';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
 import { CSVNodeModel } from './CSVNodeModel';
 import { DefaultPortLabel } from '@projectstorm/react-diagrams';
-import styled from '@emotion/styled';
-import { css } from '@emotion/core';
+import classes from './CSV.module.css';
 
-namespace S {
+/*namespace SB {
     export const Node = styled.div<{ selected: boolean }>`
-		border-radius: 10px;
-		font-family: sans-serif;
-		color: white;
-		border: solid 2px red;
-		overflow: visible;
-		font-size: 11px;
+
 		border: solid 6px ${(p) => (p.selected ? 'rgb(72,64,13)' : 'black')};
-	`;
-
-    export const Title = styled.div`
-		background: rgba(0, 0, 0, 0.3);
-		display: flex;
-		white-space: nowrap;
-		justify-items: center;
-	`;
-
-    export const TitleName = styled.div`
-		flex-grow: 1;
-		padding: 5px 5px;
 	`;
 
     export const Ports = styled.div`
@@ -35,9 +17,7 @@ namespace S {
 	`;
 
     export const PortsContainer = styled.div`
-		flex-grow: 1;
-		display: flex;
-		flex-direction: column;
+
 
 		&:first-of-type {
 			margin-right: 10px;
@@ -47,7 +27,7 @@ namespace S {
 			margin-right: 0px;
 		}
 	`;
-}
+}*/
 
 export interface CSVNodeProps {
     node: CSVNodeModel;
@@ -62,23 +42,21 @@ export class CSVNodeWidget extends React.Component<CSVNodeProps> {
     generatePort = (port: any) => {
         return <DefaultPortLabel engine={this.props.engine} port={port} key={port.getID()} />;
     };
-
+    //selected={this.props.node.isSelected()}
     render() {
-        console.log('helo');
         return (
-            <S.Node
+            <div className={classes.Node}
                 data-default-node-name={this.props.node.getOptions().name}
-                selected={this.props.node.isSelected()}>
-                srhrsdhrh
-                <S.Title>
-                    <S.TitleName>{this.props.node.getOptions().name}</S.TitleName>
-                </S.Title>
-                <input value={this.props.node.getOptions().name}/>
-                <S.Ports>
-                    <S.PortsContainer>{_.map(this.props.node.getInPorts(), this.generatePort)}</S.PortsContainer>
-                    <S.PortsContainer>{_.map(this.props.node.getOutPorts(), this.generatePort)}</S.PortsContainer>
-                </S.Ports>
-            </S.Node>
+                >
+                <div className={classes.Title}>
+                    <div className={classes.TitleName}>{this.props.node.getOptions().name}</div>
+                </div>
+                <input type="file" accept=".csv" />
+                <div className={classes.Ports}>
+                    <div className={classes.PortsContainer}>{_.map(this.props.node.getInPorts(), this.generatePort)}</div>
+                    <div className={classes.PortsContainer}>{_.map(this.props.node.getOutPorts(), this.generatePort)}</div>
+                </div>
+            </div>
         );
     }
 }

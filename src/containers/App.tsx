@@ -8,6 +8,8 @@ import createEngine, {
 } from '@projectstorm/react-diagrams';
 import {CanvasWidget} from '@projectstorm/react-canvas-core';
 import {CSVNodeModel} from "../components/nodes/load-csv/CSVNodeModel";
+import {DefaultNodeFactory} from "@projectstorm/react-diagrams-defaults";
+import {CSVNodeFactory} from "../components/nodes/load-csv/CSVNodeFactory";
 
 interface AppProps {
 
@@ -27,6 +29,7 @@ class App extends React.Component<MyProps, MyState> {
       engine: createEngine(),
       model: new DiagramModel()
     }
+    this.state.engine.getNodeFactories().registerFactory(new CSVNodeFactory()); // i cant figure out why
 
     // node 1
     const node1 = new DefaultNodeModel({
@@ -50,10 +53,9 @@ class App extends React.Component<MyProps, MyState> {
     // link them and add a label to the link
     //const link = port1.link<DefaultLinkModel>(port2);
     const node3 = new CSVNodeModel({
-      name: 'Nod35352',
-      color: 'rgb(255,0,229)',
+      color: 'rgb(255,0,229)'
     });
-
+    let port31 = node3 .addOutPort('Out12');
     this.state.model.addAll(node1 , node2, node3);//, link);
     this.state.engine.setModel(this.state.model);
 
