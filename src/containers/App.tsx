@@ -15,7 +15,6 @@ interface AppProps {
 type MyProps = {  };
 type MyState = {
   engine: DiagramEngine,
-  nodes: DefaultNodeModel[],
   model: DiagramModel
 };
 
@@ -25,33 +24,33 @@ class App extends React.Component<MyProps, MyState> {
     super(props);
     this.state = {
       engine: createEngine(),
-      model: new DiagramModel(),
-      nodes: []
+      model: new DiagramModel()
     }
 
     // node 1
-    this.state.nodes[0] = new DefaultNodeModel({
+    const node1 = new DefaultNodeModel({
       name: 'Node 1',
       color: 'rgb(0,192,255)',
 
     });
 
-    this.state.nodes[0].setPosition(100, 100);
+    node1.setPosition(100, 100);
 
-    this.state.nodes[1] = new DefaultNodeModel({
+    const node2 = new DefaultNodeModel({
       name: 'Node 2',
       color: 'rgb(0,192,255)',
     });
-    //this.state.nodes[1].setPosition(100, 100);
+    //node2.setPosition(100, 100);
 
-    let port1 = this.state.nodes[0].addOutPort('Out');
-    let port2 = this.state.nodes[1].addInPort('In');
+    let port1 = node1 .addOutPort('Out');
+    let port12 = node1 .addOutPort('Out12');
+    let port2 = node2.addInPort('In');
 
     // link them and add a label to the link
-    const link = port1.link<DefaultLinkModel>(port2);
+    //const link = port1.link<DefaultLinkModel>(port2);
 
 
-    this.state.model.addAll(this.state.nodes[0], this.state.nodes[1], link);
+    this.state.model.addAll(node1 , node2);//, link);
     this.state.engine.setModel(this.state.model);
 
   }
