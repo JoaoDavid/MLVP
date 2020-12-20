@@ -7,15 +7,14 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/core';
 
 namespace S {
-    export const Node = styled.div<{ background: string; selected: boolean }>`
-		background-color: ${(p) => p.background};
-		border-radius: 5px;
+    export const Node = styled.div<{ selected: boolean }>`
+		border-radius: 10px;
 		font-family: sans-serif;
 		color: white;
-		border: solid 2px black;
+		border: solid 2px red;
 		overflow: visible;
 		font-size: 11px;
-		border: solid 2px ${(p) => (p.selected ? 'rgb(0,192,255)' : 'black')};
+		border: solid 6px ${(p) => (p.selected ? 'rgb(72,64,13)' : 'black')};
 	`;
 
     export const Title = styled.div`
@@ -60,19 +59,21 @@ export interface CSVNodeProps {
  * for both all the input ports on the left, and the output ports on the right.
  */
 export class CSVNodeWidget extends React.Component<CSVNodeProps> {
-    generatePort = (port) => {
+    generatePort = (port: any) => {
         return <DefaultPortLabel engine={this.props.engine} port={port} key={port.getID()} />;
     };
 
     render() {
+        console.log('helo');
         return (
             <S.Node
                 data-default-node-name={this.props.node.getOptions().name}
-                selected={this.props.node.isSelected()}
-                background={this.props.node.getOptions().color}>
+                selected={this.props.node.isSelected()}>
+                srhrsdhrh
                 <S.Title>
                     <S.TitleName>{this.props.node.getOptions().name}</S.TitleName>
                 </S.Title>
+                <input value={this.props.node.getOptions().name}/>
                 <S.Ports>
                     <S.PortsContainer>{_.map(this.props.node.getInPorts(), this.generatePort)}</S.PortsContainer>
                     <S.PortsContainer>{_.map(this.props.node.getOutPorts(), this.generatePort)}</S.PortsContainer>

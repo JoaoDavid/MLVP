@@ -7,6 +7,7 @@ import createEngine, {
   DiagramEngine
 } from '@projectstorm/react-diagrams';
 import {CanvasWidget} from '@projectstorm/react-canvas-core';
+import {CSVNodeModel} from "../components/nodes/load-csv/CSVNodeModel";
 
 interface AppProps {
 
@@ -48,15 +49,18 @@ class App extends React.Component<MyProps, MyState> {
 
     // link them and add a label to the link
     //const link = port1.link<DefaultLinkModel>(port2);
+    const node3 = new CSVNodeModel({
+      name: 'Nod35352',
+      color: 'rgb(255,0,229)',
+    });
 
-
-    this.state.model.addAll(node1 , node2);//, link);
+    this.state.model.addAll(node1 , node2, node3);//, link);
     this.state.engine.setModel(this.state.model);
 
   }
 
   addNode = () => {
-    const node = new DefaultNodeModel({
+    const node = new CSVNodeModel({
       name: 'Node 3',
       color: 'rgb(0,192,255)',
     });
