@@ -1,4 +1,3 @@
-import * as _ from 'lodash';
 import { NodeModel, NodeModelGenerics, PortModelAlignment } from '@projectstorm/react-diagrams-core';
 import { DefaultPortModel } from '@projectstorm/react-diagrams';
 import { BasePositionModelOptions, DeserializeEvent } from '@projectstorm/react-canvas-core';
@@ -11,6 +10,8 @@ export interface DefaultNodeModelOptions extends BasePositionModelOptions {
 export interface DefaultNodeModelGenerics extends NodeModelGenerics {
     OPTIONS: DefaultNodeModelOptions;
 }
+
+export const csv = 'csv';
 
 export class CSVNodeModel extends NodeModel<DefaultNodeModelGenerics> {
     protected portsIn: DefaultPortModel[];
@@ -26,7 +27,7 @@ export class CSVNodeModel extends NodeModel<DefaultNodeModelGenerics> {
             };
         }
         super({
-            type: 'csv',
+            type: csv,
             name: 'Import from CSV',
             color: 'rgb(0,192,255)',
             ...options
@@ -94,12 +95,13 @@ export class CSVNodeModel extends NodeModel<DefaultNodeModelGenerics> {
         super.deserialize(event);
         this.options.name = event.data.name;
         this.options.color = event.data.color;
-        this.portsIn = _.map(event.data.portsInOrder, (id) => {
+
+        this.portsIn = event.data.portsInOrder.map((id: any) => {
             return this.getPortFromID(id);
-        }) as DefaultPortModel[];
-        this.portsOut = _.map(event.data.portsOutOrder, (id) => {
+        });
+        this.portsOut = event.data.portsOutOrder.map((id: any) => {
             return this.getPortFromID(id);
-        }) as DefaultPortModel[];
+        });
     }
 
     serialize(): any {
@@ -107,12 +109,12 @@ export class CSVNodeModel extends NodeModel<DefaultNodeModelGenerics> {
             ...super.serialize(),
             name: this.options.name,
             color: this.options.color,
-            portsInOrder: _.map(this.portsIn, (port) => {
+            portsInOrder: this.portsIn.map((port: DefaultPortModel) => {
                 return port.getID();
             }),
-            portsOutOrder: _.map(this.portsOut, (port) => {
+            portsOutOrder: this.portsOut.map((port: DefaultPortModel) => {
                 return port.getID();
-            })
+            }),
         };
     }
 
