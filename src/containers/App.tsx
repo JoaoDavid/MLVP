@@ -55,7 +55,7 @@ class App extends React.Component<MyProps, MyState> {
     const node3 = new CSVNodeModel({
       color: 'rgb(255,0,229)'
     });
-    let port31 = node3 .addOutPort('Out12');
+    let port31 = node3 .addOutPort('');
     this.state.model.addAll(node1 , node2, node3);//, link);
     this.state.engine.setModel(this.state.model);
 

@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as _ from 'lodash';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
 import { CSVNodeModel } from './CSVNodeModel';
-import { DefaultPortLabel } from '@projectstorm/react-diagrams';
+import {DefaultPortLabel, DefaultPortModel} from '@projectstorm/react-diagrams';
 import classes from './CSV.module.css';
 
 /*namespace SB {
@@ -39,9 +39,10 @@ export interface CSVNodeProps {
  * for both all the input ports on the left, and the output ports on the right.
  */
 export class CSVNodeWidget extends React.Component<CSVNodeProps> {
-    generatePort = (port: any) => {
+    generatePort = (port: DefaultPortModel) => {
         return <DefaultPortLabel engine={this.props.engine} port={port} key={port.getID()} />;
     };
+
     //selected={this.props.node.isSelected()}
     render() {
         return (
@@ -53,7 +54,6 @@ export class CSVNodeWidget extends React.Component<CSVNodeProps> {
                 </div>
                 <input type="file" accept=".csv" />
                 <div className={classes.Ports}>
-                    <div className={classes.PortsContainer}>{_.map(this.props.node.getInPorts(), this.generatePort)}</div>
                     <div className={classes.PortsContainer}>{_.map(this.props.node.getOutPorts(), this.generatePort)}</div>
                 </div>
             </div>

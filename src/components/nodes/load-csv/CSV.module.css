@@ -1,10 +1,11 @@
 .Node {
     border-radius: 10px;
     font-family: sans-serif;
-    color: white;
-    border: solid 2px red;
+    color: #ffffff;
+    border: solid 2px #000000;
     overflow: visible;
     font-size: 11px;
+    background: green;
 }
 
 .Title {
