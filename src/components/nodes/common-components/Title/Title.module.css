@@ -9,5 +9,6 @@
     flex-grow: 1;
     padding: 5px 5px;
     font-weight:bold;
-    font-size: large;
+    font-size: medium;
+    font-family: Helvetica;
 }
