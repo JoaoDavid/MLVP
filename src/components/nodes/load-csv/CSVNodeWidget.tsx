@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { DiagramEngine } from '@projectstorm/react-diagrams-core';
-import { CSVNodeModel } from './CSVNodeModel';
+import {DiagramEngine} from '@projectstorm/react-diagrams-core';
+import {CSVNodeModel} from './CSVNodeModel';
 import {DefaultPortLabel, DefaultPortModel} from '@projectstorm/react-diagrams';
 import classes from './CSV.module.css';
 import InputFile from '../common-components/InputFile/InputFile';
 import Title from '../common-components/Title/Title';
+import Ports from '../common-components/Ports/Ports';
 
 /*namespace SB {
     export const Node = styled.div<{ selected: boolean }>`
@@ -46,21 +47,24 @@ export class CSVNodeWidget extends React.Component<CSVNodeProps> {
     }
 
     generatePort = (port: DefaultPortModel) => {
-        return <DefaultPortLabel engine={this.props.engine} port={port} key={port.getID()} />;
+        return <DefaultPortLabel engine={this.props.engine} port={port} key={port.getID()}/>;
     };
-
+    /*<div className={classes.PortsContainer}>
+    {this.props.node.getOutPorts().map((port) => {
+        return this.generatePort(port);
+    })}
+    </div>*/
     //selected={this.props.node.isSelected()}
     render() {
         return (
             <div className={classes.Node}
-                data-default-node-name={this.props.node.getOptions().name}>
+                 data-default-node-name={this.props.node.getOptions().name}>
                 <Title name={this.props.node.getOptions().name}/>
                 <InputFile acceptedTypes={['.csv']} changed={this.props.node.loadCSV}/>
-                <div className={classes.Ports}>
-                    <div className={classes.PortsContainer}>{this.props.node.getOutPorts().map((port) => {
-                        return this.generatePort(port);
-                    })}</div>
-                </div>
+                <Ports generatePort={this.generatePort}
+                       getInPorts={this.props.node.getInPorts}
+                       getOutPorts={this.props.node.getOutPorts}
+                />
             </div>
         );
     }

@@ -7,16 +7,3 @@
     font-size: 11px;
     background: green;
 }
-
-
-.Ports {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-
-.PortsContainer {
-     margin-right: 10px;
-
-}
