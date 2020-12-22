@@ -3,18 +3,18 @@ import { DefaultPortModel } from '@projectstorm/react-diagrams';
 import { BasePositionModelOptions, DeserializeEvent } from '@projectstorm/react-canvas-core';
 import Papa from "papaparse";
 
-export interface DefaultNodeModelOptions extends BasePositionModelOptions {
-    name?: string;
+export interface CSVNodeModelOptions extends BasePositionModelOptions {
+    name: string;
     color?: string;
 }
 
-export interface DefaultNodeModelGenerics extends NodeModelGenerics {
-    OPTIONS: DefaultNodeModelOptions;
+export interface CSVNodeModelGenerics extends NodeModelGenerics {
+    OPTIONS: CSVNodeModelOptions;
 }
 
 export const csv = 'csv';
 
-export class CSVNodeModel extends NodeModel<DefaultNodeModelGenerics> {
+export class CSVNodeModel extends NodeModel<CSVNodeModelGenerics> {
     protected portsIn: DefaultPortModel[];
     protected portsOut: DefaultPortModel[];
     private numCols: number;
