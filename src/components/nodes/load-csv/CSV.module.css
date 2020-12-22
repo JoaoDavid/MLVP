@@ -8,17 +8,6 @@
     background: green;
 }
 
-.Title {
-    background: rgba(0, 0, 0, 0.3);
-    display: flex;
-    white-space: nowrap;
-    justify-items: center;
-}
-
-.TitleName {
-    flex-grow: 1;
-    padding: 5px 5px;
-}
 
 .Ports {
     flex-grow: 1;

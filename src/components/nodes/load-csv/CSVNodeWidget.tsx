@@ -3,7 +3,8 @@ import { DiagramEngine } from '@projectstorm/react-diagrams-core';
 import { CSVNodeModel } from './CSVNodeModel';
 import {DefaultPortLabel, DefaultPortModel} from '@projectstorm/react-diagrams';
 import classes from './CSV.module.css';
-
+import InputFile from '../common-components/InputFile/InputFile';
+import Title from '../common-components/Title/Title';
 
 /*namespace SB {
     export const Node = styled.div<{ selected: boolean }>`
@@ -53,10 +54,8 @@ export class CSVNodeWidget extends React.Component<CSVNodeProps> {
         return (
             <div className={classes.Node}
                 data-default-node-name={this.props.node.getOptions().name}>
-                <div className={classes.Title}>
-                    <div className={classes.TitleName}>{this.props.node.getOptions().name}</div>
-                </div>
-                <input type="file" accept=".csv" onChange={ (e) => this.props.node.loadCSV(e.target.files!) } />
+                <Title name={this.props.node.getOptions().name}/>
+                <InputFile acceptedTypes={['.csv']} changed={this.props.node.loadCSV}/>
                 <div className={classes.Ports}>
                     <div className={classes.PortsContainer}>{this.props.node.getOutPorts().map((port) => {
                         return this.generatePort(port);
