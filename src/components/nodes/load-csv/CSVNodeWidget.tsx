@@ -42,10 +42,6 @@ export interface CSVNodeProps {
  */
 export class CSVNodeWidget extends React.Component<CSVNodeProps> {
 
-    constructor(props: CSVNodeProps) {
-        super(props);
-    }
-
     generatePort = (port: DefaultPortModel) => {
         return <DefaultPortLabel engine={this.props.engine} port={port} key={port.getID()}/>;
     };
@@ -62,8 +58,8 @@ export class CSVNodeWidget extends React.Component<CSVNodeProps> {
                 <Title name={this.props.node.getOptions().name}/>
                 <InputFile acceptedTypes={['.csv']} changed={this.props.node.loadCSV}/>
                 <Ports generatePort={this.generatePort}
-                       getInPorts={this.props.node.getInPorts}
-                       getOutPorts={this.props.node.getOutPorts}
+                       inPorts={this.props.node.getInPorts()}
+                       outPorts={this.props.node.getOutPorts()}
                 />
             </div>
         );

@@ -4,11 +4,11 @@ import classes from './PortContainer.module.css';
 
 interface PortContainerProps {
     generatePort: (port: DefaultPortModel) => JSX.Element,
-    getPorts: () => DefaultPortModel[],
+    ports: DefaultPortModel[],
 }
 
 const portContainer = (props: PortContainerProps) => {
-    const ports = props.getPorts().map((port: DefaultPortModel) => {
+    const ports = props.ports.map((port: DefaultPortModel) => {
         return props.generatePort(port);
     });
 

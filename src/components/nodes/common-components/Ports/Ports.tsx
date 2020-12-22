@@ -5,8 +5,8 @@ import PortContainer from './PortContainer/PortContainer';
 
 interface PortsProps {
     generatePort: (port: DefaultPortModel) => JSX.Element,
-    getInPorts: () => DefaultPortModel[],
-    getOutPorts: () => DefaultPortModel[],
+    inPorts: DefaultPortModel[],
+    outPorts: DefaultPortModel[],
 }
 
 const ports = (props: PortsProps) => {
@@ -20,7 +20,7 @@ const ports = (props: PortsProps) => {
     return (
         <div className={classes.Ports}>
 
-            <PortContainer generatePort={props.generatePort} getPorts={props.getOutPorts}/>
+            <PortContainer generatePort={props.generatePort} ports={props.outPorts}/>
         </div>
     )
 }
