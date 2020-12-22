@@ -52,9 +52,7 @@ class App extends React.Component<MyProps, MyState> {
 
     // link them and add a label to the link
     //const link = port1.link<DefaultLinkModel>(port2);
-    const node3 = new CSVNodeModel({
-      color: 'rgb(255,0,229)'
-    });
+    const node3 = new CSVNodeModel();
     let port31 = node3 .addOutPort('');
     this.state.model.addAll(node1 , node2, node3);//, link);
     this.state.engine.setModel(this.state.model);
@@ -62,10 +60,7 @@ class App extends React.Component<MyProps, MyState> {
   }
 
   addNode = () => {
-    const node = new CSVNodeModel({
-      name: 'Node 3',
-      color: 'rgb(0,192,255)',
-    });
+    const node = new CSVNodeModel();
     this.state.model.addNode(node);
   }
 

@@ -17,20 +17,11 @@ export class CSVNodeModel extends NodeModel<DefaultNodeModelGenerics> {
     protected portsIn: DefaultPortModel[];
     protected portsOut: DefaultPortModel[];
 
-    constructor(name: string, color: string);
-    constructor(options?: DefaultNodeModelOptions);
-    constructor(options: any = {}, color?: string) {
-        if (typeof options === 'string') {
-            options = {
-                name: options,
-                color: color
-            };
-        }
+    constructor() {
         super({
             type: csv,
             name: 'Import from CSV',
             color: 'rgb(0,192,255)',
-            ...options
         });
         this.portsOut = [];
         this.portsIn = [];
