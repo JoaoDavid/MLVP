@@ -1,6 +1,7 @@
 import { NodeModel, NodeModelGenerics, PortModelAlignment } from '@projectstorm/react-diagrams-core';
 import { DefaultPortModel } from '@projectstorm/react-diagrams';
 import { BasePositionModelOptions, DeserializeEvent } from '@projectstorm/react-canvas-core';
+import Papa from "papaparse";
 
 export interface DefaultNodeModelOptions extends BasePositionModelOptions {
     name?: string;
@@ -16,6 +17,8 @@ export const csv = 'csv';
 export class CSVNodeModel extends NodeModel<DefaultNodeModelGenerics> {
     protected portsIn: DefaultPortModel[];
     protected portsOut: DefaultPortModel[];
+    private numCols: number;
+    private numRows: number;
 
     constructor() {
         super({
@@ -25,6 +28,8 @@ export class CSVNodeModel extends NodeModel<DefaultNodeModelGenerics> {
         });
         this.portsOut = [];
         this.portsIn = [];
+        this.numCols = 0;
+        this.numRows = 0;
     }
 
     doClone(lookupTable: {}, clone: any): void {
@@ -116,4 +121,24 @@ export class CSVNodeModel extends NodeModel<DefaultNodeModelGenerics> {
     getOutPorts(): DefaultPortModel[] {
         return this.portsOut;
     }
+
+    loadCSV = (selectorFiles: FileList) => {
+        if (selectorFiles[0] != null) {
+
+            Papa.parse(selectorFiles[0], {
+                worker: false, // Don't bog down the main thread if its a big file
+                download: true,
+                header: false,
+                complete: (results:any) => {
+                    console.log(results.data);
+                    this.numCols = results.data[0].length;//num features
+                    this.numRows = results.data.length;//num entries
+                    console.log("num_features:" + this.numCols + " num_rows:" + this.numRows);
+                }
+            });
+
+        }
+        console.log(selectorFiles);
+    }
+
 }
