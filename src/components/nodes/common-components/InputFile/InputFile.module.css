@@ -25,3 +25,7 @@
     color: #f1e5e6;
 }
 
+.Label:hover {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+}
+
