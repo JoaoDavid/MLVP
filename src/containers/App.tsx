@@ -48,13 +48,19 @@ class App extends React.Component<MyProps, MyState> {
 
     let port1 = node1 .addOutPort('Out');
     let port12 = node1 .addOutPort('Out12');
+    let port132 = node1 .addInPort('in');
     let port2 = node2.addInPort('In');
 
     // link them and add a label to the link
     //const link = port1.link<DefaultLinkModel>(port2);
     const node3 = new CSVNodeModel();
-    let port31 = node3 .addOutPort('');
-    this.state.model.addAll(node1 , node2, node3);//, link);
+    let port31 = node3.addOutPort('');
+
+    const node4 = new CSVNodeModel();
+    let port341 = node3.addOutPort('');
+
+    node3.addInPort('');
+    this.state.model.addAll(node1 , node2, node3, node4);//, link);
     this.state.engine.setModel(this.state.model);
 
   }

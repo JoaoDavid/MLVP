@@ -10,16 +10,9 @@ interface PortsProps {
 }
 
 const ports = (props: PortsProps) => {
-    /*const portsIn = props.getInPorts().map((port: DefaultPortModel) => {
-        return props.generatePort(port);
-    });
-    const portsOut = props.getOutPorts().map((port: DefaultPortModel) => {
-        return props.generatePort(port);
-    });*/
-    // <PortContainer generatePort={props.generatePort} getPorts={props.getInPorts}/>
     return (
         <div className={classes.Ports}>
-
+            <PortContainer generatePort={props.generatePort} ports={props.inPorts}/>
             <PortContainer generatePort={props.generatePort} ports={props.outPorts}/>
         </div>
     )
