@@ -1,23 +1,23 @@
 import * as React from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams-core';
-import {CSVNodeModel} from './CSVNodeModel';
 import {DefaultPortLabel, DefaultPortModel} from '@projectstorm/react-diagrams';
 import classes from './CSV.module.css';
-import InputFile from '../core/InputFile/InputFile';
-import Title from '../core/Title/Title';
-import Ports from '../core/Ports/Ports';
+import Title from '../Title/Title';
+import Ports from '../Ports/Ports';
+import {CoreNodeModel} from './CoreNodeModel';
 
 
-export interface CSVNodeProps {
-    node: CSVNodeModel;
+export interface CoreNodeProps {
+    node: CoreNodeModel;
     engine: DiagramEngine;
+    children?: React.ReactNode;
 }
 
 /**
  * Default node that models the CSVNodeModel. It creates two columns
  * for both all the input ports on the left, and the output ports on the right.
  */
-export class CSVNodeWidget extends React.Component<CSVNodeProps> {
+export class CoreNodeWidget extends React.Component<CoreNodeProps> {
 
     state = {
         isSelected: false
@@ -53,7 +53,7 @@ export class CSVNodeWidget extends React.Component<CSVNodeProps> {
                  //onClick={this.selected}
             >
                 <Title name={this.props.node.getOptions().name}/>
-                <InputFile acceptedTypes={['.csv']} changed={this.props.node.loadCSV}/>
+                {this.props.children}
                 <Ports generatePort={this.generatePort}
                        inPorts={this.props.node.getInPorts()}
                        outPorts={this.props.node.getOutPorts()}
