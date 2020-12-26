@@ -54,10 +54,8 @@ class App extends React.Component<MyProps, MyState> {
     // link them and add a label to the link
     //const link = port1.link<DefaultLinkModel>(port2);
     const node3 = new CSVNodeModel();
-    let port31 = node3.addOutPort('');
 
     const node4 = new CSVNodeModel();
-    let port341 = node3.addOutPort('');
 
     node3.addInPort('');
     this.state.model.addAll(node1 , node2, node3, node4);//, link);
