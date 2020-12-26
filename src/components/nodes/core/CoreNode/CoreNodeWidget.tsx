@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {DefaultPortLabel, DefaultPortModel} from '@projectstorm/react-diagrams';
-import classes from './CSV.module.css';
+import classes from './CoreNode.module.css';
 import Title from '../Title/Title';
 import Ports from '../Ports/Ports';
 import {CoreNodeModel} from './CoreNodeModel';
@@ -11,6 +11,7 @@ export interface CoreNodeProps {
     node: CoreNodeModel;
     engine: DiagramEngine;
     children?: React.ReactNode;
+    color: string;
 }
 
 /**
@@ -50,6 +51,7 @@ export class CoreNodeWidget extends React.Component<CoreNodeProps> {
         return (
             <div className={classes.Node}
                  data-default-node-name={this.props.node.getOptions().name}
+                 style={{background: this.props.color}}
                  //onClick={this.selected}
             >
                 <Title name={this.props.node.getOptions().name}/>
@@ -62,3 +64,5 @@ export class CoreNodeWidget extends React.Component<CoreNodeProps> {
         );
     }
 }
+
+export default CoreNodeWidget;

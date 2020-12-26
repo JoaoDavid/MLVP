@@ -5,7 +5,7 @@
     border: solid 2px #000000;
     overflow: visible;
     font-size: 11px;
-    background: green;
+    #background: #000000;
 }
 
 .NodeSelected {

@@ -2,10 +2,8 @@ import * as React from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {CSVNodeModel} from './CSVNodeModel';
 import {DefaultPortLabel, DefaultPortModel} from '@projectstorm/react-diagrams';
-import classes from './CSV.module.css';
 import InputFile from '../core/InputFile/InputFile';
-import Title from '../core/Title/Title';
-import Ports from '../core/Ports/Ports';
+import CoreNodeWidget from '../core/CoreNode/CoreNodeWidget';
 
 
 export interface CSVNodeProps {
@@ -19,46 +17,15 @@ export interface CSVNodeProps {
  */
 export class CSVNodeWidget extends React.Component<CSVNodeProps> {
 
-    state = {
-        isSelected: false
-    }
-
     generatePort = (port: DefaultPortModel) => {
         return <DefaultPortLabel engine={this.props.engine} port={port} key={port.getID()}/>;
     };
 
-/*    selected = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        // Unset selected class from other options
-        const selected = document.getElementsByClassName(classes.NodeSelected);
-        console.log(selected);
-        for (let i = 0; i < selected.length; i++) {
-            selected[i].className = classes.Node;
-        }
-       /!*selected.forEach((el) => {
-            el.classList.remove(classes.NodeSelected);
-            console.log(el);
-        });*!/
-        //event.target.//classList.add('option-selected');
-        this.setState(
-            {
-                isSelected : true
-            }
-        );
-    }*/
-
     render() {
         return (
-            <div className={classes.Node}
-                 data-default-node-name={this.props.node.getOptions().name}
-                 //onClick={this.selected}
-            >
-                <Title name={this.props.node.getOptions().name}/>
+            <CoreNodeWidget node={this.props.node} engine={this.props.engine} color={'green'}>
                 <InputFile acceptedTypes={['.csv']} changed={this.props.node.loadCSV}/>
-                <Ports generatePort={this.generatePort}
-                       inPorts={this.props.node.getInPorts()}
-                       outPorts={this.props.node.getOutPorts()}
-                />
-            </div>
+            </CoreNodeWidget>
         );
     }
 }

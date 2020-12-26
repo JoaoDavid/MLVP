@@ -1,7 +1,6 @@
 import { NodeModel, NodeModelGenerics, PortModelAlignment } from '@projectstorm/react-diagrams-core';
 import { DefaultPortModel } from '@projectstorm/react-diagrams';
 import { BasePositionModelOptions, DeserializeEvent } from '@projectstorm/react-canvas-core';
-import Papa from "papaparse";
 
 export interface CoreNodeModelOptions extends BasePositionModelOptions {
     name: string;
@@ -17,11 +16,10 @@ export class CoreNodeModel extends NodeModel<CoreNodeModelGenerics> {
     protected portsIn: DefaultPortModel[];
     protected portsOut: DefaultPortModel[];
 
-    constructor(type: string, name: string, color: string) {
+    constructor(type: string, name: string) {
         super({
             type: type,
             name: name,
-            color: color,
         });
         this.portsOut = [];
         this.portsIn = [];

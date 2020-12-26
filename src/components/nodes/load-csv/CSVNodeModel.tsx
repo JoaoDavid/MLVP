@@ -2,6 +2,7 @@ import { NodeModel, NodeModelGenerics, PortModelAlignment } from '@projectstorm/
 import { DefaultPortModel } from '@projectstorm/react-diagrams';
 import { BasePositionModelOptions, DeserializeEvent } from '@projectstorm/react-canvas-core';
 import Papa from "papaparse";
+import {CoreNodeModel} from "../core/CoreNode/CoreNodeModel";
 
 export interface CSVNodeModelOptions extends BasePositionModelOptions {
     name: string;
@@ -14,20 +15,13 @@ export interface CSVNodeModelGenerics extends NodeModelGenerics {
 
 export const csv = 'csv';
 
-export class CSVNodeModel extends NodeModel<CSVNodeModelGenerics> {
-    protected portsIn: DefaultPortModel[];
-    protected portsOut: DefaultPortModel[];
+export class CSVNodeModel extends CoreNodeModel {
+
     private numCols: number;
     private numRows: number;
 
     constructor() {
-        super({
-            type: csv,
-            name: 'Import from CSV',
-            color: 'rgb(0,192,255)',
-        });
-        this.portsOut = [];
-        this.portsIn = [];
+        super(csv, 'Import from CSV');
         this.numCols = 0;
         this.numRows = 0;
     }
