@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { CSVNodeModel, csv } from './CSVNodeModel';
-import { CSVNodeWidget } from './CSVNodeWidget';
+import CSVNodeWidget from './CSVNodeWidget';
 import { AbstractReactFactory, GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-canvas-core';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
 
