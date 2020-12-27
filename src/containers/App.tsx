@@ -42,22 +42,21 @@ class App extends React.Component<MyProps, MyState> {
 
     const node2 = new DefaultNodeModel({
       name: 'Node 2',
-      color: 'rgb(0,192,255)',
+      color: 'rgb(78,29,212)',
     });
     //node2.setPosition(100, 100);
 
-    let port1 = node1 .addOutPort('Out');
-    let port12 = node1 .addOutPort('Out12');
-    let port132 = node1 .addInPort('in');
+    let port1 = node1.addOutPort('Out');
+    let port12 = node1.addOutPort('Out12');
+    let port132 = node1.addInPort('in');
     let port2 = node2.addInPort('In');
 
     // link them and add a label to the link
     //const link = port1.link<DefaultLinkModel>(port2);
     const node3 = new CSVNodeModel();
-
     const node4 = new CSVNodeModel();
 
-    
+
     this.state.model.addAll(node1 , node2, node3, node4);//, link);
     this.state.engine.setModel(this.state.model);
 

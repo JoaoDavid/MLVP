@@ -1,7 +1,7 @@
 import Papa from "papaparse";
 import {CoreNodeModel} from "../core/CoreNode/CoreNodeModel";
 
-export const csv = 'csv';
+export const CSV = 'csv';
 
 export class CSVNodeModel extends CoreNodeModel {
 
@@ -9,7 +9,7 @@ export class CSVNodeModel extends CoreNodeModel {
     private numRows: number;
 
     constructor() {
-        super(csv, 'Import from CSV');
+        super(CSV, 'Import from CSV');
         this.numCols = 0;
         this.numRows = 0;
         super.addOutPort('');
