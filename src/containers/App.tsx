@@ -57,7 +57,7 @@ class App extends React.Component<MyProps, MyState> {
 
     const node4 = new CSVNodeModel();
 
-    node3.addInPort('');
+    
     this.state.model.addAll(node1 , node2, node3, node4);//, link);
     this.state.engine.setModel(this.state.model);
 

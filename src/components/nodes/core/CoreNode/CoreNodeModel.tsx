@@ -54,7 +54,7 @@ export class CoreNodeModel extends NodeModel<CoreNodeModelGenerics> {
         return port;
     }
 
-    addInPort(label: string, after = true): DefaultPortModel {
+    protected addInPort(label: string, after = true): DefaultPortModel {
         const p = new DefaultPortModel({
             in: true,
             name: label,
@@ -67,7 +67,7 @@ export class CoreNodeModel extends NodeModel<CoreNodeModelGenerics> {
         return this.addPort(p);
     }
 
-    addOutPort(label: string, after = true): DefaultPortModel {
+    protected addOutPort(label: string, after = true): DefaultPortModel {
         const p = new DefaultPortModel({
             in: false,
             name: label,
