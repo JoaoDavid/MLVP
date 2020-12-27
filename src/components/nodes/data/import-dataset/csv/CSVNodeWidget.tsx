@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {CSVNodeModel} from './CSVNodeModel';
-import InputFile from '../core/InputFile/InputFile';
-import CoreNodeWidget from '../core/CoreNode/CoreNodeWidget';
+import InputFile from '../../../core/InputFile/InputFile';
+import CoreNodeWidget from '../../../core/CoreNode/CoreNodeWidget';
 
 
 export interface CSVNodeProps {

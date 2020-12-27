@@ -1,5 +1,5 @@
 import Papa from "papaparse";
-import {CoreNodeModel} from "../core/CoreNode/CoreNodeModel";
+import {CoreNodeModel} from "../../../core/CoreNode/CoreNodeModel";
 
 export const CSV = 'csv';
 

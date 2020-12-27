@@ -7,9 +7,9 @@ import createEngine, {
   DiagramEngine
 } from '@projectstorm/react-diagrams';
 import {CanvasWidget} from '@projectstorm/react-canvas-core';
-import {CSVNodeModel} from "../components/nodes/load-csv/CSVNodeModel";
+import {CSVNodeModel} from "../components/nodes/data/import-dataset/csv/CSVNodeModel";
 import {DefaultNodeFactory} from "@projectstorm/react-diagrams-defaults";
-import {CSVNodeFactory} from "../components/nodes/load-csv/CSVNodeFactory";
+import {CSVNodeFactory} from "../components/nodes/data/import-dataset/csv/CSVNodeFactory";
 
 interface AppProps {
 
@@ -65,6 +65,7 @@ class App extends React.Component<MyProps, MyState> {
   addNode = () => {
     const node = new CSVNodeModel();
     this.state.model.addNode(node);
+    this.state.engine.repaintCanvas();
   }
 
 
