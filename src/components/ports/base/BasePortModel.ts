@@ -8,19 +8,19 @@ import {
 import { DefaultLinkModel } from '@projectstorm/react-diagrams-defaults';
 import { AbstractModelFactory, DeserializeEvent } from '@projectstorm/react-canvas-core';
 
-export interface DatasetPortModelOptions extends PortModelOptions {
+export interface BasePortModelOptions extends PortModelOptions {
     label?: string;
     in?: boolean;
 }
 
-export interface DatasetPortModelGenerics extends PortModelGenerics {
-    OPTIONS: DatasetPortModelOptions;
+export interface BasePortModelGenerics extends PortModelGenerics {
+    OPTIONS: BasePortModelOptions;
 }
 
-export class BasePortModel extends PortModel<DatasetPortModelGenerics> {
+export class BasePortModel extends PortModel<BasePortModelGenerics> {
     constructor(isIn: boolean, name?: string, label?: string);
-    constructor(options: DatasetPortModelOptions);
-    constructor(options: DatasetPortModelOptions | boolean, name?: string, label?: string) {
+    constructor(options: BasePortModelOptions);
+    constructor(options: BasePortModelOptions | boolean, name?: string, label?: string) {
         if (!!name) {
             options = {
                 in: !!options,
@@ -28,7 +28,7 @@ export class BasePortModel extends PortModel<DatasetPortModelGenerics> {
                 label: label
             };
         }
-        options = options as DatasetPortModelOptions;
+        options = options as BasePortModelOptions;
         super({
             label: options.label || options.name,
             alignment: options.in ? PortModelAlignment.LEFT : PortModelAlignment.RIGHT,
@@ -60,11 +60,9 @@ export class BasePortModel extends PortModel<DatasetPortModelGenerics> {
     }
 
     canLinkToPort(port: PortModel): boolean {
+        //TODO
         console.log('can link to port');
-        if (port instanceof BasePortModel) {
-            return this.options.in !== port.getOptions().in;
-        }
-        return true;
+        return false;
     }
 
     createLinkModel(factory?: AbstractModelFactory<LinkModel>): LinkModel {
