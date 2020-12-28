@@ -1,14 +1,14 @@
 import React from 'react';
-import {DefaultPortLabel, DefaultPortModel} from "@projectstorm/react-diagrams";
+import {BasePortModel} from "../../../../ports/base/BasePortModel";
 import classes from './PortContainer.module.css';
 
 interface PortContainerProps {
-    generatePort: (port: DefaultPortModel) => JSX.Element,
-    ports: DefaultPortModel[],
+    generatePort: (port: BasePortModel) => JSX.Element,
+    ports: BasePortModel[],
 }
 
 const portContainer = (props: PortContainerProps) => {
-    const ports = props.ports.map((port: DefaultPortModel) => {
+    const ports = props.ports.map((port: BasePortModel) => {
         return props.generatePort(port);
     });
 

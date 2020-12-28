@@ -1,5 +1,5 @@
 import { NodeModel, NodeModelGenerics, PortModelAlignment } from '@projectstorm/react-diagrams-core';
-import { DefaultPortModel } from '@projectstorm/react-diagrams';
+import {BasePortModel} from "../../../ports/base/BasePortModel";
 import { BasePositionModelOptions, DeserializeEvent } from '@projectstorm/react-canvas-core';
 
 export interface CoreNodeModelOptions extends BasePositionModelOptions {
@@ -13,8 +13,8 @@ export interface CoreNodeModelGenerics extends NodeModelGenerics {
 
 export class CoreNodeModel extends NodeModel<CoreNodeModelGenerics> {
 
-    protected portsIn: DefaultPortModel[];
-    protected portsOut: DefaultPortModel[];
+    protected portsIn: BasePortModel[];
+    protected portsOut: BasePortModel[];
 
     constructor(type: string, name: string) {
         super({
@@ -31,7 +31,7 @@ export class CoreNodeModel extends NodeModel<CoreNodeModelGenerics> {
         super.doClone(lookupTable, clone);
     }
 
-    removePort(port: DefaultPortModel): void {
+    removePort(port: BasePortModel): void {
         super.removePort(port);
         if (port.getOptions().in) {
             this.portsIn.splice(this.portsIn.indexOf(port), 1);
@@ -40,7 +40,7 @@ export class CoreNodeModel extends NodeModel<CoreNodeModelGenerics> {
         }
     }
 
-    addPort<T extends DefaultPortModel>(port: T): T {
+    addPort<T extends BasePortModel>(port: T): T {
         super.addPort(port);
         if (port.getOptions().in) {
             if (this.portsIn.indexOf(port) === -1) {
@@ -54,8 +54,8 @@ export class CoreNodeModel extends NodeModel<CoreNodeModelGenerics> {
         return port;
     }
 
-    protected addInPort(label: string, after = true): DefaultPortModel {
-        const p = new DefaultPortModel({
+    protected addInPort(label: string, after = true): BasePortModel {
+        const p = new BasePortModel({
             in: true,
             name: label,
             label: label,
@@ -67,8 +67,8 @@ export class CoreNodeModel extends NodeModel<CoreNodeModelGenerics> {
         return this.addPort(p);
     }
 
-    protected addOutPort(label: string, after = true): DefaultPortModel {
-        const p = new DefaultPortModel({
+    protected addOutPort(label: string, after = true): BasePortModel {
+        const p = new BasePortModel({
             in: false,
             name: label,
             label: label,
@@ -98,20 +98,20 @@ export class CoreNodeModel extends NodeModel<CoreNodeModelGenerics> {
             ...super.serialize(),
             name: this.options.name,
             color: this.options.color,
-            portsInOrder: this.portsIn.map((port: DefaultPortModel) => {
+            portsInOrder: this.portsIn.map((port: BasePortModel) => {
                 return port.getID();
             }),
-            portsOutOrder: this.portsOut.map((port: DefaultPortModel) => {
+            portsOutOrder: this.portsOut.map((port: BasePortModel) => {
                 return port.getID();
             }),
         };
     }
 
-    getInPorts(): DefaultPortModel[] {
+    getInPorts(): BasePortModel[] {
         return this.portsIn;
     }
 
-    getOutPorts(): DefaultPortModel[] {
+    getOutPorts(): BasePortModel[] {
         return this.portsOut;
     }
 

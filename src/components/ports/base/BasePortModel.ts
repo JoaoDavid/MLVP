@@ -17,7 +17,7 @@ export interface DatasetPortModelGenerics extends PortModelGenerics {
     OPTIONS: DatasetPortModelOptions;
 }
 
-export class DatasetPortModel extends PortModel<DatasetPortModelGenerics> {
+export class BasePortModel extends PortModel<DatasetPortModelGenerics> {
     constructor(isIn: boolean, name?: string, label?: string);
     constructor(options: DatasetPortModelOptions);
     constructor(options: DatasetPortModelOptions | boolean, name?: string, label?: string) {
@@ -52,6 +52,7 @@ export class DatasetPortModel extends PortModel<DatasetPortModelGenerics> {
     }
 
     link<T extends LinkModel>(port: PortModel, factory?: AbstractModelFactory<T>): T {
+        console.log('link');
         let link = this.createLinkModel(factory);
         link.setSourcePort(this);
         link.setTargetPort(port);
@@ -59,7 +60,8 @@ export class DatasetPortModel extends PortModel<DatasetPortModelGenerics> {
     }
 
     canLinkToPort(port: PortModel): boolean {
-        if (port instanceof DatasetPortModel) {
+        console.log('can link to port');
+        if (port instanceof BasePortModel) {
             return this.options.in !== port.getOptions().in;
         }
         return true;

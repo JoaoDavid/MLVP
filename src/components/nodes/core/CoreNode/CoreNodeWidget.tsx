@@ -1,8 +1,7 @@
 import * as React from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams-core';
-//import {DefaultPortLabel, DefaultPortModel} from '@projectstorm/react-diagrams';
-import {DatasetPortLabel} from "../../../ports/dataset/DatasetPortWidget";
-import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
+import {BasePortLabel} from "../../../ports/base/BasePortWidget";
+import {BasePortModel} from "../../../ports/base/BasePortModel";
 import classes from './CoreNode.module.css';
 import Title from '../Title/Title';
 import Ports from '../Ports/Ports';
@@ -26,8 +25,8 @@ export class CoreNodeWidget extends React.Component<CoreNodeProps> {
         isSelected: false
     }
 
-    generatePort = (port: DatasetPortModel) => {
-        return <DatasetPortLabel engine={this.props.engine} port={port} key={port.getID()}/>;
+    generatePort = (port: BasePortModel) => {
+        return <BasePortLabel engine={this.props.engine} port={port} key={port.getID()}/>;
     };
 
 /*    selected = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {

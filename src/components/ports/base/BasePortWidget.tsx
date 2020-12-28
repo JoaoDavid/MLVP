@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { DiagramEngine, PortWidget } from '@projectstorm/react-diagrams-core';
-import { DatasetPortModel } from "./DatasetPortModel";
-import classes from './DatasetPort.module.css';
+import { BasePortModel } from "./BasePortModel";
+import classes from './BasePort.module.css';
 
-export interface DatasetPortLabelProps {
-    port: DatasetPortModel;
+export interface BasePortLabelProps {
+    port: BasePortModel;
     engine: DiagramEngine;
 }
 
-export class DatasetPortLabel extends React.Component<DatasetPortLabelProps> {
+export class BasePortLabel extends React.Component<BasePortLabelProps> {
     render() {
         const port = (
             <PortWidget engine={this.props.engine} port={this.props.port}>
