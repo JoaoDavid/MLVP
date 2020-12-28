@@ -10,6 +10,7 @@ import {CanvasWidget} from '@projectstorm/react-canvas-core';
 import {CSVNodeModel} from "../components/nodes/data/import-dataset/csv/CSVNodeModel";
 import {DefaultNodeFactory} from "@projectstorm/react-diagrams-defaults";
 import {CSVNodeFactory} from "../components/nodes/data/import-dataset/csv/CSVNodeFactory";
+import {BasePortFactory} from "../components/ports/base/BasePortFactory";
 
 interface AppProps {
 
@@ -30,6 +31,7 @@ class App extends React.Component<MyProps, MyState> {
       model: new DiagramModel()
     }
     this.state.engine.getNodeFactories().registerFactory(new CSVNodeFactory()); // i cant figure out why
+    this.state.engine.getPortFactories().registerFactory(new BasePortFactory());
 
     // node 1
     const node1 = new DefaultNodeModel({
