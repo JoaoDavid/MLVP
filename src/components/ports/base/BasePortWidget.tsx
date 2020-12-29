@@ -3,12 +3,12 @@ import { DiagramEngine, PortWidget } from '@projectstorm/react-diagrams-core';
 import { BasePortModel } from "./BasePortModel";
 import classes from './BasePort.module.css';
 
-export interface BasePortLabelProps {
+export interface BasePortWidgetProps {
     port: BasePortModel;
     engine: DiagramEngine;
 }
 
-export class BasePortLabel extends React.Component<BasePortLabelProps> {
+export class BasePortWidget extends React.Component<BasePortWidgetProps> {
     render() {
         const port = (
             <PortWidget engine={this.props.engine} port={this.props.port}>

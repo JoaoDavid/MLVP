@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams-core';
-import {BasePortLabel} from "../../../ports/base/BasePortWidget";
+import {BasePortWidget} from "../../../ports/base/BasePortWidget";
 import {BasePortModel} from "../../../ports/base/BasePortModel";
 import classes from './CoreNode.module.css';
 import Title from '../Title/Title';
@@ -26,7 +26,7 @@ export class CoreNodeWidget extends React.Component<CoreNodeProps> {
     }
 
     generatePort = (port: BasePortModel) => {
-        return <BasePortLabel engine={this.props.engine} port={port} key={port.getID()}/>;
+        return <BasePortWidget engine={this.props.engine} port={port} key={port.getID()}/>;
     };
 
 /*    selected = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
