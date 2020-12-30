@@ -1,5 +1,7 @@
 import Papa from "papaparse";
 import {CoreNodeModel} from "../../../core/CoreNode/CoreNodeModel";
+import {DatasetPortModel} from "../../../../ports/dataset/DatasetPortModel";
+import {PortModelAlignment} from "@projectstorm/react-diagrams-core";
 
 export const CSV = 'csv';
 
@@ -12,7 +14,21 @@ export class CSVNodeModel extends CoreNodeModel {
         super(CSV, 'Import from CSV');
         this.numCols = 0;
         this.numRows = 0;
-        super.addOutPort('');
+        this.addOutPort('');
+    }
+
+    protected addOutPort(label: string, after = true): DatasetPortModel {
+        console.log(this.portsOut);
+        const p = new DatasetPortModel({
+            in: false,
+            name: label,
+            label: label,
+            alignment: PortModelAlignment.RIGHT
+        });
+        if (!after) {
+            this.portsOut.splice(0, 0, p);
+        }
+        return this.addPort(p);
     }
 
     loadCSV = (selectorFiles: FileList) => {

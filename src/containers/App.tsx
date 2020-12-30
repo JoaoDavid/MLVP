@@ -8,9 +8,10 @@ import createEngine, {
 } from '@projectstorm/react-diagrams';
 import {CanvasWidget} from '@projectstorm/react-canvas-core';
 import {CSVNodeModel} from "../components/nodes/data/import-dataset/csv/CSVNodeModel";
-import {DefaultNodeFactory} from "@projectstorm/react-diagrams-defaults";
 import {CSVNodeFactory} from "../components/nodes/data/import-dataset/csv/CSVNodeFactory";
 import {BasePortFactory} from "../components/ports/base/BasePortFactory";
+import {RandomForestNodeFactory} from '../components/nodes/model/random-forest/RandomForestNodeFactory';
+import {RandomForestNodeModel} from '../components/nodes/model/random-forest/RandomForestNodeModel';
 
 interface AppProps {
 
@@ -31,6 +32,7 @@ class App extends React.Component<MyProps, MyState> {
       model: new DiagramModel()
     }
     this.state.engine.getNodeFactories().registerFactory(new CSVNodeFactory()); // i cant figure out why
+    this.state.engine.getNodeFactories().registerFactory(new RandomForestNodeFactory());
     this.state.engine.getPortFactories().registerFactory(new BasePortFactory());
 
     // node 1
@@ -57,9 +59,9 @@ class App extends React.Component<MyProps, MyState> {
     //const link = port1.link<DefaultLinkModel>(port2);
     const node3 = new CSVNodeModel();
     const node4 = new CSVNodeModel();
+    const node5 = new RandomForestNodeModel();
 
-
-    this.state.model.addAll(node1 , node2, node3, node4);//, link);
+    this.state.model.addAll(node1 , node2, node3, node4, node5);//, link);
     this.state.engine.setModel(this.state.model);
 
   }
