@@ -13,7 +13,7 @@ const portContainer = (props: PortContainerProps) => {
     });
 
     return (
-        <div className={classes.PortsContainer}>
+        <div>
             {ports}
         </div>
     )

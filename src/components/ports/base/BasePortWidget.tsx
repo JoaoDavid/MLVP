@@ -19,8 +19,9 @@ export class BasePortWidget extends React.Component<BasePortWidgetProps> {
 
         return (
             <div className={classes.PortLabel}>
-                {this.props.port.getOptions().in ? port : label}
-                {this.props.port.getOptions().in ? label : port}
+{/*                {this.props.port.getOptions().in ? port : label}
+                {this.props.port.getOptions().in ? label : port}*/}
+                {port}
             </div>
         );
     }

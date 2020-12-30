@@ -58,7 +58,9 @@ export class CoreNodeWidget extends React.Component<CoreNodeProps> {
                 <Title name={this.props.node.getOptions().name}/>
                 <div className={classes.Content}>
                     <PortContainer generatePort={this.generatePort} ports={this.props.node.getInPorts()}/>
-                    {this.props.children}
+                    <div className={classes.ChildrenDiv}>
+                        {this.props.children}
+                    </div>
                     <PortContainer generatePort={this.generatePort} ports={this.props.node.getOutPorts()}/>
                 </div>
             </div>
