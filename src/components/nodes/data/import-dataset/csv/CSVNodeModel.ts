@@ -18,7 +18,6 @@ export class CSVNodeModel extends CoreNodeModel {
     }
 
     protected addOutPort(label: string, after = true): DatasetPortModel {
-        console.log(this.portsOut);
         const p = new DatasetPortModel({
             in: false,
             name: label,
