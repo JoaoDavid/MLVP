@@ -1,6 +1,6 @@
 .PortLabel {
     display: flex;
-    margin-top: 1px;
+    #margin-top: 1px;
     align-items: center;
 }
 
@@ -11,8 +11,8 @@
 
 .Port {
     width: 15px;
-    height: 15px;
-    background: rgba(255, 255, 255, 0.1);
+    height: 72px;
+    background: rgba(255, 255, 255, 0.3);
 }
 
 .Port:hover {

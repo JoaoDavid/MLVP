@@ -14,7 +14,8 @@ export class RandomForestNodeModel extends CoreNodeModel {
         super(NODE_RANDOM_FOREST, 'Random Forest');
         this.numCols = 0;
         this.numRows = 0;
-       this.addInPort('');
+        this.addInPort('');
+        //this.addOutPort('');
     }
 
     protected addInPort(label: string, after = true): BasePortModel {

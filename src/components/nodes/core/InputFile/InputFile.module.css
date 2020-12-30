@@ -8,17 +8,17 @@
 }
 
 .Label {
-    max-width: 80%;
+    max-width: 100%;
     font-size: 1.25rem;
     /* 20px */
-    font-weight: 700;
+    font-weight: 300;
     text-overflow: ellipsis;
     white-space: nowrap;
     cursor: pointer;
     display: inline-block;
     overflow: hidden;
-    padding: 0.625rem 1.25rem;
     /* 10px 20px */
+    padding: 0.625rem 0.80rem;
 }
 
 .InputFile + .Label {

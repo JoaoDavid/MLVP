@@ -8,7 +8,7 @@
 .TitleName {
     flex-grow: 1;
     padding: 5px 5px;
-    font-weight:bold;
+    font-weight: lighter;
     font-size: medium;
     font-family: Helvetica;
 }

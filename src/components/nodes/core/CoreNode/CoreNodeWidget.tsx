@@ -4,8 +4,8 @@ import {BasePortWidget} from "../../../ports/base/BasePortWidget";
 import {BasePortModel} from "../../../ports/base/BasePortModel";
 import classes from './CoreNode.module.css';
 import Title from '../Title/Title';
-import Ports from '../Ports/Ports';
 import {CoreNodeModel} from './CoreNodeModel';
+import PortContainer from "../Ports/PortContainer/PortContainer";
 
 
 export interface CoreNodeProps {
@@ -56,11 +56,11 @@ export class CoreNodeWidget extends React.Component<CoreNodeProps> {
                  //onClick={this.selected}
             >
                 <Title name={this.props.node.getOptions().name}/>
-                {this.props.children}
-                <Ports generatePort={this.generatePort}
-                       inPorts={this.props.node.getInPorts()}
-                       outPorts={this.props.node.getOutPorts()}
-                />
+                <div className={classes.Content}>
+                    <PortContainer generatePort={this.generatePort} ports={this.props.node.getInPorts()}/>
+                    {this.props.children}
+                    <PortContainer generatePort={this.generatePort} ports={this.props.node.getOutPorts()}/>
+                </div>
             </div>
         );
     }
