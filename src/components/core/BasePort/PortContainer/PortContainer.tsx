@@ -1,5 +1,5 @@
 import React from 'react';
-import {BasePortModel} from "../../../../ports/base/BasePortModel";
+import {BasePortModel} from "../BasePortModel";
 
 interface PortContainerProps {
     generatePort: (port: BasePortModel) => JSX.Element,

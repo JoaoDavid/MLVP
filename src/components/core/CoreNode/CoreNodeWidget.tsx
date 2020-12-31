@@ -1,11 +1,11 @@
 import * as React from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams-core';
-import {BasePortWidget} from "../../../ports/base/BasePortWidget";
-import {BasePortModel} from "../../../ports/base/BasePortModel";
+import {BasePortWidget} from "../BasePort/BasePortWidget";
+import {BasePortModel} from "../BasePort/BasePortModel";
 import classes from './CoreNode.module.css';
 import Title from '../Title/Title';
 import {CoreNodeModel} from './CoreNodeModel';
-import PortContainer from "../Ports/PortContainer/PortContainer";
+import PortContainer from "../BasePort/PortContainer/PortContainer";
 
 
 export interface CoreNodeProps {

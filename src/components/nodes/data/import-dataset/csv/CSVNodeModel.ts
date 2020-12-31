@@ -1,5 +1,5 @@
 import Papa from "papaparse";
-import {CoreNodeModel} from "../../../core/CoreNode/CoreNodeModel";
+import {CoreNodeModel} from "../../../../core/CoreNode/CoreNodeModel";
 import {DatasetPortModel} from "../../../../ports/dataset/DatasetPortModel";
 import {PortModelAlignment} from "@projectstorm/react-diagrams-core";
 

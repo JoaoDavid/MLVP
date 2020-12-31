@@ -4,7 +4,7 @@ import {
     PortModelGenerics,
     PortModelOptions
 } from '@projectstorm/react-diagrams-core';
-import { BasePortModel} from "../base/BasePortModel";
+import { BasePortModel} from "../../core/BasePort/BasePortModel";
 
 export interface DatasetPortModelOptions extends PortModelOptions {
     label?: string;

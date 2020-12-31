@@ -4,10 +4,10 @@ import createEngine, { DiagramModel, DiagramEngine } from '@projectstorm/react-d
 import {CanvasWidget} from '@projectstorm/react-canvas-core';
 import {CSVNodeModel} from "../components/nodes/data/import-dataset/csv/CSVNodeModel";
 import {CSVNodeFactory} from "../components/nodes/data/import-dataset/csv/CSVNodeFactory";
-import {BasePortFactory} from "../components/ports/base/BasePortFactory";
+import {BasePortFactory} from "../components/core/BasePort/BasePortFactory";
 import {RandomForestNodeFactory} from '../components/nodes/model/random-forest/RandomForestNodeFactory';
 import {RandomForestNodeModel} from '../components/nodes/model/random-forest/RandomForestNodeModel';
-import {CoreNodeModel} from '../components/nodes/core/CoreNode/CoreNodeModel'
+import {CoreNodeModel} from '../components/core/CoreNode/CoreNodeModel'
 
 interface AppProps {
 

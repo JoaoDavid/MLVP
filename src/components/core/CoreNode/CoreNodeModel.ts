@@ -1,5 +1,5 @@
 import { NodeModel, NodeModelGenerics, PortModelAlignment } from '@projectstorm/react-diagrams-core';
-import {BasePortModel} from "../../../ports/base/BasePortModel";
+import {BasePortModel} from "../BasePort/BasePortModel";
 import { BasePositionModelOptions, DeserializeEvent } from '@projectstorm/react-canvas-core';
 
 export interface CoreNodeModelOptions extends BasePositionModelOptions {

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {RandomForestNodeModel} from './RandomForestNodeModel';
-import CoreNodeWidget from '../../core/CoreNode/CoreNodeWidget';
+import CoreNodeWidget from '../../../core/CoreNode/CoreNodeWidget';
 
 
 export interface CSVNodeProps {
