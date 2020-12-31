@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { RandomForestNodeModel, NODE_RANDOM_FOREST } from './RandomForestNodeModel';
+import { RandomForestNodeModel } from './RandomForestNodeModel';
 import RandomForestNodeWidget from './RandomForestNodeWidget';
 import { AbstractReactFactory, GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-canvas-core';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
+import { NODE_RANDOM_FOREST } from "../../NodeType";
 
 export class RandomForestNodeFactory extends AbstractReactFactory<RandomForestNodeModel, DiagramEngine> {
     constructor() {

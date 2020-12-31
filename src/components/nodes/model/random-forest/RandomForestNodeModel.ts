@@ -2,8 +2,8 @@ import {CoreNodeModel} from "../../../core/CoreNode/CoreNodeModel";
 import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
 import {PortModelAlignment} from "@projectstorm/react-diagrams-core";
 import {BasePortModel} from "../../../core/BasePort/BasePortModel";
+import {NODE_RANDOM_FOREST} from "../../NodeType";
 
-export const NODE_RANDOM_FOREST = 'NODE_RANDOM_FOREST';
 
 export class RandomForestNodeModel extends CoreNodeModel {
 

@@ -1,12 +1,13 @@
 import * as React from 'react';
-import { CSVNodeModel, CSV } from './CSVNodeModel';
+import { CSVNodeModel } from './CSVNodeModel';
 import CSVNodeWidget from './CSVNodeWidget';
 import { AbstractReactFactory, GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-canvas-core';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
+import { NODE_CSV } from "../../../NodeType";
 
 export class CSVNodeFactory extends AbstractReactFactory<CSVNodeModel, DiagramEngine> {
     constructor() {
-        super(CSV);
+        super(NODE_CSV);
     }
 
     generateReactWidget(event: GenerateWidgetEvent<any>): JSX.Element {

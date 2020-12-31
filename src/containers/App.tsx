@@ -4,7 +4,6 @@ import createEngine, { DiagramModel, DiagramEngine } from '@projectstorm/react-d
 import {CanvasWidget} from '@projectstorm/react-canvas-core';
 import {CSVNodeModel} from "../components/nodes/data/import-dataset/csv/CSVNodeModel";
 import {CSVNodeFactory} from "../components/nodes/data/import-dataset/csv/CSVNodeFactory";
-import {BasePortFactory} from "../components/core/BasePort/BasePortFactory";
 import {RandomForestNodeFactory} from '../components/nodes/model/random-forest/RandomForestNodeFactory';
 import {RandomForestNodeModel} from '../components/nodes/model/random-forest/RandomForestNodeModel';
 import {CoreNodeModel} from '../components/core/CoreNode/CoreNodeModel'
@@ -36,12 +35,10 @@ class App extends React.Component<AppProps, AppState> {
     registerFactories = () => {
         this.state.engine.getNodeFactories().registerFactory(new CSVNodeFactory());
         this.state.engine.getNodeFactories().registerFactory(new RandomForestNodeFactory());
-        this.state.engine.getPortFactories().registerFactory(new BasePortFactory());
     }
 
     addTestNodes = () => {
         let count = 10;
-        //node2.setPosition(100, 100);
         this.nodes.push(new CSVNodeModel());
         this.nodes.push(new CSVNodeModel());
         this.nodes.push(new RandomForestNodeModel());
@@ -64,7 +61,6 @@ class App extends React.Component<AppProps, AppState> {
             <div>
                 <button onClick={this.addNode}>Toggle</button>
                 <CanvasWidget className="diagram-container" engine={this.state.engine}/>
-
             </div>
         );
     }
