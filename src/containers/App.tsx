@@ -59,7 +59,6 @@ class App extends React.Component<AppProps, AppState> {
     render() {
         return (
             <div>
-                <button onClick={this.addNode}>Toggle</button>
                 <CanvasWidget className="diagram-container" engine={this.state.engine}/>
             </div>
         );
