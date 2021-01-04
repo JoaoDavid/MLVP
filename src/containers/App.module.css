@@ -1,23 +1,18 @@
-
-
-.TopNav {
-    height: 5vh;
-}
-
-
 .FrontPage {
     flex-grow: 1;
     display: flex;
+    position: absolute;
     flex-direction: column;
     height: 100%;
+    width: 100%;
 }
 
 .Container {
-    height: 100vh;
+    height: 100%;
 }
 
 .DiagramContainer {
-    height: 100vh;
+    height: 100%;
     margin: 0;
     flex-grow: 1;
     background-color: rgb(60, 60, 60) !important;
