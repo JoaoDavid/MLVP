@@ -8,6 +8,7 @@ import {RandomForestNodeFactory} from '../components/nodes/model/random-forest/R
 import {RandomForestNodeModel} from '../components/nodes/model/random-forest/RandomForestNodeModel';
 import {CoreNodeModel} from '../components/core/CoreNode/CoreNodeModel'
 import TopNav from '../components/UI/top-nav/TopNav';
+import CSVModal from '../components/UI/modal/CSVModal';
 
 interface AppProps {
 
@@ -61,6 +62,7 @@ class App extends React.Component<AppProps, AppState> {
         return (
             <div className={classes.FrontPage}>
                 <TopNav/>
+                <CSVModal/>
                 <div className={classes.Container}>
                     <CanvasWidget className={classes.DiagramContainer} engine={this.state.engine}/>
                 </div>

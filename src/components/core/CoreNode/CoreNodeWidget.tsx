@@ -54,6 +54,7 @@ export class CoreNodeWidget extends React.Component<CoreNodeProps> {
                  data-default-node-name={this.props.node.getOptions().name}
                  style={{background: this.props.color}}
                  //onClick={this.selected}
+                 onDoubleClick={()=>{alert('hello')}}
             >
                 <Title name={this.props.node.getOptions().name}/>
                 <div className={classes.Content}>
