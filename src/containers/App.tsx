@@ -1,12 +1,13 @@
 import React from 'react';
-import './App.css';
-import createEngine, { DiagramModel, DiagramEngine } from '@projectstorm/react-diagrams';
+import classes from './App.module.css';
+import createEngine, {DiagramModel, DiagramEngine} from '@projectstorm/react-diagrams';
 import {CanvasWidget} from '@projectstorm/react-canvas-core';
 import {CSVNodeModel} from "../components/nodes/data/import-dataset/csv/CSVNodeModel";
 import {CSVNodeFactory} from "../components/nodes/data/import-dataset/csv/CSVNodeFactory";
 import {RandomForestNodeFactory} from '../components/nodes/model/random-forest/RandomForestNodeFactory';
 import {RandomForestNodeModel} from '../components/nodes/model/random-forest/RandomForestNodeModel';
 import {CoreNodeModel} from '../components/core/CoreNode/CoreNodeModel'
+import TopNav from '../components/UI/top-nav/TopNav';
 
 interface AppProps {
 
@@ -58,8 +59,11 @@ class App extends React.Component<AppProps, AppState> {
 
     render() {
         return (
-            <div>
-                <CanvasWidget className="diagram-container" engine={this.state.engine}/>
+            <div className={classes.FrontPage}>
+                <TopNav/>
+                <div className={classes.Container}>
+                    <CanvasWidget className={classes.DiagramContainer} engine={this.state.engine}/>
+                </div>
             </div>
         );
     }
