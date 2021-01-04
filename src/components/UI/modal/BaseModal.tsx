@@ -3,32 +3,28 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
 
-interface CSVModalProps {
-
+interface BaseModalProps {
+/*
+receber aqui as variaveis para fazer binding com os inputs que meter no modal
+ */
+    handleClose: () => void;
+    handleShow: () => void;
+    show: boolean;
 }
 
-const CSVModal = (props: CSVModalProps) => {
-    const [show, setShow] = React.useState(false);
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
+const BaseModal = (props: BaseModalProps) => {
     return (
         <>
-            <Button variant="primary" onClick={handleShow}>
-                Launch demo modal
-            </Button>
-
-            <Modal show={show} onHide={handleClose}>
+            <Modal show={props.show} onHide={props.handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Modal heading</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
+                    <Button variant="secondary" onClick={props.handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={handleClose}>
+                    <Button variant="primary" onClick={props.handleClose}>
                         Save Changes
                     </Button>
                 </Modal.Footer>
@@ -37,4 +33,4 @@ const CSVModal = (props: CSVModalProps) => {
     )
 }
 
-export default CSVModal;
+export default BaseModal;

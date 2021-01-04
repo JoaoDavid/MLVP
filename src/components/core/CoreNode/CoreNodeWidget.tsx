@@ -6,6 +6,7 @@ import classes from './CoreNode.module.css';
 import Title from '../Title/Title';
 import {CoreNodeModel} from './CoreNodeModel';
 import PortContainer from "../BasePort/PortContainer/PortContainer";
+import BaseModal from "../../UI/modal/BaseModal";
 
 
 export interface CoreNodeProps {
@@ -22,7 +23,8 @@ export interface CoreNodeProps {
 export class CoreNodeWidget extends React.Component<CoreNodeProps> {
 
     state = {
-        isSelected: false
+        isSelected: false,
+        show: false,
     }
 
     generatePort = (port: BasePortModel) => {
@@ -47,6 +49,13 @@ export class CoreNodeWidget extends React.Component<CoreNodeProps> {
             }
         );
     }*/
+    handleCloseModal = () => {
+        this.setState({show: false});
+    }
+
+    handleShowModal = () => {
+        this.setState({show: true});
+    }
 
     render() {
         return (
@@ -54,7 +63,7 @@ export class CoreNodeWidget extends React.Component<CoreNodeProps> {
                  data-default-node-name={this.props.node.getOptions().name}
                  style={{background: this.props.color}}
                  //onClick={this.selected}
-                 onDoubleClick={()=>{alert('hello')}}
+                 onDoubleClick={this.handleShowModal}
             >
                 <Title name={this.props.node.getOptions().name}/>
                 <div className={classes.Content}>
@@ -64,6 +73,7 @@ export class CoreNodeWidget extends React.Component<CoreNodeProps> {
                     </div>
                     <PortContainer generatePort={this.generatePort} ports={this.props.node.getOutPorts()}/>
                 </div>
+                <BaseModal handleClose={this.handleCloseModal} handleShow={this.handleShowModal} show={this.state.show}/>
             </div>
         );
     }
