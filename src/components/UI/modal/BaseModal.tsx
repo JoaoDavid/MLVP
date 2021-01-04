@@ -5,6 +5,8 @@ import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Form';
 
 interface BaseModalProps {
+    title: string;
+    children?: React.ReactNode;
     /*
     receber aqui as variaveis para fazer binding com os inputs que meter no modal
      */
@@ -16,9 +18,9 @@ interface BaseModalProps {
 const BaseModal = (props: BaseModalProps) => {
     return (
         <>
-            <Modal show={props.show} onHide={props.handleClose}>
+            <Modal size="lg" show={props.show} onHide={props.handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Modal heading</Modal.Title>
+                    <Modal.Title>{props.title}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
@@ -65,7 +67,9 @@ const BaseModal = (props: BaseModalProps) => {
                         </Form.Row>
 
                         <Form.Group id="formGridCheckbox">
-                            <Form.Check type="checkbox" label="Check me out" />
+                            <Form.File type="checkbox" label="Check me out" />
+                            <Form.Check type="radio" label="Check me out" />
+                            <Form.Check type="radio" label="Check me out" />
                         </Form.Group>
 
                         <Button variant="primary" type="submit">

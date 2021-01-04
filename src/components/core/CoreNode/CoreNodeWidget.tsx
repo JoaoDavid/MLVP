@@ -13,6 +13,7 @@ export interface CoreNodeProps {
     node: CoreNodeModel;
     engine: DiagramEngine;
     children?: React.ReactNode;
+    modalChildren?: React.ReactNode;
     color: string;
 }
 
@@ -73,7 +74,13 @@ export class CoreNodeWidget extends React.Component<CoreNodeProps> {
                     </div>
                     <PortContainer generatePort={this.generatePort} ports={this.props.node.getOutPorts()}/>
                 </div>
-                <BaseModal handleClose={this.handleCloseModal} handleShow={this.handleShowModal} show={this.state.show}/>
+                <BaseModal handleClose={this.handleCloseModal}
+                           handleShow={this.handleShowModal}
+                           show={this.state.show}
+                           title={this.props.node.getOptions().name}
+                >
+                    {this.props.modalChildren}
+                </BaseModal>
             </div>
         );
     }

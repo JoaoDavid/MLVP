@@ -8,7 +8,6 @@ import {RandomForestNodeFactory} from '../components/nodes/model/random-forest/R
 import {RandomForestNodeModel} from '../components/nodes/model/random-forest/RandomForestNodeModel';
 import {CoreNodeModel} from '../components/core/CoreNode/CoreNodeModel'
 import TopNav from '../components/UI/top-nav/TopNav';
-import CSVModal from '../components/UI/modal/BaseModal';
 
 interface AppProps {
 
