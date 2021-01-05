@@ -1,10 +1,8 @@
-import React from "react";
 import Papa from "papaparse";
 import {CoreNodeModel} from "../../../../core/CoreNode/CoreNodeModel";
 import {DatasetPortModel} from "../../../../ports/dataset/DatasetPortModel";
 import {PortModelAlignment} from "@projectstorm/react-diagrams-core";
 import { NODE_CSV } from "../../../NodeType";
-import CSVModal from "./CSVModal";
 
 
 export class CSVNodeModel extends CoreNodeModel {
