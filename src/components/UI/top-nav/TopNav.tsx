@@ -11,7 +11,7 @@ interface TopNavProps {
 const topNav = (props: TopNavProps) => {
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-            <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+            <Navbar.Brand href="#home">MLVP</Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="mr-auto">
@@ -26,9 +26,9 @@ const topNav = (props: TopNavProps) => {
                     </NavDropdown>
                 </Nav>
                 <Nav>
-                    <Nav.Link href="#deets">More deets</Nav.Link>
-                    <Nav.Link eventKey={2} href="#memes">
-                        Dank memes
+                    <Nav.Link href="#deets">About us</Nav.Link>
+                    <Nav.Link eventKey={2} href="#version">
+                        v0.0.0
                     </Nav.Link>
                 </Nav>
             </Navbar.Collapse>

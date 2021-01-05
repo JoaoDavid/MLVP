@@ -7,12 +7,12 @@ import { NODE_CSV } from "../../../NodeType";
 
 export class CSVNodeModel extends CoreNodeModel {
 
-    private numCols: number;
-    private numRows: number;
+    numCols: number;
+    numRows: number;
 
     constructor() {
         super(NODE_CSV, 'Import from CSV');
-        this.numCols = 0;
+        this.numCols = 34;
         this.numRows = 0;
         this.addOutPort('');
     }

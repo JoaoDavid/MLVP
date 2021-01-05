@@ -15,7 +15,7 @@ export interface CSVNodeProps {
  * Load CSV datasets
  */
 const csvNodeWidget = (props:CSVNodeProps) => {
-    const modal = <CSVModal changed={props.node.loadCSV}/>;
+    const modal = <CSVModal changed={props.node.loadCSV}  numCols={props.node.numCols } numRows={props.node.numRows}/>;
 
     return (
         <CoreNodeWidget node={props.node} engine={props.engine} color={'green'} modalChildren={modal}>
