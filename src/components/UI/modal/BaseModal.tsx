@@ -18,7 +18,7 @@ interface BaseModalProps {
 const BaseModal = (props: BaseModalProps) => {
     return (
         <>
-            <Modal size="lg" show={props.show} onHide={props.handleClose}>
+            <Modal animation={false} size="lg" show={props.show} onHide={props.handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>{props.title}</Modal.Title>
                 </Modal.Header>
