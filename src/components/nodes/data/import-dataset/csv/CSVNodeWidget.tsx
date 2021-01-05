@@ -6,22 +6,52 @@ import CoreNodeWidget from '../../../../core/CoreNode/CoreNodeWidget';
 import CSVModal from "./CSVModal";
 
 
-export interface CSVNodeProps {
+
+interface CSVNodeProps {
     node: CSVNodeModel;
     engine: DiagramEngine;
 }
 
-/**
- * Load CSV datasets
- */
-const csvNodeWidget = (props:CSVNodeProps) => {
-    const modal = <CSVModal changed={props.node.loadCSV}  numCols={props.node.numCols } numRows={props.node.numRows}/>;
+type CSVNodeState = {
+    model: CSVNodeModel;
+    numRows: number,
+    numCols: number,
+};
 
-    return (
-        <CoreNodeWidget node={props.node} engine={props.engine} color={'green'} modalChildren={modal}>
-            <InputFile acceptedTypes={['.csv']} changed={props.node.loadCSV}/>
-        </CoreNodeWidget>
-    )
+class CSVNodeWidget extends React.Component<CSVNodeProps, CSVNodeState> {
+
+    state = {
+        model: this.props.node,
+        numRows: this.props.node.numRows,
+        numCols: this.props.node.numCols,
+    }
+
+
+    loadCSV = (selectorFiles: FileList) => {
+        this.state.model.loadCSV(selectorFiles);
+        const temp = this.state.numRows + 1;
+        this.setState({
+/*            numRows: this.props.node.numRows,
+            numCols: this.props.node.numCols,*/
+            numRows: temp,
+            numCols: temp,
+
+        })
+    }
+
+    render() {
+        const modal = <CSVModal changed={this.loadCSV}  numCols={this.state.numCols } numRows={this.state.numRows}/>;
+
+        return (
+            <CoreNodeWidget node={this.props.node} engine={this.props.engine} color={'green'} modalChildren={modal}>
+                {/*<p>Rows: {this.state.numRows}</p>
+                {/*<p>Rows: {this.state.numRows}</p>
+                <p>Columns: {this.state.numCols}</p>*/}
+                <InputFile acceptedTypes={['.csv']} changed={this.loadCSV}/>
+            </CoreNodeWidget>
+        );
+    }
+
 }
 
-export default csvNodeWidget;
+export default CSVNodeWidget;

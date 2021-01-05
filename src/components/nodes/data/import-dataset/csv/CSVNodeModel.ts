@@ -12,7 +12,7 @@ export class CSVNodeModel extends CoreNodeModel {
 
     constructor() {
         super(NODE_CSV, 'Import from CSV');
-        this.numCols = 34;
+        this.numCols = 0;
         this.numRows = 0;
         this.addOutPort('');
     }
@@ -41,7 +41,7 @@ export class CSVNodeModel extends CoreNodeModel {
                     console.log(results.data);
                     this.numCols = results.data[0].length;//num features
                     this.numRows = results.data.length;//num entries
-                    console.log("num_features:" + this.numCols + " num_rows:" + this.numRows);
+                    console.log("numCols:" + this.numCols + " numRows:" + this.numRows);
                 }
             });
         }

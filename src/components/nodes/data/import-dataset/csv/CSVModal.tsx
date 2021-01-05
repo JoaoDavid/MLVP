@@ -1,7 +1,5 @@
 import * as React from 'react';
 import Form from "react-bootstrap/Form";
-import Col from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import {ChangeEvent} from "react";
 
 
