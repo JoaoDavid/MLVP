@@ -8,6 +8,8 @@ import {RandomForestNodeFactory} from '../components/nodes/model/random-forest/R
 import {RandomForestNodeModel} from '../components/nodes/model/random-forest/RandomForestNodeModel';
 import {CoreNodeModel} from '../components/core/CoreNode/CoreNodeModel'
 import TopNav from '../components/UI/top-nav/TopNav';
+import {AccuracyNodeFactory} from "../components/nodes/evaluate/accuracy/AccuracyNodeFactory";
+import {AccuracyNodeModel} from "../components/nodes/evaluate/accuracy/AccuracyNodeModel";
 
 interface AppProps {
 
@@ -36,6 +38,7 @@ class App extends React.Component<AppProps, AppState> {
     registerFactories = () => {
         this.state.engine.getNodeFactories().registerFactory(new CSVNodeFactory());
         this.state.engine.getNodeFactories().registerFactory(new RandomForestNodeFactory());
+        this.state.engine.getNodeFactories().registerFactory(new AccuracyNodeFactory());
     }
 
     addTestNodes = () => {
@@ -43,6 +46,7 @@ class App extends React.Component<AppProps, AppState> {
         this.nodes.push(new CSVNodeModel());
         this.nodes.push(new CSVNodeModel());
         this.nodes.push(new RandomForestNodeModel());
+        this.nodes.push(new AccuracyNodeModel());
 
         this.nodes.forEach((node: CoreNodeModel) => {
             this.state.model.addNode(node);
