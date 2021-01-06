@@ -3,19 +3,15 @@ import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
 import {PortModelAlignment} from "@projectstorm/react-diagrams-core";
 import {BasePortModel} from "../../../core/BasePort/BasePortModel";
 import {NODE_RANDOM_FOREST} from "../../NodeType";
+import {MLModelPortModel} from "../../../ports/model/MLModelPortModel";
 
 
 export class RandomForestNodeModel extends CoreNodeModel {
 
-    private numCols: number;
-    private numRows: number;
-
     constructor() {
         super(NODE_RANDOM_FOREST, 'Random Forest');
-        this.numCols = 0;
-        this.numRows = 0;
-        this.addInPort('');
-        //this.addOutPort('');
+        this.addInPort('in');
+        this.addOutPort('out');
     }
 
     protected addInPort(label: string, after = true): BasePortModel {
@@ -33,8 +29,7 @@ export class RandomForestNodeModel extends CoreNodeModel {
     }
 
     protected addOutPort(label: string, after = true): DatasetPortModel {
-        console.log(this.portsOut);
-        const p = new DatasetPortModel({
+        const p = new MLModelPortModel({
             in: false,
             name: label,
             label: label,

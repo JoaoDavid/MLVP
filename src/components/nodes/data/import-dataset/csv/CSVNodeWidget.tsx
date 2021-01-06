@@ -23,7 +23,7 @@ class CSVNodeWidget extends React.Component<CSVNodeProps, CSVNodeState> {
 
     loadCSV = (selectorFiles: FileList) => {
         this.state.model.loadCSV(selectorFiles).then((r:any) => {
-            console.log(r[0]);
+            //console.log(r[0]);
             const newState = {...this.state};
             this.setState(newState);
         });
