@@ -7,7 +7,7 @@
     font-size: 11px;
     #background: #000000;
     width:200px;
-    height: 100px;
+    min-height: 100px;
 }
 
 .NodeSelected {
