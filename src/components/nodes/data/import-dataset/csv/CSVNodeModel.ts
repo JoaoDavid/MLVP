@@ -8,13 +8,11 @@ import {NODE_CSV} from "../../../NodeType";
 export class CSVNodeModel extends CoreNodeModel {
 
     fileName: string = "";
-    numCols: number;
-    numRows: number;
+    numCols: number = 0;
+    numRows: number = 0;
 
     constructor() {
         super(NODE_CSV, 'Import from CSV');
-        this.numCols = 0;
-        this.numRows = 0;
         this.addOutPort('');
     }
 

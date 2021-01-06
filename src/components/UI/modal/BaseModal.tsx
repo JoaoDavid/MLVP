@@ -1,8 +1,5 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import Form from 'react-bootstrap/Form';
-import Col from 'react-bootstrap/Form';
 
 interface BaseModalProps {
     title: string;
@@ -25,14 +22,6 @@ const BaseModal = (props: BaseModalProps) => {
                 <Modal.Body>
                     {props.children}
                 </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={props.handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={props.handleClose}>
-                        Save Changes
-                    </Button>
-                </Modal.Footer>
             </Modal>
         </>
     )
