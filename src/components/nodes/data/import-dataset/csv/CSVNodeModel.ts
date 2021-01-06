@@ -7,6 +7,7 @@ import {NODE_CSV} from "../../../NodeType";
 
 export class CSVNodeModel extends CoreNodeModel {
 
+    fileName: string = "";
     numCols: number;
     numRows: number;
 
@@ -31,6 +32,7 @@ export class CSVNodeModel extends CoreNodeModel {
     }
 
     loadCSV = async (selectorFiles: FileList) => {
+        this.fileName = selectorFiles[0].name;
         if (selectorFiles[0] != null) {
             return new Promise((complete, error) => {
                 Papa.parse(selectorFiles[0], {
