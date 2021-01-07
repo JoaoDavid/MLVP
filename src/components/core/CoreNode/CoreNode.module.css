@@ -21,6 +21,11 @@
 }
 
 .ChildrenDiv {
+    padding-top: 10px;
+    padding-left: 15px;
     width: 100%;
     line-height: 20%;
+    font-weight: lighter;
+    font-size: small;
+    font-family: Helvetica;
 }
