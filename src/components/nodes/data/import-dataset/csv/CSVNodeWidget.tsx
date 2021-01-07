@@ -34,9 +34,9 @@ class CSVNodeWidget extends React.Component<CSVNodeProps, CSVNodeState> {
 
         return (
             <CoreNodeWidget node={this.props.node} engine={this.props.engine} color={'green'} modalChildren={modal}>
-                <p>File: {this.state.model.fileName || ""}</p>
-                <p>Rows: {this.state.model.numRows || ""}</p>
-                <p>Columns: {this.state.model.numCols || ""}</p>
+                <p>File: {this.state.model.getFileName() || ""}</p>
+                <p>Rows: {this.state.model.getRows() || ""}</p>
+                <p>Columns: {this.state.model.getCols() || ""}</p>
             </CoreNodeWidget>
         );
     }

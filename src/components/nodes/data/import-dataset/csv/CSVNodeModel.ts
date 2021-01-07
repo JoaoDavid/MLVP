@@ -7,9 +7,22 @@ import {NODE_CSV} from "../../../NodeType";
 
 export class CSVNodeModel extends CoreNodeModel {
 
-    fileName: string = "";
-    numCols: number = 0;
-    numRows: number = 0;
+    private fileName: string = "";
+    private numCols: number = 0;
+    private numRows: number = 0;
+
+
+    getFileName(): string {
+        return this.fileName;
+    }
+
+    getCols(): number {
+        return this.numCols;
+    }
+
+    getRows(): number {
+        return this.numRows;
+    }
 
     constructor() {
         super(NODE_CSV, 'Import from CSV');

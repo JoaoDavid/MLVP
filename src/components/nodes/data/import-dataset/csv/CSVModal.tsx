@@ -15,17 +15,18 @@ const CSVModal = (props: CSVModalProps) => {
     return (
         <Form>
             <Form.Group>
-                <Form.File custom onChange={(e: ChangeEvent<HTMLInputElement>) => props.changed(e.target.files!)} label={props.node.fileName || ""}/>
+                <Form.File custom onChange={(e: ChangeEvent<HTMLInputElement>) => props.changed(e.target.files!)}
+                           label={props.node.getFileName() || ""}/>
             </Form.Group>
             <Form.Group>
                 <Row>
                     <Col>
                         <Form.Label>Columns</Form.Label>
-                        <Form.Control readOnly placeholder={props.node.numCols.toString()} />
+                        <Form.Control readOnly placeholder={props.node.getCols().toString()}/>
                     </Col>
                     <Col>
                         <Form.Label>Rows</Form.Label>
-                        <Form.Control readOnly placeholder={props.node.numRows.toString()} />
+                        <Form.Control readOnly placeholder={props.node.getRows().toString()}/>
                     </Col>
                 </Row>
             </Form.Group>
