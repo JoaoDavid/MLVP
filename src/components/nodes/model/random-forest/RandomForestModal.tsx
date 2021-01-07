@@ -2,11 +2,14 @@ import * as React from 'react';
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {RandomForestNodeModel, criterionEnum} from "./RandomForestNodeModel";
+import {RandomForestNodeModel, CriterionEnum} from "./RandomForestNodeModel";
 
 
 interface ModalProps {
     node: RandomForestNodeModel;
+    numTreesChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    maxDepthChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    criterionChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const RandomForestModal = (props: ModalProps) => {
@@ -16,16 +19,16 @@ const RandomForestModal = (props: ModalProps) => {
                 <Row>
                     <Col>
                         <Form.Label>Number of Trees</Form.Label>
-                        <Form.Control type="number" min="1" value={props.node.numTrees} onChange={props.node.changedNumTrees}/>
+                        <Form.Control type="number" min="1" value={props.node.getNumTrees()} onChange={props.numTreesChanged}/>
                     </Col>
                     <Col>
                         <Form.Label>Max Depth</Form.Label>
-                        <Form.Control type="number" min="0" />
+                        <Form.Control type="number" min="0" value={props.node.getMaxDepth()} onChange={props.maxDepthChanged}/>
                     </Col>
                     <Col>
                         <Form.Label>Criterion</Form.Label>
-                        <Form.Control as="select" defaultValue="Choose...">
-                            {Object.values(criterionEnum).map((e) => {
+                        <Form.Control as="select" defaultValue="Choose..." onChange={props.criterionChanged}>
+                            {Object.values(CriterionEnum).map((e) => {
                                 return <option key={e}>{e}</option>
                             })}
                         </Form.Control>
