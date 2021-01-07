@@ -5,8 +5,17 @@ import {BasePortModel} from "../../../core/BasePort/BasePortModel";
 import {NODE_RANDOM_FOREST} from "../../NodeType";
 import {MLModelPortModel} from "../../../ports/model/MLModelPortModel";
 
+export enum criterionEnum {
+    GINI = 'gini',
+    ENTROPY = 'entropy',
+}
 
 export class RandomForestNodeModel extends CoreNodeModel {
+
+    numTrees: number = 100; //int
+    criterion: criterionEnum = criterionEnum.GINI;
+    maxDepth: number = -1; //int
+
 
     constructor() {
         super(NODE_RANDOM_FOREST, 'Random Forest');
@@ -39,6 +48,10 @@ export class RandomForestNodeModel extends CoreNodeModel {
             this.portsOut.splice(0, 0, p);
         }
         return this.addPort(p);
+    }
+
+    changedNumTrees = (event: React.ChangeEvent<HTMLInputElement>) => {
+        this.numTrees = +event.target.value;
     }
 
 }
