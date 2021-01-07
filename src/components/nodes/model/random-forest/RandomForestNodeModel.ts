@@ -16,6 +16,11 @@ export class RandomForestNodeModel extends CoreNodeModel {
     private criterion: CriterionEnum = CriterionEnum.GINI;
     private maxDepth: number = 0; //int
 
+    constructor() {
+        super(NODE_RANDOM_FOREST, 'Random Forest');
+        this.addInPort('in');
+        this.addOutPort('out');
+    }
 
     getNumTrees(): number {
         return this.numTrees;
@@ -44,12 +49,6 @@ export class RandomForestNodeModel extends CoreNodeModel {
 
     setMaxDepth(value: number) {
         this.maxDepth = value;
-    }
-
-    constructor() {
-        super(NODE_RANDOM_FOREST, 'Random Forest');
-        this.addInPort('in');
-        this.addOutPort('out');
     }
 
     protected addInPort(label: string, after = true): BasePortModel {

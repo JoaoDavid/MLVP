@@ -27,7 +27,7 @@ const RandomForestModal = (props: ModalProps) => {
                     </Col>
                     <Col>
                         <Form.Label>Criterion</Form.Label>
-                        <Form.Control as="select" defaultValue="Choose..." onChange={props.criterionChanged}>
+                        <Form.Control as="select" defaultValue={props.node.getCriterion().toString()} onChange={props.criterionChanged}>
                             {Object.values(CriterionEnum).map((e) => {
                                 return <option key={e}>{e}</option>
                             })}
