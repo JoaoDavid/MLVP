@@ -65,9 +65,29 @@ class App extends React.Component<AppProps, AppState> {
         return (
             <div className={classes.FrontPage}>
                 <TopNav/>
-                <div className={classes.Container}>
-                    <CanvasWidget className={classes.DiagramContainer} engine={this.state.engine}/>
+                <div draggable={true}>
+                    rsrshrsh
                 </div>
+                <div className={classes.Container} onDrop={(event) => {
+                    event.preventDefault();
+                    let node = new CSVNodeModel();
+
+                    let point = this.state.engine.getRelativeMousePoint(event);
+                    node.setPosition(point);
+                    this.state.engine.getModel().addNode(node);
+                    this.forceUpdate();
+                    console.log("onDrop");
+                }}
+                     onDragOver={(event) => {
+                    console.log("onDragOverEngine");
+                    event.preventDefault();
+                }}>
+                    <CanvasWidget className={classes.DiagramContainer} engine={this.state.engine}/>
+
+
+                </div>
+
+
             </div>
         );
     }
