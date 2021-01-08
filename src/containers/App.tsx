@@ -71,7 +71,7 @@ class App extends React.Component<AppProps, AppState> {
                     <CanvasWidget className={classes.DiagramContainer} engine={this.state.engine}/>
                 </div>
 
-
+                <div>testing</div>
             </div>
         );
     }
