@@ -10,6 +10,7 @@ import {CoreNodeModel} from '../components/core/CoreNode/CoreNodeModel'
 import TopNav from '../components/UI/top-nav/TopNav';
 import {AccuracyNodeFactory} from "../components/nodes/evaluate/accuracy/AccuracyNodeFactory";
 import {AccuracyNodeModel} from "../components/nodes/evaluate/accuracy/AccuracyNodeModel";
+import SideBar from "../components/UI/side-bar/SideBar";
 
 interface AppProps {
 
@@ -65,26 +66,9 @@ class App extends React.Component<AppProps, AppState> {
         return (
             <div className={classes.FrontPage}>
                 <TopNav/>
-                <div draggable={true}>
-                    rsrshrsh
-                </div>
-                <div className={classes.Container} onDrop={(event) => {
-                    event.preventDefault();
-                    let node = new CSVNodeModel();
-
-                    let point = this.state.engine.getRelativeMousePoint(event);
-                    node.setPosition(point);
-                    this.state.engine.getModel().addNode(node);
-                    this.forceUpdate();
-                    console.log("onDrop");
-                }}
-                     onDragOver={(event) => {
-                    console.log("onDragOverEngine");
-                    event.preventDefault();
-                }}>
+                <div className={classes.Container}>
+                    <SideBar/>
                     <CanvasWidget className={classes.DiagramContainer} engine={this.state.engine}/>
-
-
                 </div>
 
 

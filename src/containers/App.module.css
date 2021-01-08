@@ -9,6 +9,9 @@
 
 .Container {
     height: 100%;
+    flex-direction: row;
+    flex-grow: 1;
+    display: flex;
 }
 
 .DiagramContainer {
