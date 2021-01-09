@@ -65,8 +65,14 @@ class App extends React.Component<AppProps, AppState> {
 
 
     delDefaultFactory = () => {
-        this.state.engine.getNodeFactories().deregisterFactory('default');
         console.log(this.state.engine.getNodeFactories());
+        console.log("....");
+        //this.state.engine.getNodeFactories().deregisterFactory('default');
+        console.log(this.state.engine.getNodeFactories().getFactories().forEach(factory => {
+            console.log(factory.getType());
+            console.log(factory);
+        }));
+        console.log("....");
     }
 
     render() {
