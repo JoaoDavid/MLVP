@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {DragEvent} from 'react';
 import classes from './App.module.css';
 import createEngine, {DiagramEngine, DiagramModel} from '@projectstorm/react-diagrams';
 import {CanvasWidget} from '@projectstorm/react-canvas-core';
@@ -89,13 +89,34 @@ class App extends React.Component<AppProps, AppState> {
         return map;
     }
 
+    onDropDiagram = (event: DragEvent<HTMLDivElement>) => {
+        event.preventDefault();
+        const data = event.dataTransfer.getData("storm-diagram-node");
+        console.log(data);
+        const inJSON = JSON.parse(data);
+        const factory = this.state.engine.getNodeFactories().getFactory(inJSON.codeName);
+        const node = this.generateModel(CSVNodeFactory.getInstance());//this.generateModel(factory);
+        let point = this.state.engine.getRelativeMousePoint(event);
+        node.setPosition(point);
+        this.state.engine.getModel().addNode(node);
+        this.forceUpdate();
+
+    }
+
     render() {
         return (
             <div className={classes.FrontPage}>
                 <TopNav/>
                 <div className={classes.Container}>
                     <SideBar catAndNames={this.loadMapCategoryNodes()}/>
-                    <CanvasWidget className={classes.DiagramContainer} engine={this.state.engine}/>
+                    <div className={classes.Container}
+                         onDragOver={(event) => {
+                             event.preventDefault()
+                         }}
+                         onDrop={this.onDropDiagram}
+                    >
+                        <CanvasWidget className={classes.DiagramContainer} engine={this.state.engine}/>
+                    </div>
                 </div>
                 <div>testing</div>
             </div>

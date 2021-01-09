@@ -24,7 +24,7 @@ const Category = (props: CategoryProps) => {
                             {props.nodes.map((node) => {
                                 return <p key={node.name} draggable={true}
                                           onDragStart={(event) => {
-                                              event.dataTransfer.setData(node.name, JSON.stringify(node));
+                                              event.dataTransfer.setData("storm-diagram-node", JSON.stringify(node));
                                           }}>
                                     {node.name}
                                 </p>
