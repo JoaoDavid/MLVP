@@ -22,7 +22,7 @@ const Category = (props: CategoryProps) => {
                     <Accordion.Collapse eventKey="0">
                         <Card.Body className={classes.Body}>
                             {props.nodes.map((node) => {
-                                return <p>{node.name}</p>
+                                return <p key={node.name}>{node.name}</p>
                             })}
                         </Card.Body>
                     </Accordion.Collapse>

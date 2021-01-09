@@ -2,7 +2,7 @@ import { Category, NodeConfig, CategoryConfig } from "../Config";
 
 // Category configuration
 export const EVALUATE_CONFIG:CategoryConfig = {
-    category: Category.DATA,
+    category: Category.EVALUATE,
     color: 'rgb(95,25,25)',
 }
 
