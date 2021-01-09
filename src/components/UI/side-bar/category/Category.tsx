@@ -2,13 +2,13 @@ import React from 'react';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
 import classes from './Category.module.css';
-import {CoreNodeModel} from "../../../core/CoreNode/CoreNodeModel";
+import {NodeConfig} from "../../../nodes/Config";
 
 
 interface CategoryProps {
     title: string;
     color: string;
-    //nodes: CoreNodeModel[];
+    nodes: NodeConfig[];
 }
 
 const Category = (props: CategoryProps) => {
@@ -21,8 +21,9 @@ const Category = (props: CategoryProps) => {
                     </Accordion.Toggle>
                     <Accordion.Collapse eventKey="0">
                         <Card.Body className={classes.Body}>
-                            <p>Import from CSV</p>
-                            <p>agaeg</p>
+                            {props.nodes.map((node) => {
+                                return <p>{node.name}</p>
+                            })}
                         </Card.Body>
                     </Accordion.Collapse>
                 </Card>

@@ -9,6 +9,8 @@ import TopNav from '../components/UI/top-nav/TopNav';
 import {AccuracyNodeFactory} from "../components/nodes/evaluate/accuracy/AccuracyNodeFactory";
 import SideBar from "../components/UI/side-bar/SideBar";
 import {CoreNodeFactory} from "../components/core/CoreNode/CoreNodeFactory";
+import {CategoryConfig, NodeConfig} from "../components/nodes/Config";
+import {DATA_CONFIG, NODE_CSV} from "../components/nodes/data/DataConfig";
 
 interface AppProps {
 
@@ -41,7 +43,7 @@ class App extends React.Component<AppProps, AppState> {
         this.state.engine.getNodeFactories().registerFactory(AccuracyNodeFactory.getInstance());
     }
 
-    generateModel<T extends CoreNodeFactory<CoreNodeModel, DiagramEngine>>(factory: T): CoreNodeModel{
+    generateModel<T extends CoreNodeFactory<CoreNodeModel, DiagramEngine>>(factory: T): CoreNodeModel {
         return factory.generateModel({});
     }
 
@@ -77,12 +79,18 @@ class App extends React.Component<AppProps, AppState> {
         console.log("....");
     }
 
+    loadMapCategoryNodes = () => {
+        const map = new Map<CategoryConfig, NodeConfig[]>();
+        map.set(DATA_CONFIG, [NODE_CSV]);
+        return map;
+    }
+
     render() {
         return (
             <div className={classes.FrontPage}>
                 <TopNav/>
                 <div className={classes.Container}>
-                    <SideBar/>
+                    <SideBar catAndNames={this.loadMapCategoryNodes()}/>
                     <CanvasWidget className={classes.DiagramContainer} engine={this.state.engine}/>
                 </div>
 

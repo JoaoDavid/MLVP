@@ -1,7 +1,7 @@
 export enum Category {
-    DATA = 'data',
-    MODEL = 'model',
-    EVALUATE = 'evaluate',
+    DATA = 'Data',
+    MODEL = 'Model',
+    EVALUATE = 'Evaluate',
 }
 
 export type NodeConfig = {

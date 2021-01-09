@@ -1,20 +1,22 @@
 import React from 'react';
 import classes from './SideBar.module.css';
 import Category from "./category/Category";
+import {CategoryConfig, NodeConfig} from "../../nodes/Config";
 
 interface SideBarProps {
-
+    catAndNames: Map<CategoryConfig, NodeConfig[]>,
 }
 
 const SideBar = (props: SideBarProps) => {
+    const categories: JSX.Element[] = [];
+    props.catAndNames.forEach((value, key) => {
+        categories.push(
+            <Category key={key.category} color={key.color} title={key.category} nodes={value}/>);
+    });
+    console.log(props.catAndNames);
     return (
         <div className={classes.SideBar}>
-            <Category color={'green'} title={'Data'}/>
-            <Category color={'grey'} title={'Model'}/>
-            <Category color={'cyan'} title={'Data'}/>
-            <Category color={'grey'} title={'Model'}/>
-            <Category color={'cyan'} title={'Data'}/>
-            <Category color={'grey'} title={'Model'}/>
+            {categories}
         </div>
     )
 }
