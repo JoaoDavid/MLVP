@@ -1,16 +1,14 @@
 import React from 'react';
 import classes from './App.module.css';
-import createEngine, {DiagramModel, DiagramEngine} from '@projectstorm/react-diagrams';
+import createEngine, {DiagramEngine, DiagramModel} from '@projectstorm/react-diagrams';
 import {CanvasWidget} from '@projectstorm/react-canvas-core';
-import {CSVNodeModel} from "../components/nodes/data/import-dataset/csv/CSVNodeModel";
 import {CSVNodeFactory} from "../components/nodes/data/import-dataset/csv/CSVNodeFactory";
 import {RandomForestNodeFactory} from '../components/nodes/model/random-forest/RandomForestNodeFactory';
-import {RandomForestNodeModel} from '../components/nodes/model/random-forest/RandomForestNodeModel';
 import {CoreNodeModel} from '../components/core/CoreNode/CoreNodeModel'
 import TopNav from '../components/UI/top-nav/TopNav';
 import {AccuracyNodeFactory} from "../components/nodes/evaluate/accuracy/AccuracyNodeFactory";
-import {AccuracyNodeModel} from "../components/nodes/evaluate/accuracy/AccuracyNodeModel";
 import SideBar from "../components/UI/side-bar/SideBar";
+import {CoreNodeFactory} from "../components/core/CoreNode/CoreNodeFactory";
 
 interface AppProps {
 
@@ -43,12 +41,16 @@ class App extends React.Component<AppProps, AppState> {
         this.state.engine.getNodeFactories().registerFactory(AccuracyNodeFactory.getInstance());
     }
 
+    generateModel<T extends CoreNodeFactory<CoreNodeModel, DiagramEngine>>(factory: T): CoreNodeModel{
+        return factory.generateModel({});
+    }
+
     addTestNodes = () => {
         let count = 10;
-        this.nodes.push(new CSVNodeModel());
-        this.nodes.push(new CSVNodeModel());
-        this.nodes.push(new RandomForestNodeModel());
-        this.nodes.push(new AccuracyNodeModel());
+        this.nodes.push(this.generateModel(CSVNodeFactory.getInstance()));
+        this.nodes.push(this.generateModel(CSVNodeFactory.getInstance()));
+        this.nodes.push(this.generateModel(RandomForestNodeFactory.getInstance()));
+        this.nodes.push(this.generateModel(AccuracyNodeFactory.getInstance()));
 
         this.nodes.forEach((node: CoreNodeModel) => {
             this.state.model.addNode(node);
@@ -58,7 +60,7 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     addNode = () => {
-        const node = new CSVNodeModel();
+        const node = this.generateModel(CSVNodeFactory.getInstance());
         this.state.model.addNode(node);
         this.state.engine.repaintCanvas();
     }
