@@ -3,7 +3,7 @@ import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {CSVNodeModel} from './CSVNodeModel';
 import CoreNodeWidget from '../../../../core/CoreNode/CoreNodeWidget';
 import CSVModal from "./CSVModal";
-
+import {DATA_CONFIG} from '../../DataConfig';
 
 interface CSVNodeProps {
     node: CSVNodeModel;
@@ -33,7 +33,7 @@ class CSVNodeWidget extends React.Component<CSVNodeProps, CSVNodeState> {
         const modal = <CSVModal changed={this.loadCSV} node={this.props.node}/>;
 
         return (
-            <CoreNodeWidget node={this.props.node} engine={this.props.engine} color={'green'} modalChildren={modal}>
+            <CoreNodeWidget node={this.props.node} engine={this.props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
                 <p>File: {this.state.model.getFileName() || ""}</p>
                 <p>Rows: {this.state.model.getRows() || ""}</p>
                 <p>Columns: {this.state.model.getCols() || ""}</p>

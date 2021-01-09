@@ -17,7 +17,7 @@ export class RandomForestNodeModel extends CoreNodeModel {
     private maxDepth: number = 0; //int
 
     constructor() {
-        super(NODE_RANDOM_FOREST, 'Random Forest');
+        super(NODE_RANDOM_FOREST.codeName, NODE_RANDOM_FOREST.name);
         this.addInPort('in');
         this.addOutPort('out');
     }

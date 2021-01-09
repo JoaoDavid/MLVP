@@ -4,7 +4,8 @@ import AccuracyNodeWidget from './AccuracyNodeWidget';
 import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-canvas-core';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
 import { NODE_ACCURACY } from "../EvaluateConfig";
-import {CoreNodeFactory, NodeCategory} from "../../../core/CoreNode/CoreNodeFactory";
+import {CoreNodeFactory} from "../../../core/CoreNode/CoreNodeFactory";
+import {Category} from "../../Config";
 
 
 export class AccuracyNodeFactory extends CoreNodeFactory<AccuracyNodeModel, DiagramEngine> {
@@ -12,7 +13,7 @@ export class AccuracyNodeFactory extends CoreNodeFactory<AccuracyNodeModel, Diag
     private static INSTANCE: AccuracyNodeFactory;
 
     private constructor() {
-        super(NodeCategory.DATA, NODE_ACCURACY);
+        super(Category.DATA, NODE_ACCURACY.codeName);
     }
 
     static getInstance = () => {

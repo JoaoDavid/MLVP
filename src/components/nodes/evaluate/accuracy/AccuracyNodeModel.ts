@@ -9,7 +9,7 @@ import {MLModelPortModel} from "../../../ports/model/MLModelPortModel";
 export class AccuracyNodeModel extends CoreNodeModel {
 
     constructor() {
-        super(NODE_ACCURACY, 'Evaluate Accuracy');
+        super(NODE_ACCURACY.codeName, NODE_ACCURACY.name);
         this.addInDatasetPort('dataset');
         this.addInMLModelPort('model');
     }

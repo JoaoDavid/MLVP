@@ -4,7 +4,8 @@ import RandomForestNodeWidget from './RandomForestNodeWidget';
 import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-canvas-core';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
 import { NODE_RANDOM_FOREST } from "../ModelConfig";
-import {CoreNodeFactory, NodeCategory} from "../../../core/CoreNode/CoreNodeFactory";
+import {CoreNodeFactory} from "../../../core/CoreNode/CoreNodeFactory";
+import {Category} from "../../Config";
 
 
 export class RandomForestNodeFactory extends CoreNodeFactory<RandomForestNodeModel, DiagramEngine> {
@@ -12,7 +13,7 @@ export class RandomForestNodeFactory extends CoreNodeFactory<RandomForestNodeMod
     private static INSTANCE: RandomForestNodeFactory;
 
     private constructor() {
-        super(NodeCategory.MODEL, NODE_RANDOM_FOREST);
+        super(Category.MODEL, NODE_RANDOM_FOREST.codeName);
     }
 
     static getInstance = () => {

@@ -25,7 +25,7 @@ export class CSVNodeModel extends CoreNodeModel {
     }
 
     constructor() {
-        super(NODE_CSV, 'Import from CSV');
+        super(NODE_CSV.codeName, 'Import from CSV');
         this.addOutPort('');
     }
 

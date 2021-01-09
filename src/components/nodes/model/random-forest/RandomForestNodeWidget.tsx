@@ -3,7 +3,7 @@ import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {RandomForestNodeModel} from './RandomForestNodeModel';
 import CoreNodeWidget from '../../../core/CoreNode/CoreNodeWidget';
 import RandomForestModal from './RandomForestModal';
-import {COLOR} from './../ModelConfig';
+import { MODEL_CONFIG } from './../ModelConfig';
 
 interface NodeProps {
     node: RandomForestNodeModel;
@@ -47,7 +47,7 @@ class RandomForestNodeWidget extends React.Component<NodeProps, NodeState> {
                                          criterionChanged={this.criterionChanged}/>;
 
         return (
-            <CoreNodeWidget node={this.state.node} engine={this.props.engine} color={COLOR}
+            <CoreNodeWidget node={this.state.node} engine={this.props.engine} color={MODEL_CONFIG.color}
                             modalChildren={modal}>
                 <p>Trees: {this.state.node.getNumTrees()}</p>
                 <p>Max Depth: {this.state.node.getMaxDepth()}</p>

@@ -4,14 +4,15 @@ import CSVNodeWidget from './CSVNodeWidget';
 import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-canvas-core';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
 import { NODE_CSV } from "../../DataConfig";
-import {CoreNodeFactory, NodeCategory} from "../../../../core/CoreNode/CoreNodeFactory";
+import {CoreNodeFactory} from "../../../../core/CoreNode/CoreNodeFactory";
+import {Category} from "../../../Config";
 
 export class CSVNodeFactory extends CoreNodeFactory<CSVNodeModel, DiagramEngine> {
 
     private static INSTANCE: CSVNodeFactory;
 
     private constructor() {
-        super(NodeCategory.DATA, NODE_CSV);
+        super(Category.DATA, NODE_CSV.codeName);
     }
 
     static getInstance = () => {
