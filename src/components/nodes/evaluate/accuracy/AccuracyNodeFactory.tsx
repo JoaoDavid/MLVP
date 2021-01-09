@@ -3,7 +3,7 @@ import { AccuracyNodeModel } from './AccuracyNodeModel';
 import RandomForestNodeWidget from './AccuracyNodeWidget';
 import { AbstractReactFactory, GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-canvas-core';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
-import { NODE_ACCURACY } from "../../NodeType";
+import { NODE_ACCURACY } from "../EvaluateConfig";
 
 export class AccuracyNodeFactory extends AbstractReactFactory<AccuracyNodeModel, DiagramEngine> {
     constructor() {

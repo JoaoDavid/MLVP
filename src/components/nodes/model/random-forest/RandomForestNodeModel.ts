@@ -2,7 +2,7 @@ import {CoreNodeModel} from "../../../core/CoreNode/CoreNodeModel";
 import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
 import {PortModelAlignment} from "@projectstorm/react-diagrams-core";
 import {BasePortModel} from "../../../core/BasePort/BasePortModel";
-import {NODE_RANDOM_FOREST} from "../../NodeType";
+import {NODE_RANDOM_FOREST} from "../ModelConfig";
 import {MLModelPortModel} from "../../../ports/model/MLModelPortModel";
 
 export enum CriterionEnum {

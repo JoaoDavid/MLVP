@@ -1,0 +1,2 @@
+
+export const NODE_ACCURACY = 'NODE_ACCURACY';

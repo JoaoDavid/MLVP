@@ -1,0 +1,2 @@
+
+export const NODE_RANDOM_FOREST = 'NODE_RANDOM_FOREST';

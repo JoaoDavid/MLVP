@@ -3,7 +3,7 @@ import { RandomForestNodeModel } from './RandomForestNodeModel';
 import RandomForestNodeWidget from './RandomForestNodeWidget';
 import { AbstractReactFactory, GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-canvas-core';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
-import { NODE_RANDOM_FOREST } from "../../NodeType";
+import { NODE_RANDOM_FOREST } from "../ModelConfig";
 
 export class RandomForestNodeFactory extends AbstractReactFactory<RandomForestNodeModel, DiagramEngine> {
     constructor() {
