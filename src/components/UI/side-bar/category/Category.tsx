@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {DragEvent} from 'react';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
 import classes from './Category.module.css';
@@ -22,7 +22,12 @@ const Category = (props: CategoryProps) => {
                     <Accordion.Collapse eventKey="0">
                         <Card.Body className={classes.Body}>
                             {props.nodes.map((node) => {
-                                return <p key={node.name}>{node.name}</p>
+                                return <p key={node.name} draggable={true}
+                                          onDragStart={(event) => {
+                                              event.dataTransfer.setData(node.name, JSON.stringify(node));
+                                          }}>
+                                    {node.name}
+                                </p>
                             })}
                         </Card.Body>
                     </Accordion.Collapse>
