@@ -1,18 +1,18 @@
 import React, {DragEvent} from 'react';
 import classes from './App.module.css';
 import createEngine, {DiagramEngine, DiagramModel} from '@projectstorm/react-diagrams';
-import {CanvasWidget} from '@projectstorm/react-canvas-core';
+import {AbstractReactFactory, CanvasWidget} from '@projectstorm/react-canvas-core';
 import {CSVNodeFactory} from "../components/nodes/data/import-dataset/csv/CSVNodeFactory";
 import {RandomForestNodeFactory} from '../components/nodes/model/random-forest/RandomForestNodeFactory';
 import {CoreNodeModel} from '../components/core/CoreNode/CoreNodeModel'
 import TopNav from '../components/UI/top-nav/TopNav';
 import {AccuracyNodeFactory} from "../components/nodes/evaluate/accuracy/AccuracyNodeFactory";
 import SideBar from "../components/UI/side-bar/SideBar";
-import {CoreNodeFactory} from "../components/core/CoreNode/CoreNodeFactory";
 import {CategoryConfig, NodeConfig} from "../components/nodes/Config";
 import {DATA_CONFIG, NODE_CSV} from "../components/nodes/data/DataConfig";
 import {MODEL_CONFIG, NODE_RANDOM_FOREST} from "../components/nodes/model/ModelConfig";
 import {EVALUATE_CONFIG, NODE_ACCURACY} from "../components/nodes/evaluate/EvaluateConfig";
+import {NodeModel} from "@projectstorm/react-diagrams-core";
 
 interface AppProps {
 
@@ -45,8 +45,8 @@ class App extends React.Component<AppProps, AppState> {
         this.state.engine.getNodeFactories().registerFactory(AccuracyNodeFactory.getInstance());
     }
 
-    generateModel<T extends CoreNodeFactory<CoreNodeModel, DiagramEngine>>(factory: T): CoreNodeModel {
-        return factory.generateModel({});
+    generateModel<T extends AbstractReactFactory<NodeModel, DiagramEngine>>(factory: T): CoreNodeModel {
+        return factory.generateModel({}) as CoreNodeModel;
     }
 
     addTestNodes = () => {
@@ -95,12 +95,11 @@ class App extends React.Component<AppProps, AppState> {
         console.log(data);
         const inJSON = JSON.parse(data);
         const factory = this.state.engine.getNodeFactories().getFactory(inJSON.codeName);
-        const node = this.generateModel(CSVNodeFactory.getInstance());//this.generateModel(factory);
+        const node = this.generateModel(factory);
         let point = this.state.engine.getRelativeMousePoint(event);
         node.setPosition(point);
         this.state.engine.getModel().addNode(node);
-        this.forceUpdate();
-
+        this.forceUpdate(); // TODO, investigar should component update, fazer apenas update ao CanvasWidget
     }
 
     render() {
