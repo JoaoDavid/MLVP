@@ -1,5 +1,7 @@
 import * as React from 'react';
 import {AbstractReactFactory} from '@projectstorm/react-canvas-core';
+import {CoreNodeModel} from "./CoreNodeModel";
+import {DiagramEngine} from "@projectstorm/react-diagrams";
 
 export enum NodeCategory {
     DATA,
@@ -7,14 +9,18 @@ export enum NodeCategory {
     EVALUATE,
 }
 
-export abstract class CoreNodeFactory extends AbstractReactFactory {
+export abstract class CoreNodeFactory<T extends CoreNodeModel, E extends DiagramEngine>
+    extends AbstractReactFactory<T, E> {
 
-    private category: NodeCategory;
+    private readonly category: NodeCategory;
 
     protected constructor(category: NodeCategory, type: string) {
         super(type);
         this.category = category;
     }
 
+    getCategory = () => {
+        return this.category;
+    }
 
 }

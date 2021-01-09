@@ -1,13 +1,21 @@
-import * as React from 'react';
+import React from 'react';
 import { CSVNodeModel } from './CSVNodeModel';
 import CSVNodeWidget from './CSVNodeWidget';
-import { AbstractReactFactory, GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-canvas-core';
+import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-canvas-core';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
 import { NODE_CSV } from "../../DataConfig";
+import {CoreNodeFactory, NodeCategory} from "../../../../core/CoreNode/CoreNodeFactory";
 
-export class CSVNodeFactory extends AbstractReactFactory<CSVNodeModel, DiagramEngine> {
-    constructor() {
-        super(NODE_CSV);
+export class CSVNodeFactory extends CoreNodeFactory<CSVNodeModel, DiagramEngine> {
+
+    private static INSTANCE: CSVNodeFactory;
+
+    private constructor() {
+        super(NodeCategory.DATA, NODE_CSV);
+    }
+
+    static getInstance = () => {
+        return CSVNodeFactory.INSTANCE || (CSVNodeFactory.INSTANCE = new CSVNodeFactory());
     }
 
     generateReactWidget(event: GenerateWidgetEvent<any>): JSX.Element {
