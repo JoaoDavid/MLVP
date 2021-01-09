@@ -39,8 +39,8 @@ class App extends React.Component<AppProps, AppState> {
 
     registerFactories = () => {
         this.state.engine.getNodeFactories().registerFactory(CSVNodeFactory.getInstance());
-        this.state.engine.getNodeFactories().registerFactory(new RandomForestNodeFactory());
-        this.state.engine.getNodeFactories().registerFactory(new AccuracyNodeFactory());
+        this.state.engine.getNodeFactories().registerFactory(RandomForestNodeFactory.getInstance());
+        this.state.engine.getNodeFactories().registerFactory(AccuracyNodeFactory.getInstance());
     }
 
     addTestNodes = () => {

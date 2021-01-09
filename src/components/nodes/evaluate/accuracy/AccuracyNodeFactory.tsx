@@ -1,13 +1,22 @@
 import * as React from 'react';
 import { AccuracyNodeModel } from './AccuracyNodeModel';
 import AccuracyNodeWidget from './AccuracyNodeWidget';
-import { AbstractReactFactory, GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-canvas-core';
+import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-canvas-core';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
 import { NODE_ACCURACY } from "../EvaluateConfig";
+import {CoreNodeFactory, NodeCategory} from "../../../core/CoreNode/CoreNodeFactory";
 
-export class AccuracyNodeFactory extends AbstractReactFactory<AccuracyNodeModel, DiagramEngine> {
-    constructor() {
-        super(NODE_ACCURACY);
+
+export class AccuracyNodeFactory extends CoreNodeFactory<AccuracyNodeModel, DiagramEngine> {
+
+    private static INSTANCE: AccuracyNodeFactory;
+
+    private constructor() {
+        super(NodeCategory.DATA, NODE_ACCURACY);
+    }
+
+    static getInstance = () => {
+        return AccuracyNodeFactory.INSTANCE || (AccuracyNodeFactory.INSTANCE = new AccuracyNodeFactory());
     }
 
     generateReactWidget(event: GenerateWidgetEvent<any>): JSX.Element {
