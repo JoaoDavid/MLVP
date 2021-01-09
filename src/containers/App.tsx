@@ -34,6 +34,7 @@ class App extends React.Component<AppProps, AppState> {
         this.registerFactories();
         this.state.engine.setModel(this.state.model);
         this.addTestNodes();
+        this.delDefaultFactory();
     }
 
     registerFactories = () => {
@@ -60,6 +61,12 @@ class App extends React.Component<AppProps, AppState> {
         const node = new CSVNodeModel();
         this.state.model.addNode(node);
         this.state.engine.repaintCanvas();
+    }
+
+
+    delDefaultFactory = () => {
+        this.state.engine.getNodeFactories().deregisterFactory('default');
+        console.log(this.state.engine.getNodeFactories());
     }
 
     render() {
