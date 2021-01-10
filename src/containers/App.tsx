@@ -9,9 +9,9 @@ import TopNav from '../components/UI/top-nav/TopNav';
 import {AccuracyNodeFactory} from "../components/nodes/evaluate/accuracy/AccuracyNodeFactory";
 import SideBar from "../components/UI/side-bar/SideBar";
 import {CategoryConfig, NodeConfig} from "../components/nodes/Config";
-import {DATA_CONFIG, NODE_CSV, DATA_NODES} from "../components/nodes/data/DataConfig";
-import {MODEL_CONFIG, NODE_RANDOM_FOREST, MODEL_NODES} from "../components/nodes/model/ModelConfig";
-import {EVALUATE_CONFIG, NODE_ACCURACY, EVALUATE_NODES} from "../components/nodes/evaluate/EvaluateConfig";
+import {DATA_CONFIG, DATA_NODES} from "../components/nodes/data/DataConfig";
+import {MODEL_CONFIG, MODEL_NODES} from "../components/nodes/model/ModelConfig";
+import {EVALUATE_CONFIG, EVALUATE_NODES} from "../components/nodes/evaluate/EvaluateConfig";
 import {NodeModel} from "@projectstorm/react-diagrams-core";
 
 interface AppProps {
@@ -37,7 +37,6 @@ class App extends React.Component<AppProps, AppState> {
         this.registerFactories();
         this.state.engine.setModel(this.state.model);
         this.addTestNodes();
-        this.delDefaultFactory();
     }
 
     registerFactories = () => {
@@ -63,13 +62,6 @@ class App extends React.Component<AppProps, AppState> {
             count += 130;
         });
     }
-
-    addNode = () => {
-        const node = this.generateModel(CSVNodeFactory.getInstance());
-        this.state.model.addNode(node);
-        this.state.engine.repaintCanvas();
-    }
-
 
     delDefaultFactory = () => {
         console.log(this.state.engine.getNodeFactories());
@@ -105,8 +97,6 @@ class App extends React.Component<AppProps, AppState> {
         } catch (e) {
             //console.log(e);
         }
-
-
     }
 
     render() {

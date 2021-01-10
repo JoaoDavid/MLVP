@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {AbstractReactFactory} from '@projectstorm/react-canvas-core';
 import {CoreNodeModel} from "./CoreNodeModel";
 import {DiagramEngine} from "@projectstorm/react-diagrams";

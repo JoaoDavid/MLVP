@@ -23,12 +23,12 @@ const Category = (props: CategoryProps) => {
                     <Accordion.Collapse eventKey="0">
                         <Card.Body className={classes.Body}>
                             {props.nodes.map((node) => {
-                                return <p key={node.name} draggable={true}
+                                return <div key={node.name} draggable={true} className={classes.Node}
                                           onDragStart={(event) => {
                                               event.dataTransfer.setData(props.format, JSON.stringify(node));
                                           }}>
                                     {node.name}
-                                </p>
+                                </div>
                             })}
                         </Card.Body>
                     </Accordion.Collapse>

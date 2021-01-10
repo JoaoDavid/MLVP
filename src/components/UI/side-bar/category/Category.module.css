@@ -12,4 +12,18 @@
 .Body {
     background-color: rgb(68, 72, 78);
     color: white;
+    padding: 0px !important;
+}
+
+.Node {
+    box-sizing: border-box;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.Node:hover {
+    background: rgba(255, 255, 255, 0.3);
+    cursor: move;
 }
