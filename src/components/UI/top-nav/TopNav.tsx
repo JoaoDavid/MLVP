@@ -2,7 +2,8 @@ import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-
+import Image from '../../../logo.png';
+import LogoNeural from '../../UI/logo_nodes.png';
 
 interface TopNavProps {
 
@@ -11,7 +12,16 @@ interface TopNavProps {
 const topNav = (props: TopNavProps) => {
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-            <Navbar.Brand href="#home">MLVP</Navbar.Brand>
+            <Navbar.Brand href="#home">
+                {/*<img
+                    alt=""
+                    src={Image}
+                    width="30"
+                    height="30"
+                    className="d-inline-block align-top"
+                />*/} {' '}
+                MLVP
+            </Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="mr-auto">
