@@ -12,3 +12,9 @@ export const NODE_CSV:NodeConfig = {
     name: "Import from CSV",
 }
 
+
+/*
+    Every node declared must be added to the following array
+    to be passed into the side menu props for the drag and drop feature
+*/
+export const DATA_NODES:NodeConfig[] = [NODE_CSV];
