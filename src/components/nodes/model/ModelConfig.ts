@@ -1,6 +1,6 @@
 import { Category, NodeConfig, CategoryConfig } from "../Config";
 
-// Category configuration
+// CategoryMaterialUI configuration
 export const MODEL_CONFIG:CategoryConfig = {
     category: Category.MODEL,
     color: 'rgb(0,192,255)',
