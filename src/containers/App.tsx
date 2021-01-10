@@ -26,6 +26,7 @@ type AppState = {
 class App extends React.Component<AppProps, AppState> {
 
     private nodes: CoreNodeModel[] = [];
+    private dragDropFormat: string = "side-bar-drag-drop";
 
     constructor(props: AppProps) {
         super(props);
@@ -91,15 +92,21 @@ class App extends React.Component<AppProps, AppState> {
 
     onDropDiagram = (event: DragEvent<HTMLDivElement>) => {
         event.preventDefault();
-        const data = event.dataTransfer.getData("storm-diagram-node");
-        console.log(data);
-        const inJSON = JSON.parse(data);
-        const factory = this.state.engine.getNodeFactories().getFactory(inJSON.codeName);
-        const node = this.generateModel(factory);
-        let point = this.state.engine.getRelativeMousePoint(event);
-        node.setPosition(point);
-        this.state.engine.getModel().addNode(node);
-        this.forceUpdate(); // TODO, investigar should component update, fazer apenas update ao CanvasWidget
+        const data = event.dataTransfer.getData(this.dragDropFormat);
+        try {
+            const inJSON = JSON.parse(data);
+            console.log(data);
+            const factory = this.state.engine.getNodeFactories().getFactory(inJSON.codeName);
+            const node = this.generateModel(factory);
+            let point = this.state.engine.getRelativeMousePoint(event);
+            node.setPosition(point);
+            this.state.engine.getModel().addNode(node);
+            this.state.engine.repaintCanvas();
+        } catch (e) {
+            //console.log(e);
+        }
+
+
     }
 
     render() {
@@ -107,7 +114,7 @@ class App extends React.Component<AppProps, AppState> {
             <div className={classes.FrontPage}>
                 <TopNav/>
                 <div className={classes.Container}>
-                    <SideBar catAndNames={this.loadMapCategoryNodes()}/>
+                    <SideBar catAndNames={this.loadMapCategoryNodes()} format={this.dragDropFormat}/>
                     <div className={classes.Container}
                          onDragOver={(event) => {
                              event.preventDefault()

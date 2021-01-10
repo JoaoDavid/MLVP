@@ -9,6 +9,7 @@ interface CategoryProps {
     title: string;
     color: string;
     nodes: NodeConfig[];
+    format: string;
 }
 
 const Category = (props: CategoryProps) => {
@@ -24,7 +25,7 @@ const Category = (props: CategoryProps) => {
                             {props.nodes.map((node) => {
                                 return <p key={node.name} draggable={true}
                                           onDragStart={(event) => {
-                                              event.dataTransfer.setData("storm-diagram-node", JSON.stringify(node));
+                                              event.dataTransfer.setData(props.format, JSON.stringify(node));
                                           }}>
                                     {node.name}
                                 </p>
