@@ -13,6 +13,7 @@ import {DATA_CONFIG, DATA_NODES} from "../components/nodes/data/DataConfig";
 import {MODEL_CONFIG, MODEL_NODES} from "../components/nodes/model/ModelConfig";
 import {EVALUATE_CONFIG, EVALUATE_NODES} from "../components/nodes/evaluate/EvaluateConfig";
 import {NodeModel} from "@projectstorm/react-diagrams-core";
+import { DiagramState } from "../components/core/states/DiagramState";
 
 interface AppProps {
 
@@ -36,6 +37,7 @@ class App extends React.Component<AppProps, AppState> {
         }
         this.registerFactories();
         this.state.engine.setModel(this.state.model);
+        this.state.engine.getStateMachine().pushState(new DiagramState());
         this.addTestNodes();
     }
 
