@@ -122,10 +122,11 @@ class App extends React.Component<AppProps, AppState> {
                         this.lastSave = this.state.model.serialize();
                         console.log(this.lastSave);
                         console.log(JSON.stringify(this.lastSave));
-                    }}>Serialize</button>
+                    }}>Save(serialize)</button>
                     <button onClick={()=>{
                         this.state.model.deserializeModel(this.lastSave, this.state.engine);
-                    }}>Serialize</button>
+                        this.state.engine.repaintCanvas();
+                    }}>Load(deserialize)</button>
                     testing
                 </div>
             </div>

@@ -4,7 +4,6 @@ import { BasePositionModelOptions, DeserializeEvent } from '@projectstorm/react-
 
 export interface CoreNodeModelOptions extends BasePositionModelOptions {
     name: string;
-    color?: string;
 }
 
 export interface CoreNodeModelGenerics extends NodeModelGenerics {
@@ -82,9 +81,6 @@ export abstract class CoreNodeModel extends NodeModel<CoreNodeModelGenerics> {
 
     deserialize(event: DeserializeEvent<this>) {
         super.deserialize(event);
-        this.options.name = event.data.name;
-        this.options.color = event.data.color;
-
         this.portsIn = event.data.portsInOrder.map((id: any) => {
             return this.getPortFromID(id);
         });
@@ -96,8 +92,6 @@ export abstract class CoreNodeModel extends NodeModel<CoreNodeModelGenerics> {
     serialize(): any {
         return {
             ...super.serialize(),
-            name: this.options.name,
-            color: this.options.color,
             portsInOrder: this.portsIn.map((port: BasePortModel) => {
                 return port.getID();
             }),

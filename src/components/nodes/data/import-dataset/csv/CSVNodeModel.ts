@@ -3,6 +3,8 @@ import {CoreNodeModel} from "../../../../core/CoreNode/CoreNodeModel";
 import {DatasetPortModel} from "../../../../ports/dataset/DatasetPortModel";
 import {PortModelAlignment} from "@projectstorm/react-diagrams-core";
 import {NODE_CSV} from "../../DataConfig";
+import {DeserializeEvent} from "@projectstorm/react-canvas-core";
+import {BasePortModel} from "../../../../core/BasePort/BasePortModel";
 
 
 export class CSVNodeModel extends CoreNodeModel {
@@ -37,7 +39,7 @@ export class CSVNodeModel extends CoreNodeModel {
         return this.numRows;
     }
 
-    getColumnNames() :string[] {
+    getColumnNames(): string[] {
         return this.columnNames;
     }
 
@@ -76,6 +78,24 @@ export class CSVNodeModel extends CoreNodeModel {
                 });
             });
         }
+    }
+
+    deserialize(event: DeserializeEvent<this>) {
+        super.deserialize(event);
+        this.fileName = event.data.fileName;
+        this.numCols = event.data.numCols;
+        this.numRows = event.data.numRows;
+        this.columnNames = event.data.columnNames;
+    }
+
+    serialize(): any {
+        return {
+            ...super.serialize(),
+            fileName: this.fileName,
+            numCols: this.numCols,
+            numRows: this.numRows,
+            columnNames: this.columnNames,
+        };
     }
 
 
