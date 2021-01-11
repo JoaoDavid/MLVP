@@ -28,6 +28,7 @@ class App extends React.Component<AppProps, AppState> {
 
     private nodes: CoreNodeModel[] = [];
     private dragDropFormat: string = "side-bar-drag-drop";
+    private lastSave:any = {};
 
     constructor(props: AppProps) {
         super(props);
@@ -116,7 +117,17 @@ class App extends React.Component<AppProps, AppState> {
                         <CanvasWidget className={classes.DiagramContainer} engine={this.state.engine}/>
                     </div>
                 </div>
-                <div>testing</div>
+                <div>
+                    <button onClick={()=>{
+                        this.lastSave = this.state.model.serialize();
+                        console.log(this.lastSave);
+                        console.log(JSON.stringify(this.lastSave));
+                    }}>Serialize</button>
+                    <button onClick={()=>{
+                        this.state.model.deserializeModel(this.lastSave, this.state.engine);
+                    }}>Serialize</button>
+                    testing
+                </div>
             </div>
         );
     }

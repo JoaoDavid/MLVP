@@ -11,12 +11,12 @@ export interface CoreNodeModelGenerics extends NodeModelGenerics {
     OPTIONS: CoreNodeModelOptions;
 }
 
-export class CoreNodeModel extends NodeModel<CoreNodeModelGenerics> {
+export abstract class CoreNodeModel extends NodeModel<CoreNodeModelGenerics> {
 
     protected portsIn: BasePortModel[];
     protected portsOut: BasePortModel[];
 
-    constructor(type: string, name: string) {
+    protected constructor(type: string, name: string) {
         super({
             type: type,
             name: name,
