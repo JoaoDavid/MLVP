@@ -53,32 +53,6 @@ export abstract class CoreNodeModel extends NodeModel<CoreNodeModelGenerics> {
         return port;
     }
 
-    protected addInPort(label: string, after = true): BasePortModel {
-        const p = new BasePortModel({
-            in: true,
-            name: label,
-            label: label,
-            alignment: PortModelAlignment.LEFT
-        });
-        if (!after) {
-            this.portsIn.splice(0, 0, p);
-        }
-        return this.addPort(p);
-    }
-
-    protected addOutPort(label: string, after = true): BasePortModel {
-        const p = new BasePortModel({
-            in: false,
-            name: label,
-            label: label,
-            alignment: PortModelAlignment.RIGHT
-        });
-        if (!after) {
-            this.portsOut.splice(0, 0, p);
-        }
-        return this.addPort(p);
-    }
-
     deserialize(event: DeserializeEvent<this>) {
         super.deserialize(event);
         this.portsIn = event.data.portsInOrder.map((id: any) => {

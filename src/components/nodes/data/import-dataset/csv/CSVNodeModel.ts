@@ -4,7 +4,6 @@ import {DatasetPortModel} from "../../../../ports/dataset/DatasetPortModel";
 import {PortModelAlignment} from "@projectstorm/react-diagrams-core";
 import {NODE_CSV} from "../../DataConfig";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
-import {BasePortModel} from "../../../../core/BasePort/BasePortModel";
 
 
 export class CSVNodeModel extends CoreNodeModel {
@@ -43,17 +42,14 @@ export class CSVNodeModel extends CoreNodeModel {
         return this.columnNames;
     }
 
-    protected addOutPort(label: string, after = true): DatasetPortModel {
+    protected addOutPort(label: string): void {
         const p = new DatasetPortModel({
             in: false,
             name: label,
             label: label,
             alignment: PortModelAlignment.RIGHT
         });
-        if (!after) {
-            this.portsOut.splice(0, 0, p);
-        }
-        return this.addPort(p);
+        super.addPort(p);
     }
 
     loadCSV = async (selectorFiles: FileList) => {
