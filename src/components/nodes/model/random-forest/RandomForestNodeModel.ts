@@ -3,6 +3,7 @@ import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
 import {PortModelAlignment} from "@projectstorm/react-diagrams-core";
 import {NODE_RANDOM_FOREST} from "../ModelConfig";
 import {MLModelPortModel} from "../../../ports/model/MLModelPortModel";
+import {DeserializeEvent} from "@projectstorm/react-canvas-core";
 
 export enum CriterionEnum {
     GINI = 'gini',
@@ -69,6 +70,23 @@ export class RandomForestNodeModel extends CoreNodeModel {
             alignment: PortModelAlignment.RIGHT
         });
         super.addPort(p);
+    }
+
+    deserialize(event: DeserializeEvent<this>) {
+        super.deserialize(event);
+        this.numTrees = event.data.numTrees;
+        this.criterion = event.data.criterion;
+        //this.setCriterion(event.data.criterion);
+        this.maxDepth = event.data.maxDepth;
+    }
+
+    serialize(): any {
+        return {
+            ...super.serialize(),
+            numTrees: this.numTrees,
+            criterion: this.criterion,
+            maxDepth: this.maxDepth,
+        };
     }
 
 }
