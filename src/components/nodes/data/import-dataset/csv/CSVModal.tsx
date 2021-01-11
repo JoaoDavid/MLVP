@@ -36,8 +36,8 @@ const CSVModal = (props: CSVModalProps) => {
                 <Table striped bordered hover responsive>
                     <thead>
                     <tr>
-                        {props.node.getColumnNames().map((c) => {
-                            return <th>{c}</th>
+                        {props.node.getColumnNames().map((col,counter) => {
+                            return <th key={col+counter}>{col}</th>
                         })}
                     </tr>
                     </thead>
