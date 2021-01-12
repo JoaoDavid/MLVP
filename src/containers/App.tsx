@@ -21,12 +21,15 @@ interface AppProps {
 
 type AppState = {
     engine: DiagramEngine,
-    model: DiagramModel
+    model: DiagramModel,
+    engine2: DiagramEngine,
+    model2: DiagramModel,
 };
 
 class App extends React.Component<AppProps, AppState> {
 
     private nodes: CoreNodeModel[] = [];
+    private nodes2: CoreNodeModel[] = [];
     private dragDropFormat: string = "side-bar-drag-drop";
     private lastSave:any = {};
 
@@ -34,12 +37,33 @@ class App extends React.Component<AppProps, AppState> {
         super(props);
         this.state = {
             engine: createEngine(),
-            model: new DiagramModel()
+            model: new DiagramModel(),
+            engine2: createEngine(),
+            model2: new DiagramModel(),
         }
         this.registerFactories();
         this.state.engine.setModel(this.state.model);
         this.state.engine.getStateMachine().pushState(new DiagramState());
         this.addTestNodes();
+        this.prepareEngine(this.state.engine2, this.state.model2);
+    }
+
+    prepareEngine = (engine: DiagramEngine, model: DiagramModel) => {
+        engine.setModel(model);
+        engine.getStateMachine().pushState(new DiagramState());
+        this.nodes2.push(this.generateModel(CSVNodeFactory.getInstance()));
+        this.nodes2.push(this.generateModel(CSVNodeFactory.getInstance()));
+        this.nodes2.push(this.generateModel(RandomForestNodeFactory.getInstance()));
+        this.nodes2.push(this.generateModel(AccuracyNodeFactory.getInstance()));
+        let count = 20;
+        this.nodes2.forEach((node: CoreNodeModel) => {
+            model.addNode(node);
+            node.setPosition(count, count);
+            count += 200;
+        });
+        engine.getNodeFactories().registerFactory(CSVNodeFactory.getInstance());
+        engine.getNodeFactories().registerFactory(RandomForestNodeFactory.getInstance());
+        engine.getNodeFactories().registerFactory(AccuracyNodeFactory.getInstance());
     }
 
     registerFactories = () => {
@@ -115,6 +139,8 @@ class App extends React.Component<AppProps, AppState> {
                          onDrop={this.onDropDiagram}
                     >
                         <CanvasWidget className={classes.DiagramContainer} engine={this.state.engine}/>
+                        <CanvasWidget className={classes.DiagramContainer} engine={this.state.engine2}/>
+
                     </div>
                 </div>
                 <div>
