@@ -18,7 +18,8 @@ const CSVModal = (props: CSVModalProps) => {
         <Form>
             <Form.Group>
                 <Form.File custom onChange={(e: ChangeEvent<HTMLInputElement>) => props.changed(e.target.files!)}
-                           label={props.node.getFileName() || ""}/>
+                           label={props.node.getFileName() || ""}
+                           type="file" accept=".csv"/>
             </Form.Group>
             <Form.Group>
                 <Row>
