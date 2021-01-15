@@ -2,13 +2,13 @@ import * as React from 'react';
 import { PointModel } from '@projectstorm/react-diagrams-core';
 import styled from '@emotion/styled';
 
-export interface DefaultLinkPointWidgetProps {
+export interface BaseLinkPointWidgetProps {
 	point: PointModel;
 	color?: string;
 	colorSelected: string;
 }
 
-export interface DefaultLinkPointWidgetState {
+export interface BaseLinkPointWidgetState {
 	selected: boolean;
 }
 
@@ -18,7 +18,7 @@ namespace S {
 	`;
 }
 
-export class DefaultLinkPointWidget extends React.Component<DefaultLinkPointWidgetProps, DefaultLinkPointWidgetState> {
+export class BaseLinkPointWidget extends React.Component<BaseLinkPointWidgetProps, BaseLinkPointWidgetState> {
 	constructor(props) {
 		super(props);
 		this.state = {

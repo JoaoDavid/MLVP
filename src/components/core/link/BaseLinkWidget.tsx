@@ -1,24 +1,24 @@
 import * as React from 'react';
 import { DiagramEngine, LinkWidget, PointModel } from '@projectstorm/react-diagrams-core';
-import { DefaultLinkModel } from './DefaultLinkModel';
-import { DefaultLinkPointWidget } from './DefaultLinkPointWidget';
-import { DefaultLinkSegmentWidget } from './DefaultLinkSegmentWidget';
+import { BaseLinkModel } from './BaseLinkModel';
+import { BaseLinkPointWidget } from './BaseLinkPointWidget';
+import { BaseLinkSegmentWidget } from './BaseLinkSegmentWidget';
 import { MouseEvent } from 'react';
 
-export interface DefaultLinkProps {
-	link: DefaultLinkModel;
+export interface BaseLinkProps {
+	link: BaseLinkModel;
 	diagramEngine: DiagramEngine;
 	pointAdded?: (point: PointModel, event: MouseEvent) => any;
 }
 
-export interface DefaultLinkState {
+export interface BaseLinkState {
 	selected: boolean;
 }
 
-export class DefaultLinkWidget extends React.Component<DefaultLinkProps, DefaultLinkState> {
+export class BaseLinkWidget extends React.Component<BaseLinkProps, BaseLinkState> {
 	refPaths: React.RefObject<SVGPathElement>[];
 
-	constructor(props: DefaultLinkProps) {
+	constructor(props: BaseLinkProps) {
 		super(props);
 		this.refPaths = [];
 		this.state = {
@@ -70,7 +70,7 @@ export class DefaultLinkWidget extends React.Component<DefaultLinkProps, Default
 
 	generatePoint(point: PointModel): JSX.Element {
 		return (
-			<DefaultLinkPointWidget
+			<BaseLinkPointWidget
 				key={point.getID()}
 				point={point as any}
 				colorSelected={this.props.link.getOptions().selectedColor}
@@ -83,7 +83,7 @@ export class DefaultLinkWidget extends React.Component<DefaultLinkProps, Default
 		const ref = React.createRef<SVGPathElement>();
 		this.refPaths.push(ref);
 		return (
-			<DefaultLinkSegmentWidget
+			<BaseLinkSegmentWidget
 				key={`link-${id}`}
 				path={path}
 				selected={this.state.selected}

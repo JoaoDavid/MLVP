@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { DefaultLinkModel } from './DefaultLinkModel';
-import { DefaultLinkWidget } from './DefaultLinkWidget';
+import { BaseLinkModel } from './BaseLinkModel';
+import { BaseLinkWidget } from './BaseLinkWidget';
 import styled from '@emotion/styled';
 import { css, keyframes } from '@emotion/core';
 import { AbstractReactFactory } from '@projectstorm/react-canvas-core';
@@ -28,7 +28,7 @@ namespace S {
 	`;
 }
 
-export class DefaultLinkFactory<Link extends DefaultLinkModel = DefaultLinkModel> extends AbstractReactFactory<
+export class BaseLinkFactory<Link extends BaseLinkModel = BaseLinkModel> extends AbstractReactFactory<
 	Link,
 	DiagramEngine
 > {
@@ -37,11 +37,11 @@ export class DefaultLinkFactory<Link extends DefaultLinkModel = DefaultLinkModel
 	}
 
 	generateReactWidget(event): JSX.Element {
-		return <DefaultLinkWidget link={event.model} diagramEngine={this.engine} />;
+		return <BaseLinkWidget link={event.model} diagramEngine={this.engine} />;
 	}
 
 	generateModel(event): Link {
-		return new DefaultLinkModel() as Link;
+		return new BaseLinkModel() as Link;
 	}
 
 	generateLinkSegment(model: Link, selected: boolean, path: string) {

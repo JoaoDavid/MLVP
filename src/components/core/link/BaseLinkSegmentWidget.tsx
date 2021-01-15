@@ -1,20 +1,20 @@
 import * as React from 'react';
-import { DefaultLinkFactory } from './DefaultLinkFactory';
+import { BaseLinkFactory } from './BaseLinkFactory';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
-import { DefaultLinkModel } from './DefaultLinkModel';
+import { BaseLinkModel } from './BaseLinkModel';
 
-export interface DefaultLinkSegmentWidgetProps {
+export interface BaseLinkSegmentWidgetProps {
 	path: string;
-	link: DefaultLinkModel;
+	link: BaseLinkModel;
 	selected: boolean;
 	forwardRef: React.RefObject<SVGPathElement>;
-	factory: DefaultLinkFactory;
+	factory: BaseLinkFactory;
 	diagramEngine: DiagramEngine;
 	onSelection: (selected: boolean) => any;
 	extras: object;
 }
 
-export class DefaultLinkSegmentWidget extends React.Component<DefaultLinkSegmentWidgetProps> {
+export class BaseLinkSegmentWidget extends React.Component<BaseLinkSegmentWidgetProps> {
 	render() {
 		const Bottom = React.cloneElement(
 			this.props.factory.generateLinkSegment(

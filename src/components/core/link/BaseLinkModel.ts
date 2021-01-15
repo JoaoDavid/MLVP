@@ -1,5 +1,4 @@
 import {
-	DiagramEngine,
 	LabelModel,
 	LinkModel,
 	LinkModelGenerics,
@@ -11,13 +10,13 @@ import { DefaultLabelModel } from '@projectstorm/react-diagrams-defaults';
 import { BezierCurve } from '@projectstorm/geometry';
 import { BaseEntityEvent, BaseModelOptions, DeserializeEvent } from '@projectstorm/react-canvas-core';
 
-export interface DefaultLinkModelListener extends LinkModelListener {
-	colorChanged?(event: BaseEntityEvent<DefaultLinkModel> & { color: null | string }): void;
+export interface BaseLinkModelListener extends LinkModelListener {
+	colorChanged?(event: BaseEntityEvent<BaseLinkModel> & { color: null | string }): void;
 
-	widthChanged?(event: BaseEntityEvent<DefaultLinkModel> & { width: 0 | number }): void;
+	widthChanged?(event: BaseEntityEvent<BaseLinkModel> & { width: 0 | number }): void;
 }
 
-export interface DefaultLinkModelOptions extends BaseModelOptions {
+export interface BaseLinkModelOptions extends BaseModelOptions {
 	width?: number;
 	color?: string;
 	selectedColor?: string;
@@ -26,13 +25,13 @@ export interface DefaultLinkModelOptions extends BaseModelOptions {
 	testName?: string;
 }
 
-export interface DefaultLinkModelGenerics extends LinkModelGenerics {
-	LISTENER: DefaultLinkModelListener;
-	OPTIONS: DefaultLinkModelOptions;
+export interface BaseLinkModelGenerics extends LinkModelGenerics {
+	LISTENER: BaseLinkModelListener;
+	OPTIONS: BaseLinkModelOptions;
 }
 
-export class DefaultLinkModel extends LinkModel<DefaultLinkModelGenerics> {
-	constructor(options: DefaultLinkModelOptions = {}) {
+export class BaseLinkModel extends LinkModel<BaseLinkModelGenerics> {
+	constructor(options: BaseLinkModelOptions = {}) {
 		super({
 			type: 'default',
 			width: options.width || 3,
