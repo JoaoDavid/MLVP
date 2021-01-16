@@ -41,7 +41,7 @@ export class BaseLinkSegmentWidget extends React.Component<BaseLinkSegmentWidget
 			strokeOpacity: this.props.selected ? 0.1 : 0,
 			strokeWidth: 20,
 			fill: 'none',
-			onContextMenu: () => {
+			onContextMenu: (event: { preventDefault: () => void; }) => {
 				if (!this.props.link.isLocked()) {
 					event.preventDefault();
 					this.props.link.remove();

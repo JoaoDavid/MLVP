@@ -19,7 +19,7 @@ namespace S {
 }
 
 export class BaseLinkPointWidget extends React.Component<BaseLinkPointWidgetProps, BaseLinkPointWidgetState> {
-	constructor(props) {
+	constructor(props: BaseLinkPointWidgetProps) {
 		super(props);
 		this.state = {
 			selected: false

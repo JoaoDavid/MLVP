@@ -11,8 +11,10 @@ import { BezierCurve } from '@projectstorm/geometry';
 import { BaseEntityEvent, BaseModelOptions, DeserializeEvent } from '@projectstorm/react-canvas-core';
 
 export interface BaseLinkModelListener extends LinkModelListener {
+	// @ts-ignore
 	colorChanged?(event: BaseEntityEvent<BaseLinkModel> & { color: null | string }): void;
 
+	// @ts-ignore
 	widthChanged?(event: BaseEntityEvent<BaseLinkModel> & { width: 0 | number }): void;
 }
 

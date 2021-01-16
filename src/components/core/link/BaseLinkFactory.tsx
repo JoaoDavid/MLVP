@@ -3,7 +3,7 @@ import { BaseLinkModel } from './BaseLinkModel';
 import { BaseLinkWidget } from './BaseLinkWidget';
 import styled from '@emotion/styled';
 import { css, keyframes } from '@emotion/core';
-import { AbstractReactFactory } from '@projectstorm/react-canvas-core';
+import {AbstractReactFactory, GenerateModelEvent, GenerateWidgetEvent} from '@projectstorm/react-canvas-core';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
 
 namespace S {
@@ -36,11 +36,11 @@ export class BaseLinkFactory<Link extends BaseLinkModel = BaseLinkModel> extends
 		super(type);
 	}
 
-	generateReactWidget(event): JSX.Element {
+	generateReactWidget(event: GenerateWidgetEvent<any>): JSX.Element {
 		return <BaseLinkWidget link={event.model} diagramEngine={this.engine} />;
 	}
 
-	generateModel(event): Link {
+	generateModel(event: GenerateModelEvent): Link {
 		return new BaseLinkModel() as Link;
 	}
 

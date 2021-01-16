@@ -29,7 +29,7 @@ export class BaseLinkWidget extends React.Component<BaseLinkProps, BaseLinkState
 	componentDidUpdate(): void {
 		this.props.link.setRenderedPaths(
 			this.refPaths.map((ref) => {
-				return ref.current;
+				return ref.current!;
 			})
 		);
 	}
@@ -37,7 +37,7 @@ export class BaseLinkWidget extends React.Component<BaseLinkProps, BaseLinkState
 	componentDidMount(): void {
 		this.props.link.setRenderedPaths(
 			this.refPaths.map((ref) => {
-				return ref.current;
+				return ref.current!;
 			})
 		);
 	}
@@ -73,7 +73,7 @@ export class BaseLinkWidget extends React.Component<BaseLinkProps, BaseLinkState
 			<BaseLinkPointWidget
 				key={point.getID()}
 				point={point as any}
-				colorSelected={this.props.link.getOptions().selectedColor}
+				colorSelected={this.props.link.getOptions().selectedColor || ""}
 				color={this.props.link.getOptions().color}
 			/>
 		);
@@ -110,7 +110,7 @@ export class BaseLinkWidget extends React.Component<BaseLinkProps, BaseLinkState
 				this.generateLink(
 					this.props.link.getSVGPath(),
 					{
-						onMouseDown: (event) => {
+						onMouseDown: (event: React.MouseEvent<Element, globalThis.MouseEvent>) => {
 							this.addPointToLink(event, 1);
 						}
 					},

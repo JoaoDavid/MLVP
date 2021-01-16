@@ -24,9 +24,11 @@ export class DiagramState extends State<DiagramEngine> {
         this.dragItems = new DragDiagramItemsState();
 
         // determine what was clicked on
+
         this.registerAction(
             new Action({
                 type: InputType.MOUSE_DOWN,
+                // @ts-ignore
                 fire: (event: ActionEvent<MouseEvent>) => {
                     const element = this.engine.getActionEventBus().getModelForEvent(event);
 
