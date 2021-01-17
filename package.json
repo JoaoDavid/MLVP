@@ -13,6 +13,7 @@
     "@types/node": "^12.19.9",
     "@types/react": "^16.14.2",
     "@types/react-dom": "^16.9.10",
+    "axios": "^0.21.1",
     "bootstrap": "^4.5.3",
     "closest": "0.0.1",
     "dagre": "^0.8.5",
