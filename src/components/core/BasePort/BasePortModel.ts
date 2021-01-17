@@ -5,7 +5,7 @@ import {
     PortModelGenerics,
     PortModelOptions
 } from '@projectstorm/react-diagrams-core';
-import { DefaultLinkModel } from '@projectstorm/react-diagrams-defaults';
+import { BaseLinkModel} from "../link/BaseLinkModel";
 import { AbstractModelFactory, DeserializeEvent } from '@projectstorm/react-canvas-core';
 
 export interface BasePortModelOptions extends PortModelOptions {
@@ -70,6 +70,6 @@ export class BasePortModel extends PortModel<BasePortModelGenerics> {
         if (!link && factory) {
             return factory.generateModel({});
         }
-        return link || new DefaultLinkModel();
+        return link || new BaseLinkModel();
     }
 }

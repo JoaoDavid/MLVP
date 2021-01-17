@@ -35,9 +35,9 @@ export interface BaseLinkModelGenerics extends LinkModelGenerics {
 export class BaseLinkModel extends LinkModel<BaseLinkModelGenerics> {
 	constructor(options: BaseLinkModelOptions = {}) {
 		super({
-			type: 'default',
+			type: 'base',
 			width: options.width || 3,
-			color: options.color || 'gray',
+			color: options.color || 'red',
 			selectedColor: options.selectedColor || 'rgb(0,192,255)',
 			curvyness: 50,
 			...options

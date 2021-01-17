@@ -14,6 +14,7 @@ import {MODEL_CONFIG, MODEL_NODES} from "../components/nodes/model/ModelConfig";
 import {EVALUATE_CONFIG, EVALUATE_NODES} from "../components/nodes/evaluate/EvaluateConfig";
 import {NodeModel} from "@projectstorm/react-diagrams-core";
 import { DiagramState } from "../components/core/states/DiagramState";
+import {BaseLinkFactory} from "../components/core/link/BaseLinkFactory";
 
 interface AppProps {
 
@@ -46,6 +47,7 @@ class App extends React.Component<AppProps, AppState> {
         this.state.engine.getNodeFactories().registerFactory(CSVNodeFactory.getInstance());
         this.state.engine.getNodeFactories().registerFactory(RandomForestNodeFactory.getInstance());
         this.state.engine.getNodeFactories().registerFactory(AccuracyNodeFactory.getInstance());
+        this.state.engine.getLinkFactories().registerFactory(BaseLinkFactory.getInstance());
     }
 
     generateModel<T extends AbstractReactFactory<NodeModel, DiagramEngine>>(factory: T): CoreNodeModel {
