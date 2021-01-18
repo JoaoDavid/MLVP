@@ -34,12 +34,6 @@ const topNav = (props: TopNavProps) => {
                     </NavDropdown>
                     <Nav.Link>Item</Nav.Link>
                 </Nav>
-                <Nav>
-                    <Nav.Link>About</Nav.Link>
-                    <Nav.Link>
-                        v0.0.0
-                    </Nav.Link>
-                </Nav>
             </Navbar.Collapse>
         </Navbar>
     )

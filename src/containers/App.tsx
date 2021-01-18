@@ -16,6 +16,7 @@ import {NodeModel} from "@projectstorm/react-diagrams-core";
 import {DiagramState} from "../components/core/states/DiagramState";
 import axios from "axios";
 import download from 'js-file-download';
+import BottomNav from "../components/UI/bottom-nav/BottomNav";
 
 interface AppProps {
 
@@ -153,8 +154,7 @@ class App extends React.Component<AppProps, AppState> {
                         <CanvasWidget className={classes.DiagramContainer} engine={this.state.engine}/>
                     </div>
                 </div>
-                <div style={{backgroundColor: "rgb(68, 72, 78)"}}>.
-                </div>
+                <BottomNav/>
             </div>
         );
     }
