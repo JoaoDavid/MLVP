@@ -69,27 +69,21 @@ class App extends React.Component<AppProps, AppState> {
         });
     }
 
-/*    componentDidMount() {
-        axios.get('/posts')
-            .then(response => {
-                console.log(response);
-            })
-            .catch(error => {
-                console.log(error);
-            });
-        const data = {
-            title: "this.state.title",
-            body: "this.state.content",
-            author: "this.state.author"
-        };
-        axios.post('/foo', data)
-            .then(response => {
-                console.log(response);
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    }*/
+    /*    componentDidMount() {
+            axios.get('/posts')
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+            const data = {
+                title: "this.state.title",
+                body: "this.state.content",
+                author: "this.state.author"
+            };
+
+        }*/
 
     delDefaultFactory = () => {
         console.log(this.state.engine.getNodeFactories());
@@ -139,6 +133,18 @@ class App extends React.Component<AppProps, AppState> {
         console.log(JSON.stringify(this.lastSave, null, 4));
     }
 
+    sendDiagram = () => {
+        const data = this.state.model.serialize();
+        axios.post('/codegen', data)
+            .then(response => {
+                console.log(response);
+                download(response.data, "response.py")
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
+
     render() {
         return (
             <div className={classes.FrontPage}>
@@ -154,7 +160,7 @@ class App extends React.Component<AppProps, AppState> {
                         <CanvasWidget className={classes.DiagramContainer} engine={this.state.engine}/>
                     </div>
                 </div>
-                <BottomNav/>
+                <BottomNav sendReq={this.sendDiagram}/>
             </div>
         );
     }

@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from src.mlvp.mlvp import mlvp
 
 app = Flask(__name__)
 CORS(app)
@@ -21,11 +22,11 @@ def getjson():
     return response
 
 
-@app.route('/foo', methods=['POST'])
+@app.route('/codegen', methods=['POST'])
 def foo():
     data = request.json
-    print(data)
-    return data
+    response = mlvp(data)
+    return response
 
 
 app.run(port=5000)
