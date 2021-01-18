@@ -15,6 +15,7 @@ import {EVALUATE_CONFIG, EVALUATE_NODES} from "../components/nodes/evaluate/Eval
 import {NodeModel} from "@projectstorm/react-diagrams-core";
 import {DiagramState} from "../components/core/states/DiagramState";
 import axios from "axios";
+import download from 'js-file-download';
 
 interface AppProps {
 
@@ -143,8 +144,9 @@ class App extends React.Component<AppProps, AppState> {
                 <div>
                     <button onClick={() => {
                         this.lastSave = this.state.model.serialize();
+                        download(JSON.stringify(this.lastSave, null, 4), 'filename.json');
                         console.log(this.lastSave);
-                        console.log(JSON.stringify(this.lastSave));
+                        console.log(JSON.stringify(this.lastSave, null, 4));
                     }}>Save(serialize)
                     </button>
                     <button onClick={() => {
