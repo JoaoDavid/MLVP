@@ -32,7 +32,11 @@ const topNav = (props: TopNavProps) => {
                         <NavDropdown.Divider />
                         <NavDropdown.Item>Settings</NavDropdown.Item>
                     </NavDropdown>
-                    <Nav.Link>Item</Nav.Link>
+                    <NavDropdown title="Help" id="collasible-nav-dropdown">
+                        <NavDropdown.Item>Item</NavDropdown.Item>
+                        <NavDropdown.Divider />
+                        <NavDropdown.Item>About</NavDropdown.Item>
+                    </NavDropdown>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
