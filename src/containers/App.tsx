@@ -138,7 +138,8 @@ class App extends React.Component<AppProps, AppState> {
         axios.post('/codegen', data)
             .then(response => {
                 console.log(response);
-                download(response.data, "response.py")
+                console.log(response.data);
+                // download(response.data, "response.py")
             })
             .catch(error => {
                 console.log(error);
