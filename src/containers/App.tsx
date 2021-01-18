@@ -69,7 +69,7 @@ class App extends React.Component<AppProps, AppState> {
         });
     }
 
-    componentDidMount() {
+/*    componentDidMount() {
         axios.get('/posts')
             .then(response => {
                 console.log(response);
@@ -89,7 +89,7 @@ class App extends React.Component<AppProps, AppState> {
             .catch(error => {
                 console.log(error);
             });
-    }
+    }*/
 
     delDefaultFactory = () => {
         console.log(this.state.engine.getNodeFactories());
