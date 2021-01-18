@@ -126,10 +126,22 @@ class App extends React.Component<AppProps, AppState> {
         }
     }
 
+    openSave = () => {
+        this.state.model.deserializeModel(this.lastSave, this.state.engine);
+        this.state.engine.repaintCanvas();
+    }
+
+    downloadSave = () => {
+        this.lastSave = this.state.model.serialize();
+        download(JSON.stringify(this.lastSave, null, 4), 'mlvp.json');
+        console.log(this.lastSave);
+        console.log(JSON.stringify(this.lastSave, null, 4));
+    }
+
     render() {
         return (
             <div className={classes.FrontPage}>
-                <TopNav/>
+                <TopNav open={this.openSave} save={this.downloadSave}/>
                 <div className={classes.Container}>
                     <SideBar catAndNames={this.loadMapCategoryNodes()} format={this.dragDropFormat}/>
                     <div className={classes.Container}
@@ -141,20 +153,7 @@ class App extends React.Component<AppProps, AppState> {
                         <CanvasWidget className={classes.DiagramContainer} engine={this.state.engine}/>
                     </div>
                 </div>
-                <div>
-                    <button onClick={() => {
-                        this.lastSave = this.state.model.serialize();
-                        download(JSON.stringify(this.lastSave, null, 4), 'filename.json');
-                        console.log(this.lastSave);
-                        console.log(JSON.stringify(this.lastSave, null, 4));
-                    }}>Save(serialize)
-                    </button>
-                    <button onClick={() => {
-                        this.state.model.deserializeModel(this.lastSave, this.state.engine);
-                        this.state.engine.repaintCanvas();
-                    }}>Load(deserialize)
-                    </button>
-                    testing
+                <div style={{backgroundColor: "rgb(68, 72, 78)"}}>.
                 </div>
             </div>
         );
