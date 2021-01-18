@@ -13,7 +13,8 @@ import {DATA_CONFIG, DATA_NODES} from "../components/nodes/data/DataConfig";
 import {MODEL_CONFIG, MODEL_NODES} from "../components/nodes/model/ModelConfig";
 import {EVALUATE_CONFIG, EVALUATE_NODES} from "../components/nodes/evaluate/EvaluateConfig";
 import {NodeModel} from "@projectstorm/react-diagrams-core";
-import { DiagramState } from "../components/core/states/DiagramState";
+import {DiagramState} from "../components/core/states/DiagramState";
+import axios from "axios";
 
 interface AppProps {
 
@@ -28,7 +29,7 @@ class App extends React.Component<AppProps, AppState> {
 
     private nodes: CoreNodeModel[] = [];
     private dragDropFormat: string = "side-bar-drag-drop";
-    private lastSave:any = {};
+    private lastSave: any = {};
 
     constructor(props: AppProps) {
         super(props);
@@ -64,6 +65,28 @@ class App extends React.Component<AppProps, AppState> {
             node.setPosition(count, count);
             count += 130;
         });
+    }
+
+    componentDidMount() {
+        axios.get('/posts')
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        const data = {
+            title: "this.state.title",
+            body: "this.state.content",
+            author: "this.state.author"
+        };
+        axios.post('/foo', data)
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.log(error);
+            });
     }
 
     delDefaultFactory = () => {
@@ -118,15 +141,17 @@ class App extends React.Component<AppProps, AppState> {
                     </div>
                 </div>
                 <div>
-                    <button onClick={()=>{
+                    <button onClick={() => {
                         this.lastSave = this.state.model.serialize();
                         console.log(this.lastSave);
                         console.log(JSON.stringify(this.lastSave));
-                    }}>Save(serialize)</button>
-                    <button onClick={()=>{
+                    }}>Save(serialize)
+                    </button>
+                    <button onClick={() => {
                         this.state.model.deserializeModel(this.lastSave, this.state.engine);
                         this.state.engine.repaintCanvas();
-                    }}>Load(deserialize)</button>
+                    }}>Load(deserialize)
+                    </button>
                     testing
                 </div>
             </div>
