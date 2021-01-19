@@ -22,7 +22,7 @@ type CanvasState = {
 
 class Canvas extends React.Component<CanvasProps, CanvasState> {
 
-    private nodes: CoreNodeModel[] = [];
+
 
     constructor(props: CanvasProps) {
         super(props);
@@ -32,7 +32,6 @@ class Canvas extends React.Component<CanvasProps, CanvasState> {
         }
         this.state.engine.getStateMachine().pushState(new DiagramState());
         this.registerFactories();
-        this.addTestNodes();
     }
 
     registerFactories = () => {
@@ -41,23 +40,11 @@ class Canvas extends React.Component<CanvasProps, CanvasState> {
         this.state.engine.getNodeFactories().registerFactory(AccuracyNodeFactory.getInstance());
     }
 
-    addTestNodes = () => {
-        let count = 10;
-        this.nodes.push(this.generateModel(CSVNodeFactory.getInstance()));
-        this.nodes.push(this.generateModel(CSVNodeFactory.getInstance()));
-        this.nodes.push(this.generateModel(RandomForestNodeFactory.getInstance()));
-        this.nodes.push(this.generateModel(AccuracyNodeFactory.getInstance()));
-
-        this.nodes.forEach((node: CoreNodeModel) => {
-            this.state.model.addNode(node);
-            node.setPosition(count, count);
-            count += 130;
-        });
-    }
 
     generateModel<T extends AbstractReactFactory<NodeModel, DiagramEngine>>(factory: T): CoreNodeModel {
         return factory.generateModel({}) as CoreNodeModel;
     }
+
 
     onDropDiagram = (event: DragEvent<HTMLDivElement>) => {
         event.preventDefault();

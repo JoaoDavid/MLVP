@@ -11,6 +11,12 @@ import axios from "axios";
 import download from 'js-file-download';
 import BottomNav from "../components/UI/bottom-nav/BottomNav";
 import Canvas from "../components/Canvas/Canvas";
+import {CSVNodeFactory} from "../components/nodes/data/import-dataset/csv/CSVNodeFactory";
+import {RandomForestNodeFactory} from "../components/nodes/model/random-forest/RandomForestNodeFactory";
+import {AccuracyNodeFactory} from "../components/nodes/evaluate/accuracy/AccuracyNodeFactory";
+import {CoreNodeModel} from "../components/core/CoreNode/CoreNodeModel";
+import {AbstractReactFactory} from "@projectstorm/react-canvas-core";
+import {NodeModel} from "@projectstorm/react-diagrams-core";
 
 interface AppProps {
 
@@ -22,7 +28,7 @@ type AppState = {
 };
 
 class App extends React.Component<AppProps, AppState> {
-
+    private nodes: CoreNodeModel[] = [];
     private dragDropFormat: string = "side-bar-drag-drop";
     private lastSave: any = {};
 
@@ -32,7 +38,26 @@ class App extends React.Component<AppProps, AppState> {
             engine: createEngine(),
             model: new DiagramModel()
         }
+        this.addTestNodes();
         this.state.engine.setModel(this.state.model);
+    }
+
+    addTestNodes = () => {
+        let count = 10;
+        this.nodes.push(this.generateModel(CSVNodeFactory.getInstance()));
+        this.nodes.push(this.generateModel(CSVNodeFactory.getInstance()));
+        this.nodes.push(this.generateModel(RandomForestNodeFactory.getInstance()));
+        this.nodes.push(this.generateModel(AccuracyNodeFactory.getInstance()));
+
+        this.nodes.forEach((node: CoreNodeModel) => {
+            this.state.model.addNode(node);
+            node.setPosition(count, count);
+            count += 130;
+        });
+    }
+
+    generateModel<T extends AbstractReactFactory<NodeModel, DiagramEngine>>(factory: T): CoreNodeModel {
+        return factory.generateModel({}) as CoreNodeModel;
     }
 
     delDefaultFactory = () => {
