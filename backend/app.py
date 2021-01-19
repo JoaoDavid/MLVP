@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from src.mlvp.mlvp import mlvp
+from mlvp import parse
 
 app = Flask(__name__)
 CORS(app)
@@ -25,7 +25,7 @@ def getjson():
 @app.route('/codegen', methods=['POST'])
 def foo():
     data = request.json
-    response = mlvp(data)
+    response = parse(data)
     return response
 
 
