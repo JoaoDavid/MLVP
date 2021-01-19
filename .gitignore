@@ -2,6 +2,9 @@ node_modules
 .eslintcache
 build
 
+#output file from mlvp python tool
+mlvp-code-output.py
+
 # Created by https://www.toptal.com/developers/gitignore/api/intellij+all
 # Edit at https://www.toptal.com/developers/gitignore?templates=intellij+all
 
