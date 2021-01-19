@@ -1,9 +1,12 @@
 from mlvp.codegen.CodeTemplate import *
+from mlvp.codegen.TopoSort import get_layers
 
 
 class CodeGenerator:
 
-    def __init__(self, name):
+    def __init__(self, links, nodes, name):
+        self.links = links
+        self.nodes = nodes
         self.name = name + ".py"
         self.outFile = open(self.name, "w+")
         self.counter = 0
@@ -13,6 +16,11 @@ class CodeGenerator:
 
     def generate_code(self):
         self.__write_imports()
+        layers = get_layers(self.nodes)
+        for i in range(len(layers)):
+            for j in range(len(layers[i])):
+                print(layers[i][j])
+
         # some code
         self.outFile.close()
         finalFile = open(self.name, "r")
