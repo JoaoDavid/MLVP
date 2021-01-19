@@ -5,12 +5,11 @@ from mlvp.codegen.TopoSort import get_layers
 def parse(diagram):
     for layer in diagram['layers']:
         if layer['type'] == 'diagram-links':
-            links = layer
+            links = layer['models']
         elif layer['type'] == 'diagram-nodes':
-            nodes = layer
+            nodes = layer['models']
+
 
     layers = get_layers(nodes)
-    print(links)
-    print(type(nodes))
-    codegen = CodeGenerator("mlvp-code")
+    codegen = CodeGenerator("mlvp-code-output")
     return codegen.generate_code()
