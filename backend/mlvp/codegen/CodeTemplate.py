@@ -1,3 +1,3 @@
-IMPORT_LIB = "import {lib_name} as {lib_var}"
+IMPORT_LIB = "import {lib_name} as {lib_var}\n"
 
-LOAD_CSV = "{var} = {pandas_var}.read_csv(./{file_name})"
+LOAD_CSV = "{var} = {pandas_var}.read_csv(\'./{file_name}\')\n"

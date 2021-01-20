@@ -1,4 +1,6 @@
 from mlvp.codegen.CodeTemplate import *
+from mlvp.codegen.LibNames import *
+from mlvp.codegen.Emitter import Emitter
 from mlvp.codegen.TopoSort import get_layers
 from mlvp.datatype.Csv import Csv
 from mlvp.datatype.ModelAccuracy import ModelAccuracy
@@ -12,10 +14,10 @@ class CodeGenerator:
         self.json_nodes = nodes
         self.name = name + ".py"
         self.outFile = open(self.name, "w+")
-        self.counter = 0
+        self.emitter = Emitter()
 
     def __write_imports(self):
-        self.outFile.write(IMPORT_LIB.format(lib_name="pandas", lib_var="pd"))
+        self.outFile.write(IMPORT_LIB.format(lib_name=PANDAS, lib_var=PANDAS_VAR))
 
     def generate_code(self):
         self.__write_imports()
@@ -33,10 +35,15 @@ class CodeGenerator:
         finalFile.close()
         return fileText
 
+    def __get_var_name(self, var_name):
+        return var_name + str(self.emitter.get_count())
+
     def __write_node_statements(self, node_type):
         if isinstance(node_type, Csv):
-            self.outFile.write("batata")
+            df_var = self.__get_var_name("df")
+            print(df_var)
+            self.outFile.write(LOAD_CSV.format(var=df_var, pandas_var=PANDAS_VAR, file_name=node_type.file_name))
         elif isinstance(node_type, RandomForest):
-            self.outFile.write("cenoura")
+            self.outFile.write("")
         elif isinstance(node_type, ModelAccuracy):
-            self.outFile.write("alface")
+            self.outFile.write("")

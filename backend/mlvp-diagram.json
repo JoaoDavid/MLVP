@@ -128,10 +128,10 @@
                     "portsOutOrder": [
                         "75fae0ae-b324-4ec7-8291-196fc6ff86c3"
                     ],
-                    "fileName": "",
+                    "fileName": "train-iris.csv",
                     "numCols": 0,
                     "numRows": 0,
-                    "columnNames": ["Len", "Target"]
+                    "columnNames": ["SepalLengthCm","SepalWidthCm","PetalLengthCm","PetalWidthCm","Species"]
                 },
                 "2fc4916a-ab4e-4a86-94d8-7fa1494bb638": {
                     "id": "2fc4916a-ab4e-4a86-94d8-7fa1494bb638",
@@ -159,7 +159,7 @@
                     "portsOutOrder": [
                         "c819b3f1-3195-46a4-8c83-3828cda6afa2"
                     ],
-                    "fileName": "",
+                    "fileName": "creditcard.csv",
                     "numCols": 0,
                     "numRows": 0,
                     "columnNames": ["Time", "Class"]
