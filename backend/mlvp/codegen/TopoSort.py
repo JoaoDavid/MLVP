@@ -9,7 +9,7 @@ def get_layers(nodes):
     layers = [[] for _ in range(NUM_NODE_LAYERS)]
     for key, value in nodes.items():
         if value['type'] == 'NODE_IMPORT_CSV':
-            layers[0].append(Csv(file_name=value['fileName'], num_cols=value['numCols'], num_rows=value['numCols']))
+            layers[0].append(Csv(file_name=value['fileName'], num_cols=value['numCols'], num_rows=value['numCols'], label=value['columnNames'][-1]))
         elif value['type'] == 'NODE_RANDOM_FOREST':
             layers[1].append(RandomForest(num_trees=value['numTrees'], criterion=value['criterion'], max_depth=value['maxDepth']))
         elif value['type'] == 'NODE_ACCURACY':

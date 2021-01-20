@@ -131,7 +131,7 @@
                     "fileName": "",
                     "numCols": 0,
                     "numRows": 0,
-                    "columnNames": []
+                    "columnNames": ["Len", "Target"]
                 },
                 "2fc4916a-ab4e-4a86-94d8-7fa1494bb638": {
                     "id": "2fc4916a-ab4e-4a86-94d8-7fa1494bb638",
@@ -162,7 +162,7 @@
                     "fileName": "",
                     "numCols": 0,
                     "numRows": 0,
-                    "columnNames": []
+                    "columnNames": ["Time", "Class"]
                 },
                 "a100f6c7-3247-47ae-a5b0-6b11674d418c": {
                     "id": "a100f6c7-3247-47ae-a5b0-6b11674d418c",
