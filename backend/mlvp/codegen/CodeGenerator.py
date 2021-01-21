@@ -5,6 +5,7 @@ from mlvp.codegen.TopoSort import TopoSort
 from mlvp.statement.DatasetDeclarationStatement import DatasetDeclarationStatement
 from mlvp.statement.ModelAccuracyStatement import ModelAccuracyStatement
 from mlvp.statement.RandomForestStatement import RandomForestStatement
+from mlvp.statement.ModelTrainStatement import ModelTrainStatement
 
 
 class CodeGenerator:
@@ -56,12 +57,20 @@ class CodeGenerator:
 
         elif isinstance(statement, RandomForestStatement):
             clf_var = "clf" + str(curr_count)
+            self.emitter.set(statement, clf_var)
             variables = self.emitter.get(statement.parents[0])
             model_type = statement.model_type
             self.outFile.write(
                 RANDOM_FOREST_INIT.format(var=clf_var, num_trees=model_type.num_trees, criterion=model_type.criterion,
                                           max_depth=model_type.max_depth))
-            self.outFile.write(MODE_FIT.format(var=clf_var, x=variables[0], y=variables[1]))
+            self.outFile.write(MODEL_FIT.format(var=clf_var, x=variables[0], y=variables[1]))
         elif isinstance(statement, ModelAccuracyStatement):
-            self.outFile.write("")
+            y_predicted = "y_predicted" + str(curr_count)
+            clf_var, x_y = "", ("", "")
+            for curr in statement.parents:
+                if isinstance(curr, ModelTrainStatement):
+                    clf_var = self.emitter.get(curr)
+                elif isinstance(curr, DatasetDeclarationStatement):
+                    x_y = self.emitter.get(curr)
+            self.outFile.write(MODEL_PREDICT.format(var=y_predicted, clf_var=clf_var, x=x_y[0]))
         self.outFile.write("\n")

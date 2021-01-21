@@ -6,4 +6,5 @@ FEATURES = "{x} = {var}.drop(\'{target}\', axis=1)\n"
 TARGET = "{y} = {var}[\'{target}\']\n"
 
 RANDOM_FOREST_INIT = "{var} = RandomForestClassifier(numTrees={num_trees}, criterion=\"{criterion}\", max_depth={max_depth})\n"
-MODE_FIT = "{var}.fit({x}, {y})\n"
+MODEL_FIT = "{var}.fit({x}, {y})\n"
+MODEL_PREDICT = "{var} = {clf_var}.predict({x})\n"
