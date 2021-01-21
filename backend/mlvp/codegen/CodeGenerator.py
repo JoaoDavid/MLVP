@@ -16,12 +16,13 @@ class CodeGenerator:
         self.emitter = Emitter()
         self.topo_sort = TopoSort(self.json_nodes, self.json_links)
 
-    def __write_imports(self):
-        self.outFile.write(IMPORT_LIB.format(lib_name=PANDAS, lib_var=PANDAS_VAR))
+    def __write_imports(self, libraries):
+        for lib in libraries:
+            self.outFile.write(lib)
 
     def generate_code(self):
-        self.__write_imports()
-        layers = self.topo_sort.get_layers()
+        layers, libraries = self.topo_sort.get_layers()
+        self.__write_imports(libraries)
         for i in range(len(layers)):
             for j in range(len(layers[i])):
                 self.__write_statements(layers[i][j])

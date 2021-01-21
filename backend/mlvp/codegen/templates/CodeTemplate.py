@@ -1,4 +1,5 @@
-IMPORT_LIB = "import {lib_name} as {lib_var}\n"
+IMPORT_AS = "import {lib_name} as {lib_var}\n"
+FROM_IMPORT = "from {package} import {class_to_import}\n"
 
 LOAD_CSV = "{var} = {pandas_var}.read_csv(\'./{file_name}\')\n"
 
