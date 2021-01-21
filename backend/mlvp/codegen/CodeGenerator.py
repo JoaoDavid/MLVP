@@ -1,7 +1,7 @@
 from mlvp.codegen.CodeTemplate import *
 from mlvp.codegen.LibNames import *
 from mlvp.codegen.Emitter import Emitter
-from mlvp.codegen.TopoSort import get_layers
+from mlvp.codegen.TopoSort import TopoSort
 from mlvp.datatype.dataset.Dataset import Dataset
 from mlvp.datatype.ModelAccuracy import ModelAccuracy
 from mlvp.datatype.model.Model import Model
@@ -15,13 +15,14 @@ class CodeGenerator:
         self.name = name + ".py"
         self.outFile = open(self.name, "w+")
         self.emitter = Emitter()
+        self.topo_sort = TopoSort(self.json_nodes, self.json_links)
 
     def __write_imports(self):
         self.outFile.write(IMPORT_LIB.format(lib_name=PANDAS, lib_var=PANDAS_VAR))
 
     def generate_code(self):
         self.__write_imports()
-        layers = get_layers(self.json_nodes)
+        layers = self.topo_sort.get_layers()
         for i in range(len(layers)):
             for j in range(len(layers[i])):
                 self.__write_node_statements(layers[i][j])
