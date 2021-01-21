@@ -1,7 +1,7 @@
 from mlvp.datatype.dataset.Csv import Csv
 from mlvp.datatype.model.RandomForest import RandomForest
 from mlvp.statement.DatasetDeclarationStatement import DatasetDeclarationStatement
-from mlvp.statement.ModelTrainStatement import ModelTrainStatement
+from mlvp.statement.RandomForestStatement import RandomForestStatement
 from mlvp.statement.ModelAccuracyStatement import ModelAccuracyStatement
 
 NUM_NODE_LAYERS = 3
@@ -27,7 +27,7 @@ class TopoSort:
             elif value['type'] == 'NODE_RANDOM_FOREST':
                 model_type = RandomForest(num_trees=value['numTrees'], criterion=value['criterion'],
                                           max_depth=value['maxDepth'])
-                statement = ModelTrainStatement(parents=parents, node_id=key, model_type=model_type)
+                statement = RandomForestStatement(node_id=key, parents=parents, model_type=model_type)
                 layers[1].append(statement)
                 self.statements[key] = statement
             elif value['type'] == 'NODE_ACCURACY':

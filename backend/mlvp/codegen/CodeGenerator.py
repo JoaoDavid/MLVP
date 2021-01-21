@@ -2,13 +2,10 @@ from mlvp.codegen.CodeTemplate import *
 from mlvp.codegen.LibNames import *
 from mlvp.codegen.Emitter import Emitter
 from mlvp.codegen.TopoSort import TopoSort
-from mlvp.datatype.dataset.Dataset import Dataset
-from mlvp.datatype.ModelAccuracy import ModelAccuracy
-from mlvp.datatype.model.Model import Model
 from mlvp.statement.DatasetDeclarationStatement import DatasetDeclarationStatement
 from mlvp.statement.ModelTrainStatement import ModelTrainStatement
 from mlvp.statement.ModelAccuracyStatement import ModelAccuracyStatement
-
+from mlvp.statement.RandomForestStatement import RandomForestStatement
 
 class CodeGenerator:
 
@@ -43,8 +40,8 @@ class CodeGenerator:
         return var_name + str(self.emitter.get_count())
 
     def __write_statements(self, statement):
+        curr_count = self.emitter.get_count()
         if isinstance(statement, DatasetDeclarationStatement):
-            curr_count = self.emitter.get_count()
             df_var = "df" + str(curr_count)
             x = "x" + str(curr_count)
             y = "y" + str(curr_count)
@@ -52,11 +49,11 @@ class CodeGenerator:
             print(df_var)
             self.outFile.write(
                 LOAD_CSV.format(var=df_var, pandas_var=PANDAS_VAR, file_name=statement.ds_type.file_name))
-        elif isinstance(statement, ModelTrainStatement):
-            print("here" + str(statement.parents))
-            dataset_statement = statement.parents[0]
-            variables = self.emitter.get(dataset_statement)
-            print(variables)
-            self.outFile.write("")
+        elif isinstance(statement, RandomForestStatement):
+            clf_var = "clf" + str(curr_count)
+            variables = self.emitter.get(statement.parents[0])
+            model_type = statement.model_type
+            self.outFile.write(RANDOM_FOREST_INIT.format(var=clf_var, num_trees=model_type.num_trees, criterion=model_type.criterion, max_depth=model_type.max_depth))
+            self.outFile.write(MODE_FIT.format(var=clf_var, x=variables[0], y=variables[1]))
         elif isinstance(statement, ModelAccuracyStatement):
             self.outFile.write("")
