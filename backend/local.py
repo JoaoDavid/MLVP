@@ -1,8 +1,9 @@
 from mlvp import parse
 import json
+import sys
 
-
-file = open("mlvp-diagram.json", "r")
+print(sys.argv)
+file = open(sys.argv[1], "r")
 content = file.read()
 
 y = json.loads(content)
