@@ -21,18 +21,23 @@ class TopoSort:
             if value['type'] == 'NODE_IMPORT_CSV':
                 ds_type = Csv(file_name=value['fileName'], num_cols=value['numCols'], num_rows=value['numRows'],
                               target=value['columnNames'][-1])
-                layers[0].append(DatasetDeclarationStatement(node_id=key, ds_type=ds_type))
-                self.statements[key] = ds_type
+                statement = DatasetDeclarationStatement(node_id=key, ds_type=ds_type)
+                layers[0].append(statement)
+                self.statements[key] = statement
             elif value['type'] == 'NODE_RANDOM_FOREST':
                 model_type = RandomForest(num_trees=value['numTrees'], criterion=value['criterion'],
                                           max_depth=value['maxDepth'])
-                layers[1].append(ModelTrainStatement(parents=parents, node_id=key, model_type=model_type))
-                self.statements[key] = model_type
+                statement = ModelTrainStatement(parents=parents, node_id=key, model_type=model_type)
+                layers[1].append(statement)
+                self.statements[key] = statement
             elif value['type'] == 'NODE_ACCURACY':
-                layers[2].append(ModelAccuracyStatement(node_id=key, parents=parents))
+                statement = ModelAccuracyStatement(node_id=key, parents=parents)
+                layers[2].append(statement)
+                self.statements[key] = statement
 
         return layers
 
+    # returns a list of statements that come before the statement with id==node_id
     def __get_parent_statements(self, node_id: str):
         parents = []
         for key, value in self.json_links.items():

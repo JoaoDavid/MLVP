@@ -44,10 +44,19 @@ class CodeGenerator:
 
     def __write_statements(self, statement):
         if isinstance(statement, DatasetDeclarationStatement):
-            df_var = self.__get_var_name("df")
+            curr_count = self.emitter.get_count()
+            df_var = "df" + str(curr_count)
+            x = "x" + str(curr_count)
+            y = "y" + str(curr_count)
+            self.emitter.set(statement, (x, y))
             print(df_var)
-            self.outFile.write(LOAD_CSV.format(var=df_var, pandas_var=PANDAS_VAR, file_name=statement.ds_type.file_name))
+            self.outFile.write(
+                LOAD_CSV.format(var=df_var, pandas_var=PANDAS_VAR, file_name=statement.ds_type.file_name))
         elif isinstance(statement, ModelTrainStatement):
+            print("here" + str(statement.parents))
+            dataset_statement = statement.parents[0]
+            variables = self.emitter.get(dataset_statement)
+            print(variables)
             self.outFile.write("")
         elif isinstance(statement, ModelAccuracyStatement):
             self.outFile.write("")
