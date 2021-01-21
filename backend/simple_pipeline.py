@@ -21,6 +21,6 @@ y2_list = y2.tolist()
 counter = 0
 for i in range(len(y2)):
     if y2_list[i] == Y2_predicted[i]:
-        counter = counter + 1
+        counter += 1
 
 print(counter/len(y2) * 100)
