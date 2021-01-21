@@ -1,9 +1,8 @@
-from mlvp.codegen.CodeTemplate import *
-from mlvp.codegen.LibNames import *
+from mlvp.codegen.templates.CodeTemplate import *
+from mlvp.codegen.templates.LibNames import *
 from mlvp.codegen.Emitter import Emitter
 from mlvp.codegen.TopoSort import TopoSort
 from mlvp.statement.DatasetDeclarationStatement import DatasetDeclarationStatement
-from mlvp.statement.ModelTrainStatement import ModelTrainStatement
 from mlvp.statement.ModelAccuracyStatement import ModelAccuracyStatement
 from mlvp.statement.RandomForestStatement import RandomForestStatement
 
