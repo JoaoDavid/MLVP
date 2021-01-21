@@ -5,6 +5,9 @@ from mlvp.codegen.TopoSort import TopoSort
 from mlvp.datatype.dataset.Dataset import Dataset
 from mlvp.datatype.ModelAccuracy import ModelAccuracy
 from mlvp.datatype.model.Model import Model
+from mlvp.statement.DatasetDeclarationStatement import DatasetDeclarationStatement
+from mlvp.statement.ModelTrainStatement import ModelTrainStatement
+from mlvp.statement.ModelAccuracyStatement import ModelAccuracyStatement
 
 
 class CodeGenerator:
@@ -25,7 +28,7 @@ class CodeGenerator:
         layers = self.topo_sort.get_layers()
         for i in range(len(layers)):
             for j in range(len(layers[i])):
-                self.__write_node_statements(layers[i][j])
+                self.__write_statements(layers[i][j])
                 print(layers[i][j])
                 # chamar metodo que geral que vai posteriormente chamar o metodo respectivo ao node em causa, vendo os seus links
 
@@ -39,12 +42,12 @@ class CodeGenerator:
     def __get_var_name(self, var_name):
         return var_name + str(self.emitter.get_count())
 
-    def __write_node_statements(self, node_type):
-        if isinstance(node_type, Dataset):
+    def __write_statements(self, statement):
+        if isinstance(statement, DatasetDeclarationStatement):
             df_var = self.__get_var_name("df")
             print(df_var)
-            self.outFile.write(LOAD_CSV.format(var=df_var, pandas_var=PANDAS_VAR, file_name=node_type.file_name))
-        elif isinstance(node_type, Model):
+            self.outFile.write(LOAD_CSV.format(var=df_var, pandas_var=PANDAS_VAR, file_name=statement.ds_type.file_name))
+        elif isinstance(statement, ModelTrainStatement):
             self.outFile.write("")
-        elif isinstance(node_type, ModelAccuracy):
+        elif isinstance(statement, ModelAccuracyStatement):
             self.outFile.write("")
