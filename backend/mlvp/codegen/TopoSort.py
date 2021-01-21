@@ -21,7 +21,6 @@ class TopoSort:
         layers = [[] for _ in range(NUM_NODE_LAYERS)]
         libraries = set()
         for key, value in self.json_nodes.items():
-            parents = []
             if value['type'] == 'NODE_IMPORT_CSV':
                 ds_type = Csv(file_name=value['fileName'], num_cols=value['numCols'], num_rows=value['numRows'],
                               target=value['columnNames'][-1])
@@ -32,12 +31,12 @@ class TopoSort:
             elif value['type'] == 'NODE_RANDOM_FOREST':
                 model_type = RandomForest(num_trees=value['numTrees'], criterion=value['criterion'],
                                           max_depth=value['maxDepth'])
-                statement = RandomForestStatement(node_id=key, parents=parents, model_type=model_type)
+                statement = RandomForestStatement(node_id=key, model_type=model_type)
                 layers[1].append(statement)
                 self.statements[key] = statement
                 libraries.add(FROM_IMPORT.format(package=SKLEARN+"."+ENSEMBLE, class_to_import=RANDOM_FOREST_CLF))
             elif value['type'] == 'NODE_ACCURACY':
-                statement = ModelAccuracyStatement(node_id=key, parents=parents)
+                statement = ModelAccuracyStatement(node_id=key)
                 layers[2].append(statement)
                 self.statements[key] = statement
         self.__parse_parents()

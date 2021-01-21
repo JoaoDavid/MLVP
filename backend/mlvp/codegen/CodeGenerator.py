@@ -75,7 +75,7 @@ class CodeGenerator:
             self.outFile.write(MODEL_PREDICT.format(var=y_predicted, clf_var=clf_var, x=x_y[0]))
             series_list = x_y[1] + "_list" + str(curr_count)
             counter = "counter" + str(curr_count)
-            y_len = "len("+x_y[1]+")"
+            y_len = "len("+series_list+")"
             self.outFile.write(series_list + " = " + SERIES_TO_LIST.format(series_var=x_y[1]))
             self.outFile.write(counter + " = " + str(0) + "\n")
             self.outFile.write("for i in range(" + y_len + "):\n")
