@@ -2,9 +2,9 @@ from mlvp.codegen.CodeTemplate import *
 from mlvp.codegen.LibNames import *
 from mlvp.codegen.Emitter import Emitter
 from mlvp.codegen.TopoSort import get_layers
-from mlvp.datatype.Csv import Csv
+from mlvp.datatype.dataset.Dataset import Dataset
 from mlvp.datatype.ModelAccuracy import ModelAccuracy
-from mlvp.datatype.RandomForest import RandomForest
+from mlvp.datatype.model.Model import Model
 
 
 class CodeGenerator:
@@ -39,11 +39,11 @@ class CodeGenerator:
         return var_name + str(self.emitter.get_count())
 
     def __write_node_statements(self, node_type):
-        if isinstance(node_type, Csv):
+        if isinstance(node_type, Dataset):
             df_var = self.__get_var_name("df")
             print(df_var)
             self.outFile.write(LOAD_CSV.format(var=df_var, pandas_var=PANDAS_VAR, file_name=node_type.file_name))
-        elif isinstance(node_type, RandomForest):
+        elif isinstance(node_type, Model):
             self.outFile.write("")
         elif isinstance(node_type, ModelAccuracy):
             self.outFile.write("")

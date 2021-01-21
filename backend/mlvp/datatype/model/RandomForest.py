@@ -1,7 +1,7 @@
-from mlvp.datatype.Type import Type
+from mlvp.datatype.model.Model import Model
 
 
-class RandomForest(Type):
+class RandomForest(Model):
 
     def __init__(self, num_trees, criterion, max_depth):
         super().__init__()

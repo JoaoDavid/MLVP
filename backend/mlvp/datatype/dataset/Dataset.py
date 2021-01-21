@@ -1,7 +1,7 @@
 from mlvp.datatype.Type import Type
 
 
-class Csv(Type):
+class Dataset(Type):
 
     def __init__(self, file_name, num_cols, num_rows, label):
         super().__init__()
