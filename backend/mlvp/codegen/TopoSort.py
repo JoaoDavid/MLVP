@@ -21,7 +21,7 @@ class TopoSort:
         layers = [[] for _ in range(NUM_NODE_LAYERS)]
         libraries = set()
         for key, value in self.json_nodes.items():
-            parents = self.__get_parent_statements(key)
+            parents = []
             if value['type'] == 'NODE_IMPORT_CSV':
                 ds_type = Csv(file_name=value['fileName'], num_cols=value['numCols'], num_rows=value['numRows'],
                               target=value['columnNames'][-1])
@@ -40,13 +40,19 @@ class TopoSort:
                 statement = ModelAccuracyStatement(node_id=key, parents=parents)
                 layers[2].append(statement)
                 self.statements[key] = statement
-
+        self.__parse_parents()
         return layers, libraries
+
+    def __parse_parents(self):
+        for key, value in self.statements.items():
+            parents = self.__get_parent_statements(key)
+            value.parents = parents
 
     # returns a list of statements that come before the statement with id==node_id
     def __get_parent_statements(self, node_id: str):
         parents = []
         for key, value in self.json_links.items():
             if node_id == value['target']:
+                print(node_id + " " + key + " " + value['source'])
                 parents.append(self.statements[value['source']])
         return parents
