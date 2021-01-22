@@ -53,7 +53,12 @@ class CodeGenerator:
             parent_statement = statement.parents[0]
             if isinstance(parent_statement, DatasetDeclarationStatement):
                 x_y = self.emitter.get(statement.parents[0])
-
+            x_train = x_y[0] + "_train" + str(curr_count)
+            y_train = x_y[1] + "_train" + str(curr_count)
+            x_test = x_y[0] + "_test" + str(curr_count)
+            y_test = x_y[1] + "_test" + str(curr_count)
+            self.out_file.write(TRAIN_TEST_SPLIT_CALL.format(x_train=x_train, x_test=x_test, y_train=y_train, y_test=y_test, x=x_y[0], y=x_y[1], test_size="0.33"))
+            self.emitter.set(statement, (x_train, y_train, x_test, y_test))
         elif isinstance(statement, RandomForestStatement):
             clf_var = "clf" + str(curr_count)
             self.emitter.set(statement, clf_var)

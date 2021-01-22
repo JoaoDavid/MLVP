@@ -11,3 +11,5 @@ MODEL_PREDICT = "{var} = {clf_var}.predict({x})\n"
 
 SERIES_TO_LIST = "{series_var}.tolist()\n"
 PRINT = "print({content})\n"
+
+TRAIN_TEST_SPLIT_CALL = "{x_train}, {x_test}, {y_train}, {y_test} = train_test_split({x}, {y}, test_size={test_size})\n"

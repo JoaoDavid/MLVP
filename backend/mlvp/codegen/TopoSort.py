@@ -32,7 +32,7 @@ class TopoSort:
                 statement = SplitDatasetStatement(node_id=key)
                 layers[2].append(statement)
                 self.statements[key] = statement
-                # libraries.add(FROM_IMPORT.format(package=SKLEARN+"."+ENSEMBLE, class_to_import=RANDOM_FOREST_CLF))
+                libraries.add(FROM_IMPORT.format(package=SKLEARN+"."+MODEL_SELECTION, class_to_import=TRAIN_TEST_SPLIT))
             elif value['type'] == 'NODE_RANDOM_FOREST':
                 model_type = RandomForest(num_trees=value['numTrees'], criterion=value['criterion'],
                                           max_depth=value['maxDepth'])
