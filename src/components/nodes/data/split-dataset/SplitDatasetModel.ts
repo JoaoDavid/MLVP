@@ -7,10 +7,7 @@ import {DeserializeEvent} from "@projectstorm/react-canvas-core";
 
 export class SplitDatasetModel extends CoreNodeModel {
 
-    private fileName: string = "";
-    private numCols: number = 0;
-    private numRows: number = 0;
-    private columnNames: string[] = [];
+    private testSize: number = 0.25;
 
     constructor() {
         super(NODE_SPLIT_DATASET.codeName, NODE_SPLIT_DATASET.name);
@@ -18,20 +15,12 @@ export class SplitDatasetModel extends CoreNodeModel {
         this.addOutPort('');
     }
 
-    getFileName(): string {
-        return this.fileName;
+    getTestSize(): number {
+        return this.testSize;
     }
 
-    getCols(): number {
-        return this.numCols;
-    }
-
-    getRows(): number {
-        return this.numRows;
-    }
-
-    getColumnNames(): string[] {
-        return this.columnNames;
+    setTestSize(value: number) {
+        this.testSize = value;
     }
 
     protected addInPort(label: string): void {
@@ -56,19 +45,13 @@ export class SplitDatasetModel extends CoreNodeModel {
 
     deserialize(event: DeserializeEvent<this>) {
         super.deserialize(event);
-        this.fileName = event.data.fileName;
-        this.numCols = event.data.numCols;
-        this.numRows = event.data.numRows;
-        this.columnNames = event.data.columnNames;
+        this.testSize = event.data.testSize;
     }
 
     serialize(): any {
         return {
             ...super.serialize(),
-            fileName: this.fileName,
-            numCols: this.numCols,
-            numRows: this.numRows,
-            columnNames: this.columnNames,
+            testSize: this.testSize,
         };
     }
 

@@ -11,22 +11,32 @@ interface SplitDatasetProps {
 }
 
 type SplitDatasetState = {
-    model: SplitDatasetModel;
+    node: SplitDatasetModel;
 };
 
 class SplitDatasetWidget extends React.Component<SplitDatasetProps, SplitDatasetState> {
 
     state = {
-        model: this.props.node,
+        node: this.props.node,
+    }
+
+    testSizeChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        this.state.node.setTestSize(+event.target.value);
+        this.updateState();
+    }
+
+    private updateState = () => {
+        const newState = {...this.state};
+        this.setState(newState);
+        console.log(this.state.node);
     }
 
 
     render() {
-        const modal = <SplitDatasetModal node={this.props.node}/>;
+        const modal = <SplitDatasetModal node={this.props.node} testSizeChanged={this.testSizeChanged}/>;
         return (
             <CoreNodeWidget node={this.props.node} engine={this.props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
-                <p>Rows: {this.state.model.getRows() || ""}</p>
-                <p>Columns: {this.state.model.getCols() || ""}</p>
+                <p>Test Size: {this.state.node.getTestSize() || ""}</p>
             </CoreNodeWidget>
         );
     }

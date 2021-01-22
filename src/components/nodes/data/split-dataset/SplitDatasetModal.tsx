@@ -7,6 +7,7 @@ import {SplitDatasetModel} from "./SplitDatasetModel";
 
 interface SplitDatasetModalProps {
     node: SplitDatasetModel;
+    testSizeChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const SplitDatasetModal = (props: SplitDatasetModalProps) => {
@@ -16,14 +17,12 @@ const SplitDatasetModal = (props: SplitDatasetModalProps) => {
             </Form.Group>
             <Form.Group>
                 <Row>
-                    <Col>
-                        <Form.Label>Columns</Form.Label>
-                        <Form.Control readOnly placeholder={props.node.getCols().toString()}/>
-                    </Col>
-                    <Col>
-                        <Form.Label>Rows</Form.Label>
-                        <Form.Control readOnly placeholder={props.node.getRows().toString()}/>
-                    </Col>
+                    <Form>
+                        <Col>
+                            <Form.Label>Test Size</Form.Label>
+                            <Form.Control type="number" step="0.01" min="0" max="1" value={props.node.getTestSize()} onChange={props.testSizeChanged}/>
+                        </Col>
+                    </Form>
                 </Row>
             </Form.Group>
         </Form>
