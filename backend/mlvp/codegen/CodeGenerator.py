@@ -2,10 +2,10 @@ from mlvp.codegen.templates.CodeTemplate import *
 from mlvp.codegen.templates.LibNames import *
 from mlvp.codegen.Emitter import Emitter
 from mlvp.codegen.TopoSort import TopoSort
-from mlvp.statement.DatasetDeclarationStatement import DatasetDeclarationStatement
-from mlvp.statement.ModelAccuracyStatement import ModelAccuracyStatement
-from mlvp.statement.RandomForestStatement import RandomForestStatement
-from mlvp.statement.ModelTrainStatement import ModelTrainStatement
+from mlvp.statement.data.DatasetDeclarationStatement import DatasetDeclarationStatement
+from mlvp.statement.evaluate.ModelAccuracyStatement import ModelAccuracyStatement
+from mlvp.statement.model.RandomForestStatement import RandomForestStatement
+from mlvp.statement.model.ModelTrainStatement import ModelTrainStatement
 
 
 class CodeGenerator:

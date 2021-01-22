@@ -1,13 +1,13 @@
 from mlvp.datatype.dataset.Csv import Csv
 from mlvp.datatype.model.RandomForest import RandomForest
-from mlvp.statement.DatasetDeclarationStatement import DatasetDeclarationStatement
-from mlvp.statement.RandomForestStatement import RandomForestStatement
-from mlvp.statement.ModelAccuracyStatement import ModelAccuracyStatement
+from mlvp.statement.data.DatasetDeclarationStatement import DatasetDeclarationStatement
+from mlvp.statement.model.RandomForestStatement import RandomForestStatement
+from mlvp.statement.evaluate.ModelAccuracyStatement import ModelAccuracyStatement
 from mlvp.codegen.templates.CodeTemplate import *
 from mlvp.codegen.templates.LibNames import *
 
 
-NUM_NODE_LAYERS = 3
+NUM_NODE_LAYERS = 4
 
 
 class TopoSort:
