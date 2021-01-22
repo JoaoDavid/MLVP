@@ -63,28 +63,39 @@ class CodeGenerator:
             clf_var = "clf" + str(curr_count)
             self.emitter.set(statement, clf_var)
             parent_statement = statement.parents[0]
+            x, y = "", ""
             if isinstance(parent_statement, DatasetDeclarationStatement):
                 x_y = self.emitter.get(statement.parents[0])
+                x = x_y[0]
+                y = x_y[1]
             elif isinstance(parent_statement, SplitDatasetStatement):
-                print("SplitDatasetStatement")
+                xytrain_xytest = self.emitter.get(statement.parents[0])
+                x = xytrain_xytest[0]
+                y = xytrain_xytest[1]
             model_type = statement.model_type
             self.out_file.write(
                 RANDOM_FOREST_INIT.format(var=clf_var, num_trees=model_type.num_trees, criterion=model_type.criterion,
                                           max_depth=model_type.max_depth))
-            self.out_file.write(MODEL_FIT.format(var=clf_var, x=x_y[0], y=x_y[1]))
+            self.out_file.write(MODEL_FIT.format(var=clf_var, x=x, y=y))
         elif isinstance(statement, ModelAccuracyStatement):
             y_predicted = "y_predicted" + str(curr_count)
-            clf_var, x_y = "", ("", "")
+            clf_var, x, y = "", "" , ""
             for curr in statement.parents:
                 if isinstance(curr, ModelTrainStatement):
                     clf_var = self.emitter.get(curr)
                 elif isinstance(curr, DatasetDeclarationStatement):
                     x_y = self.emitter.get(curr)
-            self.out_file.write(MODEL_PREDICT.format(var=y_predicted, clf_var=clf_var, x=x_y[0]))
-            series_list = x_y[1] + "_list" + str(curr_count)
+                    x = x_y[0]
+                    y = x_y[1]
+                elif isinstance(curr, SplitDatasetStatement):
+                    xytrain_xytest = self.emitter.get(curr)
+                    x = xytrain_xytest[2]
+                    y = xytrain_xytest[3]
+            self.out_file.write(MODEL_PREDICT.format(var=y_predicted, clf_var=clf_var, x=x))
+            series_list = y + "_list" + str(curr_count)
             counter = "counter" + str(curr_count)
             y_len = "len(" + series_list + ")"
-            self.out_file.write(series_list + " = " + SERIES_TO_LIST.format(series_var=x_y[1]))
+            self.out_file.write(series_list + " = " + SERIES_TO_LIST.format(series_var=y))
             self.out_file.write(counter + " = " + str(0) + "\n")
             self.out_file.write("for i in range(" + y_len + "):\n")
             self.out_file.write(" " * 4 + "if " + series_list + "[i] == " + y_predicted + "[i]:\n")
