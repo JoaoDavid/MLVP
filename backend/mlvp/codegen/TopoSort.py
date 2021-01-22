@@ -1,11 +1,11 @@
-from mlvp.datatype.dataset.Csv import Csv
-from mlvp.datatype.model.RandomForest import RandomForest
-from mlvp.statement.data.DatasetDeclarationStatement import DatasetDeclarationStatement
-from mlvp.statement.model.RandomForestStatement import RandomForestStatement
-from mlvp.statement.evaluate.ModelAccuracyStatement import ModelAccuracyStatement
 from mlvp.codegen.templates.CodeTemplate import *
 from mlvp.codegen.templates.LibNames import *
-
+from mlvp.datatype.dataset.Csv import Csv
+from mlvp.datatype.model.RandomForest import RandomForest
+from mlvp.statement import DatasetDeclarationStatement
+from mlvp.statement import ModelAccuracyStatement
+from mlvp.statement import RandomForestStatement
+from mlvp.statement import SplitDatasetStatement
 
 NUM_NODE_LAYERS = 4
 
@@ -28,16 +28,21 @@ class TopoSort:
                 layers[0].append(statement)
                 self.statements[key] = statement
                 libraries.add(IMPORT_AS.format(lib_name=PANDAS, lib_var=PANDAS_VAR))
+            elif value['type'] == 'NODE_SPLIT_DATASET':
+                statement = SplitDatasetStatement(node_id=key)
+                layers[2].append(statement)
+                self.statements[key] = statement
+                # libraries.add(FROM_IMPORT.format(package=SKLEARN+"."+ENSEMBLE, class_to_import=RANDOM_FOREST_CLF))
             elif value['type'] == 'NODE_RANDOM_FOREST':
                 model_type = RandomForest(num_trees=value['numTrees'], criterion=value['criterion'],
                                           max_depth=value['maxDepth'])
                 statement = RandomForestStatement(node_id=key, model_type=model_type)
-                layers[1].append(statement)
+                layers[2].append(statement)
                 self.statements[key] = statement
                 libraries.add(FROM_IMPORT.format(package=SKLEARN+"."+ENSEMBLE, class_to_import=RANDOM_FOREST_CLF))
             elif value['type'] == 'NODE_ACCURACY':
                 statement = ModelAccuracyStatement(node_id=key)
-                layers[2].append(statement)
+                layers[3].append(statement)
                 self.statements[key] = statement
         self.__parse_parents()
         return layers, libraries

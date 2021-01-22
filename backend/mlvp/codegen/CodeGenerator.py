@@ -2,10 +2,11 @@ from mlvp.codegen.templates.CodeTemplate import *
 from mlvp.codegen.templates.LibNames import *
 from mlvp.codegen.Emitter import Emitter
 from mlvp.codegen.TopoSort import TopoSort
-from mlvp.statement.data.DatasetDeclarationStatement import DatasetDeclarationStatement
-from mlvp.statement.evaluate.ModelAccuracyStatement import ModelAccuracyStatement
-from mlvp.statement.model.RandomForestStatement import RandomForestStatement
-from mlvp.statement.model.ModelTrainStatement import ModelTrainStatement
+from mlvp.statement import DatasetDeclarationStatement
+from mlvp.statement import ModelAccuracyStatement
+from mlvp.statement import RandomForestStatement
+from mlvp.statement import ModelTrainStatement
+from mlvp.statement import SplitDatasetStatement
 
 
 class CodeGenerator:
@@ -48,16 +49,24 @@ class CodeGenerator:
                 LOAD_CSV.format(var=df_var, pandas_var=PANDAS_VAR, file_name=statement.ds_type.file_name))
             self.out_file.write(FEATURES.format(x=x, var=df_var, target=statement.ds_type.target))
             self.out_file.write(TARGET.format(y=y, var=df_var, target=statement.ds_type.target))
+        if isinstance(statement, SplitDatasetStatement):
+            parent_statement = statement.parents[0]
+            if isinstance(parent_statement, DatasetDeclarationStatement):
+                x_y = self.emitter.get(statement.parents[0])
 
         elif isinstance(statement, RandomForestStatement):
             clf_var = "clf" + str(curr_count)
             self.emitter.set(statement, clf_var)
-            variables = self.emitter.get(statement.parents[0])
+            parent_statement = statement.parents[0]
+            if isinstance(parent_statement, DatasetDeclarationStatement):
+                x_y = self.emitter.get(statement.parents[0])
+            elif isinstance(parent_statement, SplitDatasetStatement):
+                print("SplitDatasetStatement")
             model_type = statement.model_type
             self.out_file.write(
                 RANDOM_FOREST_INIT.format(var=clf_var, num_trees=model_type.num_trees, criterion=model_type.criterion,
                                           max_depth=model_type.max_depth))
-            self.out_file.write(MODEL_FIT.format(var=clf_var, x=variables[0], y=variables[1]))
+            self.out_file.write(MODEL_FIT.format(var=clf_var, x=x_y[0], y=x_y[1]))
         elif isinstance(statement, ModelAccuracyStatement):
             y_predicted = "y_predicted" + str(curr_count)
             clf_var, x_y = "", ("", "")
@@ -69,7 +78,7 @@ class CodeGenerator:
             self.out_file.write(MODEL_PREDICT.format(var=y_predicted, clf_var=clf_var, x=x_y[0]))
             series_list = x_y[1] + "_list" + str(curr_count)
             counter = "counter" + str(curr_count)
-            y_len = "len("+series_list+")"
+            y_len = "len(" + series_list + ")"
             self.out_file.write(series_list + " = " + SERIES_TO_LIST.format(series_var=x_y[1]))
             self.out_file.write(counter + " = " + str(0) + "\n")
             self.out_file.write("for i in range(" + y_len + "):\n")
