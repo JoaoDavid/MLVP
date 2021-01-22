@@ -1,5 +1,5 @@
 from mlvp.datatype.model.RandomForest import RandomForest
-from mlvp.statement.ModelTrainStatement import ModelTrainStatement
+from mlvp.statement.model.ModelTrainStatement import ModelTrainStatement
 
 
 class RandomForestStatement(ModelTrainStatement):
