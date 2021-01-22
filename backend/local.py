@@ -1,4 +1,4 @@
-from mlvp import parse
+from mlvp import generate_code
 import json
 import sys
 
@@ -8,4 +8,4 @@ content = file.read()
 
 y = json.loads(content)
 
-parse(y)
+generate_code(y)
