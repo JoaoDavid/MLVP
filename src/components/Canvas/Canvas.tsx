@@ -8,6 +8,7 @@ import {DiagramState} from "../core/states/DiagramState";
 import {CSVNodeFactory} from "../nodes/data/import-dataset/csv/CSVNodeFactory";
 import {RandomForestNodeFactory} from "../nodes/model/random-forest/RandomForestNodeFactory";
 import {AccuracyNodeFactory} from "../nodes/evaluate/accuracy/AccuracyNodeFactory";
+import {SplitDatasetFactory} from "../nodes/data/split-dataset/SplitDatasetFactory";
 
 interface CanvasProps {
     dragDropFormat: string,
@@ -38,6 +39,7 @@ class Canvas extends React.Component<CanvasProps, CanvasState> {
         this.state.engine.getNodeFactories().registerFactory(CSVNodeFactory.getInstance());
         this.state.engine.getNodeFactories().registerFactory(RandomForestNodeFactory.getInstance());
         this.state.engine.getNodeFactories().registerFactory(AccuracyNodeFactory.getInstance());
+        this.state.engine.getNodeFactories().registerFactory(SplitDatasetFactory.getInstance());
     }
 
 

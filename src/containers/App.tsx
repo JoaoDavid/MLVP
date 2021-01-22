@@ -17,6 +17,7 @@ import {AccuracyNodeFactory} from "../components/nodes/evaluate/accuracy/Accurac
 import {CoreNodeModel} from "../components/core/CoreNode/CoreNodeModel";
 import {AbstractReactFactory} from "@projectstorm/react-canvas-core";
 import {NodeModel} from "@projectstorm/react-diagrams-core";
+import {SplitDatasetFactory} from "../components/nodes/data/split-dataset/SplitDatasetFactory";
 
 interface AppProps {
 
@@ -45,7 +46,7 @@ class App extends React.Component<AppProps, AppState> {
     addTestNodes = () => {
         let count = 10;
         this.nodes.push(this.generateModel(CSVNodeFactory.getInstance()));
-        this.nodes.push(this.generateModel(CSVNodeFactory.getInstance()));
+        this.nodes.push(this.generateModel(SplitDatasetFactory.getInstance()));
         this.nodes.push(this.generateModel(RandomForestNodeFactory.getInstance()));
         this.nodes.push(this.generateModel(AccuracyNodeFactory.getInstance()));
 
