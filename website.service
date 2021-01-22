@@ -1,0 +1,9 @@
+[Unit]
+Description=MLVP website
+After=syslog.target network.target
+
+[Service]
+WorkingDirectory=/home/jdavid/MLVP
+ExecStart=/usr/local/bin/serve -s /home/jdavid/MLVP/build -l 80
+KillSignal=SIGINT
+KillMode=control-group

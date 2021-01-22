@@ -2,17 +2,18 @@ import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import Image from '../../../logo.png';
-import LogoNeural from '../../UI/logo_nodes.png';
+// import Image from '../../../logo.png';
+// import LogoNeural from '../../UI/logo_nodes.png';
 
 interface TopNavProps {
-
+    open: () => void,
+    save: () => void,
 }
 
 const topNav = (props: TopNavProps) => {
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-            <Navbar.Brand href="#home">
+            <Navbar.Brand>
                 {/*<img
                     alt=""
                     src={Image}
@@ -25,21 +26,17 @@ const topNav = (props: TopNavProps) => {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="mr-auto">
-                    <Nav.Link href="#features">Item1</Nav.Link>
-                    <Nav.Link href="#pricing">Item2</Nav.Link>
-                    <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-                        <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                    <NavDropdown title="File" id="collasible-nav-dropdown">
+                        <NavDropdown.Item onClick={props.open}>Open</NavDropdown.Item>
+                        <NavDropdown.Item onClick={props.save}>Save</NavDropdown.Item>
                         <NavDropdown.Divider />
-                        <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+                        <NavDropdown.Item>Settings</NavDropdown.Item>
                     </NavDropdown>
-                </Nav>
-                <Nav>
-                    <Nav.Link href="#deets">About us</Nav.Link>
-                    <Nav.Link eventKey={2} href="#version">
-                        v0.0.0
-                    </Nav.Link>
+                    <NavDropdown title="Help" id="collasible-nav-dropdown">
+                        <NavDropdown.Item>Item</NavDropdown.Item>
+                        <NavDropdown.Divider />
+                        <NavDropdown.Item>About</NavDropdown.Item>
+                    </NavDropdown>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>

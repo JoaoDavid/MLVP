@@ -1,22 +1,21 @@
-import { NodeModel, NodeModelGenerics, PortModelAlignment } from '@projectstorm/react-diagrams-core';
+import { NodeModel, NodeModelGenerics } from '@projectstorm/react-diagrams-core';
 import {BasePortModel} from "../BasePort/BasePortModel";
 import { BasePositionModelOptions, DeserializeEvent } from '@projectstorm/react-canvas-core';
 
 export interface CoreNodeModelOptions extends BasePositionModelOptions {
     name: string;
-    color?: string;
 }
 
 export interface CoreNodeModelGenerics extends NodeModelGenerics {
     OPTIONS: CoreNodeModelOptions;
 }
 
-export class CoreNodeModel extends NodeModel<CoreNodeModelGenerics> {
+export abstract class CoreNodeModel extends NodeModel<CoreNodeModelGenerics> {
 
     protected portsIn: BasePortModel[];
     protected portsOut: BasePortModel[];
 
-    constructor(type: string, name: string) {
+    protected constructor(type: string, name: string) {
         super({
             type: type,
             name: name,
@@ -54,37 +53,8 @@ export class CoreNodeModel extends NodeModel<CoreNodeModelGenerics> {
         return port;
     }
 
-    protected addInPort(label: string, after = true): BasePortModel {
-        const p = new BasePortModel({
-            in: true,
-            name: label,
-            label: label,
-            alignment: PortModelAlignment.LEFT
-        });
-        if (!after) {
-            this.portsIn.splice(0, 0, p);
-        }
-        return this.addPort(p);
-    }
-
-    protected addOutPort(label: string, after = true): BasePortModel {
-        const p = new BasePortModel({
-            in: false,
-            name: label,
-            label: label,
-            alignment: PortModelAlignment.RIGHT
-        });
-        if (!after) {
-            this.portsOut.splice(0, 0, p);
-        }
-        return this.addPort(p);
-    }
-
     deserialize(event: DeserializeEvent<this>) {
         super.deserialize(event);
-        this.options.name = event.data.name;
-        this.options.color = event.data.color;
-
         this.portsIn = event.data.portsInOrder.map((id: any) => {
             return this.getPortFromID(id);
         });
@@ -96,8 +66,6 @@ export class CoreNodeModel extends NodeModel<CoreNodeModelGenerics> {
     serialize(): any {
         return {
             ...super.serialize(),
-            name: this.options.name,
-            color: this.options.color,
             portsInOrder: this.portsIn.map((port: BasePortModel) => {
                 return port.getID();
             }),

@@ -4,6 +4,10 @@ import './index.css';
 import App from './containers/App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
+import axios from 'axios';
+
+axios.defaults.baseURL = 'http://localhost:5000';
+// axios.defaults.baseURL = 'https://jsonplaceholder.typicode.com';
 
 ReactDOM.render(
   <React.StrictMode>
