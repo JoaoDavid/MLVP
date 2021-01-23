@@ -8,6 +8,8 @@ import {DeserializeEvent} from "@projectstorm/react-canvas-core";
 export class SplitDatasetModel extends CoreNodeModel {
 
     private testSize: number = 0.25;
+    private trainSize: number = 1 - this.testSize;
+    private shuffle: string = "True";
 
     constructor() {
         super(NODE_SPLIT_DATASET.codeName, NODE_SPLIT_DATASET.name);
@@ -21,6 +23,22 @@ export class SplitDatasetModel extends CoreNodeModel {
 
     setTestSize(value: number) {
         this.testSize = value;
+    }
+
+    getTrainSize(): number {
+        return this.trainSize;
+    }
+
+    setTrainSize(value: number) {
+        this.trainSize = value;
+    }
+
+    getShuffle(): string {
+        return this.shuffle;
+    }
+
+    setShuffle(value: string) {
+        this.shuffle = value;
     }
 
     protected addInPort(label: string): void {
