@@ -64,12 +64,16 @@ export class SplitDatasetModel extends CoreNodeModel {
     deserialize(event: DeserializeEvent<this>) {
         super.deserialize(event);
         this.testSize = event.data.testSize;
+        this.trainSize = event.data.trainSize;
+        this.shuffle = event.data.shuffle;
     }
 
     serialize(): any {
         return {
             ...super.serialize(),
             testSize: this.testSize,
+            trainSize: this.trainSize,
+            shuffle: this.shuffle,
         };
     }
 

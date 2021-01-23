@@ -57,7 +57,7 @@ class CodeGenerator:
             y_train = x_y[1] + "_train" + str(curr_count)
             x_test = x_y[0] + "_test" + str(curr_count)
             y_test = x_y[1] + "_test" + str(curr_count)
-            self.out_file.write(TRAIN_TEST_SPLIT_CALL.format(x_train=x_train, x_test=x_test, y_train=y_train, y_test=y_test, x=x_y[0], y=x_y[1], test_size=statement.test_size))
+            self.out_file.write(TRAIN_TEST_SPLIT_CALL.format(x_train=x_train, x_test=x_test, y_train=y_train, y_test=y_test, x=x_y[0], y=x_y[1], test_size=statement.test_size, train_size=statement.train_size, shuffle=statement.shuffle))
             self.emitter.set(statement, (x_train, y_train, x_test, y_test))
         elif isinstance(statement, RandomForestStatement):
             clf_var = "clf" + str(curr_count)
