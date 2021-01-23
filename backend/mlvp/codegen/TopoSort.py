@@ -30,7 +30,7 @@ class TopoSort:
                 libraries.add(IMPORT_AS.format(lib_name=PANDAS, lib_var=PANDAS_VAR))
             elif value['type'] == 'NODE_SPLIT_DATASET':
                 statement = SplitDatasetStatement(node_id=key, test_size=value['testSize'], train_size=value['testSize'], shuffle=value['shuffle'])
-                layers[2].append(statement)
+                layers[1].append(statement)
                 self.statements[key] = statement
                 libraries.add(FROM_IMPORT.format(package=SKLEARN+"."+MODEL_SELECTION, class_to_import=TRAIN_TEST_SPLIT))
             elif value['type'] == 'NODE_RANDOM_FOREST':
