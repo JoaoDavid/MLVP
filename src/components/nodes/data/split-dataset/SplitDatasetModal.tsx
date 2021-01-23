@@ -27,7 +27,7 @@ const SplitDatasetModal = (props: SplitDatasetModalProps) => {
                         </Col>
                         <Col>
                             <Form.Label>Shuffle</Form.Label>
-                            <Form.Control as="select" defaultValue={props.node.getShuffle()} onChange={props.node.getShuffle}>
+                            <Form.Control as="select" defaultValue={props.node.getShuffle()} onChange={props.shuffleChanged}>
                                 <option>{"True"}</option>
                                 <option>{"False"}</option>
                             </Form.Control>
