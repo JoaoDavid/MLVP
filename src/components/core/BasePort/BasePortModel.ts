@@ -55,11 +55,16 @@ export class BasePortModel extends PortModel<BasePortModelGenerics> {
         };
     }
 
-    link<T extends LinkModel>(port: PortModel, factory?: AbstractModelFactory<T>): T {
+    link<T extends LinkModel>(port: BasePortModel, factory?: AbstractModelFactory<T>): T {
         console.log('link');
         let link = this.createLinkModel(factory);
-        link.setSourcePort(this);
-        link.setTargetPort(port);
+        if(this.getTier() < port.getTier()) {
+            link.setSourcePort(this);
+            link.setTargetPort(port);//port
+        } else {
+            link.setSourcePort(port);
+            link.setTargetPort(this);
+        }
         return link as T;
     }
 
@@ -76,4 +81,9 @@ export class BasePortModel extends PortModel<BasePortModelGenerics> {
         }
         return link || new DefaultLinkModel();
     }
+
+    getTier(): number {
+        return this.tier;
+    }
+
 }

@@ -53,6 +53,10 @@ class CodeGenerator:
             parent_statement = statement.parents[0]
             if isinstance(parent_statement, DatasetDeclarationStatement):
                 x_y = self.emitter.get(statement.parents[0])
+            print(statement)
+            print(statement.node_id)
+            print(parent_statement)
+            print(parent_statement.node_id)
             x_train = x_y[0] + "_train" + str(curr_count)
             y_train = x_y[1] + "_train" + str(curr_count)
             x_test = x_y[0] + "_test" + str(curr_count)
