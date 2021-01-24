@@ -16,9 +16,9 @@ export interface DatasetPortModelGenerics extends PortModelGenerics {
 }
 
 export class DatasetPortModel extends BasePortModel {
-    constructor(isIn: boolean, name?: string, label?: string);
-    constructor(options: DatasetPortModelOptions);
-    constructor(options: DatasetPortModelOptions | boolean, name?: string, label?: string) {
+    constructor(tier: number, isIn: boolean, name?: string, label?: string);
+    constructor(tier: number, options: DatasetPortModelOptions);
+    constructor(tier: number, options: DatasetPortModelOptions | boolean, name?: string, label?: string) {
         if (!!name) {
             options = {
                 in: !!options,
@@ -27,7 +27,7 @@ export class DatasetPortModel extends BasePortModel {
             };
         }
         options = options as DatasetPortModelOptions;
-        super({
+        super(tier, {
             label: options.label || options.name,
             alignment: options.in ? PortModelAlignment.LEFT : PortModelAlignment.RIGHT,
             type: 'default',

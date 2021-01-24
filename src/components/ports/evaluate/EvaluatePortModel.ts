@@ -18,9 +18,9 @@ export interface EvaluatePortModelGenerics extends PortModelGenerics {
 }
 
 export class EvaluatePortModel extends BasePortModel {
-    constructor(isIn: boolean, name?: string, label?: string);
-    constructor(options: EvaluatePortModelOptions);
-    constructor(options: EvaluatePortModelOptions | boolean, name?: string, label?: string) {
+    constructor(tier: number, isIn: boolean, name?: string, label?: string);
+    constructor(tier: number, options: EvaluatePortModelOptions);
+    constructor(tier: number, options: EvaluatePortModelOptions | boolean, name?: string, label?: string) {
         if (!!name) {
             options = {
                 in: !!options,
@@ -29,7 +29,7 @@ export class EvaluatePortModel extends BasePortModel {
             };
         }
         options = options as EvaluatePortModelOptions;
-        super({
+        super(tier, {
             label: options.label || options.name,
             alignment: options.in ? PortModelAlignment.LEFT : PortModelAlignment.RIGHT,
             type: 'default',

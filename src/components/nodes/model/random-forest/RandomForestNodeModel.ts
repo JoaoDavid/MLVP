@@ -17,7 +17,7 @@ export class RandomForestNodeModel extends CoreNodeModel {
     private maxDepth: number = 0; //int
 
     constructor() {
-        super(NODE_RANDOM_FOREST.codeName, NODE_RANDOM_FOREST.name);
+        super(NODE_RANDOM_FOREST.codeName, NODE_RANDOM_FOREST.name, NODE_RANDOM_FOREST.tier);
         this.addInPort('in');
         this.addOutPort('out');
     }
@@ -52,7 +52,7 @@ export class RandomForestNodeModel extends CoreNodeModel {
     }
 
     protected addInPort(label: string): void {
-        const p = new DatasetPortModel({
+        const p = new DatasetPortModel(this.tier, {
             in: true,
             name: label,
             label: label,
@@ -63,7 +63,7 @@ export class RandomForestNodeModel extends CoreNodeModel {
     }
 
     protected addOutPort(label: string): void {
-        const p = new MLModelPortModel({
+        const p = new MLModelPortModel(this.tier, {
             in: false,
             name: label,
             label: label,

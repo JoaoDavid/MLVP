@@ -10,6 +10,7 @@ export const MODEL_CONFIG:CategoryConfig = {
 export const NODE_RANDOM_FOREST:NodeConfig = {
     codeName: "NODE_RANDOM_FOREST",
     name: "Random Forest",
+    tier: 2,
 }
 
 

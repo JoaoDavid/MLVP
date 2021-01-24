@@ -14,14 +14,16 @@ export abstract class CoreNodeModel extends NodeModel<CoreNodeModelGenerics> {
 
     protected portsIn: BasePortModel[];
     protected portsOut: BasePortModel[];
+    protected tier: number;
 
-    protected constructor(type: string, name: string) {
+    protected constructor(type: string, name: string, tier: number) {
         super({
             type: type,
             name: name,
         });
         this.portsOut = [];
         this.portsIn = [];
+        this.tier = tier;
     }
 
     doClone(lookupTable: {}, clone: any): void {
@@ -61,6 +63,7 @@ export abstract class CoreNodeModel extends NodeModel<CoreNodeModelGenerics> {
         this.portsOut = event.data.portsOutOrder.map((id: any) => {
             return this.getPortFromID(id);
         });
+        this.tier = event.data.tier;
     }
 
     serialize(): any {
@@ -72,6 +75,7 @@ export abstract class CoreNodeModel extends NodeModel<CoreNodeModelGenerics> {
             portsOutOrder: this.portsOut.map((port: BasePortModel) => {
                 return port.getID();
             }),
+            tier: this.tier,
         };
     }
 
@@ -81,6 +85,10 @@ export abstract class CoreNodeModel extends NodeModel<CoreNodeModelGenerics> {
 
     getOutPorts(): BasePortModel[] {
         return this.portsOut;
+    }
+
+    getTier(): number {
+        return this.tier;
     }
 
 }

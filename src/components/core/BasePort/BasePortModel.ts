@@ -18,9 +18,12 @@ export interface BasePortModelGenerics extends PortModelGenerics {
 }
 
 export class BasePortModel extends PortModel<BasePortModelGenerics> {
-    constructor(isIn: boolean, name?: string, label?: string);
-    constructor(options: BasePortModelOptions);
-    constructor(options: BasePortModelOptions | boolean, name?: string, label?: string) {
+
+    private tier: number;
+
+    constructor(tier: number, isIn: boolean, name?: string, label?: string);
+    constructor(tier: number, options: BasePortModelOptions);
+    constructor(tier: number, options: BasePortModelOptions | boolean, name?: string, label?: string) {
         if (!!name) {
             options = {
                 in: !!options,
@@ -35,6 +38,7 @@ export class BasePortModel extends PortModel<BasePortModelGenerics> {
             type: 'default',
             ...options
         });
+        this.tier = tier;
     }
 
     deserialize(event: DeserializeEvent<this>) {

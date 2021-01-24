@@ -16,9 +16,9 @@ export interface MLModelPortModelGenerics extends PortModelGenerics {
 }
 
 export class MLModelPortModel extends BasePortModel {
-    constructor(isIn: boolean, name?: string, label?: string);
-    constructor(options: MLModelPortModelOptions);
-    constructor(options: MLModelPortModelOptions | boolean, name?: string, label?: string) {
+    constructor(tier: number, isIn: boolean, name?: string, label?: string);
+    constructor(tier: number, options: MLModelPortModelOptions);
+    constructor(tier: number, options: MLModelPortModelOptions | boolean, name?: string, label?: string) {
         if (!!name) {
             options = {
                 in: !!options,
@@ -27,7 +27,7 @@ export class MLModelPortModel extends BasePortModel {
             };
         }
         options = options as MLModelPortModelOptions;
-        super({
+        super(tier, {
             label: options.label || options.name,
             alignment: options.in ? PortModelAlignment.LEFT : PortModelAlignment.RIGHT,
             type: 'default',
