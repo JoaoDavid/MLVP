@@ -7,6 +7,7 @@ export enum Category {
 export type NodeConfig = {
     codeName: string,
     name: string,
+    tier: number,
 }
 
 export type CategoryConfig = {

@@ -14,7 +14,7 @@ export class CSVNodeModel extends CoreNodeModel {
     private columnNames: string[] = [];
 
     constructor() {
-        super(NODE_CSV.codeName, 'Import from CSV');
+        super(NODE_CSV.codeName, NODE_CSV.name, NODE_CSV.tier);
         this.resetFile();
         this.addOutPort('');
     }
@@ -43,11 +43,12 @@ export class CSVNodeModel extends CoreNodeModel {
     }
 
     protected addOutPort(label: string): void {
-        const p = new DatasetPortModel({
+        const p = new DatasetPortModel(this.getTier(),
+        {
             in: false,
             name: label,
             label: label,
-            alignment: PortModelAlignment.RIGHT
+            alignment: PortModelAlignment.RIGHT,
         });
         super.addPort(p);
     }

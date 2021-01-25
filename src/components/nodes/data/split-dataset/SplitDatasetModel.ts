@@ -12,7 +12,7 @@ export class SplitDatasetModel extends CoreNodeModel {
     private shuffle: string = "True";
 
     constructor() {
-        super(NODE_SPLIT_DATASET.codeName, NODE_SPLIT_DATASET.name);
+        super(NODE_SPLIT_DATASET.codeName, NODE_SPLIT_DATASET.name, NODE_SPLIT_DATASET.tier);
         this.addInPort('dataset');
         this.addOutPort('');
     }
@@ -42,7 +42,7 @@ export class SplitDatasetModel extends CoreNodeModel {
     }
 
     protected addInPort(label: string): void {
-        const p = new DatasetPortModel({
+        const p = new DatasetPortModel(this.tier, {
             in: true,
             name: label,
             label: label,
@@ -52,7 +52,7 @@ export class SplitDatasetModel extends CoreNodeModel {
     }
 
     protected addOutPort(label: string): void {
-        const p = new DatasetPortModel({
+        const p = new DatasetPortModel(this.tier, {
             in: false,
             name: label,
             label: label,

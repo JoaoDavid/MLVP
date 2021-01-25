@@ -18,9 +18,12 @@ export interface BasePortModelGenerics extends PortModelGenerics {
 }
 
 export class BasePortModel extends PortModel<BasePortModelGenerics> {
-    constructor(isIn: boolean, name?: string, label?: string);
-    constructor(options: BasePortModelOptions);
-    constructor(options: BasePortModelOptions | boolean, name?: string, label?: string) {
+
+    private tier: number;
+
+    constructor(tier: number, isIn: boolean, name?: string, label?: string);
+    constructor(tier: number, options: BasePortModelOptions);
+    constructor(tier: number, options: BasePortModelOptions | boolean, name?: string, label?: string) {
         if (!!name) {
             options = {
                 in: !!options,
@@ -35,6 +38,8 @@ export class BasePortModel extends PortModel<BasePortModelGenerics> {
             type: 'default',
             ...options
         });
+        this.tier = tier;
+        console.log("hola")
     }
 
     deserialize(event: DeserializeEvent<this>) {
@@ -51,13 +56,18 @@ export class BasePortModel extends PortModel<BasePortModelGenerics> {
         };
     }
 
-    link<T extends LinkModel>(port: PortModel, factory?: AbstractModelFactory<T>): T {
+    /*link<T extends LinkModel>(port: BasePortModel, factory?: AbstractModelFactory<T>): T {
         console.log('link');
         let link = this.createLinkModel(factory);
-        link.setSourcePort(this);
-        link.setTargetPort(port);
+        if(this.getTier() < port.getTier()) {
+            link.setSourcePort(this);
+            link.setTargetPort(this);//port
+        } else {
+            link.setSourcePort(port);
+            link.setTargetPort(port);
+        }
         return link as T;
-    }
+    }*/
 
     canLinkToPort(port: PortModel): boolean {
         //TODO
@@ -66,10 +76,16 @@ export class BasePortModel extends PortModel<BasePortModelGenerics> {
     }
 
     createLinkModel(factory?: AbstractModelFactory<LinkModel>): LinkModel {
+        console.log("helo");
         let link = super.createLinkModel();
         if (!link && factory) {
             return factory.generateModel({});
         }
         return link || new DefaultLinkModel();
     }
+
+    getTier(): number {
+        return this.tier;
+    }
+
 }
