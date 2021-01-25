@@ -39,6 +39,7 @@ export class BasePortModel extends PortModel<BasePortModelGenerics> {
             ...options
         });
         this.tier = tier;
+        console.log("hola")
     }
 
     deserialize(event: DeserializeEvent<this>) {
@@ -55,18 +56,18 @@ export class BasePortModel extends PortModel<BasePortModelGenerics> {
         };
     }
 
-    link<T extends LinkModel>(port: BasePortModel, factory?: AbstractModelFactory<T>): T {
+    /*link<T extends LinkModel>(port: BasePortModel, factory?: AbstractModelFactory<T>): T {
         console.log('link');
         let link = this.createLinkModel(factory);
         if(this.getTier() < port.getTier()) {
             link.setSourcePort(this);
-            link.setTargetPort(port);//port
+            link.setTargetPort(this);//port
         } else {
             link.setSourcePort(port);
-            link.setTargetPort(this);
+            link.setTargetPort(port);
         }
         return link as T;
-    }
+    }*/
 
     canLinkToPort(port: PortModel): boolean {
         //TODO
@@ -75,6 +76,7 @@ export class BasePortModel extends PortModel<BasePortModelGenerics> {
     }
 
     createLinkModel(factory?: AbstractModelFactory<LinkModel>): LinkModel {
+        console.log("helo");
         let link = super.createLinkModel();
         if (!link && factory) {
             return factory.generateModel({});
