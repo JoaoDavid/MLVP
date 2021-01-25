@@ -23,7 +23,7 @@ const RandomForestModal = (props: ModalProps) => {
                     </Col>
                     <Col>
                         <Form.Label>Max Depth</Form.Label>
-                        <Form.Control type="number" min="0" value={props.node.getMaxDepth()} onChange={props.maxDepthChanged}/>
+                        <Form.Control type="number" min="0" value={props.node.getMaxDepth()===0?"None":props.node.getMaxDepth()} onChange={props.maxDepthChanged} />
                     </Col>
                     <Col>
                         <Form.Label>Criterion</Form.Label>

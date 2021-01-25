@@ -76,8 +76,7 @@ export class RandomForestNodeModel extends CoreNodeModel {
         super.deserialize(event);
         this.numTrees = event.data.numTrees;
         this.criterion = event.data.criterion;
-        //this.setCriterion(event.data.criterion);
-        this.maxDepth = event.data.maxDepth;
+        this.maxDepth = event.data.maxDepth === 'None'?0:event.data.maxDepth;
     }
 
     serialize(): any {
@@ -85,7 +84,7 @@ export class RandomForestNodeModel extends CoreNodeModel {
             ...super.serialize(),
             numTrees: this.numTrees,
             criterion: this.criterion,
-            maxDepth: this.maxDepth,
+            maxDepth: this.maxDepth===0?"None":this.maxDepth,
         };
     }
 

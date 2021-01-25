@@ -50,7 +50,7 @@ class RandomForestNodeWidget extends React.Component<NodeProps, NodeState> {
             <CoreNodeWidget node={this.state.node} engine={this.props.engine} color={MODEL_CONFIG.color}
                             modalChildren={modal}>
                 <p>Trees: {this.state.node.getNumTrees()}</p>
-                <p>Max Depth: {this.state.node.getMaxDepth()}</p>
+                <p>Max Depth: {this.state.node.getMaxDepth() || "None"}</p>
                 <p>Criterion: {this.state.node.getCriterion().toString()}</p>
             </CoreNodeWidget>
         )
