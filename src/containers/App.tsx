@@ -1,6 +1,6 @@
 import React from 'react';
 import classes from './App.module.css';
-import createEngine, {DiagramEngine, DiagramModel} from '@projectstorm/react-diagrams';
+import createEngine, {DiagramEngine} from '@projectstorm/react-diagrams';
 import TopNav from '../components/UI/top-nav/TopNav';
 import SideBar from "../components/UI/side-bar/SideBar";
 import {CategoryConfig, NodeConfig} from "../components/nodes/Config";
@@ -18,6 +18,7 @@ import {CoreNodeModel} from "../components/core/CoreNode/CoreNodeModel";
 import {AbstractReactFactory} from "@projectstorm/react-canvas-core";
 import {NodeModel} from "@projectstorm/react-diagrams-core";
 import {SplitDatasetFactory} from "../components/nodes/data/split-dataset/SplitDatasetFactory";
+import {CoreDiagram} from "../components/core/diagram/CoreDiagram";
 
 interface AppProps {
 
@@ -25,7 +26,7 @@ interface AppProps {
 
 type AppState = {
     engine: DiagramEngine,
-    model: DiagramModel
+    model: CoreDiagram,
 };
 
 class App extends React.Component<AppProps, AppState> {
@@ -37,7 +38,7 @@ class App extends React.Component<AppProps, AppState> {
         super(props);
         this.state = {
             engine: createEngine(),
-            model: new DiagramModel()
+            model: new CoreDiagram()
         }
         this.addTestNodes();
         this.state.engine.setModel(this.state.model);

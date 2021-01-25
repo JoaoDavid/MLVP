@@ -7,42 +7,44 @@ from mlvp.statement import ModelAccuracyStatement
 from mlvp.statement import RandomForestStatement
 from mlvp.statement import SplitDatasetStatement
 
-NUM_NODE_LAYERS = 4
-
 
 class TopoSort:
 
-    def __init__(self, json_nodes, json_links):
+    def __init__(self, json_nodes, json_links, num_tiers):
         self.json_nodes = json_nodes
         self.json_links = json_links
+        self.num_tiers = num_tiers
         self.statements = {}
 
     def get_layers(self):
-        layers = [[] for _ in range(NUM_NODE_LAYERS)]
+        layers = [[] for _ in range(self.num_tiers)]
         libraries = set()
         for key, value in self.json_nodes.items():
+            tier = int(value['tier'])
             if value['type'] == 'NODE_IMPORT_CSV':
                 ds_type = Csv(file_name=value['fileName'], num_cols=value['numCols'], num_rows=value['numRows'],
                               target=value['columnNames'][-1])
                 statement = DatasetDeclarationStatement(node_id=key, ds_type=ds_type)
-                layers[0].append(statement)
+                layers[tier].append(statement)
                 self.statements[key] = statement
                 libraries.add(IMPORT_AS.format(lib_name=PANDAS, lib_var=PANDAS_VAR))
             elif value['type'] == 'NODE_SPLIT_DATASET':
-                statement = SplitDatasetStatement(node_id=key, test_size=value['testSize'], train_size=value['testSize'], shuffle=value['shuffle'])
-                layers[1].append(statement)
+                statement = SplitDatasetStatement(node_id=key, test_size=value['testSize'],
+                                                  train_size=value['testSize'], shuffle=value['shuffle'])
+                layers[tier].append(statement)
                 self.statements[key] = statement
-                libraries.add(FROM_IMPORT.format(package=SKLEARN+"."+MODEL_SELECTION, class_to_import=TRAIN_TEST_SPLIT))
+                libraries.add(
+                    FROM_IMPORT.format(package=SKLEARN + "." + MODEL_SELECTION, class_to_import=TRAIN_TEST_SPLIT))
             elif value['type'] == 'NODE_RANDOM_FOREST':
                 model_type = RandomForest(num_trees=value['numTrees'], criterion=value['criterion'],
                                           max_depth=value['maxDepth'])
                 statement = RandomForestStatement(node_id=key, model_type=model_type)
-                layers[2].append(statement)
+                layers[tier].append(statement)
                 self.statements[key] = statement
-                libraries.add(FROM_IMPORT.format(package=SKLEARN+"."+ENSEMBLE, class_to_import=RANDOM_FOREST_CLF))
+                libraries.add(FROM_IMPORT.format(package=SKLEARN + "." + ENSEMBLE, class_to_import=RANDOM_FOREST_CLF))
             elif value['type'] == 'NODE_ACCURACY':
                 statement = ModelAccuracyStatement(node_id=key)
-                layers[3].append(statement)
+                layers[tier].append(statement)
                 self.statements[key] = statement
         self.__parse_parents()
         return layers, libraries

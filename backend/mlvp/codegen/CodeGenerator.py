@@ -11,13 +11,13 @@ from mlvp.statement import SplitDatasetStatement
 
 class CodeGenerator:
 
-    def __init__(self, links, nodes, name):
+    def __init__(self, links, nodes, name, num_tiers):
         self.json_links = links
         self.json_nodes = nodes
         self.name = name + ".py"
         self.out_file = open(self.name, "w+")
         self.emitter = Emitter()
-        self.topo_sort = TopoSort(self.json_nodes, self.json_links)
+        self.topo_sort = TopoSort(self.json_nodes, self.json_links, num_tiers)
 
     def __write_imports(self, libraries):
         for lib in libraries:

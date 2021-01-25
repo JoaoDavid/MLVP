@@ -14,3 +14,5 @@ export type CategoryConfig = {
     category: Category,
     color: string,
 }
+
+export const NUM_TIERS = 4;

@@ -7,5 +7,5 @@ def generate_code(diagram, file_name="mlvp-code-output"):
             links = layer['models']
         elif layer['type'] == 'diagram-nodes':
             nodes = layer['models']
-    codegen = CodeGenerator(links, nodes, file_name)
+    codegen = CodeGenerator(links, nodes, file_name, int(diagram['numTiers']))
     return codegen.generate_code()
