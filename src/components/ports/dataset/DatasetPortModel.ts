@@ -8,9 +8,9 @@ export class DatasetPortModel extends BasePortModel {
     }
 
     canLinkToPort(port: PortModel): boolean {
-        console.log('can link to dataset port');
+        console.log('canLinkToPort at DatasetPortModel');
         if (port instanceof DatasetPortModel) {
-            return this.options.in !== port.getOptions().in;
+            return super.canLinkToPort(port);
         }
         return false;
     }

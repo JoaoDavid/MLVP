@@ -61,7 +61,7 @@ export abstract class BasePortModel extends PortModel<BasePortModelGenerics> {
 
     canLinkToPort(port: BasePortModel): boolean {
         console.log('canLinkToPort at BasePortModel');
-        return this.getTier() !== port.getTier();
+        return (this.getTier() !== port.getTier()) && (this.getIsIn() !== port.getIsIn());
     }
 
     createLinkModel(factory?: AbstractModelFactory<LinkModel>): LinkModel {
@@ -74,6 +74,10 @@ export abstract class BasePortModel extends PortModel<BasePortModelGenerics> {
 
     getTier(): number {
         return this.tier;
+    }
+
+    getIsIn(): boolean {
+        return this.options.in;
     }
 
 }

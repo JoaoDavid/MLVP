@@ -11,11 +11,11 @@ export class EvaluatePortModel extends BasePortModel {
     }
 
     canLinkToPort(port: PortModel): boolean {
-        console.log('can link to evaluate port');
-        if (port instanceof DatasetPortModel !! ) {
-            return true;
+        console.log('canLinkToPort at EvaluatePortModel');
+        if (port instanceof DatasetPortModel) {
+            return super.canLinkToPort(port);
         } else if (port instanceof MLModelPortModel) {
-            return true;
+            return super.canLinkToPort(port);
         }
         return false;
     }

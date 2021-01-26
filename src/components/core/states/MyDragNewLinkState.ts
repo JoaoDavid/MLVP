@@ -69,7 +69,6 @@ export class MyDragNewLinkState extends AbstractDisplacementState<DiagramEngine>
                     if (model instanceof BasePortModel) {
                         if (this.port.canLinkToPort(model)) {
                             this.adjustPorts(this.port, model);
-                            console.log("gegeaga");
                             this.engine.repaintCanvas();
                             return;
                         } else {

@@ -8,9 +8,9 @@ export class MLModelPortModel extends BasePortModel {
     }
 
     canLinkToPort(port: PortModel): boolean {
-        console.log('can link to ml trained model port');
+        console.log('canLinkToPort at MLModelPortModelg');
         if (port instanceof MLModelPortModel) {
-            return this.options.in !== port.getOptions().in;
+            return super.canLinkToPort(port);
         }
         return false;
     }
