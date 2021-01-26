@@ -21,14 +21,14 @@ export abstract class BasePortModel extends PortModel<BasePortModelGenerics> {
 
     private readonly tier: number;
 
-    protected constructor(tier: number, isIn: boolean, name: string, label: string){
+    protected constructor(tier: number, isIn: boolean, name: string, label: string, maxLinks?: number){
         super({
             name: name,
             label: label,
             alignment: isIn ? PortModelAlignment.LEFT : PortModelAlignment.RIGHT,
             type: 'default',
             in: isIn,
-            maximumLinks: 1,
+            maximumLinks: maxLinks?maxLinks:1,
         });
         this.tier = tier;
     }
