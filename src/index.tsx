@@ -9,6 +9,10 @@ import axios from 'axios';
 axios.defaults.baseURL = 'http://localhost:5000';
 // axios.defaults.baseURL = 'https://jsonplaceholder.typicode.com';
 
+if(process.env.NODE_ENV === 'production'){
+    console.log = ()=>{}
+}
+
 ReactDOM.render(
   <React.StrictMode>
     <App />
