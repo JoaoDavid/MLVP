@@ -28,6 +28,7 @@ export abstract class BasePortModel extends PortModel<BasePortModelGenerics> {
             alignment: isIn ? PortModelAlignment.LEFT : PortModelAlignment.RIGHT,
             type: 'default',
             in: isIn,
+            maximumLinks: 1,
         });
         this.tier = tier;
     }
@@ -59,17 +60,23 @@ export abstract class BasePortModel extends PortModel<BasePortModelGenerics> {
         return link as T;
     }*/
 
+    isNewLinkAllowed(): boolean {
+        return (
+            Object.keys(this.getLinks()).length < this.getMaximumLinks()
+        );
+    }
+
     canLinkToPort(port: BasePortModel): boolean {
         console.log('canLinkToPort at BasePortModel');
-        return (this.getTier() !== port.getTier()) && (this.getIsIn() !== port.getIsIn());
+        return (this.getTier() !== port.getTier()) && (this.getIsIn() !== port.getIsIn()) && port.isNewLinkAllowed();
     }
 
     createLinkModel(factory?: AbstractModelFactory<LinkModel>): LinkModel {
-        let link = super.createLinkModel();
-        if (!link && factory) {
-            return factory.generateModel({});
+        if (this.isNewLinkAllowed()) {
+            const link = new DefaultLinkModel();
+            return link;
         }
-        return link || new DefaultLinkModel();
+        return null;
     }
 
     getTier(): number {

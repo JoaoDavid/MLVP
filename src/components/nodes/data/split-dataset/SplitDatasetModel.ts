@@ -1,6 +1,5 @@
 import {CoreNodeModel} from "../../../core/CoreNode/CoreNodeModel";
 import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
-import {PortModelAlignment} from "@projectstorm/react-diagrams-core";
 import {NODE_SPLIT_DATASET} from "../DataConfig";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
 
@@ -42,13 +41,15 @@ export class SplitDatasetModel extends CoreNodeModel {
     }
 
     protected addInPort(): void {
-        const p = new DatasetPortModel(this.getTier(), true, "IN", "");
+        const p = new DatasetPortModel(this.getTier(), true, "in-ds", "");
         super.addPort(p);
     }
 
     protected addOutPort(): void {
-        const p = new DatasetPortModel(this.getTier(), false, "OUT", "");
-        super.addPort(p);
+        const p1 = new DatasetPortModel(this.getTier(), false, "out-train-ds", "");
+        const p2 = new DatasetPortModel(this.getTier(), false, "out-test-ds", "");
+        super.addPort(p1);
+        super.addPort(p2);
     }
 
     deserialize(event: DeserializeEvent<this>) {

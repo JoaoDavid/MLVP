@@ -1,6 +1,7 @@
 import {CoreNodeModel} from "../../../core/CoreNode/CoreNodeModel";
 import {NODE_ACCURACY} from "../EvaluateConfig";
-import {EvaluatePortModel} from "../../../ports/evaluate/EvaluatePortModel";
+import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
+import {MLModelPortModel} from "../../../ports/model/MLModelPortModel";
 
 
 export class AccuracyNodeModel extends CoreNodeModel {
@@ -10,10 +11,11 @@ export class AccuracyNodeModel extends CoreNodeModel {
         this.addInModelPort('evaluate');
     }
 
-
     protected addInModelPort(label: string): void {
-        const p = new EvaluatePortModel(this.tier, true, "", "");
-        super.addPort(p);
+        const datasetPort = new DatasetPortModel(this.tier, true, "in-ds", "");
+        const model = new MLModelPortModel(this.tier, true, "in-model", "");
+        super.addPort(datasetPort);
+        super.addPort(model);
     }
 
 }
