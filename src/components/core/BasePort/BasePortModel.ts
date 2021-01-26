@@ -10,33 +10,24 @@ import { AbstractModelFactory, DeserializeEvent } from '@projectstorm/react-canv
 
 export interface BasePortModelOptions extends PortModelOptions {
     label?: string;
-    in?: boolean;
+    in: boolean;
 }
 
 export interface BasePortModelGenerics extends PortModelGenerics {
     OPTIONS: BasePortModelOptions;
 }
 
-export class BasePortModel extends PortModel<BasePortModelGenerics> {
+export abstract class BasePortModel extends PortModel<BasePortModelGenerics> {
 
     private readonly tier: number;
 
-    constructor(tier: number, isIn: boolean, name?: string, label?: string);
-    constructor(tier: number, options: BasePortModelOptions);
-    constructor(tier: number, options: BasePortModelOptions | boolean, name?: string, label?: string) {
-        if (!!name) {
-            options = {
-                in: !!options,
-                name: name,
-                label: label
-            };
-        }
-        options = options as BasePortModelOptions;
+    protected constructor(tier: number, isIn: boolean, name: string, label: string){
         super({
-            label: options.label || options.name,
-            alignment: options.in ? PortModelAlignment.LEFT : PortModelAlignment.RIGHT,
+            name: name,
+            label: label,
+            alignment: isIn ? PortModelAlignment.LEFT : PortModelAlignment.RIGHT,
             type: 'default',
-            ...options
+            in: isIn,
         });
         this.tier = tier;
     }

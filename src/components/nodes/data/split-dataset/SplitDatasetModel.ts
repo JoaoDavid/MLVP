@@ -13,8 +13,8 @@ export class SplitDatasetModel extends CoreNodeModel {
 
     constructor() {
         super(NODE_SPLIT_DATASET.codeName, NODE_SPLIT_DATASET.name, NODE_SPLIT_DATASET.tier);
-        this.addInPort('dataset');
-        this.addOutPort('');
+        this.addInPort();
+        this.addOutPort();
     }
 
     getTestSize(): number {
@@ -41,23 +41,13 @@ export class SplitDatasetModel extends CoreNodeModel {
         this.shuffle = value;
     }
 
-    protected addInPort(label: string): void {
-        const p = new DatasetPortModel(this.tier, {
-            in: true,
-            name: label,
-            label: label,
-            alignment: PortModelAlignment.LEFT
-        });
+    protected addInPort(): void {
+        const p = new DatasetPortModel(this.getTier(), true, "IN", "");
         super.addPort(p);
     }
 
-    protected addOutPort(label: string): void {
-        const p = new DatasetPortModel(this.tier, {
-            in: false,
-            name: label,
-            label: label,
-            alignment: PortModelAlignment.RIGHT
-        });
+    protected addOutPort(): void {
+        const p = new DatasetPortModel(this.getTier(), false, "OUT", "");
         super.addPort(p);
     }
 

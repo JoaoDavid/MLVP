@@ -1,38 +1,10 @@
-import {
-    PortModel,
-    PortModelAlignment,
-    PortModelGenerics,
-    PortModelOptions
-} from '@projectstorm/react-diagrams-core';
-import { BasePortModel} from "../../core/BasePort/BasePortModel";
-
-export interface DatasetPortModelOptions extends PortModelOptions {
-    label?: string;
-    in?: boolean;
-}
-
-export interface DatasetPortModelGenerics extends PortModelGenerics {
-    OPTIONS: DatasetPortModelOptions;
-}
+import {PortModel} from '@projectstorm/react-diagrams-core';
+import {BasePortModel} from "../../core/BasePort/BasePortModel";
 
 export class DatasetPortModel extends BasePortModel {
-    constructor(tier: number, isIn: boolean, name?: string, label?: string);
-    constructor(tier: number, options: DatasetPortModelOptions);
-    constructor(tier: number, options: DatasetPortModelOptions | boolean, name?: string, label?: string) {
-        if (!!name) {
-            options = {
-                in: !!options,
-                name: name,
-                label: label
-            };
-        }
-        options = options as DatasetPortModelOptions;
-        super(tier, {
-            label: options.label || options.name,
-            alignment: options.in ? PortModelAlignment.LEFT : PortModelAlignment.RIGHT,
-            type: 'default',
-            ...options
-        });
+
+    constructor(tier: number, isIn: boolean, name: string, label: string){
+        super(tier, isIn, name, label);
     }
 
     canLinkToPort(port: PortModel): boolean {

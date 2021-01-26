@@ -1,6 +1,5 @@
 import {CoreNodeModel} from "../../../core/CoreNode/CoreNodeModel";
 import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
-import {PortModelAlignment} from "@projectstorm/react-diagrams-core";
 import {NODE_RANDOM_FOREST} from "../ModelConfig";
 import {MLModelPortModel} from "../../../ports/model/MLModelPortModel";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
@@ -18,8 +17,8 @@ export class RandomForestNodeModel extends CoreNodeModel {
 
     constructor() {
         super(NODE_RANDOM_FOREST.codeName, NODE_RANDOM_FOREST.name, NODE_RANDOM_FOREST.tier);
-        this.addInPort('in');
-        this.addOutPort('out');
+        this.addInPort();
+        this.addOutPort();
     }
 
     getNumTrees(): number {
@@ -51,24 +50,13 @@ export class RandomForestNodeModel extends CoreNodeModel {
         this.maxDepth = value;
     }
 
-    protected addInPort(label: string): void {
-        const p = new DatasetPortModel(this.tier, {
-            in: true,
-            name: label,
-            label: label,
-            alignment: PortModelAlignment.LEFT,
-            maximumLinks: 1,
-        });
+    protected addInPort(): void {
+        const p = new DatasetPortModel(this.getTier(), true, "IN", "");
         super.addPort(p);
     }
 
-    protected addOutPort(label: string): void {
-        const p = new MLModelPortModel(this.tier, {
-            in: false,
-            name: label,
-            label: label,
-            alignment: PortModelAlignment.RIGHT
-        });
+    protected addOutPort(): void {
+        const p = new MLModelPortModel(this.tier, false, "OUT", "");
         super.addPort(p);
     }
 

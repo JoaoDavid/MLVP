@@ -1,7 +1,6 @@
 import Papa from "papaparse";
 import {CoreNodeModel} from "../../../../core/CoreNode/CoreNodeModel";
 import {DatasetPortModel} from "../../../../ports/dataset/DatasetPortModel";
-import {PortModelAlignment} from "@projectstorm/react-diagrams-core";
 import {NODE_CSV} from "../../DataConfig";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
 
@@ -16,7 +15,7 @@ export class CSVNodeModel extends CoreNodeModel {
     constructor() {
         super(NODE_CSV.codeName, NODE_CSV.name, NODE_CSV.tier);
         this.resetFile();
-        this.addOutPort('');
+        this.addOutPort();
     }
 
     private resetFile(): void {
@@ -42,14 +41,8 @@ export class CSVNodeModel extends CoreNodeModel {
         return this.columnNames;
     }
 
-    protected addOutPort(label: string): void {
-        const p = new DatasetPortModel(this.getTier(),
-        {
-            in: false,
-            name: label,
-            label: label,
-            alignment: PortModelAlignment.RIGHT,
-        });
+    protected addOutPort(): void {
+        const p = new DatasetPortModel(this.getTier(), false, "", "");
         super.addPort(p);
     }
 
