@@ -51,12 +51,12 @@ export class RandomForestNodeModel extends CoreNodeModel {
     }
 
     protected addInPort(): void {
-        const p = new DatasetPortModel(this.getTier(), true, "IN", "");
+        const p = new DatasetPortModel(this.getTier(), true, "DATASET", "");
         super.addPort(p);
     }
 
     protected addOutPort(): void {
-        const p = new MLModelPortModel(this.tier, false, "OUT", "");
+        const p = new MLModelPortModel(this.tier, false, "MODEL", "");
         super.addPort(p);
     }
 

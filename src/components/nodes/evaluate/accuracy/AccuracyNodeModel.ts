@@ -12,8 +12,8 @@ export class AccuracyNodeModel extends CoreNodeModel {
     }
 
     protected addInModelPort(label: string): void {
-        const datasetPort = new DatasetPortModel(this.tier, true, "in-ds", "");
-        const model = new MLModelPortModel(this.tier, true, "in-model", "");
+        const datasetPort = new DatasetPortModel(this.tier, true, "DATASET", "");
+        const model = new MLModelPortModel(this.tier, true, "MODEL", "");
         super.addPort(datasetPort);
         super.addPort(model);
     }

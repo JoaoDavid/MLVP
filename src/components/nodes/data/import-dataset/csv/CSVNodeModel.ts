@@ -42,7 +42,7 @@ export class CSVNodeModel extends CoreNodeModel {
     }
 
     protected addOutPort(): void {
-        const p = new DatasetPortModel(this.getTier(), false, "", "");
+        const p = new DatasetPortModel(this.getTier(), false, "DATASET", "");
         super.addPort(p);
     }
 
