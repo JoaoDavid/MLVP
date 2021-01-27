@@ -87,4 +87,8 @@ export abstract class BasePortModel extends PortModel<BasePortModelGenerics> {
         return this.options.in;
     }
 
+    getName(): string {
+        return this.options.name
+    }
+
 }
