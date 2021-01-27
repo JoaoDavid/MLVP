@@ -2,11 +2,13 @@ from mlvp.codegen.templates.CodeTemplate import *
 from mlvp.codegen.templates.LibNames import *
 from mlvp.codegen.Emitter import Emitter
 from mlvp.codegen.TopoSort import TopoSort
+from mlvp.statement import Statement
 from mlvp.statement import DatasetDeclarationStatement
 from mlvp.statement import ModelAccuracyStatement
 from mlvp.statement import RandomForestStatement
 from mlvp.statement import ModelTrainStatement
 from mlvp.statement import SplitDatasetStatement
+from mlvp.statement import ParentLink, Port
 
 
 class CodeGenerator:
@@ -37,8 +39,9 @@ class CodeGenerator:
         final_file.close()
         return file_text
 
-    def __write_statements(self, statement):
+    def __write_statements(self, statement: Statement):
         curr_count = self.emitter.get_count()
+        parent_links = statement.parent_links
         if isinstance(statement, DatasetDeclarationStatement):
             df_var = "df" + str(curr_count)
             x = "x" + str(curr_count)
@@ -50,32 +53,33 @@ class CodeGenerator:
             self.out_file.write(FEATURES.format(x=x, var=df_var, target=statement.ds_type.target))
             self.out_file.write(TARGET.format(y=y, var=df_var, target=statement.ds_type.target))
         if isinstance(statement, SplitDatasetStatement):
-            parent_statement = statement.parents[0]
-            if isinstance(parent_statement, DatasetDeclarationStatement):
-                x_y = self.emitter.get(statement.parents[0])
+            parent = parent_links[0].parent_statement
+            if isinstance(parent, DatasetDeclarationStatement):
+                x_y = self.emitter.get(parent)
             print(statement)
             print(statement.node_id)
-            print(parent_statement)
-            print(parent_statement.node_id)
+            print(parent_links[0])
+            print(parent)
             x_train = x_y[0] + "_train" + str(curr_count)
             y_train = x_y[1] + "_train" + str(curr_count)
             x_test = x_y[0] + "_test" + str(curr_count)
             y_test = x_y[1] + "_test" + str(curr_count)
-            self.out_file.write(TRAIN_TEST_SPLIT_CALL.format(x_train=x_train, x_test=x_test, y_train=y_train, y_test=y_test, x=x_y[0], y=x_y[1], test_size=statement.test_size, train_size=statement.train_size, shuffle=statement.shuffle))
+            self.out_file.write(
+                TRAIN_TEST_SPLIT_CALL.format(x_train=x_train, x_test=x_test, y_train=y_train, y_test=y_test, x=x_y[0],
+                                             y=x_y[1], test_size=statement.test_size, train_size=statement.train_size,
+                                             shuffle=statement.shuffle))
             self.emitter.set(statement, (x_train, y_train, x_test, y_test))
         elif isinstance(statement, RandomForestStatement):
             clf_var = "clf" + str(curr_count)
             self.emitter.set(statement, clf_var)
-            parent_statement = statement.parents[0]
+            parent = statement.parent_links[0].parent_statement
             x, y = "", ""
-            if isinstance(parent_statement, DatasetDeclarationStatement):
-                x_y = self.emitter.get(statement.parents[0])
+            if isinstance(parent, DatasetDeclarationStatement):
+                x_y = self.emitter.get(parent)
                 x = x_y[0]
                 y = x_y[1]
-            elif isinstance(parent_statement, SplitDatasetStatement):
-                xytrain_xytest = self.emitter.get(statement.parents[0])
-                x = xytrain_xytest[0]
-                y = xytrain_xytest[1]
+            elif isinstance(parent, SplitDatasetStatement):
+                x, y = self.get_split_dataset_variables(parent_links[0])
             model_type = statement.model_type
             self.out_file.write(
                 RANDOM_FOREST_INIT.format(var=clf_var, num_trees=model_type.num_trees, criterion=model_type.criterion,
@@ -83,18 +87,17 @@ class CodeGenerator:
             self.out_file.write(MODEL_FIT.format(var=clf_var, x=x, y=y))
         elif isinstance(statement, ModelAccuracyStatement):
             y_predicted = "y_predicted" + str(curr_count)
-            clf_var, x, y = "", "" , ""
-            for curr in statement.parents:
-                if isinstance(curr, ModelTrainStatement):
-                    clf_var = self.emitter.get(curr)
-                elif isinstance(curr, DatasetDeclarationStatement):
-                    x_y = self.emitter.get(curr)
+            clf_var, x, y = "", "", ""
+            for curr in parent_links:
+                parent = curr.parent_statement
+                if isinstance(parent, ModelTrainStatement):
+                    clf_var = self.emitter.get(parent)
+                elif isinstance(parent, DatasetDeclarationStatement):
+                    x_y = self.emitter.get(parent)
                     x = x_y[0]
                     y = x_y[1]
-                elif isinstance(curr, SplitDatasetStatement):
-                    xytrain_xytest = self.emitter.get(curr)
-                    x = xytrain_xytest[2]
-                    y = xytrain_xytest[3]
+                elif isinstance(parent, SplitDatasetStatement):
+                    x, y = self.get_split_dataset_variables(curr)
             self.out_file.write(MODEL_PREDICT.format(var=y_predicted, clf_var=clf_var, x=x))
             series_list = y + "_list" + str(curr_count)
             counter = "counter" + str(curr_count)
@@ -106,3 +109,16 @@ class CodeGenerator:
             self.out_file.write(" " * 8 + counter + " += 1\n")
             self.out_file.write(PRINT.format(content=counter + "/" + y_len + " * 100"))
         self.out_file.write("\n")
+
+    def get_split_dataset_variables(self, parent_link: ParentLink):
+        xytrain_xytest = self.emitter.get(parent_link.parent_statement)
+        print(parent_link.parent_statement.ports)
+        print(parent_link.parent_statement.ports[parent_link.parent_source_port])
+        parent_port = parent_link.parent_statement.ports[parent_link.parent_source_port]
+        if parent_port.name == 'TRAIN_DATASET':
+            print('TRAIN_DATASET')
+            return xytrain_xytest[0], xytrain_xytest[1]
+        elif parent_port.name == 'TEST_DATASET':
+            print('TEST_DATASET')
+            return xytrain_xytest[2], xytrain_xytest[3]
+        print('here')

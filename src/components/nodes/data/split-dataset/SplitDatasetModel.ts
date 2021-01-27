@@ -46,8 +46,8 @@ export class SplitDatasetModel extends CoreNodeModel {
     }
 
     protected addOutPort(): void {
-        const p1 = new DatasetPortModel(this.getTier(), false, "out-train-ds", "");
-        const p2 = new DatasetPortModel(this.getTier(), false, "out-test-ds", "");
+        const p1 = new DatasetPortModel(this.getTier(), false, "TRAIN_DATASET", "");
+        const p2 = new DatasetPortModel(this.getTier(), false, "TEST_DATASET", "");
         super.addPort(p1);
         super.addPort(p2);
     }
