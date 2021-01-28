@@ -1,20 +1,20 @@
 import * as React from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams-core';
-import {RandomForestNodeModel} from './RandomForestNodeModel';
-import CoreNodeWidget from '../../../core/CoreNode/CoreNodeWidget';
-import RandomForestModal from './RandomForestModal';
-import { MODEL_CONFIG } from './../ModelConfig';
+import {RandomForestClassifierModel} from './RandomForestClassifierModel';
+import CoreNodeWidget from '../../../../core/CoreNode/CoreNodeWidget';
+import RandomForestClassifierModal from './RandomForestClassifierModal';
+import { MODEL_CONFIG } from '../../ModelConfig';
 
 interface NodeProps {
-    node: RandomForestNodeModel;
+    node: RandomForestClassifierModel;
     engine: DiagramEngine;
 }
 
 type NodeState = {
-    node: RandomForestNodeModel;
+    node: RandomForestClassifierModel;
 };
 
-class RandomForestNodeWidget extends React.Component<NodeProps, NodeState> {
+class RandomForestClassifierWidget extends React.Component<NodeProps, NodeState> {
 
     state = {
         node: this.props.node,
@@ -42,9 +42,9 @@ class RandomForestNodeWidget extends React.Component<NodeProps, NodeState> {
     }
 
     render() {
-        const modal = <RandomForestModal node={this.state.node} numTreesChanged={this.numTreesChanged}
-                                         maxDepthChanged={this.maxDepthChanged}
-                                         criterionChanged={this.criterionChanged}/>;
+        const modal = <RandomForestClassifierModal node={this.state.node} numTreesChanged={this.numTreesChanged}
+                                                   maxDepthChanged={this.maxDepthChanged}
+                                                   criterionChanged={this.criterionChanged}/>;
 
         return (
             <CoreNodeWidget node={this.state.node} engine={this.props.engine} color={MODEL_CONFIG.color}
@@ -58,4 +58,4 @@ class RandomForestNodeWidget extends React.Component<NodeProps, NodeState> {
 
 }
 
-export default RandomForestNodeWidget;
+export default RandomForestClassifierWidget;

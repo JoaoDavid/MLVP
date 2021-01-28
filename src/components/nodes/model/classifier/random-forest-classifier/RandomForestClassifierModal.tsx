@@ -2,17 +2,17 @@ import * as React from 'react';
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {RandomForestNodeModel, CriterionEnum} from "./RandomForestNodeModel";
+import {RandomForestClassifierModel, CriterionEnum} from "./RandomForestClassifierModel";
 
 
 interface ModalProps {
-    node: RandomForestNodeModel;
+    node: RandomForestClassifierModel;
     numTreesChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
     maxDepthChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
     criterionChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const RandomForestModal = (props: ModalProps) => {
+const RandomForestClassifierModal = (props: ModalProps) => {
     return (
         <Form>
             <Form.Group>
@@ -39,4 +39,4 @@ const RandomForestModal = (props: ModalProps) => {
     )
 }
 
-export default RandomForestModal;
+export default RandomForestClassifierModal;

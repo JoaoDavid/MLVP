@@ -1,7 +1,7 @@
-import {CoreNodeModel} from "../../../core/CoreNode/CoreNodeModel";
-import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
-import {NODE_RANDOM_FOREST} from "../ModelConfig";
-import {MLModelPortModel} from "../../../ports/model/MLModelPortModel";
+import {CoreNodeModel} from "../../../../core/CoreNode/CoreNodeModel";
+import {DatasetPortModel} from "../../../../ports/dataset/DatasetPortModel";
+import {NODE_RANDOM_FOREST} from "../../ModelConfig";
+import {MLModelPortModel} from "../../../../ports/model/MLModelPortModel";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
 
 export enum CriterionEnum {
@@ -9,7 +9,7 @@ export enum CriterionEnum {
     ENTROPY = 'entropy',
 }
 
-export class RandomForestNodeModel extends CoreNodeModel {
+export class RandomForestClassifierModel extends CoreNodeModel {
 
     private numTrees: number = 100; //int
     private criterion: CriterionEnum = CriterionEnum.GINI;

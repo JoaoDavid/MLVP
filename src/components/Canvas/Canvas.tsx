@@ -6,7 +6,7 @@ import {NodeModel} from "@projectstorm/react-diagrams-core";
 import {CoreNodeModel} from "../core/CoreNode/CoreNodeModel";
 import {DiagramState} from "../core/states/DiagramState";
 import {CSVNodeFactory} from "../nodes/data/import-dataset/csv/CSVNodeFactory";
-import {RandomForestNodeFactory} from "../nodes/model/random-forest/RandomForestNodeFactory";
+import {RandomForestClassifierFactory} from "../nodes/model/classifier/random-forest-classifier/RandomForestClassifierFactory";
 import {AccuracyNodeFactory} from "../nodes/evaluate/accuracy/AccuracyNodeFactory";
 import {SplitDatasetFactory} from "../nodes/data/split-dataset/SplitDatasetFactory";
 
@@ -37,7 +37,7 @@ class Canvas extends React.Component<CanvasProps, CanvasState> {
 
     registerFactories = () => {
         this.state.engine.getNodeFactories().registerFactory(CSVNodeFactory.getInstance());
-        this.state.engine.getNodeFactories().registerFactory(RandomForestNodeFactory.getInstance());
+        this.state.engine.getNodeFactories().registerFactory(RandomForestClassifierFactory.getInstance());
         this.state.engine.getNodeFactories().registerFactory(AccuracyNodeFactory.getInstance());
         this.state.engine.getNodeFactories().registerFactory(SplitDatasetFactory.getInstance());
     }
