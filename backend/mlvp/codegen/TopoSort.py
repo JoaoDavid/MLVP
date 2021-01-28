@@ -53,6 +53,7 @@ class TopoSort:
                 statement.ports = ports
                 layers[tier].append(statement)
                 self.statements[key] = statement
+                libraries.add(FROM_IMPORT.format(package=SKLEARN + "." + METRICS, class_to_import=ACCURACY_SCORE))
         self.__parse_parents()
         return layers, libraries
 

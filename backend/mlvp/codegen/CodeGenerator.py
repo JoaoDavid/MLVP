@@ -99,15 +99,9 @@ class CodeGenerator:
                 elif isinstance(parent, SplitDatasetStatement):
                     x, y = self.get_split_dataset_variables(curr)
             self.out_file.write(MODEL_PREDICT.format(var=y_predicted, clf_var=clf_var, x=x))
-            series_list = y + "_list" + str(curr_count)
-            counter = "counter" + str(curr_count)
-            y_len = "len(" + series_list + ")"
-            self.out_file.write(series_list + " = " + SERIES_TO_LIST.format(series_var=y))
-            self.out_file.write(counter + " = " + str(0) + "\n")
-            self.out_file.write("for i in range(" + y_len + "):\n")
-            self.out_file.write(" " * 4 + "if " + series_list + "[i] == " + y_predicted + "[i]:\n")
-            self.out_file.write(" " * 8 + counter + " += 1\n")
-            self.out_file.write(PRINT.format(content=counter + "/" + y_len + " * 100"))
+            score = "score" + str(curr_count)
+            self.out_file.write(score + " = " + ACCURACY_SCORE_CALL.format(y_true=y, y_pred=y_predicted))
+            self.out_file.write("print("+score+")\n")
         self.out_file.write("\n")
 
     def get_split_dataset_variables(self, parent_link: ParentLink):
