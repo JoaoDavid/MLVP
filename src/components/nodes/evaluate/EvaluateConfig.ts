@@ -10,7 +10,7 @@ export const EVALUATE_CONFIG:CategoryConfig = {
 export const NODE_ACCURACY:NodeConfig = {
     codeName: "NODE_ACCURACY_CLASSIFIER",
     name: "Evaluate Classifier",
-    tier: 3,
+    tier: 4,
 }
 
 

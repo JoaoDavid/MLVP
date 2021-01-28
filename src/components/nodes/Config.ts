@@ -15,4 +15,4 @@ export type CategoryConfig = {
     color: string,
 }
 
-export const NUM_TIERS = 4;
+export const NUM_TIERS = 20;

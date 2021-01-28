@@ -19,6 +19,7 @@ import {AbstractReactFactory} from "@projectstorm/react-canvas-core";
 import {NodeModel} from "@projectstorm/react-diagrams-core";
 import {SplitDatasetFactory} from "../components/nodes/data/split-dataset/SplitDatasetFactory";
 import {CoreDiagram} from "../components/core/diagram/CoreDiagram";
+import {OversamplingFactory} from "../components/nodes/data/oversampling/OversamplingFactory";
 
 interface AppProps {
 
@@ -47,6 +48,7 @@ class App extends React.Component<AppProps, AppState> {
     addTestNodes = () => {
         let count = 10;
         this.nodes.push(this.generateModel(CSVFactory.getInstance()));
+        this.nodes.push(this.generateModel(OversamplingFactory.getInstance()));
         this.nodes.push(this.generateModel(SplitDatasetFactory.getInstance()));
         this.nodes.push(this.generateModel(RandomForestClassifierFactory.getInstance()));
         this.nodes.push(this.generateModel(AccuracyClassifierFactory.getInstance()));
