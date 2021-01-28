@@ -3,7 +3,7 @@ import { RandomForestClassifierModel } from './RandomForestClassifierModel';
 import RandomForestClassifierWidget from './RandomForestClassifierWidget';
 import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-canvas-core';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
-import { NODE_RANDOM_FOREST } from "../../ModelConfig";
+import { NODE_RANDOM_FOREST_CLASSIFIER } from "../../ModelConfig";
 import {CoreNodeFactory} from "../../../../core/CoreNode/CoreNodeFactory";
 import {Category} from "../../../Config";
 
@@ -13,7 +13,7 @@ export class RandomForestClassifierFactory extends CoreNodeFactory<RandomForestC
     private static INSTANCE: RandomForestClassifierFactory;
 
     private constructor() {
-        super(Category.MODEL, NODE_RANDOM_FOREST.codeName);
+        super(Category.MODEL, NODE_RANDOM_FOREST_CLASSIFIER.codeName);
     }
 
     static getInstance = () => {

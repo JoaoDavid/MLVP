@@ -40,7 +40,7 @@ class TopoSort:
                 self.statements[key] = statement
                 libraries.add(
                     FROM_IMPORT.format(package=SKLEARN + "." + MODEL_SELECTION, class_to_import=TRAIN_TEST_SPLIT))
-            elif value['type'] == 'NODE_RANDOM_FOREST':
+            elif value['type'] == 'NODE_RANDOM_FOREST_CLASSIFIER':
                 model_type = RandomForest(num_trees=value['numTrees'], criterion=value['criterion'],
                                           max_depth=value['maxDepth'])
                 statement = RandomForestStatement(node_id=key, model_type=model_type)

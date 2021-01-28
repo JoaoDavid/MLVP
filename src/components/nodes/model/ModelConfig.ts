@@ -7,9 +7,9 @@ export const MODEL_CONFIG:CategoryConfig = {
 }
 
 // NODES
-export const NODE_RANDOM_FOREST:NodeConfig = {
-    codeName: "NODE_RANDOM_FOREST",
-    name: "Random Forest",
+export const NODE_RANDOM_FOREST_CLASSIFIER:NodeConfig = {
+    codeName: "NODE_RANDOM_FOREST_CLASSIFIER",
+    name: "Random Forest Classifier",
     tier: 2,
 }
 
@@ -18,4 +18,4 @@ export const NODE_RANDOM_FOREST:NodeConfig = {
     Every node declared must be added to the following array
     to be passed into the side menu props for the drag and drop feature
 */
-export const MODEL_NODES:NodeConfig[] = [NODE_RANDOM_FOREST];
+export const MODEL_NODES:NodeConfig[] = [NODE_RANDOM_FOREST_CLASSIFIER];
