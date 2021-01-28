@@ -115,10 +115,10 @@ class CodeGenerator:
         print(parent_link.parent_statement.ports)
         print(parent_link.parent_statement.ports[parent_link.parent_source_port])
         parent_port = parent_link.parent_statement.ports[parent_link.parent_source_port]
-        if parent_port.name == 'TRAIN_DATASET':
-            print('TRAIN_DATASET')
+        if parent_port.name == 'Train Dataset':
+            print('Train Dataset')
             return xytrain_xytest[0], xytrain_xytest[1]
-        elif parent_port.name == 'TEST_DATASET':
-            print('TEST_DATASET')
+        elif parent_port.name == 'Test Dataset':
+            print('Test Dataset')
             return xytrain_xytest[2], xytrain_xytest[3]
         print('here')

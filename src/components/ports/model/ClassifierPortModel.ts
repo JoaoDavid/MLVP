@@ -1,15 +1,15 @@
 import {PortModel} from '@projectstorm/react-diagrams-core';
 import {BasePortModel} from "../../core/BasePort/BasePortModel";
 
-export class DatasetPortModel extends BasePortModel {
+export class ClassifierPortModel extends BasePortModel {
 
     constructor(tier: number, isIn: boolean, name?: string, label?: string, maxLinks?: number){
-        super(tier, isIn, name?name:"Dataset", label?label:"", maxLinks);
+        super(tier, isIn, name?name:"Classifier", label?label:"", maxLinks);
     }
 
     canLinkToPort(port: PortModel): boolean {
-        console.log('canLinkToPort at DatasetPortModel');
-        if (port instanceof DatasetPortModel) {
+        console.log('canLinkToPort at ClassifierPortModel');
+        if (port instanceof ClassifierPortModel) {
             return super.canLinkToPort(port);
         }
         return false;

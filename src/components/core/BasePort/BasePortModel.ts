@@ -91,4 +91,8 @@ export abstract class BasePortModel extends PortModel<BasePortModelGenerics> {
         return this.options.name
     }
 
+    getLabel(): string {
+        return this.options.label
+    }
+
 }

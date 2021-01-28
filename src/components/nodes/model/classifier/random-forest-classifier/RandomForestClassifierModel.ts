@@ -1,7 +1,7 @@
 import {CoreNodeModel} from "../../../../core/CoreNode/CoreNodeModel";
 import {DatasetPortModel} from "../../../../ports/dataset/DatasetPortModel";
 import {NODE_RANDOM_FOREST_CLASSIFIER} from "../../ModelConfig";
-import {MLModelPortModel} from "../../../../ports/model/MLModelPortModel";
+import {ClassifierPortModel} from "../../../../ports/model/ClassifierPortModel";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
 
 export enum CriterionEnum {
@@ -51,12 +51,12 @@ export class RandomForestClassifierModel extends CoreNodeModel {
     }
 
     protected addInPort(): void {
-        const p = new DatasetPortModel(this.getTier(), true, "DATASET", "");
+        const p = new DatasetPortModel(this.getTier(), true);
         super.addPort(p);
     }
 
     protected addOutPort(): void {
-        const p = new MLModelPortModel(this.tier, false, "MODEL", "");
+        const p = new ClassifierPortModel(this.tier, false);
         super.addPort(p);
     }
 
