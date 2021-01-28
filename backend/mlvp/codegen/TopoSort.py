@@ -48,7 +48,7 @@ class TopoSort:
                 layers[tier].append(statement)
                 self.statements[key] = statement
                 libraries.add(FROM_IMPORT.format(package=SKLEARN + "." + ENSEMBLE, class_to_import=RANDOM_FOREST_CLF))
-            elif value['type'] == 'NODE_ACCURACY':
+            elif value['type'] == 'NODE_ACCURACY_CLASSIFIER':
                 statement = ModelAccuracyStatement(node_id=key)
                 statement.ports = ports
                 layers[tier].append(statement)
