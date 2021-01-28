@@ -4,13 +4,13 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Table from "react-bootstrap/Table";
 import {ChangeEvent} from "react";
-import {CSVNodeModel} from "./CSVNodeModel";
+import {CSVModel} from "./CSVModel";
 import {FormGroup} from "react-bootstrap";
 
 
 interface CSVModalProps {
     changed: (files: FileList) => void;
-    node: CSVNodeModel;
+    node: CSVModel;
 }
 
 const CSVModal = (props: CSVModalProps) => {

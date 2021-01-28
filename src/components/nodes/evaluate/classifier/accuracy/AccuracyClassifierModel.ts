@@ -1,10 +1,10 @@
-import {CoreNodeModel} from "../../../core/CoreNode/CoreNodeModel";
-import {NODE_ACCURACY} from "../EvaluateConfig";
-import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
-import {MLModelPortModel} from "../../../ports/model/MLModelPortModel";
+import {CoreNodeModel} from "../../../../core/CoreNode/CoreNodeModel";
+import {NODE_ACCURACY} from "../../EvaluateConfig";
+import {DatasetPortModel} from "../../../../ports/dataset/DatasetPortModel";
+import {MLModelPortModel} from "../../../../ports/model/MLModelPortModel";
 
 
-export class AccuracyNodeModel extends CoreNodeModel {
+export class AccuracyClassifierModel extends CoreNodeModel {
 
     constructor() {
         super(NODE_ACCURACY.codeName, NODE_ACCURACY.name, NODE_ACCURACY.tier);

@@ -11,9 +11,9 @@ import axios from "axios";
 import download from 'js-file-download';
 import BottomNav from "../components/UI/bottom-nav/BottomNav";
 import Canvas from "../components/Canvas/Canvas";
-import {CSVNodeFactory} from "../components/nodes/data/import-dataset/csv/CSVNodeFactory";
+import {CSVFactory} from "../components/nodes/data/import-dataset/csv/CSVFactory";
 import {RandomForestClassifierFactory} from "../components/nodes/model/classifier/random-forest-classifier/RandomForestClassifierFactory";
-import {AccuracyNodeFactory} from "../components/nodes/evaluate/accuracy/AccuracyNodeFactory";
+import {AccuracyClassifierFactory} from "../components/nodes/evaluate/classifier/accuracy/AccuracyClassifierFactory";
 import {CoreNodeModel} from "../components/core/CoreNode/CoreNodeModel";
 import {AbstractReactFactory} from "@projectstorm/react-canvas-core";
 import {NodeModel} from "@projectstorm/react-diagrams-core";
@@ -46,10 +46,10 @@ class App extends React.Component<AppProps, AppState> {
 
     addTestNodes = () => {
         let count = 10;
-        this.nodes.push(this.generateModel(CSVNodeFactory.getInstance()));
+        this.nodes.push(this.generateModel(CSVFactory.getInstance()));
         this.nodes.push(this.generateModel(SplitDatasetFactory.getInstance()));
         this.nodes.push(this.generateModel(RandomForestClassifierFactory.getInstance()));
-        this.nodes.push(this.generateModel(AccuracyNodeFactory.getInstance()));
+        this.nodes.push(this.generateModel(AccuracyClassifierFactory.getInstance()));
 
         this.nodes.forEach((node: CoreNodeModel) => {
             this.state.model.addNode(node);
