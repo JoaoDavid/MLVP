@@ -36,4 +36,4 @@ export const NODE_UNDERSAMPLING:NodeConfig = {
     Every node declared must be added to the following array
     to be passed into the side menu props for the drag and drop feature
 */
-export const DATA_NODES:NodeConfig[] = [NODE_CSV, NODE_SPLIT_DATASET, NODE_OVERSAMPLING];
+export const DATA_NODES:NodeConfig[] = [NODE_CSV, NODE_SPLIT_DATASET, NODE_OVERSAMPLING, NODE_UNDERSAMPLING];

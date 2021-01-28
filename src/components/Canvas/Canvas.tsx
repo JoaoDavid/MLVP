@@ -10,6 +10,7 @@ import {RandomForestClassifierFactory} from "../nodes/model/classifier/random-fo
 import {AccuracyClassifierFactory} from "../nodes/evaluate/classifier/accuracy/AccuracyClassifierFactory";
 import {SplitDatasetFactory} from "../nodes/data/split-dataset/SplitDatasetFactory";
 import {OversamplingFactory} from "../nodes/data/oversampling/OversamplingFactory";
+import {UndersamplingFactory} from "../nodes/data/undersampling/UndersamplingFactory";
 
 interface CanvasProps {
     dragDropFormat: string,
@@ -40,6 +41,7 @@ class Canvas extends React.Component<CanvasProps, CanvasState> {
         this.state.engine.getNodeFactories().registerFactory(CSVFactory.getInstance());
         this.state.engine.getNodeFactories().registerFactory(RandomForestClassifierFactory.getInstance());
         this.state.engine.getNodeFactories().registerFactory(OversamplingFactory.getInstance());
+        this.state.engine.getNodeFactories().registerFactory(UndersamplingFactory.getInstance());
         this.state.engine.getNodeFactories().registerFactory(AccuracyClassifierFactory.getInstance());
         this.state.engine.getNodeFactories().registerFactory(SplitDatasetFactory.getInstance());
     }
