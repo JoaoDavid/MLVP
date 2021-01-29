@@ -21,6 +21,7 @@ import {SplitDatasetFactory} from "../components/nodes/data/split-dataset/SplitD
 import {CoreDiagram} from "../components/core/diagram/CoreDiagram";
 import {OversamplingFactory} from "../components/nodes/data/oversampling/OversamplingFactory";
 import {UndersamplingFactory} from "../components/nodes/data/undersampling/UndersamplingFactory";
+import {PCAFactory} from "../components/nodes/data/principal-component-analysis/PCAFactory";
 
 interface AppProps {
 
@@ -51,6 +52,7 @@ class App extends React.Component<AppProps, AppState> {
         this.nodes.push(this.generateModel(CSVFactory.getInstance()));
         this.nodes.push(this.generateModel(OversamplingFactory.getInstance()));
         this.nodes.push(this.generateModel(UndersamplingFactory.getInstance()));
+        this.nodes.push(this.generateModel(PCAFactory.getInstance()));
         this.nodes.push(this.generateModel(SplitDatasetFactory.getInstance()));
         this.nodes.push(this.generateModel(RandomForestClassifierFactory.getInstance()));
         this.nodes.push(this.generateModel(AccuracyClassifierFactory.getInstance()));
