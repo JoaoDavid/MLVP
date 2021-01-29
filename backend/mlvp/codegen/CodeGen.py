@@ -41,7 +41,8 @@ class CodeGen:
         print(statement)
         if not statement.visited:
             statement.visited = True
-            for parent in statement.parents:
+            for parent_link in statement.parent_links:
+                parent = parent_link.parent_statement
                 if not parent.visited: # may be redundant
                     self.__write_statements(parent)
             # parents are all visited

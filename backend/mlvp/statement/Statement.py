@@ -8,7 +8,6 @@ class Statement(ABC):
         self.node_id = node_id
         self.parent_links = []
         self.ports = {}
-        self.parents = []
         self.children = []
         self.visited = False
         pass

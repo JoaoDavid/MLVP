@@ -68,7 +68,6 @@ class ParseJSON:
             target_node = self.statements[data['target']]
             # add children and parents to the respective arrays
             source_node.children.append(target_node)
-            target_node.parents.append(source_node)
             target_node.parent_links.append(ParentLink(source_node, source_port))
 
     def __parse_ports(self, json_ports):
