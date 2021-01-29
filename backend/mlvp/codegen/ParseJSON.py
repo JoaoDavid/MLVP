@@ -16,6 +16,7 @@ class ParseJSON:
         self.json_links = {}
         self.json_nodes = {}
         # parsed information
+        self.libraries = set()
         self.statements = {}
         self.ports = {}
         self.roots = []
@@ -28,36 +29,41 @@ class ParseJSON:
                 self.json_nodes = layer['models']
         self.__parse_nodes()
         self.__parse_links()
+        self.__parse_parents()
 
         for node in self.roots:
             print(node.children[0].children)
+        return self.libraries, self.statements, self.roots
 
     def __parse_nodes(self):
-        libraries = set()
         for node_id, data in self.json_nodes.items():
             if data['type'] == 'NODE_IMPORT_CSV':
                 ds_type = Csv(file_name=data['fileName'], num_cols=data['numCols'], num_rows=data['numRows'],
                               target=data['columnNames'][-1])
                 statement = DatasetDeclarationStatement(node_id=node_id, ds_type=ds_type)
+                statement.ports = self.__parse_ports(data['ports'])
                 self.statements[node_id] = statement
-                libraries.add(IMPORT_AS.format(lib_name=PANDAS, lib_var=PANDAS_VAR))
+                self.libraries.add(IMPORT_AS.format(lib_name=PANDAS, lib_var=PANDAS_VAR))
                 self.roots.append(statement)
             elif data['type'] == 'NODE_SPLIT_DATASET':
                 statement = SplitDatasetStatement(node_id=node_id, test_size=data['testSize'],
                                                   train_size=data['testSize'], shuffle=data['shuffle'])
+                statement.ports = self.__parse_ports(data['ports'])
                 self.statements[node_id] = statement
-                libraries.add(
+                self.libraries.add(
                     FROM_IMPORT.format(package=SKLEARN + "." + MODEL_SELECTION, class_to_import=TRAIN_TEST_SPLIT))
             elif data['type'] == 'NODE_RANDOM_FOREST_CLASSIFIER':
                 model_type = RandomForest(num_trees=data['numTrees'], criterion=data['criterion'],
                                           max_depth=data['maxDepth'])
                 statement = RandomForestStatement(node_id=node_id, model_type=model_type)
+                statement.ports = self.__parse_ports(data['ports'])
                 self.statements[node_id] = statement
-                libraries.add(FROM_IMPORT.format(package=SKLEARN + "." + ENSEMBLE, class_to_import=RANDOM_FOREST_CLF))
+                self.libraries.add(FROM_IMPORT.format(package=SKLEARN + "." + ENSEMBLE, class_to_import=RANDOM_FOREST_CLF))
             elif data['type'] == 'NODE_ACCURACY_CLASSIFIER':
                 statement = ModelAccuracyStatement(node_id=node_id)
+                statement.ports = self.__parse_ports(data['ports'])
                 self.statements[node_id] = statement
-                libraries.add(FROM_IMPORT.format(package=SKLEARN + "." + METRICS, class_to_import=ACCURACY_SCORE))
+                self.libraries.add(FROM_IMPORT.format(package=SKLEARN + "." + METRICS, class_to_import=ACCURACY_SCORE))
 
     def __parse_links(self):
         for link_id, data in self.json_links.items():

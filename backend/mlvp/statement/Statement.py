@@ -10,4 +10,5 @@ class Statement(ABC):
         self.ports = {}
         self.parents = []
         self.children = []
+        self.visited = False
         pass

@@ -1,5 +1,6 @@
 from mlvp.codegen.CodeGenerator import CodeGenerator
 from mlvp.codegen.ParseJSON import ParseJSON
+from mlvp.codegen.CodeGen import CodeGen
 
 def generate_code(diagram, file_name="mlvp-code-output"):
     for layer in diagram['layers']:
@@ -13,5 +14,7 @@ def generate_code(diagram, file_name="mlvp-code-output"):
 
 def generate_code_version2(diagram, file_name="mlvp-code-output"):
     parser = ParseJSON(json_diagram=diagram)
-    parser.parse()
+    libraries, statements, roots = parser.parse()
+    codegen = CodeGen(file_name, libraries, statements, roots)
+    codegen.generate_code()
 
