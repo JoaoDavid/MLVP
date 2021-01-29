@@ -42,9 +42,7 @@ class CodeGen:
         if not statement.visited:
             statement.visited = True
             for parent_link in statement.parent_links:
-                parent = parent_link.parent_statement
-                if not parent.visited: # may be redundant
-                    self.__write_statements(parent)
+                self.__write_statements(parent_link.parent_statement)
             # parents are all visited
             curr_count = self.emitter.get_count()
             parent_links = statement.parent_links
