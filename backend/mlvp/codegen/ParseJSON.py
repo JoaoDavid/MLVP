@@ -2,11 +2,13 @@ from mlvp.codegen.templates.CodeTemplate import *
 from mlvp.codegen.templates.LibNames import *
 from mlvp.datatype.dataset.Csv import Csv
 from mlvp.datatype.model.RandomForest import RandomForest
+from mlvp.statement import Port, ParentLink
 from mlvp.statement import DatasetDeclarationStatement
 from mlvp.statement import ModelAccuracyStatement
 from mlvp.statement import RandomForestStatement
 from mlvp.statement import SplitDatasetStatement
-from mlvp.statement import Port, ParentLink
+from mlvp.statement import OversamplingStatement, UnderSamplingStatement
+from mlvp.statement import PCAStatement
 
 
 class ParseJSON:
@@ -48,13 +50,29 @@ class ParseJSON:
                 self.statements[node_id] = statement
                 self.libraries.add(
                     FROM_IMPORT.format(package=SKLEARN + "." + MODEL_SELECTION, class_to_import=TRAIN_TEST_SPLIT))
+            elif data['type'] == 'NODE_OVERSAMPLING':
+                statement = OversamplingStatement(node_id=node_id, random_state=data['randomState'])
+                statement.ports = self.__parse_ports(data['ports'])
+                self.statements[node_id] = statement
+                # write lib import TODO
+            elif data['type'] == 'NODE_UNDERSAMPLING':
+                statement = UnderSamplingStatement(node_id=node_id, random_state=data['randomState'])
+                statement.ports = self.__parse_ports(data['ports'])
+                self.statements[node_id] = statement
+                # write lib import TODO
+            elif data['type'] == 'NODE_PCA':
+                statement = PCAStatement(node_id=node_id, random_state=data['randomState'])
+                statement.ports = self.__parse_ports(data['ports'])
+                self.statements[node_id] = statement
+                # write lib import TODO
             elif data['type'] == 'NODE_RANDOM_FOREST_CLASSIFIER':
                 model_type = RandomForest(num_trees=data['numTrees'], criterion=data['criterion'],
                                           max_depth=data['maxDepth'])
                 statement = RandomForestStatement(node_id=node_id, model_type=model_type)
                 statement.ports = self.__parse_ports(data['ports'])
                 self.statements[node_id] = statement
-                self.libraries.add(FROM_IMPORT.format(package=SKLEARN + "." + ENSEMBLE, class_to_import=RANDOM_FOREST_CLF))
+                self.libraries.add(
+                    FROM_IMPORT.format(package=SKLEARN + "." + ENSEMBLE, class_to_import=RANDOM_FOREST_CLF))
             elif data['type'] == 'NODE_ACCURACY_CLASSIFIER':
                 statement = ModelAccuracyStatement(node_id=node_id)
                 statement.ports = self.__parse_ports(data['ports'])

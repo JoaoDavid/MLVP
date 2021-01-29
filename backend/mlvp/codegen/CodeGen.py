@@ -1,13 +1,15 @@
 from mlvp.codegen.templates.CodeTemplate import *
 from mlvp.codegen.templates.LibNames import *
 from mlvp.codegen.Emitter import Emitter
+from mlvp.statement import ParentLink
 from mlvp.statement import Statement
 from mlvp.statement import DatasetDeclarationStatement
 from mlvp.statement import ModelAccuracyStatement
 from mlvp.statement import RandomForestStatement
 from mlvp.statement import ModelTrainStatement
 from mlvp.statement import SplitDatasetStatement
-from mlvp.statement import ParentLink, Port
+from mlvp.statement import OversamplingStatement, UnderSamplingStatement
+from mlvp.statement import PCAStatement
 
 
 class CodeGen:
@@ -57,7 +59,7 @@ class CodeGen:
                     LOAD_CSV.format(var=df_var, pandas_var=PANDAS_VAR, file_name=statement.ds_type.file_name))
                 self.out_file.write(FEATURES.format(x=x, var=df_var, target=statement.ds_type.target))
                 self.out_file.write(TARGET.format(y=y, var=df_var, target=statement.ds_type.target))
-            if isinstance(statement, SplitDatasetStatement):
+            elif isinstance(statement, SplitDatasetStatement):
                 print("SplitDatasetStatement")
                 parent = parent_links[0].parent_statement
                 if isinstance(parent, DatasetDeclarationStatement):
@@ -75,6 +77,15 @@ class CodeGen:
                                                  y=x_y[1], test_size=statement.test_size, train_size=statement.train_size,
                                                  shuffle=statement.shuffle))
                 self.emitter.set(statement, (x_train, y_train, x_test, y_test))
+            elif isinstance(statement, OversamplingStatement): #TODO
+                print("OversamplingStatement")
+                parent = parent_links[0].parent_statement
+            elif isinstance(statement, UnderSamplingStatement): #TODO
+                print("UnderSamplingStatement")
+                parent = parent_links[0].parent_statement
+            elif isinstance(statement, PCAStatement): #TODO
+                print("PCAStatement")
+                parent = parent_links[0].parent_statement
             elif isinstance(statement, RandomForestStatement):
                 print("RandomForestStatement")
                 clf_var = "clf" + str(curr_count)
