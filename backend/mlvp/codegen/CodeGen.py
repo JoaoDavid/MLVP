@@ -39,15 +39,17 @@ class CodeGen:
         return file_text
 
     def __write_statements(self, statement: Statement):
+        print(statement)
         if not statement.visited:
             statement.visited = True
             for parent in statement.parents:
                 if not parent.visited: # may be redundant
-                    self.__write_imports(parent)
+                    self.__write_statements(parent)
             # parents are all visited
             curr_count = self.emitter.get_count()
             parent_links = statement.parent_links
             if isinstance(statement, DatasetDeclarationStatement):
+                print("DatasetDeclarationStatement")
                 df_var = "df" + str(curr_count)
                 x = "x" + str(curr_count)
                 y = "y" + str(curr_count)
@@ -58,6 +60,7 @@ class CodeGen:
                 self.out_file.write(FEATURES.format(x=x, var=df_var, target=statement.ds_type.target))
                 self.out_file.write(TARGET.format(y=y, var=df_var, target=statement.ds_type.target))
             if isinstance(statement, SplitDatasetStatement):
+                print("SplitDatasetStatement")
                 parent = parent_links[0].parent_statement
                 if isinstance(parent, DatasetDeclarationStatement):
                     x_y = self.emitter.get(parent)
@@ -75,6 +78,7 @@ class CodeGen:
                                                  shuffle=statement.shuffle))
                 self.emitter.set(statement, (x_train, y_train, x_test, y_test))
             elif isinstance(statement, RandomForestStatement):
+                print("RandomForestStatement")
                 clf_var = "clf" + str(curr_count)
                 self.emitter.set(statement, clf_var)
                 parent = statement.parent_links[0].parent_statement
@@ -91,6 +95,7 @@ class CodeGen:
                                               max_depth=model_type.max_depth))
                 self.out_file.write(MODEL_FIT.format(var=clf_var, x=x, y=y))
             elif isinstance(statement, ModelAccuracyStatement):
+                print("ModelAccuracyStatement")
                 y_predicted = "y_predicted" + str(curr_count)
                 clf_var, x, y = "", "", ""
                 for curr in parent_links:
