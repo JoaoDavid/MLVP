@@ -54,17 +54,20 @@ class ParseJSON:
                 statement = OversamplingStatement(node_id=node_id, random_state=data['randomState'])
                 statement.ports = self.__parse_ports(data['ports'])
                 self.statements[node_id] = statement
-                # write lib import TODO
+                self.libraries.add(
+                    FROM_IMPORT.format(package=IMBLEARN + "." + OVER_SAMPLING, class_to_import=RANDOM_OVERSAMPLER))
             elif data['type'] == 'NODE_UNDERSAMPLING':
                 statement = UnderSamplingStatement(node_id=node_id, random_state=data['randomState'])
                 statement.ports = self.__parse_ports(data['ports'])
                 self.statements[node_id] = statement
-                # write lib import TODO
+                self.libraries.add(
+                    FROM_IMPORT.format(package=IMBLEARN + "." + UNDER_SAMPLING, class_to_import=RANDOM_UNDERSAMPLER))
             elif data['type'] == 'NODE_PCA':
                 statement = PCAStatement(node_id=node_id, random_state=data['randomState'])
                 statement.ports = self.__parse_ports(data['ports'])
                 self.statements[node_id] = statement
-                # write lib import TODO
+                self.libraries.add(
+                    FROM_IMPORT.format(package=SKLEARN + "." + DECOMPOSITION, class_to_import=PCA))
             elif data['type'] == 'NODE_RANDOM_FOREST_CLASSIFIER':
                 model_type = RandomForest(num_trees=data['numTrees'], criterion=data['criterion'],
                                           max_depth=data['maxDepth'])
