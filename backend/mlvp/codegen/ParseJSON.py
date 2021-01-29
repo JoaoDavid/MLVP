@@ -29,10 +29,6 @@ class ParseJSON:
                 self.json_nodes = layer['models']
         self.__parse_nodes()
         self.__parse_links()
-        # self.__parse_parents()
-
-        for node in self.roots:
-            print(node.children[0].children)
         return self.libraries, self.statements, self.roots
 
     def __parse_nodes(self):
@@ -70,23 +66,10 @@ class ParseJSON:
             source_node = self.statements[data['source']]
             source_port = source_node.ports[data['sourcePort']]
             target_node = self.statements[data['target']]
-            target_port = target_node.ports[data['targetPort']]
+            # add children and parents to the respective arrays
             source_node.children.append(target_node)
             target_node.parents.append(source_node)
-            target_node.parent_links.append(ParentLink(source_node, data['sourcePort']))
-
-    def __parse_parents(self):
-        for key, value in self.statements.items():
-            value.parent_links = self.__get_parent_statements(key)
-
-    # returns a list of statements that come before the statement with id==node_id
-    def __get_parent_statements(self, node_id: str):
-        parent_links = []
-        for key, value in self.json_links.items():
-            if node_id == value['target']:
-                print(node_id + " " + key + " " + value['source'])
-                parent_links.append(ParentLink(self.statements[value['source']], value['sourcePort']))
-        return parent_links
+            target_node.parent_links.append(ParentLink(source_node, source_port))
 
     def __parse_ports(self, json_ports):
         ports = {}

@@ -118,8 +118,8 @@ class CodeGen:
     def get_split_dataset_variables(self, parent_link: ParentLink):
         xytrain_xytest = self.emitter.get(parent_link.parent_statement)
         print(parent_link.parent_statement.ports)
-        print(parent_link.parent_statement.ports[parent_link.parent_source_port])
-        parent_port = parent_link.parent_statement.ports[parent_link.parent_source_port]
+        print(parent_link.parent_source_port)
+        parent_port = parent_link.parent_source_port
         if parent_port.name == 'Train Dataset':
             print('Train Dataset')
             return xytrain_xytest[0], xytrain_xytest[1]
