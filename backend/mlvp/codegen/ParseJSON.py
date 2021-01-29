@@ -29,7 +29,7 @@ class ParseJSON:
                 self.json_nodes = layer['models']
         self.__parse_nodes()
         self.__parse_links()
-        self.__parse_parents()
+        # self.__parse_parents()
 
         for node in self.roots:
             print(node.children[0].children)
@@ -67,12 +67,13 @@ class ParseJSON:
 
     def __parse_links(self):
         for link_id, data in self.json_links.items():
-            source_node_id = data['source']
-            source_port_id = data['sourcePort']
-            target_node_id = data['target']
-            target_port_id = data['targetPort']
-            self.statements[source_node_id].children.append(self.statements[target_node_id])
-            self.statements[target_node_id].parents.append(self.statements[source_node_id])
+            source_node = self.statements[data['source']]
+            source_port = source_node.ports[data['sourcePort']]
+            target_node = self.statements[data['target']]
+            target_port = target_node.ports[data['targetPort']]
+            source_node.children.append(target_node)
+            target_node.parents.append(source_node)
+            target_node.parent_links.append(ParentLink(source_node, data['sourcePort']))
 
     def __parse_parents(self):
         for key, value in self.statements.items():
