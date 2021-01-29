@@ -9,7 +9,7 @@ export class UndersamplingModel extends CoreNodeModel {
     private randomState: number = 0;
 
     constructor() {
-        super(NODE_UNDERSAMPLING.codeName, NODE_UNDERSAMPLING.name, NODE_UNDERSAMPLING.tier);
+        super(NODE_UNDERSAMPLING.codeName, NODE_UNDERSAMPLING.name);
         this.addInPort();
         this.addOutPort();
     }
@@ -23,12 +23,12 @@ export class UndersamplingModel extends CoreNodeModel {
     }
 
     protected addInPort(): void {
-        const p = new DatasetPortModel(this.getTier(), true);
+        const p = new DatasetPortModel(true);
         super.addPort(p);
     }
 
     protected addOutPort(): void {
-        const p = new DatasetPortModel(this.getTier(), false, "Balanced Dataset");
+        const p = new DatasetPortModel(false, "Balanced Dataset");
         super.addPort(p);
     }
 

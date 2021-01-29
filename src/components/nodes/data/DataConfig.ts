@@ -10,31 +10,26 @@ export const DATA_CONFIG:CategoryConfig = {
 export const NODE_CSV:NodeConfig = {
     codeName: "NODE_IMPORT_CSV",
     name: "Import from CSV",
-    tier: 0,
 }
 
 export const NODE_SPLIT_DATASET:NodeConfig = {
     codeName: "NODE_SPLIT_DATASET",
     name: "Split Dataset",
-    tier: 2,
 }
 
 export const NODE_OVERSAMPLING:NodeConfig = {
     codeName: "NODE_OVERSAMPLING",
     name: "Oversampling",
-    tier: 1,
 }
 
 export const NODE_UNDERSAMPLING:NodeConfig = {
     codeName: "NODE_UNDERSAMPLING",
     name: "Undersampling",
-    tier: 1,
 }
 
 export const NODE_PCA:NodeConfig = {
     codeName: "NODE_PCA",
     name: "PCA",
-    tier: 1,
 }
 
 
