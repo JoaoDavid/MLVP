@@ -19,9 +19,7 @@ export interface BasePortModelGenerics extends PortModelGenerics {
 
 export abstract class BasePortModel extends PortModel<BasePortModelGenerics> {
 
-    private readonly tier: number;
-
-    protected constructor(tier: number, isIn: boolean, name: string, label: string, maxLinks?: number){
+    protected constructor(isIn: boolean, name: string, label: string, maxLinks?: number){
         super({
             name: name,
             label: label,
@@ -30,7 +28,6 @@ export abstract class BasePortModel extends PortModel<BasePortModelGenerics> {
             in: isIn,
             maximumLinks: maxLinks?maxLinks:1,
         });
-        this.tier = tier;
     }
 
     deserialize(event: DeserializeEvent<this>) {
@@ -68,7 +65,7 @@ export abstract class BasePortModel extends PortModel<BasePortModelGenerics> {
 
     canLinkToPort(port: BasePortModel): boolean {
         console.log('canLinkToPort at BasePortModel');
-        return (this.getTier() !== port.getTier()) && (this.getIsIn() !== port.getIsIn()) && port.isNewLinkAllowed();
+        return (this.getNode().getID() !== port.getNode().getID()) && (this.getIsIn() !== port.getIsIn()) && port.isNewLinkAllowed();
     }
 
     createLinkModel(factory?: AbstractModelFactory<LinkModel>): LinkModel {
@@ -77,10 +74,6 @@ export abstract class BasePortModel extends PortModel<BasePortModelGenerics> {
             return link;
         }
         return null;
-    }
-
-    getTier(): number {
-        return this.tier;
     }
 
     getIsIn(): boolean {
