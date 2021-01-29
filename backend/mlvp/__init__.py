@@ -1,2 +1,1 @@
-from .app import generate_code, generate_code_version2
-
+from .app import generate_code

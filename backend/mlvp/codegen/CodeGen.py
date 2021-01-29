@@ -1,7 +1,6 @@
 from mlvp.codegen.templates.CodeTemplate import *
 from mlvp.codegen.templates.LibNames import *
 from mlvp.codegen.Emitter import Emitter
-from mlvp.codegen.TopoSort import TopoSort
 from mlvp.statement import Statement
 from mlvp.statement import DatasetDeclarationStatement
 from mlvp.statement import ModelAccuracyStatement

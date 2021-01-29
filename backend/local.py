@@ -1,4 +1,4 @@
-from mlvp import generate_code, generate_code_version2
+from mlvp import generate_code
 import json
 import sys
 
@@ -8,5 +8,4 @@ content = file.read()
 
 y = json.loads(content)
 
-# generate_code(y)
-generate_code_version2(y)
+generate_code(y)
