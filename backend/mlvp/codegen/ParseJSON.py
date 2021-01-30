@@ -1,6 +1,7 @@
 from mlvp.codegen.templates.CodeTemplate import *
 from mlvp.codegen.templates.LibNames import *
-from mlvp.statement import Port, ParentLink
+from mlvp.datatype import ParentLink
+from mlvp.datatype import DatasetPort, ModelPort
 from mlvp.statement import DatasetDeclarationStatement
 from mlvp.statement import ModelAccuracyStatement
 from mlvp.statement import RandomForestStatement
@@ -91,5 +92,12 @@ class ParseJSON:
     def __parse_ports(self, json_ports):
         ports = {}
         for p in json_ports:
-            ports[p['id']] = Port(p['name'], bool(p['in']))
+            name = p['name']
+            print(name)
+            if "Dataset" in name:
+                print("entrou1")
+                ports[p['id']] = DatasetPort(p['name'], bool(p['in']))
+            elif "Classifier" in name:
+                print("entrou2")
+                ports[p['id']] = ModelPort(p['name'], bool(p['in']))
         return ports
