@@ -124,6 +124,12 @@ class CodeGen:
             for child in statement.children:
                 self.__write_statements(child)
 
+    def __look_up_ports(self, ports, is_in, name):
+        for _, port in ports.items():
+            if name == port.name and port.in_port == is_in:
+                print("found")
+                return port
+
     def get_split_dataset_variables(self, parent_link: ParentLink):
         xytrain_xytest = self.emitter.get(parent_link.parent_statement)
         print(parent_link.parent_statement.ports)
