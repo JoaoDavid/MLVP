@@ -1,6 +1,5 @@
 from mlvp.codegen.templates.CodeTemplate import *
 from mlvp.codegen.templates.LibNames import *
-from mlvp.datatype.dataset.Csv import Csv
 from mlvp.statement import Port, ParentLink
 from mlvp.statement import DatasetDeclarationStatement
 from mlvp.statement import ModelAccuracyStatement
@@ -35,9 +34,9 @@ class ParseJSON:
     def __parse_nodes(self):
         for node_id, data in self.json_nodes.items():
             if data['type'] == 'NODE_IMPORT_CSV':
-                ds_type = Csv(file_name=data['fileName'], num_cols=data['numCols'], num_rows=data['numRows'],
-                              target=data['columnNames'][-1])
-                statement = DatasetDeclarationStatement(node_id=node_id, ds_type=ds_type)
+                statement = DatasetDeclarationStatement(node_id=node_id, file_name=data['fileName'],
+                                                        num_cols=data['numCols'], num_rows=data['numRows'],
+                                                        target=data['columnNames'][-1])
                 statement.ports = self.__parse_ports(data['ports'])
                 self.statements[node_id] = statement
                 self.libraries.add(IMPORT_AS.format(lib_name=PANDAS, lib_var=PANDAS_VAR))

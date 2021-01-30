@@ -56,9 +56,9 @@ class CodeGen:
                 self.emitter.set(statement, (x, y))
                 print(df_var)
                 self.out_file.write(
-                    LOAD_CSV.format(var=df_var, pandas_var=PANDAS_VAR, file_name=statement.ds_type.file_name))
-                self.out_file.write(FEATURES.format(x=x, var=df_var, target=statement.ds_type.target))
-                self.out_file.write(TARGET.format(y=y, var=df_var, target=statement.ds_type.target))
+                    LOAD_CSV.format(var=df_var, pandas_var=PANDAS_VAR, file_name=statement.file_name))
+                self.out_file.write(FEATURES.format(x=x, var=df_var, target=statement.target))
+                self.out_file.write(TARGET.format(y=y, var=df_var, target=statement.target))
             elif isinstance(statement, SplitDatasetStatement):
                 print("SplitDatasetStatement")
                 parent = parent_links[0].parent_statement
