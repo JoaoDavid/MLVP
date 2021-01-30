@@ -1,7 +1,6 @@
 from mlvp.codegen.templates.CodeTemplate import *
 from mlvp.codegen.templates.LibNames import *
 from mlvp.datatype.dataset.Csv import Csv
-from mlvp.datatype.model.RandomForest import RandomForest
 from mlvp.statement import Port, ParentLink
 from mlvp.statement import DatasetDeclarationStatement
 from mlvp.statement import ModelAccuracyStatement
@@ -69,9 +68,8 @@ class ParseJSON:
                 self.libraries.add(
                     FROM_IMPORT.format(package=SKLEARN + "." + DECOMPOSITION, class_to_import=PCA))
             elif data['type'] == 'NODE_RANDOM_FOREST_CLASSIFIER':
-                model_type = RandomForest(num_trees=data['numTrees'], criterion=data['criterion'],
-                                          max_depth=data['maxDepth'])
-                statement = RandomForestStatement(node_id=node_id, model_type=model_type)
+                statement = RandomForestStatement(node_id=node_id, num_trees=data['numTrees'],
+                                                  criterion=data['criterion'], max_depth=data['maxDepth'])
                 statement.ports = self.__parse_ports(data['ports'])
                 self.statements[node_id] = statement
                 self.libraries.add(

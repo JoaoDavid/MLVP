@@ -1,9 +1,10 @@
-from mlvp.datatype.model.RandomForest import RandomForest
 from mlvp.statement.model.ModelTrainStatement import ModelTrainStatement
 
 
 class RandomForestStatement(ModelTrainStatement):
 
-    def __init__(self, node_id: str, model_type: RandomForest):
-        super().__init__(node_id, model_type)
-        self.model_type = model_type
+    def __init__(self, node_id: str, num_trees, criterion, max_depth):
+        super().__init__(node_id)
+        self.num_trees = num_trees
+        self.criterion = criterion
+        self.max_depth = max_depth

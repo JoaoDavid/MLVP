@@ -98,10 +98,9 @@ class CodeGen:
                     y = x_y[1]
                 elif isinstance(parent, SplitDatasetStatement):
                     x, y = self.get_split_dataset_variables(parent_links[0])
-                model_type = statement.model_type
                 self.out_file.write(
-                    RANDOM_FOREST_INIT.format(var=clf_var, num_trees=model_type.num_trees, criterion=model_type.criterion,
-                                              max_depth=model_type.max_depth))
+                    RANDOM_FOREST_INIT.format(var=clf_var, num_trees=statement.num_trees, criterion=statement.criterion,
+                                              max_depth=statement.max_depth))
                 self.out_file.write(MODEL_FIT.format(var=clf_var, x=x, y=y))
             elif isinstance(statement, ModelAccuracyStatement):
                 print("ModelAccuracyStatement")
