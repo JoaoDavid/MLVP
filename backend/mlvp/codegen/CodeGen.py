@@ -64,18 +64,14 @@ class CodeGen:
             elif isinstance(statement, SplitDatasetStatement):
                 print("SplitDatasetStatement")
                 parent_port = parent_links[0].parent_source_port
-                x_y = self.emitter.get(parent_port)
-                print(statement)
-                print(statement.node_id)
-                print(parent_links[0])
-                print(parent_port)
-                x_train = x_y[0] + "_train" + str(curr_count)
-                y_train = x_y[1] + "_train" + str(curr_count)
-                x_test = x_y[0] + "_test" + str(curr_count)
-                y_test = x_y[1] + "_test" + str(curr_count)
+                x, y = self.emitter.get(parent_port)
+                x_train = x + "_train" + str(curr_count)
+                y_train = y + "_train" + str(curr_count)
+                x_test = x + "_test" + str(curr_count)
+                y_test = y + "_test" + str(curr_count)
                 self.out_file.write(
-                    TRAIN_TEST_SPLIT_CALL.format(x_train=x_train, x_test=x_test, y_train=y_train, y_test=y_test, x=x_y[0],
-                                                 y=x_y[1], test_size=statement.test_size, train_size=statement.train_size,
+                    TRAIN_TEST_SPLIT_CALL.format(x_train=x_train, x_test=x_test, y_train=y_train, y_test=y_test, x=x,
+                                                 y=y, test_size=statement.test_size, train_size=statement.train_size,
                                                  shuffle=statement.shuffle))
                 out_train_ds = self.__find_port(statement.ports, False, "Train Dataset")
                 out_test_ds = self.__find_port(statement.ports, False, "Test Dataset")
@@ -106,6 +102,7 @@ class CodeGen:
                 out_clf = self.__find_port(statement.ports, False, "Classifier")
                 self.emitter.set(out_clf, clf_var)
                 parent_port = parent_links[0].parent_source_port
+                print(parent_port)
                 x, y = self.emitter.get(parent_port)
                 self.out_file.write(
                     RANDOM_FOREST_INIT.format(var=clf_var, num_trees=statement.num_trees, criterion=statement.criterion,
