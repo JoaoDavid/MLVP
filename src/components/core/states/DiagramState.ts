@@ -7,11 +7,12 @@ import {
     ActionEvent,
     DragCanvasState
 } from '@projectstorm/react-canvas-core';
-import { PortModel, DragNewLinkState, DiagramEngine, DragDiagramItemsState } from '@projectstorm/react-diagrams';
+import { PortModel, DiagramEngine, DragDiagramItemsState } from '@projectstorm/react-diagrams';
+import {MyDragNewLinkState} from "./MyDragNewLinkState";
 
 export class DiagramState extends State<DiagramEngine> {
     dragCanvas: DragCanvasState;
-    dragNewLink: DragNewLinkState;
+    dragNewLink: MyDragNewLinkState;
     dragItems: DragDiagramItemsState;
 
     constructor() {
@@ -20,7 +21,7 @@ export class DiagramState extends State<DiagramEngine> {
         });
         this.childStates = [new SelectingState()];
         this.dragCanvas = new DragCanvasState();
-        this.dragNewLink = new DragNewLinkState({allowLooseLinks: false});
+        this.dragNewLink = new MyDragNewLinkState({allowLooseLinks: false});
         this.dragItems = new DragDiagramItemsState();
 
         // determine what was clicked on

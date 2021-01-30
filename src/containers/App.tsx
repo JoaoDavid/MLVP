@@ -1,6 +1,6 @@
 import React from 'react';
 import classes from './App.module.css';
-import createEngine, {DiagramEngine, DiagramModel} from '@projectstorm/react-diagrams';
+import createEngine, {DiagramEngine} from '@projectstorm/react-diagrams';
 import TopNav from '../components/UI/top-nav/TopNav';
 import SideBar from "../components/UI/side-bar/SideBar";
 import {CategoryConfig, NodeConfig} from "../components/nodes/Config";
@@ -11,12 +11,17 @@ import axios from "axios";
 import download from 'js-file-download';
 import BottomNav from "../components/UI/bottom-nav/BottomNav";
 import Canvas from "../components/Canvas/Canvas";
-import {CSVNodeFactory} from "../components/nodes/data/import-dataset/csv/CSVNodeFactory";
-import {RandomForestNodeFactory} from "../components/nodes/model/random-forest/RandomForestNodeFactory";
-import {AccuracyNodeFactory} from "../components/nodes/evaluate/accuracy/AccuracyNodeFactory";
+import {CSVFactory} from "../components/nodes/data/import-dataset/csv/CSVFactory";
+import {RandomForestClassifierFactory} from "../components/nodes/model/classifier/random-forest-classifier/RandomForestClassifierFactory";
+import {AccuracyClassifierFactory} from "../components/nodes/evaluate/classifier/accuracy/AccuracyClassifierFactory";
 import {CoreNodeModel} from "../components/core/CoreNode/CoreNodeModel";
 import {AbstractReactFactory} from "@projectstorm/react-canvas-core";
 import {NodeModel} from "@projectstorm/react-diagrams-core";
+import {SplitDatasetFactory} from "../components/nodes/data/split-dataset/SplitDatasetFactory";
+import {CoreDiagram} from "../components/core/diagram/CoreDiagram";
+import {OversamplingFactory} from "../components/nodes/data/oversampling/OversamplingFactory";
+import {UndersamplingFactory} from "../components/nodes/data/undersampling/UndersamplingFactory";
+import {PCAFactory} from "../components/nodes/data/principal-component-analysis/PCAFactory";
 
 interface AppProps {
 
@@ -24,7 +29,7 @@ interface AppProps {
 
 type AppState = {
     engine: DiagramEngine,
-    model: DiagramModel
+    model: CoreDiagram,
 };
 
 class App extends React.Component<AppProps, AppState> {
@@ -36,7 +41,7 @@ class App extends React.Component<AppProps, AppState> {
         super(props);
         this.state = {
             engine: createEngine(),
-            model: new DiagramModel()
+            model: new CoreDiagram()
         }
         this.addTestNodes();
         this.state.engine.setModel(this.state.model);
@@ -44,10 +49,13 @@ class App extends React.Component<AppProps, AppState> {
 
     addTestNodes = () => {
         let count = 10;
-        this.nodes.push(this.generateModel(CSVNodeFactory.getInstance()));
-        this.nodes.push(this.generateModel(CSVNodeFactory.getInstance()));
-        this.nodes.push(this.generateModel(RandomForestNodeFactory.getInstance()));
-        this.nodes.push(this.generateModel(AccuracyNodeFactory.getInstance()));
+        this.nodes.push(this.generateModel(CSVFactory.getInstance()));
+        this.nodes.push(this.generateModel(OversamplingFactory.getInstance()));
+        this.nodes.push(this.generateModel(UndersamplingFactory.getInstance()));
+        this.nodes.push(this.generateModel(PCAFactory.getInstance()));
+        this.nodes.push(this.generateModel(SplitDatasetFactory.getInstance()));
+        this.nodes.push(this.generateModel(RandomForestClassifierFactory.getInstance()));
+        this.nodes.push(this.generateModel(AccuracyClassifierFactory.getInstance()));
 
         this.nodes.forEach((node: CoreNodeModel) => {
             this.state.model.addNode(node);

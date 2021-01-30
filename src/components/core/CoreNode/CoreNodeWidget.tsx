@@ -18,7 +18,7 @@ export interface CoreNodeProps {
 }
 
 /**
- * Default node that models the CSVNodeModel. It creates two columns
+ * Default node that models the CSVModel. It creates two columns
  * for both all the input ports on the left, and the output ports on the right.
  */
 export class CoreNodeWidget extends React.Component<CoreNodeProps> {

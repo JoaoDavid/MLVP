@@ -8,8 +8,8 @@ export const EVALUATE_CONFIG:CategoryConfig = {
 
 // NODES
 export const NODE_ACCURACY:NodeConfig = {
-    codeName: "NODE_ACCURACY",
-    name: "Evaluate Model",
+    codeName: "NODE_ACCURACY_CLASSIFIER",
+    name: "Evaluate Classifier",
 }
 
 

@@ -13,7 +13,7 @@ const BottomNav = (props: BottomNavProps) => {
     return (
         <div className={classes.BottomNav}>
             {dev}
-            v0.0.0
+            Project under development
         </div>
     )
 }

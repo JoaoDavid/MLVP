@@ -10,30 +10,23 @@ import { AbstractModelFactory, DeserializeEvent } from '@projectstorm/react-canv
 
 export interface BasePortModelOptions extends PortModelOptions {
     label?: string;
-    in?: boolean;
+    in: boolean;
 }
 
 export interface BasePortModelGenerics extends PortModelGenerics {
     OPTIONS: BasePortModelOptions;
 }
 
-export class BasePortModel extends PortModel<BasePortModelGenerics> {
-    constructor(isIn: boolean, name?: string, label?: string);
-    constructor(options: BasePortModelOptions);
-    constructor(options: BasePortModelOptions | boolean, name?: string, label?: string) {
-        if (!!name) {
-            options = {
-                in: !!options,
-                name: name,
-                label: label
-            };
-        }
-        options = options as BasePortModelOptions;
+export abstract class BasePortModel extends PortModel<BasePortModelGenerics> {
+
+    protected constructor(isIn: boolean, name: string, label: string, maxLinks?: number){
         super({
-            label: options.label || options.name,
-            alignment: options.in ? PortModelAlignment.LEFT : PortModelAlignment.RIGHT,
+            name: name,
+            label: label,
+            alignment: isIn ? PortModelAlignment.LEFT : PortModelAlignment.RIGHT,
             type: 'default',
-            ...options
+            in: isIn,
+            maximumLinks: maxLinks?maxLinks:1,
         });
     }
 
@@ -51,25 +44,48 @@ export class BasePortModel extends PortModel<BasePortModelGenerics> {
         };
     }
 
-    link<T extends LinkModel>(port: PortModel, factory?: AbstractModelFactory<T>): T {
+    /*link<T extends LinkModel>(port: BasePortModel, factory?: AbstractModelFactory<T>): T {
         console.log('link');
         let link = this.createLinkModel(factory);
-        link.setSourcePort(this);
-        link.setTargetPort(port);
+        if(this.getTier() < port.getTier()) {
+            link.setSourcePort(this);
+            link.setTargetPort(this);//port
+        } else {
+            link.setSourcePort(port);
+            link.setTargetPort(port);
+        }
         return link as T;
+    }*/
+
+    isNewLinkAllowed(): boolean {
+        return (
+            Object.keys(this.getLinks()).length < this.getMaximumLinks()
+        );
     }
 
-    canLinkToPort(port: PortModel): boolean {
-        //TODO
-        console.log('can link to port');
-        return false;
+    canLinkToPort(port: BasePortModel): boolean {
+        console.log('canLinkToPort at BasePortModel');
+        return (this.getNode().getID() !== port.getNode().getID()) && (this.getIsIn() !== port.getIsIn()) && port.isNewLinkAllowed();
     }
 
     createLinkModel(factory?: AbstractModelFactory<LinkModel>): LinkModel {
-        let link = super.createLinkModel();
-        if (!link && factory) {
-            return factory.generateModel({});
+        if (this.isNewLinkAllowed()) {
+            const link = new DefaultLinkModel();
+            return link;
         }
-        return link || new DefaultLinkModel();
+        return null;
     }
+
+    getIsIn(): boolean {
+        return this.options.in;
+    }
+
+    getName(): string {
+        return this.options.name
+    }
+
+    getLabel(): string {
+        return this.options.label
+    }
+
 }
