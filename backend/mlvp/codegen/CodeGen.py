@@ -81,18 +81,25 @@ class CodeGen:
                 out_test_ds = self.__find_port(statement.ports, False, "Test Dataset")
                 self.emitter.set(out_train_ds, (x_train, y_train))
                 self.emitter.set(out_test_ds, (x_test, y_test))
-            elif isinstance(statement, OversamplingStatement): #TODO
+            elif isinstance(statement, OversamplingStatement):
                 print("OversamplingStatement")
                 parent_port = parent_links[0].parent_source_port
-                x_y = self.emitter.get(parent_port)
+                x, y = self.emitter.get(parent_port)
+                ros_var = "ros" + str(curr_count)
+                x_ros_res = "x_ros_res" + str(curr_count)
+                y_ros_res = "y_ros_res" + str(curr_count)
+                self.out_file.write(ros_var + " = " + RANDOM_OVERSAMPLER_INIT.format(random_state=statement.random_state))
+                self.out_file.write(FIT_RESAMPLE.format(x_res=x_ros_res, y_res=y_ros_res, var=ros_var, x=x, y=y))
+                out_ds = self.__find_port(statement.ports, False, "Balanced Dataset")
+                self.emitter.set(out_ds, (x_ros_res, y_ros_res))
             elif isinstance(statement, UnderSamplingStatement): #TODO
                 print("UnderSamplingStatement")
                 parent_port = parent_links[0].parent_source_port
-                x_y = self.emitter.get(parent_port)
+                x, y = self.emitter.get(parent_port)
             elif isinstance(statement, PCAStatement): #TODO
                 print("PCAStatement")
                 parent_port = parent_links[0].parent_source_port
-                x_y = self.emitter.get(parent_port)
+                x, y = self.emitter.get(parent_port)
             elif isinstance(statement, RandomForestStatement):
                 print("RandomForestStatement")
                 clf_var = "clf" + str(curr_count)

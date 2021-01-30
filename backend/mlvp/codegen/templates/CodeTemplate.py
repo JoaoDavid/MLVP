@@ -15,3 +15,7 @@ PRINT = "print({content})\n"
 TRAIN_TEST_SPLIT_CALL = "{x_train}, {x_test}, {y_train}, {y_test} = train_test_split({x}, {y}, test_size={test_size}, train_size={train_size}, shuffle={shuffle})\n"
 
 ACCURACY_SCORE_CALL = "accuracy_score({y_true}, {y_pred})\n"
+
+RANDOM_OVERSAMPLER_INIT = "RandomOverSampler(random_state={random_state})\n"
+RANDOM_UNDERSAMPLER_INIT = "RandomUnderSampler(random_state={random_state})\n"
+FIT_RESAMPLE = "{x_res}, {y_res} = {var}.fit_resample({x}, {y})\n"
