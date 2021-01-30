@@ -93,11 +93,8 @@ class ParseJSON:
         ports = {}
         for p in json_ports:
             name = p['name']
-            print(name)
             if "Dataset" in name:
-                print("entrou1")
                 ports[p['id']] = DatasetPort(p['name'], bool(p['in']))
             elif "Classifier" in name:
-                print("entrou2")
                 ports[p['id']] = ModelPort(p['name'], bool(p['in']))
         return ports

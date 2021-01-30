@@ -28,7 +28,7 @@ export class PCAModel extends CoreNodeModel {
     }
 
     protected addOutPort(): void {
-        const p = new DatasetPortModel(false, "Balanced Dataset");
+        const p = new DatasetPortModel(false, "Reduced Dataset");
         super.addPort(p);
     }
 

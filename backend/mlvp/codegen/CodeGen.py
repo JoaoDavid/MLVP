@@ -2,6 +2,7 @@ from mlvp.codegen.templates.CodeTemplate import *
 from mlvp.codegen.templates.LibNames import *
 from mlvp.codegen.Emitter import Emitter
 from mlvp.ports import ParentLink
+from mlvp.ports import DatasetPort, ModelPort
 from mlvp.statement import Statement
 from mlvp.statement import DatasetDeclarationStatement
 from mlvp.statement import ModelAccuracyStatement
@@ -53,7 +54,8 @@ class CodeGen:
                 df_var = "df" + str(curr_count)
                 x = "x" + str(curr_count)
                 y = "y" + str(curr_count)
-                self.emitter.set(statement, (x, y))
+                out_ds = self.__find_port(statement.ports, False, "Dataset")
+                self.emitter.set(out_ds, (x, y))
                 print(df_var)
                 self.out_file.write(
                     LOAD_CSV.format(var=df_var, pandas_var=PANDAS_VAR, file_name=statement.file_name))
@@ -61,43 +63,61 @@ class CodeGen:
                 self.out_file.write(TARGET.format(y=y, var=df_var, target=statement.target))
             elif isinstance(statement, SplitDatasetStatement):
                 print("SplitDatasetStatement")
-                parent = parent_links[0].parent_statement
-                if isinstance(parent, DatasetDeclarationStatement):
-                    x_y = self.emitter.get(parent)
-                print(statement)
-                print(statement.node_id)
-                print(parent_links[0])
-                print(parent)
-                x_train = x_y[0] + "_train" + str(curr_count)
-                y_train = x_y[1] + "_train" + str(curr_count)
-                x_test = x_y[0] + "_test" + str(curr_count)
-                y_test = x_y[1] + "_test" + str(curr_count)
+                parent_port = parent_links[0].parent_source_port
+                x, y = self.emitter.get(parent_port)
+                x_train = x + "_train" + str(curr_count)
+                y_train = y + "_train" + str(curr_count)
+                x_test = x + "_test" + str(curr_count)
+                y_test = y + "_test" + str(curr_count)
                 self.out_file.write(
-                    TRAIN_TEST_SPLIT_CALL.format(x_train=x_train, x_test=x_test, y_train=y_train, y_test=y_test, x=x_y[0],
-                                                 y=x_y[1], test_size=statement.test_size, train_size=statement.train_size,
+                    TRAIN_TEST_SPLIT_CALL.format(x_train=x_train, x_test=x_test, y_train=y_train, y_test=y_test, x=x,
+                                                 y=y, test_size=statement.test_size, train_size=statement.train_size,
                                                  shuffle=statement.shuffle))
-                self.emitter.set(statement, (x_train, y_train, x_test, y_test))
-            elif isinstance(statement, OversamplingStatement): #TODO
+                out_train_ds = self.__find_port(statement.ports, False, "Train Dataset")
+                out_test_ds = self.__find_port(statement.ports, False, "Test Dataset")
+                self.emitter.set(out_train_ds, (x_train, y_train))
+                self.emitter.set(out_test_ds, (x_test, y_test))
+            elif isinstance(statement, OversamplingStatement):
                 print("OversamplingStatement")
-                parent = parent_links[0].parent_statement
-            elif isinstance(statement, UnderSamplingStatement): #TODO
+                parent_port = parent_links[0].parent_source_port
+                x, y = self.emitter.get(parent_port)
+                ros_var = "ros" + str(curr_count)
+                x_ros_res = "x_ros_res" + str(curr_count)
+                y_ros_res = "y_ros_res" + str(curr_count)
+                self.out_file.write(SAMPLER_INIT.format(var=ros_var, sampler=RANDOM_OVERSAMPLER, random_state=statement.random_state))
+                self.out_file.write(FIT_RESAMPLE.format(x_res=x_ros_res, y_res=y_ros_res, var=ros_var, x=x, y=y))
+                out_ds = self.__find_port(statement.ports, False, "Balanced Dataset")
+                self.emitter.set(out_ds, (x_ros_res, y_ros_res))
+            elif isinstance(statement, UnderSamplingStatement):
                 print("UnderSamplingStatement")
-                parent = parent_links[0].parent_statement
-            elif isinstance(statement, PCAStatement): #TODO
+                parent_port = parent_links[0].parent_source_port
+                x, y = self.emitter.get(parent_port)
+                rus_var = "rus" + str(curr_count)
+                x_rus_res = "x_rus_res" + str(curr_count)
+                y_rus_res = "y_rus_res" + str(curr_count)
+                self.out_file.write(SAMPLER_INIT.format(var=rus_var, sampler=RANDOM_UNDERSAMPLER, random_state=statement.random_state))
+                self.out_file.write(FIT_RESAMPLE.format(x_res=x_rus_res, y_res=y_rus_res, var=rus_var, x=x, y=y))
+                out_ds = self.__find_port(statement.ports, False, "Balanced Dataset")
+                self.emitter.set(out_ds, (x_rus_res, y_rus_res))
+            elif isinstance(statement, PCAStatement):
                 print("PCAStatement")
-                parent = parent_links[0].parent_statement
+                parent_port = parent_links[0].parent_source_port
+                x, y = self.emitter.get(parent_port)
+                pca_var = "pca" + str(curr_count)
+                x_pca = "x_pca" + str(curr_count)
+                # y_pca = "y_pca" + str(curr_count)
+                self.out_file.write(PCA_INIT.format(pca_var=pca_var, random_state=statement.random_state))
+                self.out_file.write(FIT_TRANSFORM_CALL.format(x_pca=x_pca, pca_var=pca_var, x=x))
+                out_ds = self.__find_port(statement.ports, False, "Reduced Dataset")
+                self.emitter.set(out_ds, (x_pca, y))
             elif isinstance(statement, RandomForestStatement):
                 print("RandomForestStatement")
                 clf_var = "clf" + str(curr_count)
-                self.emitter.set(statement, clf_var)
-                parent = statement.parent_links[0].parent_statement
-                x, y = "", ""
-                if isinstance(parent, DatasetDeclarationStatement):
-                    x_y = self.emitter.get(parent)
-                    x = x_y[0]
-                    y = x_y[1]
-                elif isinstance(parent, SplitDatasetStatement):
-                    x, y = self.get_split_dataset_variables(parent_links[0])
+                out_clf = self.__find_port(statement.ports, False, "Classifier")
+                self.emitter.set(out_clf, clf_var)
+                parent_port = parent_links[0].parent_source_port
+                print(parent_port)
+                x, y = self.emitter.get(parent_port)
                 self.out_file.write(
                     RANDOM_FOREST_INIT.format(var=clf_var, num_trees=statement.num_trees, criterion=statement.criterion,
                                               max_depth=statement.max_depth))
@@ -107,15 +127,11 @@ class CodeGen:
                 y_predicted = "y_predicted" + str(curr_count)
                 clf_var, x, y = "", "", ""
                 for curr in parent_links:
-                    parent = curr.parent_statement
-                    if isinstance(parent, ModelTrainStatement):
-                        clf_var = self.emitter.get(parent)
-                    elif isinstance(parent, DatasetDeclarationStatement):
-                        x_y = self.emitter.get(parent)
-                        x = x_y[0]
-                        y = x_y[1]
-                    elif isinstance(parent, SplitDatasetStatement):
-                        x, y = self.get_split_dataset_variables(curr)
+                    parent_port = curr.parent_source_port
+                    if isinstance(parent_port, ModelPort):
+                        clf_var = self.emitter.get(parent_port)
+                    elif isinstance(parent_port, DatasetPort):
+                        x, y = self.emitter.get(parent_port)
                 self.out_file.write(MODEL_PREDICT.format(var=y_predicted, clf_var=clf_var, x=x))
                 score = "score" + str(curr_count)
                 self.out_file.write(score + " = " + ACCURACY_SCORE_CALL.format(y_true=y, y_pred=y_predicted))
@@ -124,15 +140,8 @@ class CodeGen:
             for child in statement.children:
                 self.__write_statements(child)
 
-    def get_split_dataset_variables(self, parent_link: ParentLink):
-        xytrain_xytest = self.emitter.get(parent_link.parent_statement)
-        print(parent_link.parent_statement.ports)
-        print(parent_link.parent_source_port)
-        parent_port = parent_link.parent_source_port
-        if parent_port.name == 'Train Dataset':
-            print('Train Dataset')
-            return xytrain_xytest[0], xytrain_xytest[1]
-        elif parent_port.name == 'Test Dataset':
-            print('Test Dataset')
-            return xytrain_xytest[2], xytrain_xytest[3]
-        print('here')
+    def __find_port(self, ports, is_in, name):
+        for _, port in ports.items():
+            if name == port.name and port.in_port == is_in:
+                print("found")
+                return port
