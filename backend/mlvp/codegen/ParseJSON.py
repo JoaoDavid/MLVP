@@ -1,7 +1,7 @@
 from mlvp.codegen.templates.CodeTemplate import *
 from mlvp.codegen.templates.LibNames import *
-from mlvp.datatype import ParentLink
-from mlvp.datatype import DatasetPort, ModelPort
+from mlvp.ports import ParentLink
+from mlvp.ports import DatasetPort, ModelPort
 from mlvp.statement import DatasetDeclarationStatement
 from mlvp.statement import ModelAccuracyStatement
 from mlvp.statement import RandomForestStatement

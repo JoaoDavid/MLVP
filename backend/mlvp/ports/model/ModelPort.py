@@ -1,4 +1,4 @@
-from mlvp.datatype.PortType import PortType
+from mlvp.ports.PortType import PortType
 
 
 class ModelPort(PortType):
