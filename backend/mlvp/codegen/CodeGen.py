@@ -84,7 +84,7 @@ class CodeGen:
                 ros_var = "ros" + str(curr_count)
                 x_ros_res = "x_ros_res" + str(curr_count)
                 y_ros_res = "y_ros_res" + str(curr_count)
-                self.out_file.write(ros_var + " = " + RANDOM_OVERSAMPLER_INIT.format(random_state=statement.random_state))
+                self.out_file.write(SAMPLER_INIT.format(var=ros_var, sampler=RANDOM_OVERSAMPLER, random_state=statement.random_state))
                 self.out_file.write(FIT_RESAMPLE.format(x_res=x_ros_res, y_res=y_ros_res, var=ros_var, x=x, y=y))
                 out_ds = self.__find_port(statement.ports, False, "Balanced Dataset")
                 self.emitter.set(out_ds, (x_ros_res, y_ros_res))
@@ -92,6 +92,13 @@ class CodeGen:
                 print("UnderSamplingStatement")
                 parent_port = parent_links[0].parent_source_port
                 x, y = self.emitter.get(parent_port)
+                rus_var = "rus" + str(curr_count)
+                x_rus_res = "x_rus_res" + str(curr_count)
+                y_rus_res = "y_rus_res" + str(curr_count)
+                self.out_file.write(SAMPLER_INIT.format(var=rus_var, sampler=RANDOM_UNDERSAMPLER, random_state=statement.random_state))
+                self.out_file.write(FIT_RESAMPLE.format(x_res=x_rus_res, y_res=y_rus_res, var=rus_var, x=x, y=y))
+                out_ds = self.__find_port(statement.ports, False, "Balanced Dataset")
+                self.emitter.set(out_ds, (x_rus_res, y_rus_res))
             elif isinstance(statement, PCAStatement): #TODO
                 print("PCAStatement")
                 parent_port = parent_links[0].parent_source_port

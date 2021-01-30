@@ -16,6 +16,5 @@ TRAIN_TEST_SPLIT_CALL = "{x_train}, {x_test}, {y_train}, {y_test} = train_test_s
 
 ACCURACY_SCORE_CALL = "accuracy_score({y_true}, {y_pred})\n"
 
-RANDOM_OVERSAMPLER_INIT = "RandomOverSampler(random_state={random_state})\n"
-RANDOM_UNDERSAMPLER_INIT = "RandomUnderSampler(random_state={random_state})\n"
+SAMPLER_INIT = "{var} = {sampler}(random_state={random_state})\n"
 FIT_RESAMPLE = "{x_res}, {y_res} = {var}.fit_resample({x}, {y})\n"
