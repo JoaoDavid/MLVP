@@ -1,6 +1,4 @@
 from mlvp.statement.Statement import Statement
-from mlvp.datatype.model.Model import Model
-
 
 class ModelTrainStatement(Statement):
 
