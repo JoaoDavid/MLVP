@@ -49,7 +49,7 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     addTestNodes = () => {
-        let count = 10;
+        let count = 5;
         this.nodes.push(this.generateModel(CSVFactory.getInstance()));
         this.nodes.push(this.generateModel(OversamplingFactory.getInstance()));
         this.nodes.push(this.generateModel(UndersamplingFactory.getInstance()));
@@ -62,7 +62,7 @@ class App extends React.Component<AppProps, AppState> {
         this.nodes.forEach((node: CoreNodeModel) => {
             this.state.model.addNode(node);
             node.setPosition(count, count);
-            count += 130;
+            count += 105;
         });
     }
 
