@@ -21,3 +21,5 @@ FIT_RESAMPLE = "{x_res}, {y_res} = {var}.fit_resample({x}, {y})\n"
 
 PCA_INIT = "{pca_var} = PCA(random_state={random_state})\n"
 FIT_TRANSFORM_CALL = "{x_pca} = {pca_var}.fit_transform({x})\n"
+
+CROSS_VAL_SCORE_CALL = "{score} = cross_val_score({model}, {x}, {y}, cv={cv})\n"
