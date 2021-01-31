@@ -12,6 +12,7 @@ import {SplitDatasetFactory} from "../nodes/data/split-dataset/SplitDatasetFacto
 import {OversamplingFactory} from "../nodes/data/oversampling/OversamplingFactory";
 import {UndersamplingFactory} from "../nodes/data/undersampling/UndersamplingFactory";
 import {PCAFactory} from "../nodes/data/principal-component-analysis/PCAFactory";
+import {CrossValidationFactory} from "../nodes/evaluate/cross-validation/CrossValidationFactory";
 
 interface CanvasProps {
     dragDropFormat: string,
@@ -46,6 +47,7 @@ class Canvas extends React.Component<CanvasProps, CanvasState> {
         this.state.engine.getNodeFactories().registerFactory(PCAFactory.getInstance());
         this.state.engine.getNodeFactories().registerFactory(AccuracyClassifierFactory.getInstance());
         this.state.engine.getNodeFactories().registerFactory(SplitDatasetFactory.getInstance());
+        this.state.engine.getNodeFactories().registerFactory(CrossValidationFactory.getInstance());
     }
 
 

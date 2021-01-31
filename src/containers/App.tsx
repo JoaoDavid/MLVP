@@ -22,6 +22,7 @@ import {CoreDiagram} from "../components/core/diagram/CoreDiagram";
 import {OversamplingFactory} from "../components/nodes/data/oversampling/OversamplingFactory";
 import {UndersamplingFactory} from "../components/nodes/data/undersampling/UndersamplingFactory";
 import {PCAFactory} from "../components/nodes/data/principal-component-analysis/PCAFactory";
+import {CrossValidationFactory} from "../components/nodes/evaluate/cross-validation/CrossValidationFactory";
 
 interface AppProps {
 
@@ -56,6 +57,7 @@ class App extends React.Component<AppProps, AppState> {
         this.nodes.push(this.generateModel(SplitDatasetFactory.getInstance()));
         this.nodes.push(this.generateModel(RandomForestClassifierFactory.getInstance()));
         this.nodes.push(this.generateModel(AccuracyClassifierFactory.getInstance()));
+        this.nodes.push(this.generateModel(CrossValidationFactory.getInstance()));
 
         this.nodes.forEach((node: CoreNodeModel) => {
             this.state.model.addNode(node);
