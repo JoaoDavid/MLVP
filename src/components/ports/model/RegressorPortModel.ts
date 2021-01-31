@@ -1,5 +1,6 @@
 import {PortModel} from '@projectstorm/react-diagrams-core';
 import {ModelPortModel} from "./ModelPortModel";
+import {ClassifierPortModel} from "./ClassifierPortModel";
 
 export class RegressorPortModel extends ModelPortModel {
 
@@ -8,8 +9,10 @@ export class RegressorPortModel extends ModelPortModel {
     }
 
     canLinkToPort(port: PortModel): boolean {
-        console.log('canLinkToPort at RegressorPortModel');
-        if (port instanceof RegressorPortModel) {
+        console.log('canLinkToPort at ClassifierPortModel');
+        if (port instanceof ClassifierPortModel) {
+            return false;
+        } else if (port instanceof ModelPortModel) {
             return super.canLinkToPort(port);
         }
         return false;
