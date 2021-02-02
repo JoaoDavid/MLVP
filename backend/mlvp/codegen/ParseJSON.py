@@ -31,7 +31,7 @@ class ParseJSON:
                 self.json_nodes = layer['models']
         self.__parse_nodes()
         self.__parse_links()
-        return self.libraries, self.statements, self.roots
+        return self.libraries, self.roots
 
     def __parse_nodes(self):
         for node_id, data in self.json_nodes.items():

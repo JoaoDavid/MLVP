@@ -14,10 +14,9 @@ from mlvp.statement import CrossValidationStatement
 
 class CodeGen:
 
-    def __init__(self, name, libraries, statements, roots):
+    def __init__(self, name, libraries, roots):
         self.name = name + ".py"
         self.libraries = libraries
-        self.statements = statements
         self.roots = roots
         self.out_file = open(self.name, "w+")
         self.emitter = Emitter()
