@@ -4,9 +4,11 @@ import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 // import Image from '../../../logo.png';
 // import LogoNeural from '../../UI/logo_nodes.png';
+import classes from './TopNav.module.css';
 
 interface TopNavProps {
-    open: () => void,
+    newCanvas: () => void,
+    open: (event: React.ChangeEvent<HTMLInputElement>) => void,
     save: () => void,
 }
 
@@ -27,7 +29,14 @@ const topNav = (props: TopNavProps) => {
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="mr-auto">
                     <NavDropdown title="File" id="collasible-nav-dropdown">
-                        <NavDropdown.Item onClick={props.open}>Open</NavDropdown.Item>
+                        <label className={classes.Label} htmlFor={"load-save-file"}>Open</label>
+                        <input className={classes.Input}
+                               type="file"
+                               id="load-save-file"
+                               accept=".json"
+                               onChange={props.open}/>
+                        <NavDropdown.Item onClick={props.newCanvas}>New</NavDropdown.Item>
+                        <NavDropdown.Item> Open                        </NavDropdown.Item>
                         <NavDropdown.Item onClick={props.save}>Save</NavDropdown.Item>
                         <NavDropdown.Divider />
                         <NavDropdown.Item>Settings</NavDropdown.Item>

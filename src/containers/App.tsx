@@ -89,9 +89,19 @@ class App extends React.Component<AppProps, AppState> {
         return map;
     }
 
-    openSave = () => {
-        this.state.model.deserializeModel(this.lastSave, this.state.engine);
+    newCanvas = () => {
+        let empty:any = {};
+        this.state.model.deserializeModel(empty, this.state.engine);
         this.state.engine.repaintCanvas();
+    }
+
+    openSave = (event: React.ChangeEvent<HTMLInputElement>) => {
+        console.log(event);
+        console.log(event.target.files);
+        event.target.files[0].text().then((text:string) => {
+            this.state.model.deserializeModel(JSON.parse(text), this.state.engine);
+            this.state.engine.repaintCanvas();
+        });
     }
 
     downloadSave = () => {
@@ -117,7 +127,7 @@ class App extends React.Component<AppProps, AppState> {
     render() {
         return (
             <div className={classes.FrontPage}>
-                <TopNav open={this.openSave} save={this.downloadSave}/>
+                <TopNav newCanvas={this.newCanvas} open={this.openSave} save={this.downloadSave}/>
                 <div className={classes.Container}>
                     <SideBar catAndNames={this.loadMapCategoryNodes()} format={this.dragDropFormat}/>
                     <Canvas dragDropFormat={this.dragDropFormat} engine={this.state.engine} model={this.state.model}/>
