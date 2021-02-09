@@ -33,7 +33,7 @@ const topNav = (props: TopNavProps) => {
                         <input className={classes.Input}
                                type="file"
                                id="load-save-file"
-                               accept=".json"
+                               accept="application/JSON"
                                onChange={props.open}/>
                         <NavDropdown.Item onClick={props.newCanvas}>New</NavDropdown.Item>
                         <NavDropdown.Item> Open                        </NavDropdown.Item>
