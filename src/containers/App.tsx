@@ -112,26 +112,13 @@ class App extends React.Component<AppProps, AppState> {
         console.log(JSON.stringify(this.lastSave, null, 4));
     }
 
-    sendDiagram = () => {
+    generateCodeReq = () => {
         const data = this.state.model.serialize();
         axios.post('/codegen', data)
             .then(response => {
                 console.log(response);
                 console.log(response.data);
-                // download(response.data, "response.py")
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    }
-
-    testGetReq = () => {
-        const data = this.state.model.serialize();
-        axios.get('/')
-            .then(response => {
-                console.log(response);
-                console.log(response.data);
-                // download(response.data, "response.py")
+                download(response.data, "mlvp-generated-code.py")
             })
             .catch(error => {
                 console.log(error);
@@ -141,12 +128,12 @@ class App extends React.Component<AppProps, AppState> {
     render() {
         return (
             <div className={classes.FrontPage}>
-                <TopNav newCanvas={this.newCanvas} open={this.openSave} save={this.downloadSave} generateCode={this.sendDiagram} debug={this.testGetReq}/>
+                <TopNav newCanvas={this.newCanvas} open={this.openSave} save={this.downloadSave} generateCodeReq={this.generateCodeReq}/>
                 <div className={classes.Container}>
                     <SideBar catAndNames={this.loadMapCategoryNodes()} format={this.dragDropFormat}/>
                     <Canvas dragDropFormat={this.dragDropFormat} engine={this.state.engine} model={this.state.model}/>
                 </div>
-                <BottomNav sendReq={this.sendDiagram}/>
+                <BottomNav sendReq={this.generateCodeReq}/>
             </div>
         );
     }
