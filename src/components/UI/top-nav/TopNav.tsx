@@ -37,7 +37,7 @@ const topNav = (props: TopNavProps) => {
                                accept="application/JSON"
                                onChange={props.open}/>
                         <NavDropdown.Item onClick={props.newCanvas}>New</NavDropdown.Item>
-                        <NavDropdown.Item> Open                        </NavDropdown.Item>
+                        {/*<NavDropdown.Item> Open                        </NavDropdown.Item>*/}
                         <NavDropdown.Item onClick={props.save}>Save</NavDropdown.Item>
                         <NavDropdown.Divider />
                         <NavDropdown.Item>Settings</NavDropdown.Item>
