@@ -125,10 +125,23 @@ class App extends React.Component<AppProps, AppState> {
             });
     }
 
+    testGetReq = () => {
+        const data = this.state.model.serialize();
+        axios.get('/')
+            .then(response => {
+                console.log(response);
+                console.log(response.data);
+                // download(response.data, "response.py")
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
+
     render() {
         return (
             <div className={classes.FrontPage}>
-                <TopNav newCanvas={this.newCanvas} open={this.openSave} save={this.downloadSave}/>
+                <TopNav newCanvas={this.newCanvas} open={this.openSave} save={this.downloadSave} generateCode={this.sendDiagram} debug={this.testGetReq}/>
                 <div className={classes.Container}>
                     <SideBar catAndNames={this.loadMapCategoryNodes()} format={this.dragDropFormat}/>
                     <Canvas dragDropFormat={this.dragDropFormat} engine={this.state.engine} model={this.state.model}/>

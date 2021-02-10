@@ -6,12 +6,12 @@ import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:5000';
+axios.defaults.baseURL = 'http://localhost:8080';
 // axios.defaults.baseURL = 'https://jsonplaceholder.typicode.com';
 
-if(process.env.NODE_ENV === 'production'){
+/*if(process.env.NODE_ENV === 'production'){
     console.log = ()=>{}
-}
+}*/
 
 ReactDOM.render(
   <React.StrictMode>

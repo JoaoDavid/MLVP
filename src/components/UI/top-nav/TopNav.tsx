@@ -10,6 +10,8 @@ interface TopNavProps {
     newCanvas: () => void,
     open: (event: React.ChangeEvent<HTMLInputElement>) => void,
     save: () => void,
+    generateCode: () => void,
+    debug: () => void,
 }
 
 const topNav = (props: TopNavProps) => {
@@ -40,6 +42,10 @@ const topNav = (props: TopNavProps) => {
                         <NavDropdown.Item onClick={props.save}>Save</NavDropdown.Item>
                         <NavDropdown.Divider />
                         <NavDropdown.Item>Settings</NavDropdown.Item>
+                    </NavDropdown>
+                    <NavDropdown title="Run" id="collasible-nav-dropdown">
+                        <NavDropdown.Item onClick={props.generateCode}>Generate Code</NavDropdown.Item>
+                        <NavDropdown.Item onClick={props.debug}>Get</NavDropdown.Item>
                     </NavDropdown>
                     <NavDropdown title="Help" id="collasible-nav-dropdown">
                         <NavDropdown.Item>Item</NavDropdown.Item>
