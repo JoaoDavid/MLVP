@@ -1,5 +1,5 @@
 [Unit]
-Description=MLVP website
+Description=MLVP frontend
 After=syslog.target network.target
 
 [Service]

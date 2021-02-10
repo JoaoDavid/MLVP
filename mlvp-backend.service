@@ -1,0 +1,9 @@
+[Unit]
+Description=MLVP backend
+After=syslog.target network.target
+
+[Service]
+WorkingDirectory=/home/jdavid/MLVP/backend
+ExecStart=/usr/bin/python3 /home/jdavid/MLVP/backend/server.py
+KillSignal=SIGINT
+KillMode=control-group

@@ -7,11 +7,11 @@ import 'bootstrap/dist/css/bootstrap.css';
 import axios from 'axios';
 
 axios.defaults.baseURL = 'http://localhost:8080';
-// axios.defaults.baseURL = 'https://jsonplaceholder.typicode.com';
 
-/*if(process.env.NODE_ENV === 'production'){
+if(process.env.NODE_ENV === 'production'){
     console.log = ()=>{}
-}*/
+    axios.defaults.baseURL = 'http://194.117.20.237:443';
+}
 
 ReactDOM.render(
   <React.StrictMode>

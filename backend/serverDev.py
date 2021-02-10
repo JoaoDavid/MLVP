@@ -1,20 +1,16 @@
 from flask import Flask, request
 from flask_cors import CORS
 from waitress import serve
+from mlvp import generate_code
 
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/', methods=['GET'])
-def home():
-    response = "generate_code(data)"
-    return response
 
 @app.route('/codegen', methods=['POST'])
-def foo():
+def codegen():
     data = request.json
-    print("here")
-    response = "generate_code(data)"
+    response = generate_code(data)
     return response
 
 
