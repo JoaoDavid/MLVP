@@ -22,6 +22,7 @@ import {CoreDiagram} from "../components/core/diagram/CoreDiagram";
 import {OversamplingFactory} from "../components/nodes/data/oversampling/OversamplingFactory";
 import {UndersamplingFactory} from "../components/nodes/data/undersampling/UndersamplingFactory";
 import {PCAFactory} from "../components/nodes/data/principal-component-analysis/PCAFactory";
+import {CrossValidationFactory} from "../components/nodes/evaluate/cross-validation/CrossValidationFactory";
 
 interface AppProps {
 
@@ -48,7 +49,7 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     addTestNodes = () => {
-        let count = 10;
+        let count = 5;
         this.nodes.push(this.generateModel(CSVFactory.getInstance()));
         this.nodes.push(this.generateModel(OversamplingFactory.getInstance()));
         this.nodes.push(this.generateModel(UndersamplingFactory.getInstance()));
@@ -56,11 +57,12 @@ class App extends React.Component<AppProps, AppState> {
         this.nodes.push(this.generateModel(SplitDatasetFactory.getInstance()));
         this.nodes.push(this.generateModel(RandomForestClassifierFactory.getInstance()));
         this.nodes.push(this.generateModel(AccuracyClassifierFactory.getInstance()));
+        this.nodes.push(this.generateModel(CrossValidationFactory.getInstance()));
 
         this.nodes.forEach((node: CoreNodeModel) => {
             this.state.model.addNode(node);
             node.setPosition(count, count);
-            count += 130;
+            count += 105;
         });
     }
 
@@ -87,9 +89,20 @@ class App extends React.Component<AppProps, AppState> {
         return map;
     }
 
-    openSave = () => {
-        this.state.model.deserializeModel(this.lastSave, this.state.engine);
+    newCanvas = () => {
+        let empty: any = {};
+        this.state.model.deserializeModel(empty, this.state.engine);
         this.state.engine.repaintCanvas();
+    }
+
+    openSave = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const fileList = event.target.files;
+        if (fileList.length > 0) {
+            event.target.files[0].text().then((text: string) => {
+                this.state.model.deserializeModel(JSON.parse(text), this.state.engine);
+                this.state.engine.repaintCanvas();
+            });
+        }
     }
 
     downloadSave = () => {
@@ -99,13 +112,13 @@ class App extends React.Component<AppProps, AppState> {
         console.log(JSON.stringify(this.lastSave, null, 4));
     }
 
-    sendDiagram = () => {
+    generateCodeReq = () => {
         const data = this.state.model.serialize();
         axios.post('/codegen', data)
             .then(response => {
                 console.log(response);
                 console.log(response.data);
-                // download(response.data, "response.py")
+                download(response.data, "mlvp-generated-code.py")
             })
             .catch(error => {
                 console.log(error);
@@ -115,12 +128,12 @@ class App extends React.Component<AppProps, AppState> {
     render() {
         return (
             <div className={classes.FrontPage}>
-                <TopNav open={this.openSave} save={this.downloadSave}/>
+                <TopNav newCanvas={this.newCanvas} open={this.openSave} save={this.downloadSave} generateCodeReq={this.generateCodeReq}/>
                 <div className={classes.Container}>
                     <SideBar catAndNames={this.loadMapCategoryNodes()} format={this.dragDropFormat}/>
                     <Canvas dragDropFormat={this.dragDropFormat} engine={this.state.engine} model={this.state.model}/>
                 </div>
-                <BottomNav sendReq={this.sendDiagram}/>
+                <BottomNav sendReq={this.generateCodeReq}/>
             </div>
         );
     }

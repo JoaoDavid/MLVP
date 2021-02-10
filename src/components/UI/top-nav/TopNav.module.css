@@ -1,0 +1,23 @@
+.DropsDownItem:hover {
+    background-color: rgb(68, 72, 78) !important;
+    color: white !important;
+}
+
+.Label {
+    cursor: pointer;
+}
+
+.Label:hover {
+    cursor: pointer;
+    background-color: rgb(68, 72, 78) !important;
+    color: white !important;
+}
+
+.Input {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}

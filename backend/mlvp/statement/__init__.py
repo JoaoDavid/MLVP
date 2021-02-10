@@ -9,5 +9,5 @@ from .model.RandomForestStatement import RandomForestStatement
 
 
 from .evaluate.ModelAccuracyStatement import ModelAccuracyStatement
-
+from .evaluate.CrossValidationStatement import CrossValidationStatement
 

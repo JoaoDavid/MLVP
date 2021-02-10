@@ -1,24 +1,22 @@
 from mlvp.codegen.templates.CodeTemplate import *
 from mlvp.codegen.templates.LibNames import *
 from mlvp.codegen.Emitter import Emitter
-from mlvp.ports import ParentLink
 from mlvp.ports import DatasetPort, ModelPort
 from mlvp.statement import Statement
 from mlvp.statement import DatasetDeclarationStatement
 from mlvp.statement import ModelAccuracyStatement
 from mlvp.statement import RandomForestStatement
-from mlvp.statement import ModelTrainStatement
 from mlvp.statement import SplitDatasetStatement
 from mlvp.statement import OversamplingStatement, UnderSamplingStatement
 from mlvp.statement import PCAStatement
+from mlvp.statement import CrossValidationStatement
 
 
 class CodeGen:
 
-    def __init__(self, name, libraries, statements, roots):
+    def __init__(self, name, libraries, roots):
         self.name = name + ".py"
         self.libraries = libraries
-        self.statements = statements
         self.roots = roots
         self.out_file = open(self.name, "w+")
         self.emitter = Emitter()
@@ -135,6 +133,18 @@ class CodeGen:
                 self.out_file.write(MODEL_PREDICT.format(var=y_predicted, clf_var=clf_var, x=x))
                 score = "score" + str(curr_count)
                 self.out_file.write(score + " = " + ACCURACY_SCORE_CALL.format(y_true=y, y_pred=y_predicted))
+                self.out_file.write("print("+score+")\n")
+            elif isinstance(statement, CrossValidationStatement):
+                print("CrossValidationStatement")
+                score = "score" + str(curr_count)
+                model_var, x, y = "", "", ""
+                for curr in parent_links:
+                    parent_port = curr.parent_source_port
+                    if isinstance(parent_port, ModelPort):
+                        model_var = self.emitter.get(parent_port)
+                    elif isinstance(parent_port, DatasetPort):
+                        x, y = self.emitter.get(parent_port)
+                self.out_file.write(CROSS_VAL_SCORE_CALL.format(score=score, model=model_var, x=x, y=y, cv=statement.number_folds))
                 self.out_file.write("print("+score+")\n")
             self.out_file.write("\n")
             for child in statement.children:

@@ -8,6 +8,7 @@ from mlvp.statement import RandomForestStatement
 from mlvp.statement import SplitDatasetStatement
 from mlvp.statement import OversamplingStatement, UnderSamplingStatement
 from mlvp.statement import PCAStatement
+from mlvp.statement import CrossValidationStatement
 
 
 class ParseJSON:
@@ -30,7 +31,7 @@ class ParseJSON:
                 self.json_nodes = layer['models']
         self.__parse_nodes()
         self.__parse_links()
-        return self.libraries, self.statements, self.roots
+        return self.libraries, self.roots
 
     def __parse_nodes(self):
         for node_id, data in self.json_nodes.items():
@@ -44,7 +45,7 @@ class ParseJSON:
                 self.roots.append(statement)
             elif data['type'] == 'NODE_SPLIT_DATASET':
                 statement = SplitDatasetStatement(node_id=node_id, test_size=data['testSize'],
-                                                  train_size=data['testSize'], shuffle=data['shuffle'])
+                                                  train_size=data['trainSize'], shuffle=data['shuffle'])
                 statement.ports = self.__parse_ports(data['ports'])
                 self.statements[node_id] = statement
                 self.libraries.add(
@@ -79,6 +80,11 @@ class ParseJSON:
                 statement.ports = self.__parse_ports(data['ports'])
                 self.statements[node_id] = statement
                 self.libraries.add(FROM_IMPORT.format(package=SKLEARN + "." + METRICS, class_to_import=ACCURACY_SCORE))
+            elif data['type'] == 'NODE_CROSS_VALIDATION':
+                statement = CrossValidationStatement(node_id=node_id, number_folds=data['numberFolds'])
+                statement.ports = self.__parse_ports(data['ports'])
+                self.statements[node_id] = statement
+                self.libraries.add(FROM_IMPORT.format(package=SKLEARN + "." + MODEL_SELECTION, class_to_import=CROSS_VAL_SCORE))
 
     def __parse_links(self):
         for link_id, data in self.json_links.items():
