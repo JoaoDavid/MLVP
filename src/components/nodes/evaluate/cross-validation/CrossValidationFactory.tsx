@@ -4,10 +4,10 @@ import CrossValidationWidget from './CrossValidationWidget';
 import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-canvas-core';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
 import { NODE_CROSS_VALIDATION } from "../EvaluateConfig";
-import {CoreNodeFactory} from "../../../core/CoreNode/CoreNodeFactory";
+import {BaseNodeFactory} from "../../../core/BaseNode/BaseNodeFactory";
 import {Category} from "../../Config";
 
-export class CrossValidationFactory extends CoreNodeFactory<CrossValidationModel, DiagramEngine> {
+export class CrossValidationFactory extends BaseNodeFactory<CrossValidationModel, DiagramEngine> {
 
     private static INSTANCE: CrossValidationFactory;
 

@@ -1,11 +1,11 @@
-import {CoreNodeModel} from "../../../core/CoreNode/CoreNodeModel";
+import {BaseNodeModel} from "../../../core/BaseNode/BaseNodeModel";
 import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
 import { NODE_CROSS_VALIDATION } from "../EvaluateConfig";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
 import {ModelPortModel} from "../../../ports/model/ModelPortModel";
 
 
-export class CrossValidationModel extends CoreNodeModel {
+export class CrossValidationModel extends BaseNodeModel {
 
     private numberFolds : number = 5;
 

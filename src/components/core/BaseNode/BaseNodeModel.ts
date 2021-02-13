@@ -10,7 +10,7 @@ export interface CoreNodeModelGenerics extends NodeModelGenerics {
     OPTIONS: CoreNodeModelOptions;
 }
 
-export abstract class CoreNodeModel extends NodeModel<CoreNodeModelGenerics> {
+export abstract class BaseNodeModel extends NodeModel<CoreNodeModelGenerics> {
 
     protected portsIn: BasePortModel[];
     protected portsOut: BasePortModel[];

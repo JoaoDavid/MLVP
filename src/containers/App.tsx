@@ -14,7 +14,7 @@ import Canvas from "../components/Canvas/Canvas";
 import {CSVFactory} from "../components/nodes/data/import-dataset/csv/CSVFactory";
 import {RandomForestClassifierFactory} from "../components/nodes/model/classifier/random-forest-classifier/RandomForestClassifierFactory";
 import {AccuracyClassifierFactory} from "../components/nodes/evaluate/classifier/accuracy/AccuracyClassifierFactory";
-import {CoreNodeModel} from "../components/core/CoreNode/CoreNodeModel";
+import {BaseNodeModel} from "../components/core/BaseNode/BaseNodeModel";
 import {AbstractReactFactory} from "@projectstorm/react-canvas-core";
 import {NodeModel} from "@projectstorm/react-diagrams-core";
 import {SplitDatasetFactory} from "../components/nodes/data/split-dataset/SplitDatasetFactory";
@@ -34,7 +34,7 @@ type AppState = {
 };
 
 class App extends React.Component<AppProps, AppState> {
-    private nodes: CoreNodeModel[] = [];
+    private nodes: BaseNodeModel[] = [];
     private dragDropFormat: string = "side-bar-drag-drop";
     private lastSave: any = {};
 
@@ -59,15 +59,15 @@ class App extends React.Component<AppProps, AppState> {
         this.nodes.push(this.generateModel(AccuracyClassifierFactory.getInstance()));
         this.nodes.push(this.generateModel(CrossValidationFactory.getInstance()));
 
-        this.nodes.forEach((node: CoreNodeModel) => {
+        this.nodes.forEach((node: BaseNodeModel) => {
             this.state.model.addNode(node);
             node.setPosition(count, count);
             count += 105;
         });
     }
 
-    generateModel<T extends AbstractReactFactory<NodeModel, DiagramEngine>>(factory: T): CoreNodeModel {
-        return factory.generateModel({}) as CoreNodeModel;
+    generateModel<T extends AbstractReactFactory<NodeModel, DiagramEngine>>(factory: T): BaseNodeModel {
+        return factory.generateModel({}) as BaseNodeModel;
     }
 
     delDefaultFactory = () => {

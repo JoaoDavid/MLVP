@@ -1,11 +1,11 @@
 import Papa from "papaparse";
-import {CoreNodeModel} from "../../../../core/CoreNode/CoreNodeModel";
+import {BaseNodeModel} from "../../../../core/BaseNode/BaseNodeModel";
 import {DatasetPortModel} from "../../../../ports/dataset/DatasetPortModel";
 import {NODE_CSV} from "../../DataConfig";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
 
 
-export class CSVModel extends CoreNodeModel {
+export class CSVModel extends BaseNodeModel {
 
     private fileName: string = "";
     private numCols: number = 0;

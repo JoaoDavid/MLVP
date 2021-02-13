@@ -4,10 +4,10 @@ import CSVWidget from './CSVWidget';
 import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-canvas-core';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
 import { NODE_CSV } from "../../DataConfig";
-import {CoreNodeFactory} from "../../../../core/CoreNode/CoreNodeFactory";
+import {BaseNodeFactory} from "../../../../core/BaseNode/BaseNodeFactory";
 import {Category} from "../../../Config";
 
-export class CSVFactory extends CoreNodeFactory<CSVModel, DiagramEngine> {
+export class CSVFactory extends BaseNodeFactory<CSVModel, DiagramEngine> {
 
     private static INSTANCE: CSVFactory;
 

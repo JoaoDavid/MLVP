@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {RandomForestClassifierModel} from './RandomForestClassifierModel';
-import CoreNodeWidget from '../../../../core/CoreNode/CoreNodeWidget';
+import BaseNodeWidget from '../../../../core/BaseNode/BaseNodeWidget';
 import RandomForestClassifierModal from './RandomForestClassifierModal';
 import { MODEL_CONFIG } from '../../ModelConfig';
 
@@ -47,12 +47,12 @@ class RandomForestClassifierWidget extends React.Component<NodeProps, NodeState>
                                                    criterionChanged={this.criterionChanged}/>;
 
         return (
-            <CoreNodeWidget node={this.state.node} engine={this.props.engine} color={MODEL_CONFIG.color}
+            <BaseNodeWidget node={this.state.node} engine={this.props.engine} color={MODEL_CONFIG.color}
                             modalChildren={modal}>
                 <p>Trees: {this.state.node.getNumTrees()}</p>
                 <p>Max Depth: {this.state.node.getMaxDepth() || "None"}</p>
                 <p>Criterion: {this.state.node.getCriterion().toString()}</p>
-            </CoreNodeWidget>
+            </BaseNodeWidget>
         )
     }
 

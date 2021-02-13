@@ -2,15 +2,15 @@ import * as React from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {BasePortWidget} from "../BasePort/BasePortWidget";
 import {BasePortModel} from "../BasePort/BasePortModel";
-import classes from './CoreNode.module.css';
+import classes from './BaseNode.module.css';
 import Title from '../Title/Title';
-import {CoreNodeModel} from './CoreNodeModel';
+import {BaseNodeModel} from './BaseNodeModel';
 import PortContainer from "../BasePort/PortContainer/PortContainer";
 import BaseModal from "../../UI/modal/BaseModal";
 
 
 export interface CoreNodeProps {
-    node: CoreNodeModel;
+    node: BaseNodeModel;
     engine: DiagramEngine;
     children?: React.ReactNode;
     modalChildren?: React.ReactNode;
@@ -21,7 +21,7 @@ export interface CoreNodeProps {
  * Default node that models the CSVModel. It creates two columns
  * for both all the input ports on the left, and the output ports on the right.
  */
-export class CoreNodeWidget extends React.Component<CoreNodeProps> {
+export class BaseNodeWidget extends React.Component<CoreNodeProps> {
 
     state = {
         isSelected: false,
@@ -86,4 +86,4 @@ export class CoreNodeWidget extends React.Component<CoreNodeProps> {
     }
 }
 
-export default CoreNodeWidget;
+export default BaseNodeWidget;
