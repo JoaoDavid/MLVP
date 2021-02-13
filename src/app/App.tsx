@@ -18,7 +18,7 @@ import {BaseNodeModel} from "../components/core/BaseNode/BaseNodeModel";
 import {AbstractReactFactory} from "@projectstorm/react-canvas-core";
 import {NodeModel} from "@projectstorm/react-diagrams-core";
 import {SplitDatasetFactory} from "../components/nodes/data/split-dataset/SplitDatasetFactory";
-import {CoreDiagram} from "../components/core/diagram/CoreDiagram";
+import {BaseDiagram} from "../components/core/diagram/BaseDiagram";
 import {OversamplingFactory} from "../components/nodes/data/oversampling/OversamplingFactory";
 import {UndersamplingFactory} from "../components/nodes/data/undersampling/UndersamplingFactory";
 import {PCAFactory} from "../components/nodes/data/principal-component-analysis/PCAFactory";
@@ -30,7 +30,7 @@ interface AppProps {
 
 type AppState = {
     engine: DiagramEngine,
-    model: CoreDiagram,
+    model: BaseDiagram,
 };
 
 class App extends React.Component<AppProps, AppState> {
@@ -42,7 +42,7 @@ class App extends React.Component<AppProps, AppState> {
         super(props);
         this.state = {
             engine: createEngine(),
-            model: new CoreDiagram()
+            model: new BaseDiagram()
         }
         this.addTestNodes();
         this.state.engine.setModel(this.state.model);

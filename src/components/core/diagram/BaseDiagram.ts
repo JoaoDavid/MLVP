@@ -1,7 +1,7 @@
 import {DiagramModel} from '@projectstorm/react-diagrams';
 
 
-export class CoreDiagram extends DiagramModel {
+export class BaseDiagram extends DiagramModel {
 
     serialize() {
         return {

@@ -3,7 +3,7 @@ import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {BasePortWidget} from "../BasePort/BasePortWidget";
 import {BasePortModel} from "../BasePort/BasePortModel";
 import classes from './BaseNode.module.css';
-import Title from '../Title/Title';
+import Title from './Title/Title';
 import {BaseNodeModel} from './BaseNodeModel';
 import PortContainer from "../BasePort/PortContainer/PortContainer";
 import BaseModal from "../../UI/modal/BaseModal";
