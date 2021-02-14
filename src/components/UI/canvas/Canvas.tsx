@@ -3,16 +3,16 @@ import {DiagramEngine, DiagramModel} from "@projectstorm/react-diagrams";
 import classes from "./Canvas.module.css";
 import {AbstractReactFactory, CanvasWidget} from "@projectstorm/react-canvas-core";
 import {NodeModel} from "@projectstorm/react-diagrams-core";
-import {BaseNodeModel} from "../core/BaseNode/BaseNodeModel";
-import {DiagramState} from "../core/states/DiagramState";
-import {CSVFactory} from "../nodes/data/import-dataset/csv/CSVFactory";
-import {RandomForestClassifierFactory} from "../nodes/model/classifier/random-forest-classifier/RandomForestClassifierFactory";
-import {AccuracyClassifierFactory} from "../nodes/evaluate/classifier/accuracy/AccuracyClassifierFactory";
-import {SplitDatasetFactory} from "../nodes/data/split-dataset/SplitDatasetFactory";
-import {OversamplingFactory} from "../nodes/data/oversampling/OversamplingFactory";
-import {UndersamplingFactory} from "../nodes/data/undersampling/UndersamplingFactory";
-import {PCAFactory} from "../nodes/data/principal-component-analysis/PCAFactory";
-import {CrossValidationFactory} from "../nodes/evaluate/cross-validation/CrossValidationFactory";
+import {BaseNodeModel} from "../../core/BaseNode/BaseNodeModel";
+import {DiagramState} from "./states/DiagramState";
+import {CSVFactory} from "../../nodes/data/import-dataset/csv/CSVFactory";
+import {RandomForestClassifierFactory} from "../../nodes/model/classifier/random-forest-classifier/RandomForestClassifierFactory";
+import {AccuracyClassifierFactory} from "../../nodes/evaluate/classifier/accuracy/AccuracyClassifierFactory";
+import {SplitDatasetFactory} from "../../nodes/data/split-dataset/SplitDatasetFactory";
+import {OversamplingFactory} from "../../nodes/data/oversampling/OversamplingFactory";
+import {UndersamplingFactory} from "../../nodes/data/undersampling/UndersamplingFactory";
+import {PCAFactory} from "../../nodes/data/principal-component-analysis/PCAFactory";
+import {CrossValidationFactory} from "../../nodes/evaluate/cross-validation/CrossValidationFactory";
 
 interface CanvasProps {
     dragDropFormat: string,

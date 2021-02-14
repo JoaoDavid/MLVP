@@ -8,7 +8,7 @@ import {
 import {LinkModel} from '@projectstorm/react-diagrams-core';
 import {MouseEvent} from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams';
-import {BasePortModel} from "../BasePort/BasePortModel";
+import {BasePortModel} from "../../../core/BasePort/BasePortModel";
 
 export interface MyDragNewLinkStateOptions {
     /**

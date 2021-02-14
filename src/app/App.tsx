@@ -10,7 +10,7 @@ import {EVALUATE_CONFIG, EVALUATE_NODES} from "../components/nodes/evaluate/Eval
 import axios from "axios";
 import download from 'js-file-download';
 import BottomNav from "../components/UI/bottom-nav/BottomNav";
-import Canvas from "../components/Canvas/Canvas";
+import Canvas from "../components/UI/canvas/Canvas";
 import {CSVFactory} from "../components/nodes/data/import-dataset/csv/CSVFactory";
 import {RandomForestClassifierFactory} from "../components/nodes/model/classifier/random-forest-classifier/RandomForestClassifierFactory";
 import {AccuracyClassifierFactory} from "../components/nodes/evaluate/classifier/accuracy/AccuracyClassifierFactory";
@@ -18,7 +18,7 @@ import {BaseNodeModel} from "../components/core/BaseNode/BaseNodeModel";
 import {AbstractReactFactory} from "@projectstorm/react-canvas-core";
 import {NodeModel} from "@projectstorm/react-diagrams-core";
 import {SplitDatasetFactory} from "../components/nodes/data/split-dataset/SplitDatasetFactory";
-import {BaseDiagram} from "../components/core/diagram/BaseDiagram";
+import {MyDiagramModel} from "../components/UI/canvas/diagram/MyDiagramModel";
 import {OversamplingFactory} from "../components/nodes/data/oversampling/OversamplingFactory";
 import {UndersamplingFactory} from "../components/nodes/data/undersampling/UndersamplingFactory";
 import {PCAFactory} from "../components/nodes/data/principal-component-analysis/PCAFactory";
@@ -30,7 +30,7 @@ interface AppProps {
 
 type AppState = {
     engine: DiagramEngine,
-    model: BaseDiagram,
+    model: MyDiagramModel,
 };
 
 class App extends React.Component<AppProps, AppState> {
@@ -42,7 +42,7 @@ class App extends React.Component<AppProps, AppState> {
         super(props);
         this.state = {
             engine: createEngine(),
-            model: new BaseDiagram()
+            model: new MyDiagramModel()
         }
         this.addTestNodes();
         this.state.engine.setModel(this.state.model);
