@@ -40,7 +40,7 @@ const topNav = (props: TopNavProps) => {
                         <NavDropdown.Item>Settings</NavDropdown.Item>
                     </NavDropdown>
                     <NavDropdown title="Run" id="collasible-nav-dropdown">
-                        <NavDropdown.Item onClick={props.generateCodeReq}>Generate Code</NavDropdown.Item>
+                        <NavDropdown.Item onClick={props.generateCodeReq}>Compile</NavDropdown.Item>
                     </NavDropdown>
                     <NavDropdown title="Help" id="collasible-nav-dropdown">
                         <NavDropdown.Item>Item</NavDropdown.Item>
