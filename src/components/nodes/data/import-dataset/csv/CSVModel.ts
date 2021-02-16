@@ -11,7 +11,7 @@ export class CSVModel extends BaseNodeModel {
     private numCols: number = 0;
     private numRows: number = 0;
     private columnNames: string[] = [];
-    private labels: {};
+    private labels: Map<string, number> = new Map();
 
     constructor() {
         super(NODE_CSV.codeName, NODE_CSV.name);
@@ -24,6 +24,7 @@ export class CSVModel extends BaseNodeModel {
         this.numCols = 0;
         this.numRows = 0;
         this.columnNames = [];
+        this.labels = new Map();
     }
 
     getFileName(): string {
@@ -40,6 +41,10 @@ export class CSVModel extends BaseNodeModel {
 
     getColumnNames(): string[] {
         return this.columnNames;
+    }
+
+    getLabels() {
+        return this.labels;
     }
 
     protected addOutPort(): void {
