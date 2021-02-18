@@ -14,6 +14,7 @@ def import_from_csv(id_output: str, n_cols: int, n_rows: int, labels: Dict[str, 
     labels_values = [label_names[i] == label_counts[i] for i in range(len(labels))]
     balanced_output = Bool(id_output + "_balanced")
     list_balanced = [label_counts[i] == label_counts[i + 1] for i in range(len(labels) - 1)]
+    # list_balanced = [abs(label_counts[i] - label_counts[i + 1]) <= 1 for i in range(len(labels) - 1)]
     return And(
         cols == n_cols,
         rows == n_rows,
@@ -68,10 +69,11 @@ def oversampling(id_input, id_output, random_state):
     rows_input = Int(id_input + "_n_rows")
     cols_output = Int(id_output + "_n_cols")
     rows_output = Int(id_output + "_n_rows")
+    balanced_input = Bool(id_input + "_balanced")
     balanced_output = Bool(id_output + "_balanced")
     return And(
         cols_input == cols_output,
-        rows_input <= rows_output,
+        Implies(balanced_input, rows_input == rows_output),
         balanced_output
     )
 
@@ -81,3 +83,11 @@ def func3(id_input):
     cols = Int(id_input + "_n_cols")
     rows = Int(id_input + "_n_rows")
     return And(cols > 3, rows > 2)
+
+s = Solver()
+s.add(import_from_csv("a", 5, 10, {"batata": 5, "alface": 5}))
+# s.add(split_dataset("b", "c", "d", 0.5, 0.5, False))
+s.add(oversampling("b", "c", 3))
+s.add(link("a", "b"))
+print(s.check())
+print(s.model())
