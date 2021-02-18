@@ -30,29 +30,38 @@ def import_from_csv(id_output: str, n_cols: int, n_rows: int, labels: Dict[str, 
     )
 
 
-def split_dataset(id_input, id_output_train, id_output_test, test_size, train_size, shuffle):
-    cols_input = Int(id_input + N_COLS)
-    rows_input = Int(id_input + N_ROWS)
-    cols_output_train = Int(id_output_train + N_COLS)
-    rows_output_train = Int(id_output_train + N_ROWS)
-    cols_output_test = Int(id_output_test + N_COLS)
-    rows_output_test = Int(id_output_test + N_ROWS)
-    shuffle_input = Bool(id_input + SHUFFLED)
-    shuffle_output_train = Bool(id_output_train + SHUFFLED)
-    shuffle_output_test = Bool(id_output_test + SHUFFLED)
-    output_shuffles = Or(shuffle_input, shuffle)
+def split_dataset(id_input, id_output_train, id_output_test, test_size, train_size, shuffle, stratify):
+    cols_input, rows_input, n_labels_input, max_label_count_input, min_label_count_input = dataset(id_input)
+    cols_train, rows_train, n_labels_train, max_label_count_train, min_label_count_train = dataset(id_output_train)
+    cols_test, rows_test, n_labels_test, max_label_count_test, min_label_count_test = dataset(id_output_test)
+
     balanced_input = Bool(id_input + BALANCED)
+    balanced_train = Bool(id_output_train + BALANCED)
+    balanced_test = Bool(id_output_test + BALANCED)
+
+    shuffle_input = Bool(id_input + SHUFFLED)
+    shuffle_train = Bool(id_output_train + SHUFFLED)
+    shuffle_test = Bool(id_output_test + SHUFFLED)
+    output_shuffles = Or(shuffle_input, shuffle)
+
     return And(
         # Requires
         rows_input >= 2,
         balanced_input,
         #
-        rows_output_train == ToInt(ToReal(rows_input) * train_size),
-        rows_output_test == ToInt(ToReal(rows_input) * test_size),
-        cols_input == cols_output_train,
-        cols_output_train == cols_output_test,
-        shuffle_output_train == output_shuffles,
-        shuffle_output_test == output_shuffles
+        rows_train == ToInt(ToReal(rows_input) * train_size),
+        rows_test == ToInt(ToReal(rows_input) * test_size),
+        cols_input == cols_train,
+        cols_train == cols_test,
+        n_labels_input == n_labels_train,
+        n_labels_train == n_labels_test,
+        n_labels_train == ToInt(ToReal(n_labels_input) * train_size),
+        n_labels_test == ToInt(ToReal(n_labels_input) * test_size),
+        Implies(stratify, And(balanced_train, balanced_test)),
+
+        shuffle_train == output_shuffles,
+        shuffle_test == output_shuffles
+
     )
 
 
@@ -136,8 +145,10 @@ s.add(import_from_csv("a", 5, 8, {"batata": 5, "alface": 3}))
 # s.add(oversampling("b", "c", 3))
 s.add(undersampling("b", "c", 3))
 s.add(link("a", "b"))
-print(s.check())
-m = s.model()
-m_sorted = sorted([str(d) + " = " + str(m[d]) for d in m], key=lambda x: str(x[0]))
-for y in m_sorted:
-    print(y)
+if s.check():
+    m = s.model()
+    m_sorted = sorted([str(d) + " = " + str(m[d]) for d in m], key=lambda x: str(x[0]))
+    for y in m_sorted:
+        print(y)
+else:
+    print("UNSAT")
