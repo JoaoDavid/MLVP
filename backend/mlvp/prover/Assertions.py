@@ -1,6 +1,7 @@
 from typing import Dict
 from z3 import *
 from VarNames import *
+from PortProperties import *
 
 
 # And(func(a),func2(b,c,d),link(a,b))
@@ -8,15 +9,13 @@ from VarNames import *
 # a_ncols== b_cols
 
 def import_from_csv(id_output: str, n_cols: int, n_rows: int, labels: Dict[str, int]):
-    cols = Int(id_output + N_COLS)
-    rows = Int(id_output + N_ROWS)
+    cols, rows, n_labels, max_label_count, min_label_count = dataset(id_output)
+
     label_names = [Int(id_output + "_label_" + key) for key in labels.keys()]
     label_counts = list(labels.values())
     labels_values = [label_names[i] == label_counts[i] for i in range(len(labels))]
     balanced_output = Bool(id_output + BALANCED)
-    n_labels = Int(id_output + N_LABELS)
-    max_label_count = Int(id_output + MAX_LABEL_COUNT)
-    min_label_count = Int(id_output + MIN_LABEL_COUNT)
+
     list_balanced = [label_counts[i] == label_counts[i + 1] for i in range(len(labels) - 1)]
     # list_balanced = [abs(label_counts[i] - label_counts[i + 1]) <= 1 for i in range(len(labels) - 1)]
     return And(
@@ -58,19 +57,12 @@ def split_dataset(id_input, id_output_train, id_output_test, test_size, train_si
 
 
 def link(id_from: str, id_to: str):
-    cols_from = Int(id_from + N_COLS)
-    rows_from = Int(id_from + N_ROWS)
-    balanced_from = Bool(id_from + BALANCED)
-    cols_to = Int(id_to + N_COLS)
-    rows_to = Int(id_to + N_ROWS)
-    balanced_to = Bool(id_to + BALANCED)
-    n_labels_from = Int(id_from + N_LABELS)
-    max_label_count_from = Int(id_from + MAX_LABEL_COUNT)
-    min_label_count_from = Int(id_from + MIN_LABEL_COUNT)
+    cols_from, rows_from, n_labels_from, max_label_count_from, min_label_count_from = dataset(id_from)
+    cols_to, rows_to, n_labels_to, max_label_count_to, min_label_count_to = dataset(id_from)
 
-    n_labels_to = Int(id_to + N_LABELS)
-    max_label_count_to = Int(id_to + MAX_LABEL_COUNT)
-    min_label_count_to = Int(id_to + MIN_LABEL_COUNT)
+    balanced_from = Bool(id_from + BALANCED)
+    balanced_to = Bool(id_to + BALANCED)
+
     return And(
         cols_from == cols_to,
         rows_from == rows_to,
@@ -82,19 +74,26 @@ def link(id_from: str, id_to: str):
 
 
 def oversampling(id_input, id_output, random_state):
-    cols_input = Int(id_input + N_COLS)
-    rows_input = Int(id_input + N_ROWS)
-    cols_output = Int(id_output + N_COLS)
-    rows_output = Int(id_output + N_ROWS)
+    cols_input, rows_input, n_labels_input, max_label_count_input, min_label_count_input = dataset(id_input)
+    cols_output, rows_output, n_labels_output, max_label_count_output, min_label_count_output = dataset(id_output)
+
     balanced_input = Bool(id_input + BALANCED)
     balanced_output = Bool(id_output + BALANCED)
 
-    n_labels = Int(id_input + N_LABELS)
-    max_label_count = Int(id_input + MAX_LABEL_COUNT)
     return And(
         cols_input == cols_output,
-        Implies(balanced_input, rows_input == rows_output),
-        Implies(Not(balanced_input), rows_output == max_label_count*n_labels),
+        Implies(balanced_input, And(
+            rows_input == rows_output,
+            n_labels_input == n_labels_output,
+            max_label_count_input == max_label_count_output,
+            min_label_count_input == min_label_count_output
+        )),
+        Implies(Not(balanced_input), And(
+            rows_output == max_label_count_input * n_labels_input,
+            n_labels_input == n_labels_output,
+            max_label_count_input == max_label_count_output,
+            min_label_count_output == max_label_count_output,
+        )),
         balanced_output
     )
 
