@@ -1,3 +1,4 @@
+from typing import Dict
 from z3 import *
 
 
@@ -5,10 +6,13 @@ from z3 import *
 # a_nrows == b_rows
 # a_ncols== b_cols
 
-def import_from_csv(id_output: str, n_cols: int, n_rows: int, labels: dict[str, int]):
+def import_from_csv(id_output: str, n_cols: int, n_rows: int, labels: Dict[str, int]):
     cols = Int(id_output + "_n_cols")
     rows = Int(id_output + "_n_rows")
-    return And(cols == n_cols, rows == n_rows)
+    label_names = [Int(id_output + "_label_" + key) for key in labels.keys()]
+    label_counts = list(labels.values())
+    labels_values = [label_names[i] == label_counts[i] for i in range(len(labels))]
+    return And(cols == n_cols, rows == n_rows, And(labels_values))
 
 
 def split_dataset(id_input, id_output_train, id_output_test, test_size, train_size, shuffle):
