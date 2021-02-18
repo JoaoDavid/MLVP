@@ -14,9 +14,9 @@ def import_from_csv(id_output: str, n_cols: int, n_rows: int, labels: Dict[str, 
     label_counts = list(labels.values())
     labels_values = [label_names[i] == label_counts[i] for i in range(len(labels))]
     balanced_output = Bool(id_output + BALANCED)
-    n_labels = Int(id_output + "_n_labels")
-    max_label_count = Int(id_output + "_max_label_count")
-    min_label_count = Int(id_output + "_min_label_count")
+    n_labels = Int(id_output + N_LABELS)
+    max_label_count = Int(id_output + MAX_LABEL_COUNT)
+    min_label_count = Int(id_output + MIN_LABEL_COUNT)
     list_balanced = [label_counts[i] == label_counts[i + 1] for i in range(len(labels) - 1)]
     # list_balanced = [abs(label_counts[i] - label_counts[i + 1]) <= 1 for i in range(len(labels) - 1)]
     return And(
@@ -64,10 +64,20 @@ def link(id_from: str, id_to: str):
     cols_to = Int(id_to + N_COLS)
     rows_to = Int(id_to + N_ROWS)
     balanced_to = Bool(id_to + BALANCED)
+    n_labels_from = Int(id_from + N_LABELS)
+    max_label_count_from = Int(id_from + MAX_LABEL_COUNT)
+    min_label_count_from = Int(id_from + MIN_LABEL_COUNT)
+
+    n_labels_to = Int(id_to + N_LABELS)
+    max_label_count_to = Int(id_to + MAX_LABEL_COUNT)
+    min_label_count_to = Int(id_to + MIN_LABEL_COUNT)
     return And(
         cols_from == cols_to,
         rows_from == rows_to,
-        balanced_from == balanced_to
+        balanced_from == balanced_to,
+        n_labels_from == n_labels_to,
+        max_label_count_from == max_label_count_to,
+        min_label_count_from == min_label_count_to,
     )
 
 
@@ -78,9 +88,13 @@ def oversampling(id_input, id_output, random_state):
     rows_output = Int(id_output + N_ROWS)
     balanced_input = Bool(id_input + BALANCED)
     balanced_output = Bool(id_output + BALANCED)
+
+    n_labels = Int(id_input + N_LABELS)
+    max_label_count = Int(id_input + MAX_LABEL_COUNT)
     return And(
         cols_input == cols_output,
         Implies(balanced_input, rows_input == rows_output),
+        Implies(Not(balanced_input), rows_output == max_label_count*n_labels),
         balanced_output
     )
 
@@ -92,7 +106,7 @@ def func3(id_input):
     return And(cols > 3, rows > 2)
 
 s = Solver()
-s.add(import_from_csv("a", 5, 10, {"batata": 5, "alface": 5}))
+s.add(import_from_csv("a", 5, 8, {"batata": 5, "alface": 3}))
 # s.add(split_dataset("b", "c", "d", 0.5, 0.5, False))
 s.add(oversampling("b", "c", 3))
 s.add(link("a", "b"))
