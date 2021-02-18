@@ -58,7 +58,7 @@ def split_dataset(id_input, id_output_train, id_output_test, test_size, train_si
 
 def link(id_from: str, id_to: str):
     cols_from, rows_from, n_labels_from, max_label_count_from, min_label_count_from = dataset(id_from)
-    cols_to, rows_to, n_labels_to, max_label_count_to, min_label_count_to = dataset(id_from)
+    cols_to, rows_to, n_labels_to, max_label_count_to, min_label_count_to = dataset(id_to)
 
     balanced_from = Bool(id_from + BALANCED)
     balanced_to = Bool(id_to + BALANCED)
@@ -98,16 +98,46 @@ def oversampling(id_input, id_output, random_state):
     )
 
 
+def undersampling(id_input, id_output, random_state):
+    cols_input, rows_input, n_labels_input, max_label_count_input, min_label_count_input = dataset(id_input)
+    cols_output, rows_output, n_labels_output, max_label_count_output, min_label_count_output = dataset(id_output)
+
+    balanced_input = Bool(id_input + BALANCED)
+    balanced_output = Bool(id_output + BALANCED)
+
+    return And(
+        cols_input == cols_output,
+        Implies(balanced_input, And(
+            rows_input == rows_output,
+            n_labels_input == n_labels_output,
+            max_label_count_input == max_label_count_output,
+            min_label_count_input == min_label_count_output
+        )),
+        Implies(Not(balanced_input), And(
+            rows_output == min_label_count_input * n_labels_input,
+            n_labels_input == n_labels_output,
+            max_label_count_output == min_label_count_input,
+            min_label_count_input == min_label_count_output,
+        )),
+        balanced_output
+    )
+
+
 # mais de duas rows e mais de 3 colunas
 def func3(id_input):
     cols = Int(id_input + N_COLS)
     rows = Int(id_input + N_ROWS)
     return And(cols > 3, rows > 2)
 
+
 s = Solver()
 s.add(import_from_csv("a", 5, 8, {"batata": 5, "alface": 3}))
 # s.add(split_dataset("b", "c", "d", 0.5, 0.5, False))
-s.add(oversampling("b", "c", 3))
+# s.add(oversampling("b", "c", 3))
+s.add(undersampling("b", "c", 3))
 s.add(link("a", "b"))
 print(s.check())
-print(s.model())
+m = s.model()
+m_sorted = sorted([str(d) + " = " + str(m[d]) for d in m], key=lambda x: str(x[0]))
+for y in m_sorted:
+    print(y)
