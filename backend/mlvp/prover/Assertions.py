@@ -1,7 +1,7 @@
 from typing import Dict
 from z3 import *
 from VarNames import *
-from PortProperties import *
+from PortProperties import Dataset
 
 
 # And(func(a),func2(b,c,d),link(a,b))
@@ -9,7 +9,7 @@ from PortProperties import *
 # a_ncols== b_cols
 
 def import_from_csv(id_output: str, n_cols: int, n_rows: int, labels: Dict[str, int]):
-    cols, rows, n_labels, max_label_count, min_label_count = dataset(id_output)
+    output = Dataset(id_output)
 
     label_names = [Int(id_output + "_label_" + key) for key in labels.keys()]
     label_counts = list(labels.values())
@@ -19,21 +19,21 @@ def import_from_csv(id_output: str, n_cols: int, n_rows: int, labels: Dict[str, 
     list_balanced = [label_counts[i] == label_counts[i + 1] for i in range(len(labels) - 1)]
     # list_balanced = [abs(label_counts[i] - label_counts[i + 1]) <= 1 for i in range(len(labels) - 1)]
     return And(
-        cols == n_cols,
-        rows == n_rows,
-        rows == sum(label_counts),
+        output.cols == n_cols,
+        output.rows == n_rows,
+        output.rows == sum(label_counts),
         And(labels_values),
         balanced_output == And(list_balanced),
-        n_labels == len(label_counts),
-        max_label_count == max(label_counts),
-        min_label_count == min(label_counts)
+        output.n_labels == len(label_counts),
+        output.max_label_count == max(label_counts),
+        output.min_label_count == min(label_counts)
     )
 
 
 def split_dataset(id_input, id_output_train, id_output_test, test_size, train_size, shuffle, stratify):
-    cols_input, rows_input, n_labels_input, max_label_count_input, min_label_count_input = dataset(id_input)
-    cols_train, rows_train, n_labels_train, max_label_count_train, min_label_count_train = dataset(id_output_train)
-    cols_test, rows_test, n_labels_test, max_label_count_test, min_label_count_test = dataset(id_output_test)
+    input_ds = Dataset(id_input)
+    train_ds = Dataset(id_output_train)
+    test_ds = Dataset(id_output_test)
 
     balanced_input = Bool(id_input + BALANCED)
     balanced_train = Bool(id_output_train + BALANCED)
@@ -45,137 +45,139 @@ def split_dataset(id_input, id_output_train, id_output_test, test_size, train_si
     output_shuffles = Or(shuffle_input, shuffle)
 
     return And(
-        # Requires
-        rows_input >= 2,
+        # requires
+        input_ds.rows >= 2,
         balanced_input,
         # falta relacionar os min e max label count
-        rows_train == ToInt(ToReal(rows_input) * train_size),
-        rows_test == ToInt(ToReal(rows_input) * test_size),
-        cols_input == cols_train,
-        cols_train == cols_test,
-        n_labels_train == ToInt(ToReal(n_labels_input) * train_size),
-        n_labels_test == ToInt(ToReal(n_labels_input) * test_size),
+        # ensures
+        train_ds.rows == ToInt(ToReal(input_ds.rows) * train_size),
+        test_ds.rows == ToInt(ToReal(input_ds.rows) * test_size),
+        input_ds.cols == train_ds.cols,
+        train_ds.cols == test_ds.cols,
+        train_ds.n_labels == ToInt(ToReal(input_ds.n_labels) * train_size),
+        test_ds.n_labels == ToInt(ToReal(input_ds.n_labels) * test_size),
         Implies(stratify, And(balanced_train, balanced_test)),
 
         shuffle_train == output_shuffles,
         shuffle_test == output_shuffles
-
     )
 
 
 def link(id_from: str, id_to: str):
-    cols_from, rows_from, n_labels_from, max_label_count_from, min_label_count_from = dataset(id_from)
-    cols_to, rows_to, n_labels_to, max_label_count_to, min_label_count_to = dataset(id_to)
+    port_from = Dataset(id_from)
+    port_to = Dataset(id_to)
 
     balanced_from = Bool(id_from + BALANCED)
     balanced_to = Bool(id_to + BALANCED)
 
     return And(
-        cols_from == cols_to,
-        rows_from == rows_to,
+        port_from.cols == port_to.cols,
+        port_from.rows == port_to.rows,
         balanced_from == balanced_to,
-        n_labels_from == n_labels_to,
-        max_label_count_from == max_label_count_to,
-        min_label_count_from == min_label_count_to,
+        port_from.n_labels == port_to.n_labels,
+        port_from.max_label_count == port_to.max_label_count,
+        port_from.min_label_count == port_to.min_label_count,
     )
 
 
 def oversampling(id_input, id_output, random_state):
-    cols_input, rows_input, n_labels_input, max_label_count_input, min_label_count_input = dataset(id_input)
-    cols_output, rows_output, n_labels_output, max_label_count_output, min_label_count_output = dataset(id_output)
+    input_ds = Dataset(id_input)
+    output_ds = Dataset(id_output)
 
     balanced_input = Bool(id_input + BALANCED)
     balanced_output = Bool(id_output + BALANCED)
 
     return And(
-        cols_input == cols_output,
+        input_ds.cols == output_ds.cols,
         Implies(balanced_input, And(
-            rows_input == rows_output,
-            n_labels_input == n_labels_output,
-            max_label_count_input == max_label_count_output,
-            min_label_count_input == min_label_count_output
+            input_ds.rows == output_ds.rows,
+            input_ds.n_labels == output_ds.n_labels,
+            input_ds.max_label_count == output_ds.max_label_count,
+            input_ds.min_label_count == output_ds.min_label_count
         )),
         Implies(Not(balanced_input), And(
-            rows_output == max_label_count_input * n_labels_input,
-            n_labels_input == n_labels_output,
-            max_label_count_input == max_label_count_output,
-            min_label_count_output == max_label_count_output,
+            output_ds.rows == input_ds.max_label_count * input_ds.n_labels,
+            input_ds.n_labels == output_ds.n_labels,
+            input_ds.max_label_count == output_ds.max_label_count,
+            output_ds.min_label_count == output_ds.max_label_count,
         )),
         balanced_output
     )
 
 
 def undersampling(id_input, id_output, random_state):
-    cols_input, rows_input, n_labels_input, max_label_count_input, min_label_count_input = dataset(id_input)
-    cols_output, rows_output, n_labels_output, max_label_count_output, min_label_count_output = dataset(id_output)
+    input_ds = Dataset(id_input)
+    output_ds = Dataset(id_output)
 
     balanced_input = Bool(id_input + BALANCED)
     balanced_output = Bool(id_output + BALANCED)
 
     return And(
-        cols_input == cols_output,
+        input_ds.cols == output_ds.cols,
         Implies(balanced_input, And(
-            rows_input == rows_output,
-            n_labels_input == n_labels_output,
-            max_label_count_input == max_label_count_output,
-            min_label_count_input == min_label_count_output
+            input_ds.rows == output_ds.rows,
+            input_ds.n_labels == output_ds.n_labels,
+            input_ds.max_label_count == output_ds.max_label_count,
+            input_ds.min_label_count == output_ds.min_label_count
         )),
         Implies(Not(balanced_input), And(
-            rows_output == min_label_count_input * n_labels_input,
-            n_labels_input == n_labels_output,
-            max_label_count_output == min_label_count_input,
-            min_label_count_input == min_label_count_output,
+            output_ds.rows == input_ds.min_label_count * input_ds.n_labels,
+            input_ds.n_labels == output_ds.n_labels,
+            output_ds.max_label_count == input_ds.min_label_count,
+            input_ds.min_label_count == output_ds.min_label_count,
         )),
         balanced_output
     )
 
 
 def pca(id_input, id_output, random_state, n_components):
-    cols_input, rows_input, n_labels_input, max_label_count_input, min_label_count_input = dataset(id_input)
-    cols_output, rows_output, n_labels_output, max_label_count_output, min_label_count_output = dataset(id_output)
+    input_ds = Dataset(id_input)
+    output_ds = Dataset(id_output)
 
     balanced_input = Bool(id_input + BALANCED)
     balanced_output = Bool(id_output + BALANCED)
 
     return And(
         # requires
-        n_components < cols_input,
+        n_components < input_ds.cols,
         n_components > 0,
         # ensures
-        cols_output == n_components + 1,
-        rows_output == rows_input,
-        n_labels_output == n_labels_input,
-        max_label_count_output == max_label_count_input,
-        min_label_count_output == min_label_count_input,
+        output_ds.cols == n_components + 1,
+        output_ds.rows == input_ds.rows,
+        output_ds.n_labels == input_ds.n_labels,
+        output_ds.max_label_count == input_ds.max_label_count,
+        output_ds.min_label_count == input_ds.min_label_count,
         balanced_input == balanced_output,
     )
 
-def random_forest_classifier(id_input_ds, n_trees, max_depth):
-    cols_input, rows_input, n_labels_input, max_label_count_input, min_label_count_input = dataset(id_input_ds)
 
-    balanced_input = Bool(id_input_ds + BALANCED)
+def random_forest_classifier(id_input, n_trees, max_depth):
+    input_ds = Dataset(id_input)
+    balanced_input = Bool(id_input + BALANCED)
 
     return And(
         # requires
         n_trees > 0,
         max_depth > 0,
         balanced_input,
-        cols_input > 1
+        input_ds.cols > 1
     )
 
+
 def evaluate_classifier(id_input_ds):
-    cols_input, rows_input, n_labels_input, max_label_count_input, min_label_count_input = dataset(id_input_ds)
+    input_ds = Dataset(id_input_ds)
 
     balanced_input = Bool(id_input_ds + BALANCED)
 
     return And(
         # requires
         balanced_input,
-        cols_input >= 2
+        input_ds.cols >= 2
     )
 
+
 def cross_validation(id_input_ds, n_folds):
-    cols_input, rows_input, n_labels_input, max_label_count_input, min_label_count_input = dataset(id_input_ds)
+    input_ds = Dataset(id_input_ds)
 
     balanced_input = Bool(id_input_ds + BALANCED)
 
@@ -183,8 +185,9 @@ def cross_validation(id_input_ds, n_folds):
         # requires
         n_folds > 1,
         balanced_input,
-        cols_input > 1
+        input_ds.cols > 1
     )
+
 
 s = Solver()
 s.add(import_from_csv("a", 5, 8, {"batata": 5, "alface": 3}))
