@@ -130,6 +130,27 @@ def undersampling(id_input, id_output, random_state):
     )
 
 
+def pca(id_input, id_output, random_state, n_components):
+    cols_input, rows_input, n_labels_input, max_label_count_input, min_label_count_input = dataset(id_input)
+    cols_output, rows_output, n_labels_output, max_label_count_output, min_label_count_output = dataset(id_output)
+
+    balanced_input = Bool(id_input + BALANCED)
+    balanced_output = Bool(id_output + BALANCED)
+
+    return And(
+        # requires
+        n_components < cols_input,
+        n_components > 0,
+        # ensures
+        cols_output == n_components + 1,
+        rows_output == rows_input,
+        n_labels_output == n_labels_input,
+        max_label_count_output == max_label_count_input,
+        min_label_count_output == min_label_count_input,
+        balanced_input == balanced_output,
+    )
+
+
 s = Solver()
 s.add(import_from_csv("a", 5, 8, {"batata": 5, "alface": 3}))
 # s.add(split_dataset("b", "c", "d", 0.5, 0.5, False))
@@ -138,6 +159,8 @@ s.add(link("a", "b"))
 s.add(undersampling("b", "c", 3))
 s.add(link("c", "d"))
 s.add(split_dataset("d", "e", "f", 0.5, 0.5, False, True))
+s.add(link("e", "g"))
+s.add(pca("g", "h", 0, 3))
 
 if s.check() == sat:
     m = s.model()
