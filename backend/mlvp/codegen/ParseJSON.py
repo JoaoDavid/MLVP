@@ -2,13 +2,13 @@ from mlvp.codegen.templates.CodeTemplate import *
 from mlvp.codegen.templates.LibNames import *
 from mlvp.ports import ParentLink
 from mlvp.ports import DatasetPort, ModelPort
-from mlvp.statement import DatasetDeclarationStatement
-from mlvp.statement import ModelAccuracyStatement
-from mlvp.statement import RandomForestStatement
-from mlvp.statement import SplitDatasetStatement
-from mlvp.statement import OversamplingStatement, UnderSamplingStatement
-from mlvp.statement import PCAStatement
-from mlvp.statement import CrossValidationStatement
+from mlvp.nodes import ImportFromCSV
+from mlvp.nodes import ModelAccuracy
+from mlvp.nodes import RandomForestClassifier
+from mlvp.nodes import SplitDataset
+from mlvp.nodes import Oversampling, UnderSampling
+from mlvp.nodes import PCA
+from mlvp.nodes import CrossValidation
 
 
 class ParseJSON:
@@ -19,7 +19,7 @@ class ParseJSON:
         self.json_nodes = {}
         # parsed information
         self.libraries = set()
-        self.statements = {}
+        self.nodes = {}
         self.ports = {}
         self.roots = []
 
@@ -36,61 +36,61 @@ class ParseJSON:
     def __parse_nodes(self):
         for node_id, data in self.json_nodes.items():
             if data['type'] == 'NODE_IMPORT_CSV':
-                statement = DatasetDeclarationStatement(node_id=node_id, file_name=data['fileName'],
+                node = ImportFromCSV(node_id=node_id, file_name=data['fileName'],
                                                         num_cols=data['numCols'], num_rows=data['numRows'],
                                                         target=data['columnNames'][-1])
-                statement.ports = self.__parse_ports(data['ports'])
-                self.statements[node_id] = statement
+                node.ports = self.__parse_ports(data['ports'])
+                self.nodes[node_id] = node
                 self.libraries.add(IMPORT_AS.format(lib_name=PANDAS, lib_var=PANDAS_VAR))
-                self.roots.append(statement)
+                self.roots.append(node)
             elif data['type'] == 'NODE_SPLIT_DATASET':
-                statement = SplitDatasetStatement(node_id=node_id, test_size=data['testSize'],
+                node = SplitDataset(node_id=node_id, test_size=data['testSize'],
                                                   train_size=data['trainSize'], shuffle=data['shuffle'])
-                statement.ports = self.__parse_ports(data['ports'])
-                self.statements[node_id] = statement
+                node.ports = self.__parse_ports(data['ports'])
+                self.nodes[node_id] = node
                 self.libraries.add(
                     FROM_IMPORT.format(package=SKLEARN + "." + MODEL_SELECTION, class_to_import=TRAIN_TEST_SPLIT))
             elif data['type'] == 'NODE_OVERSAMPLING':
-                statement = OversamplingStatement(node_id=node_id, random_state=data['randomState'])
-                statement.ports = self.__parse_ports(data['ports'])
-                self.statements[node_id] = statement
+                node = Oversampling(node_id=node_id, random_state=data['randomState'])
+                node.ports = self.__parse_ports(data['ports'])
+                self.nodes[node_id] = node
                 self.libraries.add(
                     FROM_IMPORT.format(package=IMBLEARN + "." + OVER_SAMPLING, class_to_import=RANDOM_OVERSAMPLER))
             elif data['type'] == 'NODE_UNDERSAMPLING':
-                statement = UnderSamplingStatement(node_id=node_id, random_state=data['randomState'])
-                statement.ports = self.__parse_ports(data['ports'])
-                self.statements[node_id] = statement
+                node = UnderSampling(node_id=node_id, random_state=data['randomState'])
+                node.ports = self.__parse_ports(data['ports'])
+                self.nodes[node_id] = node
                 self.libraries.add(
                     FROM_IMPORT.format(package=IMBLEARN + "." + UNDER_SAMPLING, class_to_import=RANDOM_UNDERSAMPLER))
             elif data['type'] == 'NODE_PCA':
-                statement = PCAStatement(node_id=node_id, random_state=data['randomState'])
-                statement.ports = self.__parse_ports(data['ports'])
-                self.statements[node_id] = statement
+                node = PCA(node_id=node_id, random_state=data['randomState'])
+                node.ports = self.__parse_ports(data['ports'])
+                self.nodes[node_id] = node
                 self.libraries.add(
                     FROM_IMPORT.format(package=SKLEARN + "." + DECOMPOSITION, class_to_import=PCA))
             elif data['type'] == 'NODE_RANDOM_FOREST_CLASSIFIER':
-                statement = RandomForestStatement(node_id=node_id, num_trees=data['numTrees'],
+                node = RandomForestClassifier(node_id=node_id, num_trees=data['numTrees'],
                                                   criterion=data['criterion'], max_depth=data['maxDepth'])
-                statement.ports = self.__parse_ports(data['ports'])
-                self.statements[node_id] = statement
+                node.ports = self.__parse_ports(data['ports'])
+                self.nodes[node_id] = node
                 self.libraries.add(
                     FROM_IMPORT.format(package=SKLEARN + "." + ENSEMBLE, class_to_import=RANDOM_FOREST_CLF))
             elif data['type'] == 'NODE_ACCURACY_CLASSIFIER':
-                statement = ModelAccuracyStatement(node_id=node_id)
-                statement.ports = self.__parse_ports(data['ports'])
-                self.statements[node_id] = statement
+                node = ModelAccuracy(node_id=node_id)
+                node.ports = self.__parse_ports(data['ports'])
+                self.nodes[node_id] = node
                 self.libraries.add(FROM_IMPORT.format(package=SKLEARN + "." + METRICS, class_to_import=ACCURACY_SCORE))
             elif data['type'] == 'NODE_CROSS_VALIDATION':
-                statement = CrossValidationStatement(node_id=node_id, number_folds=data['numberFolds'])
-                statement.ports = self.__parse_ports(data['ports'])
-                self.statements[node_id] = statement
+                node = CrossValidation(node_id=node_id, number_folds=data['numberFolds'])
+                node.ports = self.__parse_ports(data['ports'])
+                self.nodes[node_id] = node
                 self.libraries.add(FROM_IMPORT.format(package=SKLEARN + "." + MODEL_SELECTION, class_to_import=CROSS_VAL_SCORE))
 
     def __parse_links(self):
         for link_id, data in self.json_links.items():
-            source_node = self.statements[data['source']]
+            source_node = self.nodes[data['source']]
             source_port = source_node.ports[data['sourcePort']]
-            target_node = self.statements[data['target']]
+            target_node = self.nodes[data['target']]
             # add children and parents to the respective arrays
             source_node.children.append(target_node)
             target_node.parent_links.append(ParentLink(source_node, source_port))

@@ -1,7 +1,7 @@
-from mlvp.statement.Statement import Statement
+from mlvp.nodes.Node import Node
 
 
-class CrossValidationStatement(Statement):
+class CrossValidation(Node):
 
     def __init__(self, node_id: str, number_folds: int):
         super().__init__(node_id)

@@ -1,7 +1,7 @@
-from mlvp.statement.Statement import Statement
+from mlvp.nodes.Node import Node
 
 
-class DatasetDeclarationStatement(Statement):
+class ImportFromCSV(Node):
 
     def __init__(self, node_id: str, file_name: str, num_cols: int, num_rows: int, target: str):
         super().__init__(node_id)

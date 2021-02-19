@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class Statement(ABC):
+class Node(ABC):
 
     @abstractmethod
     def __init__(self, node_id: str):

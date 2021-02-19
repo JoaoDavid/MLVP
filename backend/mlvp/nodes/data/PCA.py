@@ -1,7 +1,7 @@
-from mlvp.statement.Statement import Statement
+from mlvp.nodes.Node import Node
 
 
-class UnderSamplingStatement(Statement):
+class PCA(Node):
 
     def __init__(self, node_id: str, random_state):
         super().__init__(node_id)

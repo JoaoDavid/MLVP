@@ -1,7 +1,7 @@
-from mlvp.statement.Statement import Statement
+from mlvp.nodes.Node import Node
 
 
-class SplitDatasetStatement(Statement):
+class SplitDataset(Node):
 
     def __init__(self, node_id: str, test_size, train_size, shuffle):
         super().__init__(node_id)
