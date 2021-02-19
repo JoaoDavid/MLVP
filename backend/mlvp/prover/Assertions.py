@@ -150,6 +150,41 @@ def pca(id_input, id_output, random_state, n_components):
         balanced_input == balanced_output,
     )
 
+def random_forest_classifier(id_input_ds, n_trees, max_depth):
+    cols_input, rows_input, n_labels_input, max_label_count_input, min_label_count_input = dataset(id_input_ds)
+
+    balanced_input = Bool(id_input_ds + BALANCED)
+
+    return And(
+        # requires
+        n_trees > 0,
+        max_depth > 0,
+        balanced_input,
+        cols_input > 1
+    )
+
+def evaluate_classifier(id_input_ds):
+    cols_input, rows_input, n_labels_input, max_label_count_input, min_label_count_input = dataset(id_input_ds)
+
+    balanced_input = Bool(id_input_ds + BALANCED)
+
+    return And(
+        # requires
+        balanced_input,
+        cols_input >= 2
+    )
+
+def cross_validation(id_input_ds, n_folds):
+    cols_input, rows_input, n_labels_input, max_label_count_input, min_label_count_input = dataset(id_input_ds)
+
+    balanced_input = Bool(id_input_ds + BALANCED)
+
+    return And(
+        # requires
+        n_folds > 1,
+        balanced_input,
+        cols_input > 1
+    )
 
 s = Solver()
 s.add(import_from_csv("a", 5, 8, {"batata": 5, "alface": 3}))
