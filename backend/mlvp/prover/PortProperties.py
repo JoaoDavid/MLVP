@@ -10,3 +10,4 @@ class Dataset:
         self.n_labels = Int(id_port + N_LABELS)
         self.max_label_count = Int(id_port + MAX_LABEL_COUNT)
         self.min_label_count = Int(id_port + MIN_LABEL_COUNT)
+        self.balanced = Bool(id_port + BALANCED)
