@@ -15,7 +15,7 @@ interface TopNavProps {
 
 const topNav = (props: TopNavProps) => {
     return (
-        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+        <Navbar className={classes.Unselectable} collapseOnSelect expand="lg" bg="dark" variant="dark">
             <Navbar.Brand>
                 <img
                     alt=""
@@ -39,7 +39,7 @@ const topNav = (props: TopNavProps) => {
                         <NavDropdown.Divider />
                         <NavDropdown.Item>Settings</NavDropdown.Item>
                     </NavDropdown>
-                    <NavDropdown title="Run" id="collasible-nav-dropdown">
+                    <NavDropdown  title="Run" id="collasible-nav-dropdown">
                         <NavDropdown.Item onClick={props.generateCodeReq}>Compile</NavDropdown.Item>
                     </NavDropdown>
                     <NavDropdown title="Help" id="collasible-nav-dropdown">

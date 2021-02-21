@@ -2,4 +2,7 @@
     background-color: rgb(68, 72, 78);
     width: 15%;
     height: 100%;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10+ and Edge */
+    user-select: none; /* Standard syntax */
 }
