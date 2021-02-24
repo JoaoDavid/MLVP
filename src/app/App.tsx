@@ -23,6 +23,7 @@ import {OversamplingFactory} from "../components/nodes/data/oversampling/Oversam
 import {UndersamplingFactory} from "../components/nodes/data/undersampling/UndersamplingFactory";
 import {PCAFactory} from "../components/nodes/data/principal-component-analysis/PCAFactory";
 import {CrossValidationFactory} from "../components/nodes/evaluate/cross-validation/CrossValidationFactory";
+import splitEvaluate from '../demos/split-n-evaluate.json'
 
 interface AppProps {
 
@@ -44,12 +45,11 @@ class App extends React.Component<AppProps, AppState> {
             engine: createEngine(),
             model: new MyDiagramModel()
         }
-        this.addTestNodes();
+        this.registerFactories();
         this.state.engine.setModel(this.state.model);
     }
 
-    addTestNodes = () => {
-        let count = 5;
+    registerFactories = () => {
         this.nodes.push(this.generateModel(CSVFactory.getInstance()));
         this.nodes.push(this.generateModel(OversamplingFactory.getInstance()));
         this.nodes.push(this.generateModel(UndersamplingFactory.getInstance()));
@@ -58,12 +58,6 @@ class App extends React.Component<AppProps, AppState> {
         this.nodes.push(this.generateModel(RandomForestClassifierFactory.getInstance()));
         this.nodes.push(this.generateModel(AccuracyClassifierFactory.getInstance()));
         this.nodes.push(this.generateModel(CrossValidationFactory.getInstance()));
-
-        this.nodes.forEach((node: BaseNodeModel) => {
-            this.state.model.addNode(node);
-            node.setPosition(count, count);
-            count += 105;
-        });
     }
 
     generateModel<T extends AbstractReactFactory<NodeModel, DiagramEngine>>(factory: T): BaseNodeModel {
@@ -81,6 +75,16 @@ class App extends React.Component<AppProps, AppState> {
         console.log("....");
     }
 
+    loadDemos = () => {
+        const map = new Map<String, ()=>void>();
+        map.set("Simple Pipeline", ()=>{
+            const diagram: any = splitEvaluate;
+            this.state.model.deserializeModel(diagram, this.state.engine);
+            this.state.engine.repaintCanvas();
+        });
+        return map;
+    }
+
     loadMapCategoryNodes = () => {
         const map = new Map<CategoryConfig, NodeConfig[]>();
         map.set(DATA_CONFIG, DATA_NODES);
@@ -90,9 +94,9 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     newCanvas = () => {
-        let empty: any = {};
-        this.state.model.deserializeModel(empty, this.state.engine);
-        this.state.engine.repaintCanvas();
+        const newModel = new MyDiagramModel()
+        this.state.engine.setModel(newModel);
+        this.setState({model: newModel});
     }
 
     openSave = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -128,7 +132,8 @@ class App extends React.Component<AppProps, AppState> {
     render() {
         return (
             <div className={classes.FrontPage}>
-                <TopNav newCanvas={this.newCanvas} open={this.openSave} save={this.downloadSave} generateCodeReq={this.generateCodeReq}/>
+                <TopNav newCanvas={this.newCanvas} open={this.openSave} save={this.downloadSave}
+                        generateCodeReq={this.generateCodeReq} loadDemos={this.loadDemos()}/>
                 <div className={classes.Container}>
                     <SideBar catAndNames={this.loadMapCategoryNodes()} format={this.dragDropFormat}/>
                     <Canvas dragDropFormat={this.dragDropFormat} engine={this.state.engine} model={this.state.model}/>

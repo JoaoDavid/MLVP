@@ -3,7 +3,6 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Logo from '../../../logo-nav-bar.png';
-// import LogoNeural from '../../UI/logo_nodes.png';
 import classes from './TopNav.module.css';
 
 interface TopNavProps {
@@ -11,9 +10,15 @@ interface TopNavProps {
     open: (event: React.ChangeEvent<HTMLInputElement>) => void,
     save: () => void,
     generateCodeReq: () => void,
+    loadDemos: Map<String, ()=>void>,
 }
 
 const topNav = (props: TopNavProps) => {
+    const demos: JSX.Element[] = [];
+    props.loadDemos.forEach((value, key) => {
+        demos.push(
+            <NavDropdown.Item className={classes.NavDropdownItem} onClick={value}>{key}</NavDropdown.Item>);
+    });
     return (
         <Navbar className={classes.Unselectable} collapseOnSelect expand="lg" bg="dark" variant="dark">
             <Navbar.Brand>
@@ -42,6 +47,9 @@ const topNav = (props: TopNavProps) => {
                     </NavDropdown>
                     <NavDropdown  title="Run" id="collasible-nav-dropdown">
                         <NavDropdown.Item className={classes.NavDropdownItem} onClick={props.generateCodeReq}>Compile</NavDropdown.Item>
+                    </NavDropdown>
+                    <NavDropdown  title="Demos" id="collasible-nav-dropdown">
+                        {demos}
                     </NavDropdown>
                     <NavDropdown title="Help" id="collasible-nav-dropdown">
                         <NavDropdown.Item >Help</NavDropdown.Item>
