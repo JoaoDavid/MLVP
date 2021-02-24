@@ -26,25 +26,26 @@ const topNav = (props: TopNavProps) => {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="mr-auto">
-                    <NavDropdown title="File" id="collasible-nav-dropdown">
-                        <label className={classes.Label} htmlFor={"load-save-file"}>Open</label>
-                        <input className={classes.Input}
-                               type="file"
-                               id="load-save-file"
-                               accept="application/JSON"
-                               onChange={props.open}/>
-                        <NavDropdown.Item onClick={props.newCanvas}>New</NavDropdown.Item>
-                        {/*<NavDropdown.Item> Open                        </NavDropdown.Item>*/}
-                        <NavDropdown.Item onClick={props.save}>Save</NavDropdown.Item>
+                    <NavDropdown className={classes.NavDropDown} title="File" id="collasible-nav-dropdown">
+                        <div className={classes.NavDropdownItem} >
+                            <label className={classes.Label} htmlFor={"load-save-file"}>Open</label>
+                            <input className={classes.Input}
+                                   type="file"
+                                   id="load-save-file"
+                                   accept="application/JSON"
+                                   onChange={props.open}/>
+                        </div>
+                        <NavDropdown.Item className={classes.NavDropdownItem} onClick={props.newCanvas}>New</NavDropdown.Item>
+                        <NavDropdown.Item className={classes.NavDropdownItem} onClick={props.save}>Save</NavDropdown.Item>
                         <NavDropdown.Divider />
                         <NavDropdown.Item>Settings</NavDropdown.Item>
                     </NavDropdown>
                     <NavDropdown  title="Run" id="collasible-nav-dropdown">
-                        <NavDropdown.Item onClick={props.generateCodeReq}>Compile</NavDropdown.Item>
+                        <NavDropdown.Item className={classes.NavDropdownItem} onClick={props.generateCodeReq}>Compile</NavDropdown.Item>
                     </NavDropdown>
                     <NavDropdown title="Help" id="collasible-nav-dropdown">
-                        <NavDropdown.Item>Item</NavDropdown.Item>
-                        <NavDropdown.Divider />
+                        <NavDropdown.Item >Help</NavDropdown.Item>
+                        <NavDropdown.Divider/>
                         <NavDropdown.Item>About</NavDropdown.Item>
                     </NavDropdown>
                 </Nav>
