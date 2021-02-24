@@ -1,0 +1,31 @@
+define(["require", "exports", "../libz3", "../ctypes"], function (require, exports, libz3_1, ctypes_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    registerTest("simple_contradiction", function test(wasmInstance) {
+        var lib = new libz3_1.LibZ3(wasmInstance);
+        var config = lib.Z3_mk_config();
+        console.log("config: ", config);
+        var context = lib.Z3_mk_context(config);
+        console.log("context: ", context);
+        var solver = lib.Z3_mk_solver(context);
+        console.log("solver: ", solver);
+        var int_sort = lib.Z3_mk_int_sort(context);
+        console.log("int_sort: ", int_sort);
+        var s1 = lib.Z3_mk_int_symbol(context, new ctypes_1.Sint32(1));
+        console.log("s1: ", s1);
+        var c1 = lib.Z3_mk_const(context, s1, int_sort);
+        console.log("c1: ", c1);
+        var s2 = lib.Z3_mk_int_symbol(context, new ctypes_1.Sint32(2));
+        console.log("s2: ", s2);
+        var c2 = lib.Z3_mk_const(context, s2, int_sort);
+        console.log("c2: ", c2);
+        var eq = lib.Z3_mk_eq(context, c1, c2);
+        console.log('eq:', eq);
+        var neq = lib.Z3_mk_not(context, eq);
+        console.log('neq:', neq);
+        lib.Z3_solver_assert(context, solver, eq);
+        lib.Z3_solver_assert(context, solver, neq);
+        var res = lib.Z3_solver_check(context, solver);
+        console.log('res:', res);
+    });
+});
