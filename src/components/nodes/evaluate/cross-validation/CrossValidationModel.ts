@@ -24,7 +24,7 @@ export class CrossValidationModel extends BaseNodeModel {
 
     protected addInPort(): void {
         const p1 = new DatasetPortModel(true);
-        const p2 = new ModelPortModel(true)
+        const p2 = new ModelPortModel('PORT_CLASSIFIER', true)
         super.addPort(p1);
         super.addPort(p2);
     }

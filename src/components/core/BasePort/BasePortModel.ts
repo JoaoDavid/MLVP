@@ -19,12 +19,12 @@ export interface BasePortModelGenerics extends PortModelGenerics {
 
 export abstract class BasePortModel extends PortModel<BasePortModelGenerics> {
 
-    protected constructor(isIn: boolean, name: string, label: string, maxLinks?: number){
+    protected constructor(codename: string, isIn: boolean, name: string, label: string, maxLinks?: number){
         super({
             name: name,
             label: label,
             alignment: isIn ? PortModelAlignment.LEFT : PortModelAlignment.RIGHT,
-            type: 'default',
+            type: codename,
             in: isIn,
             maximumLinks: maxLinks?maxLinks:1,
         });

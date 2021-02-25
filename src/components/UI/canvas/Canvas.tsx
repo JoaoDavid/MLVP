@@ -13,6 +13,7 @@ import {OversamplingFactory} from "../../nodes/data/oversampling/OversamplingFac
 import {UndersamplingFactory} from "../../nodes/data/undersampling/UndersamplingFactory";
 import {PCAFactory} from "../../nodes/data/principal-component-analysis/PCAFactory";
 import {CrossValidationFactory} from "../../nodes/evaluate/cross-validation/CrossValidationFactory";
+import {DatasetPortFactory} from "../../ports/dataset/DatasetPortFactory";
 
 interface CanvasProps {
     dragDropFormat: string,
@@ -36,10 +37,11 @@ class Canvas extends React.Component<CanvasProps, CanvasState> {
             model: props.model,
         }
         this.state.engine.getStateMachine().pushState(new DiagramState());
-        this.registerFactories();
+        this.registerNodeFactories();
+        this.registerPortFactories();
     }
 
-    registerFactories = () => {
+    registerNodeFactories = () => {
         this.state.engine.getNodeFactories().registerFactory(CSVFactory.getInstance());
         this.state.engine.getNodeFactories().registerFactory(RandomForestClassifierFactory.getInstance());
         this.state.engine.getNodeFactories().registerFactory(OversamplingFactory.getInstance());
@@ -48,6 +50,11 @@ class Canvas extends React.Component<CanvasProps, CanvasState> {
         this.state.engine.getNodeFactories().registerFactory(AccuracyClassifierFactory.getInstance());
         this.state.engine.getNodeFactories().registerFactory(SplitDatasetFactory.getInstance());
         this.state.engine.getNodeFactories().registerFactory(CrossValidationFactory.getInstance());
+    }
+
+    registerPortFactories = () => {
+        this.state.engine.getPortFactories().registerFactory(DatasetPortFactory.getInstance())
+
     }
 
 

@@ -24,6 +24,8 @@ import {UndersamplingFactory} from "../components/nodes/data/undersampling/Under
 import {PCAFactory} from "../components/nodes/data/principal-component-analysis/PCAFactory";
 import {CrossValidationFactory} from "../components/nodes/evaluate/cross-validation/CrossValidationFactory";
 import splitEvaluate from '../demos/split-n-evaluate.json'
+import {DatasetPortFactory} from "../components/ports/dataset/DatasetPortFactory";
+import {ClassifierPortFactory} from "../components/ports/model/ClassifierPortFactory";
 
 interface AppProps {
 
@@ -46,6 +48,7 @@ class App extends React.Component<AppProps, AppState> {
             model: new MyDiagramModel()
         }
         this.registerFactories();
+        this.registerPortFactories();
         this.state.engine.setModel(this.state.model);
     }
 
@@ -58,6 +61,11 @@ class App extends React.Component<AppProps, AppState> {
         this.nodes.push(this.generateModel(RandomForestClassifierFactory.getInstance()));
         this.nodes.push(this.generateModel(AccuracyClassifierFactory.getInstance()));
         this.nodes.push(this.generateModel(CrossValidationFactory.getInstance()));
+    }
+
+    registerPortFactories = () => {
+        this.state.engine.getPortFactories().registerFactory(DatasetPortFactory.getInstance());
+        this.state.engine.getPortFactories().registerFactory(ClassifierPortFactory.getInstance());
     }
 
     generateModel<T extends AbstractReactFactory<NodeModel, DiagramEngine>>(factory: T): BaseNodeModel {

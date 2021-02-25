@@ -88,6 +88,8 @@ export class MyDragNewLinkState extends AbstractDisplacementState<DiagramEngine>
     }
 
     adjustPorts = (portA: BasePortModel, portB: BasePortModel) => {
+        console.log(portA);
+        console.log(portB);
         if(!portA.getIsIn() && portB.getIsIn()) {
             this.link.setTargetPort(portB);
         } else {
