@@ -17,7 +17,7 @@ const topNav = (props: TopNavProps) => {
     const demos: JSX.Element[] = [];
     props.loadDemos.forEach((value, key) => {
         demos.push(
-            <NavDropdown.Item className={classes.NavDropdownItem} onClick={value}>{key}</NavDropdown.Item>);
+            <NavDropdown.Item key={key.toString()} className={classes.NavDropdownItem} onClick={value}>{key}</NavDropdown.Item>);
     });
     return (
         <Navbar className={classes.Unselectable} collapseOnSelect expand="lg" bg="dark" variant="dark">

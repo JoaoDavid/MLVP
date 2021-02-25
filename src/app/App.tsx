@@ -1,6 +1,6 @@
 import React from 'react';
 import classes from './App.module.css';
-import createEngine, {DiagramEngine} from '@projectstorm/react-diagrams';
+import createEngine, {DiagramEngine, DiagramModel} from '@projectstorm/react-diagrams';
 import TopNav from '../components/UI/top-nav/TopNav';
 import SideBar from "../components/UI/side-bar/SideBar";
 import {CategoryConfig, NodeConfig} from "../components/nodes/Config";
@@ -23,7 +23,8 @@ import {OversamplingFactory} from "../components/nodes/data/oversampling/Oversam
 import {UndersamplingFactory} from "../components/nodes/data/undersampling/UndersamplingFactory";
 import {PCAFactory} from "../components/nodes/data/principal-component-analysis/PCAFactory";
 import {CrossValidationFactory} from "../components/nodes/evaluate/cross-validation/CrossValidationFactory";
-import splitEvaluate from '../demos/split-n-evaluate.json'
+import splitEvaluate from '../demos/split-n-evaluate.json';
+import testJson from '../demos/test.json';
 import {DatasetPortFactory} from "../components/ports/dataset/DatasetPortFactory";
 import {ClassifierPortFactory} from "../components/ports/model/ClassifierPortFactory";
 
@@ -33,7 +34,6 @@ interface AppProps {
 
 type AppState = {
     engine: DiagramEngine,
-    model: MyDiagramModel,
 };
 
 class App extends React.Component<AppProps, AppState> {
@@ -45,11 +45,10 @@ class App extends React.Component<AppProps, AppState> {
         super(props);
         this.state = {
             engine: createEngine(),
-            model: new MyDiagramModel()
         }
         this.registerFactories();
         this.registerPortFactories();
-        this.state.engine.setModel(this.state.model);
+        this.state.engine.setModel(new MyDiagramModel());
     }
 
     registerFactories = () => {
@@ -86,11 +85,26 @@ class App extends React.Component<AppProps, AppState> {
     loadDemos = () => {
         const map = new Map<String, ()=>void>();
         map.set("Simple Pipeline", ()=>{
+
+      /*      const newModel = new MyDiagramModel()
+            this.state.engine.setModel(newModel);*/
             const diagram: any = splitEvaluate;
-            this.state.model.deserializeModel(diagram, this.state.engine);
+            this.state.engine.getModel().deserializeModel(diagram, this.state.engine);
             this.state.engine.repaintCanvas();
         });
+        map.set("Test", ()=>{
+            this.loadDemoAux(testJson);
+        });
         return map;
+    }
+
+    loadDemoAux = (diagram: any) => {
+        // this.newCanvas();
+        console.log("1")
+        this.state.engine.getModel().deserializeModel(diagram, this.state.engine);
+        this.state.engine.repaintCanvas();
+        console.log("2")
+        console.log("3")
     }
 
     loadMapCategoryNodes = () => {
@@ -104,28 +118,28 @@ class App extends React.Component<AppProps, AppState> {
     newCanvas = () => {
         const newModel = new MyDiagramModel()
         this.state.engine.setModel(newModel);
-        this.setState({model: newModel});
     }
 
     openSave = (event: React.ChangeEvent<HTMLInputElement>) => {
         const fileList = event.target.files;
         if (fileList.length > 0) {
             event.target.files[0].text().then((text: string) => {
-                this.state.model.deserializeModel(JSON.parse(text), this.state.engine);
+                this.state.engine.getModel().deserializeModel(JSON.parse(text), this.state.engine);
                 this.state.engine.repaintCanvas();
             });
         }
+        event.target.value = "";
     }
 
     downloadSave = () => {
-        this.lastSave = this.state.model.serialize();
+        this.lastSave = this.state.engine.getModel().serialize();
         download(JSON.stringify(this.lastSave, null, 4), 'mlvp.json');
         console.log(this.lastSave);
         console.log(JSON.stringify(this.lastSave, null, 4));
     }
 
     generateCodeReq = () => {
-        const data = this.state.model.serialize();
+        const data = this.state.engine.getModel().serialize();
         axios.post('/codegen', data)
             .then(response => {
                 console.log(response);
@@ -144,7 +158,7 @@ class App extends React.Component<AppProps, AppState> {
                         generateCodeReq={this.generateCodeReq} loadDemos={this.loadDemos()}/>
                 <div className={classes.Container}>
                     <SideBar catAndNames={this.loadMapCategoryNodes()} format={this.dragDropFormat}/>
-                    <Canvas dragDropFormat={this.dragDropFormat} engine={this.state.engine} model={this.state.model}/>
+                    <Canvas dragDropFormat={this.dragDropFormat} engine={this.state.engine} model={this.state.engine.getModel()}/>
                 </div>
                 <BottomNav sendReq={this.generateCodeReq}/>
             </div>
