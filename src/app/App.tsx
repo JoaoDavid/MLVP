@@ -104,7 +104,7 @@ class App extends React.Component<AppProps, AppState> {
                     <SideBar catAndNames={this.loadMapCategoryNodes()} format={this.dragDropFormat}/>
                     <Canvas dragDropFormat={this.dragDropFormat} engine={this.engine}/>
                 </div>
-                <BottomNav sendReq={this.generateCodeReq}/>
+                <BottomNav/>
             </div>
         );
     }
