@@ -18,8 +18,7 @@ export interface CoreNodeProps {
 }
 
 /**
- * Default node that models the CSVModel. It creates two columns
- * for both all the input ports on the left, and the output ports on the right.
+ * Base Node Widget, used to shape every node within the project
  */
 export class BaseNodeWidget extends React.Component<CoreNodeProps> {
 
@@ -32,24 +31,6 @@ export class BaseNodeWidget extends React.Component<CoreNodeProps> {
         return <BasePortWidget engine={this.props.engine} port={port} key={port.getID()}/>;
     };
 
-/*    selected = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        // Unset selected class from other options
-        const selected = document.getElementsByClassName(classes.NodeSelected);
-        console.log(selected);
-        for (let i = 0; i < selected.length; i++) {
-            selected[i].className = classes.Node;
-        }
-       /!*selected.forEach((el) => {
-            el.classList.remove(classes.NodeSelected);
-            console.log(el);
-        });*!/
-        //event.target.//classList.add('option-selected');
-        this.setState(
-            {
-                isSelected : true
-            }
-        );
-    }*/
     handleCloseModal = () => {
         this.setState({show: false});
     }
@@ -59,11 +40,14 @@ export class BaseNodeWidget extends React.Component<CoreNodeProps> {
     }
 
     render() {
+        const nodeClasses = [classes.Node];
+        if (this.props.node.isSelected()) {
+            nodeClasses.push(classes.NodeSelected);
+        }
         return (
-            <div className={classes.Node}
+            <div className={nodeClasses.join(' ')}
                  data-default-node-name={this.props.node.getOptions().name}
                  style={{background: this.props.color}}
-                 //onClick={this.selected}
                  onDoubleClick={this.handleShowModal}
             >
                 <Title name={this.props.node.getOptions().name}/>
