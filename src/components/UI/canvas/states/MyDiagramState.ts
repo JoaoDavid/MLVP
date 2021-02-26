@@ -10,7 +10,7 @@ import {
 import { PortModel, DiagramEngine, DragDiagramItemsState } from '@projectstorm/react-diagrams';
 import {MyDragNewLinkState} from "./MyDragNewLinkState";
 
-export class DiagramState extends State<DiagramEngine> {
+export class MyDiagramState extends State<DiagramEngine> {
     dragCanvas: DragCanvasState;
     dragNewLink: MyDragNewLinkState;
     dragItems: DragDiagramItemsState;
