@@ -1,10 +1,9 @@
 import React, {DragEvent} from 'react';
-import {DiagramEngine, DiagramModel} from "@projectstorm/react-diagrams";
+import {DiagramEngine} from "@projectstorm/react-diagrams";
 import classes from "./Canvas.module.css";
 import {AbstractReactFactory, CanvasWidget} from "@projectstorm/react-canvas-core";
 import {NodeModel} from "@projectstorm/react-diagrams-core";
 import {BaseNodeModel} from "../../core/BaseNode/BaseNodeModel";
-import {DiagramState} from "./states/DiagramState";
 import {CSVFactory} from "../../nodes/data/import-dataset/csv/CSVFactory";
 import {RandomForestClassifierFactory} from "../../nodes/model/classifier/random-forest-classifier/RandomForestClassifierFactory";
 import {AccuracyClassifierFactory} from "../../nodes/evaluate/classifier/accuracy/AccuracyClassifierFactory";
@@ -14,54 +13,55 @@ import {UndersamplingFactory} from "../../nodes/data/undersampling/Undersampling
 import {PCAFactory} from "../../nodes/data/principal-component-analysis/PCAFactory";
 import {CrossValidationFactory} from "../../nodes/evaluate/cross-validation/CrossValidationFactory";
 import {DatasetPortFactory} from "../../ports/dataset/DatasetPortFactory";
+import {ClassifierPortFactory} from "../../ports/model/ClassifierPortFactory";
 
 interface CanvasProps {
     dragDropFormat: string,
     engine: DiagramEngine,
-    model: DiagramModel,
 }
 
 type CanvasState = {
-    engine: DiagramEngine,
-    model: DiagramModel,
+
 };
 
 class Canvas extends React.Component<CanvasProps, CanvasState> {
 
-
-
     constructor(props: CanvasProps) {
         super(props);
-        this.state = {
-            engine: props.engine,
-            model: props.model,
-        }
-        this.state.engine.getStateMachine().pushState(new DiagramState());
         this.registerNodeFactories();
         this.registerPortFactories();
     }
 
     registerNodeFactories = () => {
-        this.state.engine.getNodeFactories().registerFactory(CSVFactory.getInstance());
-        this.state.engine.getNodeFactories().registerFactory(RandomForestClassifierFactory.getInstance());
-        this.state.engine.getNodeFactories().registerFactory(OversamplingFactory.getInstance());
-        this.state.engine.getNodeFactories().registerFactory(UndersamplingFactory.getInstance());
-        this.state.engine.getNodeFactories().registerFactory(PCAFactory.getInstance());
-        this.state.engine.getNodeFactories().registerFactory(AccuracyClassifierFactory.getInstance());
-        this.state.engine.getNodeFactories().registerFactory(SplitDatasetFactory.getInstance());
-        this.state.engine.getNodeFactories().registerFactory(CrossValidationFactory.getInstance());
+        this.props.engine.getNodeFactories().registerFactory(CSVFactory.getInstance());
+        this.props.engine.getNodeFactories().registerFactory(RandomForestClassifierFactory.getInstance());
+        this.props.engine.getNodeFactories().registerFactory(OversamplingFactory.getInstance());
+        this.props.engine.getNodeFactories().registerFactory(UndersamplingFactory.getInstance());
+        this.props.engine.getNodeFactories().registerFactory(PCAFactory.getInstance());
+        this.props.engine.getNodeFactories().registerFactory(AccuracyClassifierFactory.getInstance());
+        this.props.engine.getNodeFactories().registerFactory(SplitDatasetFactory.getInstance());
+        this.props.engine.getNodeFactories().registerFactory(CrossValidationFactory.getInstance());
     }
 
     registerPortFactories = () => {
-        this.state.engine.getPortFactories().registerFactory(DatasetPortFactory.getInstance())
-
+        this.props.engine.getPortFactories().registerFactory(DatasetPortFactory.getInstance());
+        this.props.engine.getPortFactories().registerFactory(ClassifierPortFactory.getInstance());
     }
 
+    delDefaultFactory = () => {
+        console.log(this.props.engine.getNodeFactories());
+        console.log("....");
+        //this.state.engine.getNodeFactories().deregisterFactory('default');
+        console.log(this.props.engine.getNodeFactories().getFactories().forEach(factory => {
+            console.log(factory.getType());
+            console.log(factory);
+        }));
+        console.log("....");
+    }
 
     generateModel<T extends AbstractReactFactory<NodeModel, DiagramEngine>>(factory: T): BaseNodeModel {
         return factory.generateModel({}) as BaseNodeModel;
     }
-
 
     onDropDiagram = (event: DragEvent<HTMLDivElement>) => {
         event.preventDefault();
@@ -69,12 +69,12 @@ class Canvas extends React.Component<CanvasProps, CanvasState> {
         try {
             const inJSON = JSON.parse(data);
             console.log(data);
-            const factory = this.state.engine.getNodeFactories().getFactory(inJSON.codeName);
+            const factory = this.props.engine.getNodeFactories().getFactory(inJSON.codeName);
             const node = this.generateModel(factory);
-            let point = this.state.engine.getRelativeMousePoint(event);
+            let point = this.props.engine.getRelativeMousePoint(event);
             node.setPosition(point);
-            this.state.engine.getModel().addNode(node);
-            this.state.engine.repaintCanvas();
+            this.props.engine.getModel().addNode(node);
+            this.props.engine.repaintCanvas();
         } catch (e) {
             //console.log(e);
         }
@@ -88,7 +88,7 @@ class Canvas extends React.Component<CanvasProps, CanvasState> {
                  }}
                  onDrop={this.onDropDiagram}
             >
-                <CanvasWidget className={classes.DiagramContainer} engine={this.state.engine}/>
+                <CanvasWidget className={classes.DiagramContainer} engine={this.props.engine}/>
             </div>
         )
     }
