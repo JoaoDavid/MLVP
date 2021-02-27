@@ -30,6 +30,7 @@ class Canvas extends React.Component<CanvasProps, CanvasState> {
     constructor(props: CanvasProps) {
         super(props);
         this.props.engine.getStateMachine().pushState(new MyDiagramState());
+        this.props.engine.maxNumberPointsPerLink = 0;
         this.registerNodeFactories();
         this.registerPortFactories();
     }

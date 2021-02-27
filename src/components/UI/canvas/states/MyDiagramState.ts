@@ -9,11 +9,14 @@ import {
 } from '@projectstorm/react-canvas-core';
 import { PortModel, DiagramEngine, DragDiagramItemsState } from '@projectstorm/react-diagrams';
 import {MyDragNewLinkState} from "./MyDragNewLinkState";
+import {SelectLinkState} from './SelectLinkState';
+import {LinkModel} from "@projectstorm/react-diagrams-core";
 
 export class MyDiagramState extends State<DiagramEngine> {
     dragCanvas: DragCanvasState;
     dragNewLink: MyDragNewLinkState;
     dragItems: DragDiagramItemsState;
+    selectLink: SelectLinkState;
 
     constructor() {
         super({
@@ -23,6 +26,9 @@ export class MyDiagramState extends State<DiagramEngine> {
         this.dragCanvas = new DragCanvasState();
         this.dragNewLink = new MyDragNewLinkState({allowLooseLinks: false});
         this.dragItems = new DragDiagramItemsState();
+
+        // But this is a custom one!
+        this.selectLink = new SelectLinkState();
 
         // determine what was clicked on
         this.registerAction(
@@ -38,6 +44,10 @@ export class MyDiagramState extends State<DiagramEngine> {
                     // initiate dragging a new link
                     else if (element instanceof PortModel) {
                         this.transitionWithEvent(this.dragNewLink, event);
+                    }
+                    // Link selection <============================================
+                    else if (element instanceof LinkModel) {
+                        this.transitionWithEvent(this.selectLink, event);
                     }
                     // move the items (and potentially link points)
                     else {
