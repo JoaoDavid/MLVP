@@ -52,6 +52,7 @@ export class MyDragNewLinkState extends AbstractDisplacementState<DiagramEngine>
                         this.eject();
                         return;
                     }
+                    this.engine.getModel().clearSelection();
                     this.link.setSelected(true);
                     this.link.setSourcePort(this.port);
                     this.engine.getModel().addLink(this.link);
