@@ -1,16 +1,17 @@
 import Papa from "papaparse";
-import {CoreNodeModel} from "../../../../core/CoreNode/CoreNodeModel";
+import {BaseNodeModel} from "../../../../core/BaseNode/BaseNodeModel";
 import {DatasetPortModel} from "../../../../ports/dataset/DatasetPortModel";
 import {NODE_CSV} from "../../DataConfig";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
 
 
-export class CSVModel extends CoreNodeModel {
+export class CSVModel extends BaseNodeModel {
 
     private fileName: string = "";
     private numCols: number = 0;
     private numRows: number = 0;
     private columnNames: string[] = [];
+    private labels: Map<string, number> = new Map();
 
     constructor() {
         super(NODE_CSV.codeName, NODE_CSV.name);
@@ -23,6 +24,7 @@ export class CSVModel extends CoreNodeModel {
         this.numCols = 0;
         this.numRows = 0;
         this.columnNames = [];
+        this.labels = new Map();
     }
 
     getFileName(): string {
@@ -41,6 +43,10 @@ export class CSVModel extends CoreNodeModel {
         return this.columnNames;
     }
 
+    getLabels() {
+        return this.labels;
+    }
+
     protected addOutPort(): void {
         const p = new DatasetPortModel(false);
         super.addPort(p);
@@ -55,19 +61,37 @@ export class CSVModel extends CoreNodeModel {
                     worker: false, // Don't bog down the main thread if its a big file
                     download: true,
                     header: false,
+                    fastMode: true,
+                    skipEmptyLines: true,
                     complete: (results: any) => {
                         if (results.data.length > 0) {
                             console.log(results.data);
                             this.numCols = results.data[0].length;//num features
-                            this.numRows = results.data.length - 2;//num entries, -2 because of column row and last empty row left by papaparse
+                            this.numRows = results.data.length - 1;//num entries, -1 because of column name's row
                             this.columnNames = results.data[0];
+                            this.labels = this.processDataset(results.data);
                             console.log("numCols:" + this.numCols + " numRows:" + this.numRows);
+                            console.log(this.labels);
                             complete(results.data);
                         }
                     }
                 });
             });
         }
+    }
+
+    processDataset = (data: string[][]) => {
+        const labels = new Map();
+        const lastColIndex = data[0].length - 1;
+        for(let i = 1; i < data.length; i++) {
+            let currLabel = labels.get(data[i][lastColIndex]);
+            if(currLabel === undefined) {
+                labels.set(data[i][lastColIndex], 1);
+            } else {
+                labels.set(data[i][lastColIndex], currLabel+1);
+            }
+        }
+        return labels;
     }
 
     deserialize(event: DeserializeEvent<this>) {

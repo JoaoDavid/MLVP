@@ -19,12 +19,12 @@ export interface BasePortModelGenerics extends PortModelGenerics {
 
 export abstract class BasePortModel extends PortModel<BasePortModelGenerics> {
 
-    protected constructor(isIn: boolean, name: string, label: string, maxLinks?: number){
+    protected constructor(codename: string, isIn: boolean, name: string, label: string, maxLinks?: number){
         super({
             name: name,
             label: label,
             alignment: isIn ? PortModelAlignment.LEFT : PortModelAlignment.RIGHT,
-            type: 'default',
+            type: codename,
             in: isIn,
             maximumLinks: maxLinks?maxLinks:1,
         });
@@ -43,19 +43,6 @@ export abstract class BasePortModel extends PortModel<BasePortModelGenerics> {
             label: this.options.label
         };
     }
-
-    /*link<T extends LinkModel>(port: BasePortModel, factory?: AbstractModelFactory<T>): T {
-        console.log('link');
-        let link = this.createLinkModel(factory);
-        if(this.getTier() < port.getTier()) {
-            link.setSourcePort(this);
-            link.setTargetPort(this);//port
-        } else {
-            link.setSourcePort(port);
-            link.setTargetPort(port);
-        }
-        return link as T;
-    }*/
 
     isNewLinkAllowed(): boolean {
         return (

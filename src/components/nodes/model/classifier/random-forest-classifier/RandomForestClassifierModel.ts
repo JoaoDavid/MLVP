@@ -1,4 +1,4 @@
-import {CoreNodeModel} from "../../../../core/CoreNode/CoreNodeModel";
+import {BaseNodeModel} from "../../../../core/BaseNode/BaseNodeModel";
 import {DatasetPortModel} from "../../../../ports/dataset/DatasetPortModel";
 import {NODE_RANDOM_FOREST_CLASSIFIER} from "../../ModelConfig";
 import {ClassifierPortModel} from "../../../../ports/model/ClassifierPortModel";
@@ -9,7 +9,7 @@ export enum CriterionEnum {
     ENTROPY = 'entropy',
 }
 
-export class RandomForestClassifierModel extends CoreNodeModel {
+export class RandomForestClassifierModel extends BaseNodeModel {
 
     private numTrees: number = 100; //int
     private criterion: CriterionEnum = CriterionEnum.GINI;

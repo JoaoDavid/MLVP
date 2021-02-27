@@ -3,8 +3,8 @@ import {BasePortModel} from "../../core/BasePort/BasePortModel";
 
 export class ModelPortModel extends BasePortModel {
 
-    constructor(isIn: boolean, name?: string, label?: string, maxLinks?: number){
-        super(isIn, name?name:"Model", label?label:"", maxLinks);
+    constructor(type: string, isIn: boolean, name?: string, label?: string, maxLinks?: number){
+        super('PORT_CLASSIFIER', isIn, name?name:"Model", label?label:"", maxLinks);
     }
 
     canLinkToPort(port: PortModel): boolean {

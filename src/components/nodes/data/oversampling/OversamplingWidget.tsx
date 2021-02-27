@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {OversamplingModel} from './OversamplingModel';
-import CoreNodeWidget from '../../../core/CoreNode/CoreNodeWidget';
+import BaseNodeWidget from '../../../core/BaseNode/BaseNodeWidget';
 import OversamplingModal from "./OversamplingModal";
 import {DATA_CONFIG} from '../DataConfig';
 
@@ -35,9 +35,9 @@ class OversamplingWidget extends React.Component<OversamplingProps, Oversampling
     render() {
         const modal = <OversamplingModal node={this.props.node} randomStateChanged={this.randomStateChanged}/>;
         return (
-            <CoreNodeWidget node={this.props.node} engine={this.props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
+            <BaseNodeWidget node={this.props.node} engine={this.props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
                 <p>Random State: {this.state.node.getRandomState()}</p>
-            </CoreNodeWidget>
+            </BaseNodeWidget>
         );
     }
 

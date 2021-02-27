@@ -1,10 +1,10 @@
-import {CoreNodeModel} from "../../../../core/CoreNode/CoreNodeModel";
+import {BaseNodeModel} from "../../../../core/BaseNode/BaseNodeModel";
 import {NODE_ACCURACY_CLASSIFIER} from "../../EvaluateConfig";
 import {DatasetPortModel} from "../../../../ports/dataset/DatasetPortModel";
 import {ClassifierPortModel} from "../../../../ports/model/ClassifierPortModel";
 
 
-export class AccuracyClassifierModel extends CoreNodeModel {
+export class AccuracyClassifierModel extends BaseNodeModel {
 
     constructor() {
         super(NODE_ACCURACY_CLASSIFIER.codeName, NODE_ACCURACY_CLASSIFIER.name);

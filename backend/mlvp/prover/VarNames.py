@@ -1,0 +1,7 @@
+N_COLS = "_n_cols"
+N_ROWS = "_n_rows"
+BALANCED = "_balanced"
+SHUFFLED = "_shuffled"
+N_LABELS = "_n_labels"
+MAX_LABEL_COUNT = "_max_label_count"
+MIN_LABEL_COUNT = "_min_label_count"

@@ -14,6 +14,16 @@ interface CSVModalProps {
 }
 
 const CSVModal = (props: CSVModalProps) => {
+    const labelNames: JSX.Element[] = [];
+    const labelCounts: JSX.Element[] = [];
+    let counter = 0;
+    props.node.getLabels().forEach((value, key) => {
+        counter += 1;
+        labelNames.push(
+            <th key={key + counter}>{key}</th>);
+        labelCounts.push(
+            <td key={value + counter}>{value}</td>);
+    });
     return (
         <Form>
             <Form.Group>
@@ -36,9 +46,10 @@ const CSVModal = (props: CSVModalProps) => {
             <FormGroup>
                 <Table striped bordered hover responsive>
                     <thead>
+                    {props.node.getColumnNames().length > 0?<Form.Label>Column Names</Form.Label>:null}
                     <tr>
-                        {props.node.getColumnNames().map((col,counter) => {
-                            return <th key={col+counter}>{col}</th>
+                        {props.node.getColumnNames().map((col, counter) => {
+                            return <th key={col + counter}>{col}</th>
                         })}
                     </tr>
                     </thead>
@@ -48,6 +59,21 @@ const CSVModal = (props: CSVModalProps) => {
                         {/*<td>on</td>*/}
                         {/*<td>purpose</td>*/}
                         {/*<td>WIP</td>*/}
+                    </tr>
+                    </tbody>
+                </Table>
+            </FormGroup>
+            <FormGroup>
+                <Table striped bordered hover responsive>
+                    <thead>
+                    {labelNames.length > 0?<Form.Label>Labels</Form.Label>:null}
+                    <tr>
+                        {labelNames}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        {labelCounts}
                     </tr>
                     </tbody>
                 </Table>

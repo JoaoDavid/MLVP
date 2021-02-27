@@ -1,17 +1,34 @@
-.DropsDownItem:hover {
+.NavDropdownItem:hover {
+    background-color: rgb(85, 91, 97) !important;
+    color: white !important;
+}
+
+.MenuOption {
+    cursor: pointer;
+    width: 160px;
+    text-indent: 20px;
+}
+
+.MenuOption:hover {
+    cursor: pointer;
     background-color: rgb(68, 72, 78) !important;
     color: white !important;
 }
 
 .Label {
     cursor: pointer;
+    width: 160px;
+    text-indent: 20px;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
 }
-
+/*
 .Label:hover {
     cursor: pointer;
     background-color: rgb(68, 72, 78) !important;
     color: white !important;
-}
+}*/
 
 .Input {
     width: 0.1px;
@@ -20,4 +37,10 @@
     overflow: hidden;
     position: absolute;
     z-index: -1;
+}
+
+.Unselectable {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10+ and Edge */
+    user-select: none; /* Standard syntax */
 }
