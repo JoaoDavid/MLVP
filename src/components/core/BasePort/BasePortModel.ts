@@ -44,19 +44,6 @@ export abstract class BasePortModel extends PortModel<BasePortModelGenerics> {
         };
     }
 
-    /*link<T extends LinkModel>(port: BasePortModel, factory?: AbstractModelFactory<T>): T {
-        console.log('link');
-        let link = this.createLinkModel(factory);
-        if(this.getTier() < port.getTier()) {
-            link.setSourcePort(this);
-            link.setTargetPort(this);//port
-        } else {
-            link.setSourcePort(port);
-            link.setTargetPort(port);
-        }
-        return link as T;
-    }*/
-
     isNewLinkAllowed(): boolean {
         return (
             Object.keys(this.getLinks()).length < this.getMaximumLinks()
