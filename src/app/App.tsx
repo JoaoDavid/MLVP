@@ -14,6 +14,7 @@ import Canvas from "../components/UI/canvas/Canvas";
 import {MyDiagramModel} from "../components/UI/canvas/diagram/MyDiagramModel";
 import splitEvaluate from '../demos/split-n-evaluate.json';
 import testJson from '../demos/test.json';
+import {MyZoomCanvasAction} from "../components/UI/canvas/actions/MyZoomCanvasAction";
 
 interface AppProps {
 
@@ -31,8 +32,9 @@ class App extends React.Component<AppProps, AppState> {
 
     constructor(props: AppProps) {
         super(props);
-        this.engine = createEngine();
+        this.engine = createEngine({registerDefaultZoomCanvasAction:false});
         this.engine.setModel(new MyDiagramModel());
+        this.engine.getActionEventBus().registerAction(new MyZoomCanvasAction({inverseZoom:true}));
     }
 
     loadDemos = () => {
