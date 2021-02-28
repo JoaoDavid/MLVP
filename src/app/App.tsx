@@ -35,6 +35,29 @@ class App extends React.Component<AppProps, AppState> {
         this.engine = createEngine({registerDefaultZoomCanvasAction:false});
         this.engine.setModel(new MyDiagramModel());
         this.engine.getActionEventBus().registerAction(new MyZoomCanvasAction({inverseZoom:true}));
+        this.registerListener();
+    }
+
+    registerListener = () => {
+        this.engine.getModel().registerListener({
+            linksUpdated: (event) => {
+                console.log('linksUpdated');
+                console.log(event);
+            },
+            sourcePortChanged: (event) => {
+                console.log('sourcePortChanged');
+                console.log(event);
+
+            },
+            nodePropsUpdated: (event) => {
+                console.log("nodePropsUpdated");
+                console.log(event);
+            },
+            nodesUpdated: (event) => {
+                console.log("nodesUpdated");
+                console.log(event);
+            }
+        });
     }
 
     loadDemos = () => {
