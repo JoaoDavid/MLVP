@@ -12,5 +12,6 @@ def generate_code(diagram, file_name="mlvp-code-output"):
 
 def validate_links(data):
     validator = ValidateLinks(links_data=data)
-    is_valid = validator.validate()
-    return is_valid
+    response = validator.validate()
+    print(response)
+    return str(response)

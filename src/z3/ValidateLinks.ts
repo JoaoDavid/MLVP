@@ -59,7 +59,7 @@ export class ValidateLinks {
         let res = false;
         axios.post('/z3', data)
             .then(response => {
-                res = response.data==="True";
+                res = response.data==="sat";
                 console.log(response);
                 console.log(response.data);
                 console.log("return res is " + res);
