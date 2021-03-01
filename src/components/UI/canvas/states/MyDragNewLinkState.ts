@@ -75,14 +75,13 @@ export class MyDragNewLinkState extends AbstractDisplacementState<DiagramEngine>
                                         },
                                         'linkCreated'
                                     );
-                                    this.engine.repaintCanvas();
-                                    return;
                                 } else {
                                     console.log("vai remover link, deu unsat")
                                     this.link.remove();
-                                    return;
+                                    this.engine.repaintCanvas();
                                 }
                             });
+                            return;
                         } else {
                             this.link.remove();
                             this.engine.repaintCanvas();
