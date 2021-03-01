@@ -1,7 +1,7 @@
 from typing import Dict
 from z3 import *
-from VarNames import *
-from PortProperties import Dataset
+from mlvp.prover.VarNames import *
+from mlvp.prover.PortProperties import Dataset
 
 
 # And(func(a),func2(b,c,d),link(a,b))

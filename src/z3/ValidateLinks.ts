@@ -1,4 +1,4 @@
-import {DiagramEngine, LinkModel, NodeModel} from '@projectstorm/react-diagrams-core';
+import {DiagramEngine, LinkModel} from '@projectstorm/react-diagrams-core';
 import axios from "axios";
 
 export class ValidateLinks {
@@ -59,13 +59,15 @@ export class ValidateLinks {
         let res = false;
         axios.post('/z3', data)
             .then(response => {
-                res = response.data;
+                res = response.data==="True";
                 console.log(response);
                 console.log(response.data);
+                console.log("return res is " + res);
             })
             .catch(error => {
                 console.log(error);
             });
+        console.log("return res is " + res);
         return res;
     }
 

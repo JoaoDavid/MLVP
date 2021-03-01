@@ -1,2 +1,2 @@
-from .Assertions import import_from_csv
-from .Assertions import split_dataset
+from mlvp.prover.Assertions import *
+from mlvp.prover.ValidateLinks import ValidateLinks
