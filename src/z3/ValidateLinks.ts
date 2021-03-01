@@ -31,17 +31,17 @@ export class ValidateLinks {
     }
 
 
-    validateLinks = () => {
-        const data:{
+    validLink = async () => {
+        const data: {
             sourcePortId: string,
             targetPortId: string,
             sourceNode: object,
             targetNode: object,
         }[] = [];
-        const links:LinkModel[] = this.engine.getModel().getLinks();
+        const links: LinkModel[] = this.engine.getModel().getLinks();
         console.log("validateLinks  LINKS");
         console.log(links);
-        links.forEach((link)=> {
+        links.forEach((link) => {
             data.push({
                 sourcePortId: link.getSourcePort().getID(),
                 targetPortId: link.getTargetPort().getID(),
@@ -51,27 +51,18 @@ export class ValidateLinks {
             console.log(link.getSourcePort().getNode());
             console.log(link.getTargetPort().getNode());
         });
-        return this.sendReq(data);
+        const isSat = await this.sendReq(data);
+        console.log(isSat);
+        console.log(isSat === "sat");
+        return isSat === "sat";
     }
 
-    sendReq = (data) => {
-        console.log(data)
-        let res = false;
-        axios.post('/z3', data)
-            .then(response => {
-                res = response.data==="sat";
-                console.log(response);
-                console.log(response.data);
-                console.log("return res is " + res);
-            })
+    sendReq = async (data) => {
+        return axios.post('/z3', data)
+            .then(res => res.data)
             .catch(error => {
                 console.log(error);
             });
-        console.log("return res is " + res);
-        return res;
     }
-
-
-
 
 }

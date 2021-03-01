@@ -62,18 +62,27 @@ export class MyDragNewLinkState extends AbstractDisplacementState<DiagramEngine>
                     if (model instanceof BasePortModel) {
                         if (this.port.canLinkToPort(model)) {
                             this.adjustPorts(this.port, model);
-                            this.validateLinks.validateLinks();
-                            this.link.remove();
-                            //link created between nodes
-                            this.engine.getModel().fireEvent(
-                                {
-                                    sourceNode: this.link.getSourcePort().getNode(),
-                                    targetNode: this.link.getTargetPort().getNode(),
-                                },
-                                'linkCreated'
-                            );
-                            this.engine.repaintCanvas();
-                            return;
+
+                            this.validateLinks.validLink().then((res) => {
+                                // let res = true;
+                                console.log("res " + res)
+                                if(res) {
+                                    //link created between nodes
+                                    this.engine.getModel().fireEvent(
+                                        {
+                                            sourceNode: this.link.getSourcePort().getNode(),
+                                            targetNode: this.link.getTargetPort().getNode(),
+                                        },
+                                        'linkCreated'
+                                    );
+                                    this.engine.repaintCanvas();
+                                    return;
+                                } else {
+                                    console.log("vai remover link, deu unsat")
+                                    this.link.remove();
+                                    return;
+                                }
+                            });
                         } else {
                             this.link.remove();
                             this.engine.repaintCanvas();
