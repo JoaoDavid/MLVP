@@ -100,17 +100,24 @@ export class CSVModel extends BaseNodeModel {
         this.numCols = event.data.numCols;
         this.numRows = event.data.numRows;
         this.columnNames = event.data.columnNames;
-        this.labels = event.data.labels;
+        const jsonLabels = event.data.labels;
+        for (let value in jsonLabels) {
+            this.labels.set(value,jsonLabels[value])
+        }
     }
 
     serialize(): any {
+        let jsonLabels = {};
+        this.labels.forEach((value, key) => {
+            jsonLabels[key] = value
+        });
         return {
             ...super.serialize(),
             fileName: this.fileName,
             numCols: this.numCols,
             numRows: this.numRows,
             columnNames: this.columnNames,
-            labels: this.labels,
+            labels: jsonLabels,
         };
     }
 
