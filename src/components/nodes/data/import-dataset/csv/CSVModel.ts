@@ -100,6 +100,7 @@ export class CSVModel extends BaseNodeModel {
         this.numCols = event.data.numCols;
         this.numRows = event.data.numRows;
         this.columnNames = event.data.columnNames;
+        this.labels = event.data.labels;
     }
 
     serialize(): any {
@@ -109,6 +110,7 @@ export class CSVModel extends BaseNodeModel {
             numCols: this.numCols,
             numRows: this.numRows,
             columnNames: this.columnNames,
+            labels: this.labels,
         };
     }
 
