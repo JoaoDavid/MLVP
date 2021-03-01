@@ -9,39 +9,31 @@ import {LinkModel} from '@projectstorm/react-diagrams-core';
 import {MouseEvent} from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams';
 import {BasePortModel} from "../../../core/BasePort/BasePortModel";
+import {ValidateLinks} from "../../../../z3/ValidateLinks";
 
-export interface MyDragNewLinkStateOptions {
-    /**
-     * If enabled, the links will stay on the canvas if they dont connect to a port
-     * when dragging finishes
-     */
-    allowLooseLinks?: boolean;
-    /**
-     * If enabled, then a link can still be drawn from the port even if it is locked
-     */
-    allowLinksFromLockedPorts?: boolean;
-}
 
 export class MyDragNewLinkState extends AbstractDisplacementState<DiagramEngine> {
+
+    private readonly allowLooseLinks = false;
+    private readonly allowLinksFromLockedPorts = false;
+    private validateLinks;
+
     port: BasePortModel;
     link: LinkModel;
-    config: MyDragNewLinkStateOptions;
 
-    constructor(options: MyDragNewLinkStateOptions = {}) {
+    constructor(validateLinks: ValidateLinks) {
         super({ name: 'drag-new-link' });
+        this.validateLinks = validateLinks;
+        this.registerNewLinkDragging();
+    }
 
-        this.config = {
-            allowLooseLinks: false,
-            allowLinksFromLockedPorts: false,
-            ...options
-        };
-
+    registerNewLinkDragging = () => {
         this.registerAction(
             new Action({
                 type: InputType.MOUSE_DOWN,
                 fire: (event: ActionEvent<MouseEvent, BasePortModel>) => {
                     this.port = this.engine.getMouseElement(event.event) as BasePortModel;
-                    if (!this.config.allowLinksFromLockedPorts && this.port.isLocked()) {
+                    if (!this.allowLinksFromLockedPorts && this.port.isLocked()) {
                         this.eject();
                         return;
                     }
@@ -70,6 +62,8 @@ export class MyDragNewLinkState extends AbstractDisplacementState<DiagramEngine>
                     if (model instanceof BasePortModel) {
                         if (this.port.canLinkToPort(model)) {
                             this.adjustPorts(this.port, model);
+                            this.validateLinks.validateLinks();
+                            this.link.remove();
                             //link created between nodes
                             this.engine.getModel().fireEvent(
                                 {
@@ -87,7 +81,7 @@ export class MyDragNewLinkState extends AbstractDisplacementState<DiagramEngine>
                         }
                     }
 
-                    if (!this.config.allowLooseLinks) {
+                    if (!this.allowLooseLinks) {
                         this.link.remove();
                         this.engine.repaintCanvas();
                     }

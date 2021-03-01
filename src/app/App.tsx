@@ -16,6 +16,7 @@ import splitEvaluate from '../demos/split-n-evaluate.json';
 import testJson from '../demos/test.json';
 import {MyZoomCanvasAction} from "../components/UI/canvas/actions/MyZoomCanvasAction";
 import {DiagramStateManager} from "../components/UI/canvas/states/DiagramStateManager";
+import {ValidateLinks} from "../z3/ValidateLinks";
 
 interface AppProps {
 
@@ -30,36 +31,17 @@ class App extends React.Component<AppProps, AppState> {
     private readonly dragDropFormat: string = "side-bar-drag-drop";
     private lastSave: any = {};
     private readonly engine: DiagramEngine;
+    private readonly validateLinks: ValidateLinks;
 
     constructor(props: AppProps) {
         super(props);
         this.engine = createEngine({registerDefaultZoomCanvasAction:false});
+        this.validateLinks = new ValidateLinks(this.engine);
         this.newCanvas();
         this.engine.getActionEventBus().registerAction(new MyZoomCanvasAction({inverseZoom:true}));
-        this.engine.getStateMachine().pushState(new DiagramStateManager());
+        this.engine.getStateMachine().pushState(new DiagramStateManager(this.validateLinks));
         this.engine.maxNumberPointsPerLink = 0;
-    }
 
-
-    registerListener = () => {
-        this.engine.getModel().registerListener({
-            linksUpdated: (event) => {
-                console.log('linksUpdated');
-                console.log(event);
-            },
-            linkCreated: (event) => {
-                console.log('linkCreated');
-                console.log(event);
-            },
-            nodePropsUpdated: (event) => {
-                console.log("nodePropsUpdated");
-                console.log(event);
-            },
-            nodesUpdated: (event) => {
-                console.log("nodesUpdated");
-                console.log(event);
-            }
-        });
     }
 
     loadDemos = () => {
@@ -88,7 +70,7 @@ class App extends React.Component<AppProps, AppState> {
 
     newCanvas = () => {
         this.engine.setModel(new MyDiagramModel());
-        this.registerListener();
+        this.validateLinks.registerListener();
     }
 
     openSave = (event: React.ChangeEvent<HTMLInputElement>) => {
