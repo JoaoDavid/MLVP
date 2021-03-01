@@ -14,7 +14,6 @@ import {PCAFactory} from "../../nodes/data/principal-component-analysis/PCAFacto
 import {CrossValidationFactory} from "../../nodes/evaluate/cross-validation/CrossValidationFactory";
 import {DatasetPortFactory} from "../../ports/dataset/DatasetPortFactory";
 import {ClassifierPortFactory} from "../../ports/model/ClassifierPortFactory";
-import {MyDiagramState} from "./states/MyDiagramState";
 
 interface CanvasProps {
     dragDropFormat: string,
@@ -29,8 +28,6 @@ class Canvas extends React.Component<CanvasProps, CanvasState> {
 
     constructor(props: CanvasProps) {
         super(props);
-        this.props.engine.getStateMachine().pushState(new MyDiagramState());
-        this.props.engine.maxNumberPointsPerLink = 0;
         this.registerNodeFactories();
         this.registerPortFactories();
     }

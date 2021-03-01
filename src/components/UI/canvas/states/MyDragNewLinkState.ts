@@ -31,7 +31,7 @@ export class MyDragNewLinkState extends AbstractDisplacementState<DiagramEngine>
         super({ name: 'drag-new-link' });
 
         this.config = {
-            allowLooseLinks: true,
+            allowLooseLinks: false,
             allowLinksFromLockedPorts: false,
             ...options
         };
@@ -70,6 +70,14 @@ export class MyDragNewLinkState extends AbstractDisplacementState<DiagramEngine>
                     if (model instanceof BasePortModel) {
                         if (this.port.canLinkToPort(model)) {
                             this.adjustPorts(this.port, model);
+                            //link created between nodes
+                            this.engine.getModel().fireEvent(
+                                {
+                                    sourceNode: this.link.getSourcePort().getNode(),
+                                    targetNode: this.link.getTargetPort().getNode(),
+                                },
+                                'linkCreated'
+                            );
                             this.engine.repaintCanvas();
                             return;
                         } else {
@@ -89,8 +97,6 @@ export class MyDragNewLinkState extends AbstractDisplacementState<DiagramEngine>
     }
 
     adjustPorts = (portA: BasePortModel, portB: BasePortModel) => {
-        console.log(portA);
-        console.log(portB);
         if(!portA.getIsIn() && portB.getIsIn()) {
             this.link.setTargetPort(portB);
         } else {

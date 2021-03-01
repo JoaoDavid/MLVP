@@ -15,6 +15,7 @@ import {MyDiagramModel} from "../components/UI/canvas/diagram/MyDiagramModel";
 import splitEvaluate from '../demos/split-n-evaluate.json';
 import testJson from '../demos/test.json';
 import {MyZoomCanvasAction} from "../components/UI/canvas/actions/MyZoomCanvasAction";
+import {DiagramStateManager} from "../components/UI/canvas/states/DiagramStateManager";
 
 interface AppProps {
 
@@ -33,10 +34,12 @@ class App extends React.Component<AppProps, AppState> {
     constructor(props: AppProps) {
         super(props);
         this.engine = createEngine({registerDefaultZoomCanvasAction:false});
-        this.engine.setModel(new MyDiagramModel());
+        this.newCanvas();
         this.engine.getActionEventBus().registerAction(new MyZoomCanvasAction({inverseZoom:true}));
-        this.registerListener();
+        this.engine.getStateMachine().pushState(new DiagramStateManager());
+        this.engine.maxNumberPointsPerLink = 0;
     }
+
 
     registerListener = () => {
         this.engine.getModel().registerListener({
@@ -44,10 +47,9 @@ class App extends React.Component<AppProps, AppState> {
                 console.log('linksUpdated');
                 console.log(event);
             },
-            sourcePortChanged: (event) => {
-                console.log('sourcePortChanged');
+            linkCreated: (event) => {
+                console.log('linkCreated');
                 console.log(event);
-
             },
             nodePropsUpdated: (event) => {
                 console.log("nodePropsUpdated");
@@ -85,8 +87,8 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     newCanvas = () => {
-        const newModel = new MyDiagramModel()
-        this.engine.setModel(newModel);
+        this.engine.setModel(new MyDiagramModel());
+        this.registerListener();
     }
 
     openSave = (event: React.ChangeEvent<HTMLInputElement>) => {

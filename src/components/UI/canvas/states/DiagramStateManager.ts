@@ -11,12 +11,15 @@ import { PortModel, DiagramEngine, DragDiagramItemsState } from '@projectstorm/r
 import {MyDragNewLinkState} from "./MyDragNewLinkState";
 import {SelectLinkState} from './SelectLinkState';
 import {LinkModel} from "@projectstorm/react-diagrams-core";
+import {ValidateLinks} from "../../../../z3/ValidateLinks";
 
-export class MyDiagramState extends State<DiagramEngine> {
+export class DiagramStateManager extends State<DiagramEngine> {
     dragCanvas: DragCanvasState;
     dragNewLink: MyDragNewLinkState;
     dragItems: DragDiagramItemsState;
     selectLink: SelectLinkState;
+
+    private validateLinks: ValidateLinks;
 
     constructor() {
         super({
@@ -24,12 +27,18 @@ export class MyDiagramState extends State<DiagramEngine> {
         });
         this.childStates = [new SelectingState()];
         this.dragCanvas = new DragCanvasState();
-        this.dragNewLink = new MyDragNewLinkState({allowLooseLinks: false});
+        this.dragNewLink = new MyDragNewLinkState();
         this.dragItems = new DragDiagramItemsState();
 
         // But this is a custom one!
         this.selectLink = new SelectLinkState();
 
+        this.validateLinks = new ValidateLinks(this.engine);
+
+        this.registerClicks();
+    }
+
+    private registerClicks = () => {
         // determine what was clicked on
         this.registerAction(
             new Action({
@@ -57,4 +66,6 @@ export class MyDiagramState extends State<DiagramEngine> {
             })
         );
     }
+
+
 }
