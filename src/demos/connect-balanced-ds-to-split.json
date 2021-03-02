@@ -1,0 +1,199 @@
+{
+  "id": "84e9b721-3b7e-4053-81a8-48386de679c5",
+  "offsetX": 105,
+  "offsetY": 127,
+  "zoom": 100,
+  "gridSize": 0,
+  "layers": [
+    {
+      "id": "544e86ee-6a49-42a4-947f-08e3f314efec",
+      "type": "diagram-links",
+      "isSvg": true,
+      "transformed": true,
+      "models": {}
+    },
+    {
+      "id": "94a0ebc3-44a8-4fa0-9734-ae427fd7a320",
+      "type": "diagram-nodes",
+      "isSvg": false,
+      "transformed": true,
+      "models": {
+        "7e71ff53-e920-4128-b69d-284a112e4af3": {
+          "id": "7e71ff53-e920-4128-b69d-284a112e4af3",
+          "type": "NODE_IMPORT_CSV",
+          "selected": false,
+          "x": -16.1875,
+          "y": 10,
+          "ports": [
+            {
+              "id": "9f4cc2b0-3a78-4f10-8dc5-f69d09afe16c",
+              "type": "PORT_DATASET",
+              "x": 166.8125,
+              "y": 46,
+              "name": "Dataset",
+              "alignment": "right",
+              "parentNode": "7e71ff53-e920-4128-b69d-284a112e4af3",
+              "links": [],
+              "in": false,
+              "label": ""
+            }
+          ],
+          "portsInOrder": [],
+          "portsOutOrder": [
+            "9f4cc2b0-3a78-4f10-8dc5-f69d09afe16c"
+          ],
+          "fileName": "eval-Iris.csv",
+          "numCols": 5,
+          "numRows": 37,
+          "columnNames": [
+            "SepalLengthCm",
+            "SepalWidthCm",
+            "PetalLengthCm",
+            "PetalWidthCm",
+            "Species"
+          ],
+          "labels": {
+            "Iris-setosa": 10,
+            "Iris-versicolor": 11,
+            "Iris-virginica": 16
+          }
+        },
+        "a26d311b-95b9-4025-9173-c1b454350ecc": {
+          "id": "a26d311b-95b9-4025-9173-c1b454350ecc",
+          "type": "NODE_SPLIT_DATASET",
+          "selected": false,
+          "x": 663.8125,
+          "y": 106,
+          "ports": [
+            {
+              "id": "e3f18ab5-4e88-49fe-a0ef-0366f9dddba8",
+              "type": "PORT_DATASET",
+              "x": 665.8125,
+              "y": 142,
+              "name": "Dataset",
+              "alignment": "left",
+              "parentNode": "a26d311b-95b9-4025-9173-c1b454350ecc",
+              "links": [],
+              "in": true,
+              "label": ""
+            },
+            {
+              "id": "c8a30b41-0d6b-4c55-81be-4064a2a04fd1",
+              "type": "PORT_DATASET",
+              "x": 846.8125,
+              "y": 142,
+              "name": "Train Dataset",
+              "alignment": "right",
+              "parentNode": "a26d311b-95b9-4025-9173-c1b454350ecc",
+              "links": [],
+              "in": false,
+              "label": ""
+            },
+            {
+              "id": "9a2c2585-a43c-4c0b-bab8-e8d7c80f8490",
+              "type": "PORT_DATASET",
+              "x": 846.8125,
+              "y": 205,
+              "name": "Test Dataset",
+              "alignment": "right",
+              "parentNode": "a26d311b-95b9-4025-9173-c1b454350ecc",
+              "links": [],
+              "in": false,
+              "label": ""
+            }
+          ],
+          "portsInOrder": [
+            "e3f18ab5-4e88-49fe-a0ef-0366f9dddba8"
+          ],
+          "portsOutOrder": [
+            "c8a30b41-0d6b-4c55-81be-4064a2a04fd1",
+            "9a2c2585-a43c-4c0b-bab8-e8d7c80f8490"
+          ],
+          "testSize": 0.25,
+          "trainSize": 0.75,
+          "shuffle": "True"
+        },
+        "19f267e0-6389-413e-a687-7591d53215ae": {
+          "id": "19f267e0-6389-413e-a687-7591d53215ae",
+          "type": "NODE_IMPORT_CSV",
+          "selected": false,
+          "x": 31.8125,
+          "y": 338,
+          "ports": [
+            {
+              "id": "89062366-47a9-4b80-81ff-cb057366f04b",
+              "type": "PORT_DATASET",
+              "x": 214.8125,
+              "y": 374,
+              "name": "Dataset",
+              "alignment": "right",
+              "parentNode": "19f267e0-6389-413e-a687-7591d53215ae",
+              "links": [],
+              "in": false,
+              "label": ""
+            }
+          ],
+          "portsInOrder": [],
+          "portsOutOrder": [
+            "89062366-47a9-4b80-81ff-cb057366f04b"
+          ],
+          "fileName": "train-Iris.csv",
+          "numCols": 5,
+          "numRows": 150,
+          "columnNames": [
+            "SepalLengthCm",
+            "SepalWidthCm",
+            "PetalLengthCm",
+            "PetalWidthCm",
+            "Species"
+          ],
+          "labels": {
+            "Iris-setosa": 50,
+            "Iris-versicolor": 50,
+            "Iris-virginica": 50
+          }
+        },
+        "9d2a6afd-399e-4ee2-b07f-2edfb01bd7bb": {
+          "id": "9d2a6afd-399e-4ee2-b07f-2edfb01bd7bb",
+          "type": "NODE_OVERSAMPLING",
+          "selected": false,
+          "x": 326.8125,
+          "y": 115,
+          "ports": [
+            {
+              "id": "88ddeabe-435f-4260-890f-fa14dbd3e8e8",
+              "type": "PORT_DATASET",
+              "x": 328.8125,
+              "y": 151,
+              "name": "Dataset",
+              "alignment": "left",
+              "parentNode": "9d2a6afd-399e-4ee2-b07f-2edfb01bd7bb",
+              "links": [],
+              "in": true,
+              "label": ""
+            },
+            {
+              "id": "46e6e36b-ea13-40d5-925f-e5b1f1e68e75",
+              "type": "PORT_DATASET",
+              "x": 509.8125,
+              "y": 151,
+              "name": "Balanced Dataset",
+              "alignment": "right",
+              "parentNode": "9d2a6afd-399e-4ee2-b07f-2edfb01bd7bb",
+              "links": [],
+              "in": false,
+              "label": ""
+            }
+          ],
+          "portsInOrder": [
+            "88ddeabe-435f-4260-890f-fa14dbd3e8e8"
+          ],
+          "portsOutOrder": [
+            "46e6e36b-ea13-40d5-925f-e5b1f1e68e75"
+          ],
+          "randomState": 0
+        }
+      }
+    }
+  ]
+}

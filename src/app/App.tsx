@@ -14,6 +14,7 @@ import Canvas from "../components/UI/canvas/Canvas";
 import {MyDiagramModel} from "../components/UI/canvas/diagram/MyDiagramModel";
 import splitEvaluate from '../demos/split-n-evaluate.json';
 import testJson from '../demos/test.json';
+import conBalancedDsToSplit from '../demos/connect-balanced-ds-to-split.json';
 import {MyZoomCanvasAction} from "../components/UI/canvas/actions/MyZoomCanvasAction";
 import {DiagramStateManager} from "../components/UI/canvas/states/DiagramStateManager";
 import {ValidateLinks} from "../z3/ValidateLinks";
@@ -51,6 +52,9 @@ class App extends React.Component<AppProps, AppState> {
         });
         map.set("Test", ()=>{
             this.loadDemoAux(testJson);
+        });
+        map.set("Balanced DS Split", ()=>{
+            this.loadDemoAux(conBalancedDsToSplit);
         });
         return map;
     }
