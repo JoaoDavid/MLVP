@@ -1,1 +1,1 @@
-from .app import generate_code
+from .app import generate_code, validate_links

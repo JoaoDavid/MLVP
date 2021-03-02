@@ -6,6 +6,10 @@ export interface ZoomCanvasActionOptions {
 }
 
 export class MyZoomCanvasAction extends Action {
+
+    private readonly maxZoomLevel: number = 150;
+    private readonly minZoomLevel: number = 50;
+
     constructor(options: ZoomCanvasActionOptions = {}) {
         super({
             type: InputType.MOUSE_WHEEL,
@@ -31,7 +35,8 @@ export class MyZoomCanvasAction extends Action {
                 } else {
                     scrollDelta /= 10; //scroll step, lower value == faster zoom in/out
                 }
-                if (model.getZoomLevel() + scrollDelta > 10) {
+                const newZoomLevel = model.getZoomLevel() + scrollDelta;
+                if (newZoomLevel >= this.minZoomLevel && newZoomLevel <= this.maxZoomLevel) {
                     model.setZoomLevel(model.getZoomLevel() + scrollDelta);
                 }
 

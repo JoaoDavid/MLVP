@@ -1,5 +1,5 @@
 from z3 import *
-from VarNames import *
+from mlvp.prover.VarNames import *
 
 
 class Dataset:

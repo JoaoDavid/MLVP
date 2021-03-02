@@ -44,9 +44,9 @@ const CSVModal = (props: CSVModalProps) => {
                 </Row>
             </Form.Group>
             <FormGroup>
+                {props.node.getColumnNames().length > 0?<Form.Label>Column Names</Form.Label>:null}
                 <Table striped bordered hover responsive>
                     <thead>
-                    {props.node.getColumnNames().length > 0?<Form.Label>Column Names</Form.Label>:null}
                     <tr>
                         {props.node.getColumnNames().map((col, counter) => {
                             return <th key={col + counter}>{col}</th>
@@ -64,9 +64,9 @@ const CSVModal = (props: CSVModalProps) => {
                 </Table>
             </FormGroup>
             <FormGroup>
+                {labelNames.length > 0?<Form.Label>Labels</Form.Label>:null}
                 <Table striped bordered hover responsive>
                     <thead>
-                    {labelNames.length > 0?<Form.Label>Labels</Form.Label>:null}
                     <tr>
                         {labelNames}
                     </tr>

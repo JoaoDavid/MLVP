@@ -39,6 +39,12 @@ class SplitDatasetWidget extends React.Component<SplitDatasetProps, SplitDataset
         const newState = {...this.state};
         this.setState(newState);
         console.log(this.state.node);
+        this.props.engine.getModel().fireEvent(
+            {
+                node: this,
+            },
+            'nodePropsUpdated'
+        );
     }
 
 

@@ -15,6 +15,8 @@ import {MyDiagramModel} from "../components/UI/canvas/diagram/MyDiagramModel";
 import splitEvaluate from '../demos/split-n-evaluate.json';
 import testJson from '../demos/test.json';
 import {MyZoomCanvasAction} from "../components/UI/canvas/actions/MyZoomCanvasAction";
+import {DiagramStateManager} from "../components/UI/canvas/states/DiagramStateManager";
+import {ValidateLinks} from "../z3/ValidateLinks";
 
 interface AppProps {
 
@@ -29,12 +31,17 @@ class App extends React.Component<AppProps, AppState> {
     private readonly dragDropFormat: string = "side-bar-drag-drop";
     private lastSave: any = {};
     private readonly engine: DiagramEngine;
+    private readonly validateLinks: ValidateLinks;
 
     constructor(props: AppProps) {
         super(props);
         this.engine = createEngine({registerDefaultZoomCanvasAction:false});
-        this.engine.setModel(new MyDiagramModel());
+        this.validateLinks = new ValidateLinks(this.engine);
+        this.newCanvas();
         this.engine.getActionEventBus().registerAction(new MyZoomCanvasAction({inverseZoom:true}));
+        this.engine.getStateMachine().pushState(new DiagramStateManager(this.validateLinks));
+        this.engine.maxNumberPointsPerLink = 0;
+
     }
 
     loadDemos = () => {
@@ -62,8 +69,8 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     newCanvas = () => {
-        const newModel = new MyDiagramModel()
-        this.engine.setModel(newModel);
+        this.engine.setModel(new MyDiagramModel());
+        this.validateLinks.registerListener();
     }
 
     openSave = (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -1,4 +1,5 @@
 import {DiagramModel} from '@projectstorm/react-diagrams';
+import {LinkModel} from "@projectstorm/react-diagrams-core";
 
 
 export class MyDiagramModel extends DiagramModel {
@@ -7,5 +8,12 @@ export class MyDiagramModel extends DiagramModel {
         return {
             ...super.serialize(),
         };
+    }
+
+    validateLinks = () => {
+        const links:LinkModel[] = this.getLinks();
+        links.forEach((link)=> {
+            console.log(link);
+        })
     }
 }

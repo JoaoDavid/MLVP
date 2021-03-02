@@ -1,7 +1,7 @@
 from typing import Dict
 from z3 import *
-from VarNames import *
-from PortProperties import Dataset
+from mlvp.prover.VarNames import *
+from mlvp.prover.PortProperties import Dataset
 
 
 # And(func(a),func2(b,c,d),link(a,b))
@@ -168,7 +168,7 @@ def cross_validation(id_input_ds, n_folds):
 
 s = Solver()
 s.add(import_from_csv("a", 5, 8, {"batata": 5, "alface": 3}))
-# s.add(split_dataset("b", "c", "d", 0.5, 0.5, False))
+# s.add(split_dataset("b", "c", "d", 0.5, 0.5, False, True))
 # s.add(oversampling("b", "c", 3))
 s.add(link("a", "b"))
 s.add(undersampling("b", "c", 3))
