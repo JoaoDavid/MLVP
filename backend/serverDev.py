@@ -13,6 +13,7 @@ def codegen():
     response = generate_code(data)
     return response
 
+
 @app.route('/z3', methods=['POST'])
 def z3():
     data = request.json
