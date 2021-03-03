@@ -30,23 +30,20 @@ const BaseModal = (props: BaseModalProps) => {
         setEdit(false);
     }
 
-    let hiddenStyle = {display: "none"};
-    let modalTitle = (<Modal.Title onClick={startEditingText}>{title}</Modal.Title>);
-    let inputTitle = (<input onChange={changeTextHandler} value={title} onBlur={finishEditingText} style={hiddenStyle}/>);
+    let titleStyle = {};
+    let inputStyle = {display: "none"};
 
     if (isEditing) {
-        modalTitle = (<Modal.Title onClick={startEditingText} style={hiddenStyle}>{title}</Modal.Title>);
-        inputTitle = (<input onChange={changeTextHandler} value={title} onBlur={finishEditingText}/>);
+        titleStyle = {display: "none"};
+        inputStyle = {display: "inline"};
     }
-
-
 
     return (
         <>
             <Modal animation={false} size="lg" show={props.show} onHide={()=>{props.handleClose();finishEditingText()}}>
                 <Modal.Header closeButton>
-                    {modalTitle}
-                    {inputTitle}
+                    <Modal.Title style={titleStyle} onClick={startEditingText}>{title}</Modal.Title>
+                    <input style={inputStyle} onChange={changeTextHandler} value={title} onBlur={finishEditingText}/>
                 </Modal.Header>
                 <Modal.Body>
                     {props.children}
