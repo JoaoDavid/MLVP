@@ -46,11 +46,11 @@ export class BaseNodeWidget extends React.Component<CoreNodeProps> {
         }
         return (
             <div className={nodeClasses.join(' ')}
-                 data-default-node-name={this.props.node.getOptions().name}
+                 data-default-node-name={this.props.node.getTitle()}
                  style={{background: this.props.color}}
                  onDoubleClick={this.handleShowModal}
             >
-                <Title name={this.props.node.getOptions().name}/>
+                <Title name={this.props.node.getTitle()}/>
                 <div className={classes.Content}>
                     <PortContainer generatePort={this.generatePort} ports={this.props.node.getInPorts()}/>
                     <div className={classes.ChildrenDiv}>
@@ -61,7 +61,8 @@ export class BaseNodeWidget extends React.Component<CoreNodeProps> {
                 <BaseModal handleClose={this.handleCloseModal}
                            handleShow={this.handleShowModal}
                            show={this.state.show}
-                           title={this.props.node.getOptions().name}
+                           title={this.props.node.getTitle()}
+                           footer={this.props.node.getOptions().name}
                 >
                     {this.props.modalChildren}
                 </BaseModal>
