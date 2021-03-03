@@ -12,10 +12,11 @@ interface BaseModalProps {
     handleClose: () => void;
     handleShow: () => void;
     show: boolean;
+    saveTitle: (title: string) => void;
 }
 
 const BaseModal = (props: BaseModalProps) => {
-    const [title, setTitle] = useState("g");
+    const [title, setTitle] = useState(props.title);
     const [isEditing, setEdit] = useState(false);
 
     const changeTextHandler = (event:React.ChangeEvent<HTMLInputElement>) => {
@@ -28,6 +29,7 @@ const BaseModal = (props: BaseModalProps) => {
 
     const finishEditingText = () => {
         setEdit(false);
+        props.saveTitle(title);
     }
 
     let titleStyle = {};
@@ -43,7 +45,7 @@ const BaseModal = (props: BaseModalProps) => {
             <Modal animation={false} size="lg" show={props.show} onHide={()=>{props.handleClose();finishEditingText()}}>
                 <Modal.Header closeButton>
                     <Modal.Title style={titleStyle} onClick={startEditingText}>{title}</Modal.Title>
-                    <input style={inputStyle} onChange={changeTextHandler} value={title} onBlur={finishEditingText}/>
+                    <input style={inputStyle} onChange={changeTextHandler} value={title} onBlur={finishEditingText} maxLength={25}/>
                 </Modal.Header>
                 <Modal.Body>
                     {props.children}

@@ -87,6 +87,10 @@ export abstract class BaseNodeModel extends NodeModel<BaseNodeModelGenerics> {
         return this.portsOut;
     }
 
+    setTitle = (title: string) => {
+        this.title = title;
+    }
+
     getTitle = () => {
         return this.title;
     }
