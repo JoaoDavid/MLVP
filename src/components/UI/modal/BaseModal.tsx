@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import Modal from 'react-bootstrap/Modal';
 import ModalFooter from 'react-bootstrap/ModalFooter';
+import InputTitle from "./input-title/InputTitle";
+import classes from './BaseModal.module.css';
 
 interface BaseModalProps {
     title: string;
@@ -34,12 +36,13 @@ const BaseModal = (props: BaseModalProps) => {
         props.saveTitle(title);
     }
 
-    let titleStyle = {};
-    let inputStyle = {display: "none"};
+    let currTitleElement;
 
     if (isEditing) {
-        titleStyle = {display: "none"};
-        inputStyle = {display: "inline"};
+        currTitleElement = (<InputTitle title={props.title} changeTextHandler={changeTextHandler} finishEditingText={finishEditingText}/>);
+    } else {
+        currTitleElement = (<Modal.Title className={classes.Title} onClick={startEditingText}>{title}</Modal.Title>);
+
     }
 
     return (
@@ -47,8 +50,7 @@ const BaseModal = (props: BaseModalProps) => {
             <Modal animation={false} size="lg" show={props.show} onHide={()=>{props.handleClose();finishEditingText()}}>
                 <Modal.Header closeButton>
                     <div onClick={startEditingText}>
-                        <Modal.Title style={titleStyle} onClick={startEditingText}>{title}</Modal.Title>
-                        <input style={inputStyle} onChange={changeTextHandler} value={title} onBlur={finishEditingText} maxLength={25}/>
+                        {currTitleElement}
                     </div>
                 </Modal.Header>
                 <Modal.Body>
