@@ -3,6 +3,8 @@
     display: flex;
     white-space: nowrap;
     justify-items: center;
+    text-overflow: clip;
+    overflow: hidden;
 }
 
 .TitleName {
