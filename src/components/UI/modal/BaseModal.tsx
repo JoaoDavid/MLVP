@@ -21,10 +21,8 @@ const BaseModal = (props: BaseModalProps) => {
     const [title, setTitle] = useState(props.title);
     const [isEditing, setEdit] = useState(false);
 
-    const changeTextHandler = (event:React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.value.length > 0) {
-            setTitle(event.target.value);
-        }
+    const saveTitle = (title: string) => {
+        setTitle(title);
     }
 
     const startEditingText = () => {
@@ -39,7 +37,8 @@ const BaseModal = (props: BaseModalProps) => {
     let currTitleElement;
 
     if (isEditing) {
-        currTitleElement = (<InputTitle title={props.title} changeTextHandler={changeTextHandler} finishEditingText={finishEditingText}/>);
+        currTitleElement = (<InputTitle title={title} saveTitle={saveTitle}
+                                        finishEditingText={finishEditingText}/>);
     } else {
         currTitleElement = (<Modal.Title className={classes.Title} onClick={startEditingText}>{title}</Modal.Title>);
 
@@ -47,7 +46,10 @@ const BaseModal = (props: BaseModalProps) => {
 
     return (
         <>
-            <Modal animation={false} size="lg" show={props.show} onHide={()=>{props.handleClose();finishEditingText()}}>
+            <Modal animation={false} size="lg" show={props.show} onHide={() => {
+                props.handleClose();
+                finishEditingText()
+            }}>
                 <Modal.Header closeButton>
                     <div onClick={startEditingText}>
                         {currTitleElement}
