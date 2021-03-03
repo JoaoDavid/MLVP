@@ -1,7 +1,7 @@
 {
   "id": "84e9b721-3b7e-4053-81a8-48386de679c5",
-  "offsetX": 105,
-  "offsetY": 127,
+  "offsetX": 106,
+  "offsetY": 121,
   "zoom": 100,
   "gridSize": 0,
   "layers": [
@@ -42,6 +42,7 @@
           "portsOutOrder": [
             "9f4cc2b0-3a78-4f10-8dc5-f69d09afe16c"
           ],
+          "title": "Import from CSV",
           "fileName": "eval-Iris.csv",
           "numCols": 5,
           "numRows": 37,
@@ -57,61 +58,6 @@
             "Iris-versicolor": 11,
             "Iris-virginica": 16
           }
-        },
-        "a26d311b-95b9-4025-9173-c1b454350ecc": {
-          "id": "a26d311b-95b9-4025-9173-c1b454350ecc",
-          "type": "NODE_SPLIT_DATASET",
-          "selected": false,
-          "x": 663.8125,
-          "y": 106,
-          "ports": [
-            {
-              "id": "e3f18ab5-4e88-49fe-a0ef-0366f9dddba8",
-              "type": "PORT_DATASET",
-              "x": 665.8125,
-              "y": 142,
-              "name": "Dataset",
-              "alignment": "left",
-              "parentNode": "a26d311b-95b9-4025-9173-c1b454350ecc",
-              "links": [],
-              "in": true,
-              "label": ""
-            },
-            {
-              "id": "c8a30b41-0d6b-4c55-81be-4064a2a04fd1",
-              "type": "PORT_DATASET",
-              "x": 846.8125,
-              "y": 142,
-              "name": "Train Dataset",
-              "alignment": "right",
-              "parentNode": "a26d311b-95b9-4025-9173-c1b454350ecc",
-              "links": [],
-              "in": false,
-              "label": ""
-            },
-            {
-              "id": "9a2c2585-a43c-4c0b-bab8-e8d7c80f8490",
-              "type": "PORT_DATASET",
-              "x": 846.8125,
-              "y": 205,
-              "name": "Test Dataset",
-              "alignment": "right",
-              "parentNode": "a26d311b-95b9-4025-9173-c1b454350ecc",
-              "links": [],
-              "in": false,
-              "label": ""
-            }
-          ],
-          "portsInOrder": [
-            "e3f18ab5-4e88-49fe-a0ef-0366f9dddba8"
-          ],
-          "portsOutOrder": [
-            "c8a30b41-0d6b-4c55-81be-4064a2a04fd1",
-            "9a2c2585-a43c-4c0b-bab8-e8d7c80f8490"
-          ],
-          "testSize": 0.25,
-          "trainSize": 0.75,
-          "shuffle": "True"
         },
         "19f267e0-6389-413e-a687-7591d53215ae": {
           "id": "19f267e0-6389-413e-a687-7591d53215ae",
@@ -137,6 +83,7 @@
           "portsOutOrder": [
             "89062366-47a9-4b80-81ff-cb057366f04b"
           ],
+          "title": "Import from CSV",
           "fileName": "train-Iris.csv",
           "numCols": 5,
           "numRows": 150,
@@ -191,7 +138,51 @@
           "portsOutOrder": [
             "46e6e36b-ea13-40d5-925f-e5b1f1e68e75"
           ],
+          "title": "Oversampling",
           "randomState": 0
+        },
+        "0a6dd59a-7ba9-4db7-8dd6-06e4821508ec": {
+          "id": "0a6dd59a-7ba9-4db7-8dd6-06e4821508ec",
+          "type": "NODE_RANDOM_FOREST_CLASSIFIER",
+          "selected": false,
+          "x": 754,
+          "y": 146,
+          "ports": [
+            {
+              "id": "90e76657-96fd-4472-a084-85da23d3daf0",
+              "type": "PORT_DATASET",
+              "x": 756,
+              "y": 182,
+              "name": "Dataset",
+              "alignment": "left",
+              "parentNode": "0a6dd59a-7ba9-4db7-8dd6-06e4821508ec",
+              "links": [],
+              "in": true,
+              "label": ""
+            },
+            {
+              "id": "0fc09fcd-b1d3-41d9-9764-5908fdedfe4d",
+              "type": "PORT_CLASSIFIER",
+              "x": 937,
+              "y": 182,
+              "name": "Classifier",
+              "alignment": "right",
+              "parentNode": "0a6dd59a-7ba9-4db7-8dd6-06e4821508ec",
+              "links": [],
+              "in": false,
+              "label": ""
+            }
+          ],
+          "portsInOrder": [
+            "90e76657-96fd-4472-a084-85da23d3daf0"
+          ],
+          "portsOutOrder": [
+            "0fc09fcd-b1d3-41d9-9764-5908fdedfe4d"
+          ],
+          "title": "Random Forest Classifier",
+          "numTrees": 100,
+          "criterion": "gini",
+          "maxDepth": 25
         }
       }
     }

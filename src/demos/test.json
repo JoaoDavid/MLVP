@@ -1,7 +1,7 @@
 {
   "id": "23666952-59cf-43c8-acdb-9ba25be5fbb8",
-  "offsetX": -127,
-  "offsetY": -3,
+  "offsetX": -7,
+  "offsetY": -12,
   "zoom": 100,
   "gridSize": 0,
   "layers": [
@@ -216,6 +216,7 @@
             "6dc9103b-2385-41ca-b1d0-66778eab02dc",
             "85eea7b6-dc75-43c2-9341-ad0fbd85eacc"
           ],
+          "title": "Split Dataset",
           "testSize": 0.25,
           "trainSize": 0.75,
           "shuffle": "True"
@@ -246,10 +247,22 @@
           "portsOutOrder": [
             "6fd2ee9c-7196-4edd-b5d9-cf3c02fedc49"
           ],
-          "fileName": "",
-          "numCols": 0,
-          "numRows": 0,
-          "columnNames": []
+          "title": "Import from CSV",
+          "fileName": "train-Iris.csv",
+          "numCols": 5,
+          "numRows": 150,
+          "columnNames": [
+            "SepalLengthCm",
+            "SepalWidthCm",
+            "PetalLengthCm",
+            "PetalWidthCm",
+            "Species"
+          ],
+          "labels": {
+            "Iris-setosa": 50,
+            "Iris-versicolor": 50,
+            "Iris-virginica": 50
+          }
         },
         "f65e0fae-998e-4ae6-931b-2af4cdba9f4b": {
           "id": "f65e0fae-998e-4ae6-931b-2af4cdba9f4b",
@@ -293,6 +306,7 @@
           "portsOutOrder": [
             "73af148b-00cc-4fc7-b425-05bea461817e"
           ],
+          "title": "Oversampling",
           "randomState": 0
         },
         "cefc225a-6b11-424f-a823-6ad12242d4c6": {
@@ -337,6 +351,7 @@
           "portsOutOrder": [
             "b9d27928-6e52-4818-9708-9adcac1306a5"
           ],
+          "title": "Undersampling",
           "randomState": 0
         },
         "ef39839a-0532-4395-994e-e3f099760e69": {
@@ -376,7 +391,8 @@
             "6573211e-501b-4004-8bff-29aa38eabcd0",
             "9e9d6fb9-f144-4cbd-a217-acdd63d8b470"
           ],
-          "portsOutOrder": []
+          "portsOutOrder": [],
+          "title": "Evaluate Classifier"
         },
         "84eaf0de-ed3c-4f08-b404-fb532353f8f8": {
           "id": "84eaf0de-ed3c-4f08-b404-fb532353f8f8",
@@ -416,6 +432,7 @@
             "6e3cdf4e-7156-4026-b22f-cd71441b4a16"
           ],
           "portsOutOrder": [],
+          "title": "Cross Validation",
           "numberFolds": 5
         }
       }

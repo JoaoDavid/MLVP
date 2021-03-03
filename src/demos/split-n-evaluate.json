@@ -157,6 +157,7 @@
                     "portsOutOrder": [
                         "d5a1a457-4b46-4506-a5cc-6bbd836ecbbf"
                     ],
+                    "title": "Import from CSV",
                     "fileName": "creditcard.csv",
                     "numCols": 31,
                     "numRows": 284807,
@@ -192,7 +193,8 @@
                         "\"V28\"",
                         "\"Amount\"",
                         "\"Class\""
-                    ]
+                    ],
+                    "labels": {}
                 },
                 "f36c12b7-81f4-4802-8610-86e98eb48654": {
                     "id": "f36c12b7-81f4-4802-8610-86e98eb48654",
@@ -251,6 +253,7 @@
                         "9482cab8-d2a6-4a9a-911e-4765ef80e481",
                         "11093126-af99-4b4e-bb16-0849c164761a"
                     ],
+                    "title": "Split Dataset",
                     "testSize": 0.25,
                     "trainSize": 0.75,
                     "shuffle": "True"
@@ -297,6 +300,7 @@
                     "portsOutOrder": [
                         "65e28b98-f649-4716-b9eb-cbe1ebca0740"
                     ],
+                    "title": "Random Forest Classifier",
                     "numTrees": 100,
                     "criterion": "gini",
                     "maxDepth": "None"
@@ -304,7 +308,7 @@
                 "724c3953-c500-43ec-b9cc-eec12ed899ee": {
                     "id": "724c3953-c500-43ec-b9cc-eec12ed899ee",
                     "type": "NODE_ACCURACY_CLASSIFIER",
-                    "selected": true,
+                    "selected": false,
                     "x": 944.359375,
                     "y": 311,
                     "ports": [
@@ -341,7 +345,8 @@
                         "9aed019d-a5b1-479b-8133-b3de5a808c71",
                         "7e902625-e0ec-4576-8ba4-c2ec322345a7"
                     ],
-                    "portsOutOrder": []
+                    "portsOutOrder": [],
+                    "title": "Evaluate Classifier"
                 }
             }
         }
