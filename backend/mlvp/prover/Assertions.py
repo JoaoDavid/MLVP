@@ -41,7 +41,6 @@ def split_dataset(id_input, id_output_train, id_output_test, test_size, train_si
     return And(
         # requires
         input_ds.rows >= 2,
-        input_ds.balanced,
         # falta relacionar os min e max label count
         # ensures
         train_ds.rows == ToInt(ToReal(input_ds.rows) * train_size),
