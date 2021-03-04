@@ -20,26 +20,19 @@ class CSVWidget extends React.Component<CSVNodeProps, CSVNodeState> {
         model: this.props.node,
     }
 
-
     loadCSV = (selectorFiles: FileList) => {
         this.state.model.loadCSV(selectorFiles).then((r:any) => {
-            //console.log(r[0]);
-            const newState = {...this.state};
-            this.setState(newState);
+            this.setState({});
         });
     }
 
     render() {
         const modal = <CSVModal changed={this.loadCSV} node={this.props.node}/>;
-        let fileName = this.state.model.getFileName();
-        if (fileName.length === 0) {
-            fileName = "File:";
-        }
         return (
             <BaseNodeWidget node={this.props.node} engine={this.props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
-                <p>{fileName}</p>
-                <p>Rows: {this.state.model.getRows() || ""}</p>
-                <p>Columns: {this.state.model.getCols() || ""}</p>
+                <p>{this.state.model.getFileName() || "File:"}</p>
+                <p>Rows: {this.state.model.getRows()}</p>
+                <p>Columns: {this.state.model.getCols()}</p>
             </BaseNodeWidget>
         );
     }

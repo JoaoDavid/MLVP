@@ -22,15 +22,8 @@ class PCAWidget extends React.Component<PCAProps, PCAState> {
 
     randomStateChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.state.node.setRandomState(+event.target.value);
-        this.updateState();
+        this.setState({});
     }
-
-    private updateState = () => {
-        const newState = {...this.state};
-        this.setState(newState);
-        console.log(this.state.node);
-    }
-
 
     render() {
         const modal = <PCAModal node={this.props.node} randomStateChanged={this.randomStateChanged}/>;

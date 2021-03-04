@@ -17,12 +17,12 @@ const AbstractDsModal = (props: AbstractDsModalProps) => {
             <Form.Group>
                 <Row>
                     <Col>
-                        <Form.Label>Columns</Form.Label>
-                        <Form.Control type="number" min={0} value={props.node.getCols()} onChange={props.numColsChanged} />
-                    </Col>
-                    <Col>
                         <Form.Label>Rows</Form.Label>
                         <Form.Control type="number" min={0} value={props.node.getRows()} onChange={props.numRowsChanged} />
+                    </Col>
+                    <Col>
+                        <Form.Label>Columns</Form.Label>
+                        <Form.Control type="number" min={0} value={props.node.getCols()} onChange={props.numColsChanged} />
                     </Col>
                 </Row>
             </Form.Group>

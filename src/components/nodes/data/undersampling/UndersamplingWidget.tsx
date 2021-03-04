@@ -22,15 +22,8 @@ class UndersamplingWidget extends React.Component<UndersamplingProps, Undersampl
 
     randomStateChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.state.node.setRandomState(+event.target.value);
-        this.updateState();
+        this.setState({});
     }
-
-    private updateState = () => {
-        const newState = {...this.state};
-        this.setState(newState);
-        console.log(this.state.node);
-    }
-
 
     render() {
         const modal = <UndersamplingModal node={this.props.node} randomStateChanged={this.randomStateChanged}/>;

@@ -22,23 +22,17 @@ class RandomForestClassifierWidget extends React.Component<NodeProps, NodeState>
 
     numTreesChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.state.node.setNumTrees(+event.target.value);
-        this.updateState();
+        this.setState({});
     }
 
     maxDepthChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.state.node.setMaxDepth(+event.target.value);
-        this.updateState();
+        this.setState({});
     }
 
     criterionChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.state.node.setCriterion(event.target.value);
-        this.updateState();
-    }
-
-    private updateState = () => {
-        const newState = {...this.state};
-        this.setState(newState);
-        console.log(this.state.node);
+        this.setState({});
     }
 
     render() {
