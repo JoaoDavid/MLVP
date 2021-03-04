@@ -51,7 +51,7 @@ const BaseModal = (props: BaseModalProps) => {
                 finishEditingText()
             }}>
                 <Modal.Header closeButton>
-                    <div onClick={startEditingText}>
+                    <div style={{height: "30px"}}onClick={startEditingText}>
                         {currTitleElement}
                     </div>
                 </Modal.Header>
