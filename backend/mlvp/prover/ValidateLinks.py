@@ -19,7 +19,10 @@ class ValidateLinks:
 
     def __parse_link(self, data):
         print(data)
-        if data['type'] == 'NODE_IMPORT_CSV':
+        if data['type'] == 'NODE_ABSTRACT_DS':
+            id_output = self.__find_port(data['ports'], False, "Dataset")
+            self.solver.add(abstract_ds(id_output, data['numCols'], data['numRows']))
+        elif data['type'] == 'NODE_IMPORT_CSV':
             id_output = self.__find_port(data['ports'], False, "Dataset")
             print(data['labels'])
             self.solver.add(import_from_csv(id_output, data['numCols'], data['numRows'], data['labels']))

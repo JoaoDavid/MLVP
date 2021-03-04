@@ -4,8 +4,14 @@ from mlvp.prover.VarNames import *
 from mlvp.prover.PortProperties import Dataset
 
 
-# And(func(a),func2(b,c,d),link(a,b))
-# per port link
+def abstract_ds(id_output: str, n_cols: int, n_rows: int):
+    output = Dataset(id_output)
+
+    return And(
+        output.cols == n_cols,
+        output.rows == n_rows,
+    )
+
 
 def import_from_csv(id_output: str, n_cols: int, n_rows: int, labels: Dict[str, int]):
     output = Dataset(id_output)
