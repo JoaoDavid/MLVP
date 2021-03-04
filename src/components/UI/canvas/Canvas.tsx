@@ -4,6 +4,7 @@ import classes from "./Canvas.module.css";
 import {AbstractReactFactory, CanvasWidget} from "@projectstorm/react-canvas-core";
 import {NodeModel} from "@projectstorm/react-diagrams-core";
 import {BaseNodeModel} from "../../core/BaseNode/BaseNodeModel";
+import {AbstractDsFactory} from "../../nodes/data/import-dataset/abstract/AbstractDsFactory";
 import {CSVFactory} from "../../nodes/data/import-dataset/csv/CSVFactory";
 import {RandomForestClassifierFactory} from "../../nodes/model/classifier/random-forest-classifier/RandomForestClassifierFactory";
 import {AccuracyClassifierFactory} from "../../nodes/evaluate/classifier/accuracy/AccuracyClassifierFactory";
@@ -33,6 +34,7 @@ class Canvas extends React.Component<CanvasProps, CanvasState> {
     }
 
     registerNodeFactories = () => {
+        this.props.engine.getNodeFactories().registerFactory(AbstractDsFactory.getInstance());
         this.props.engine.getNodeFactories().registerFactory(CSVFactory.getInstance());
         this.props.engine.getNodeFactories().registerFactory(RandomForestClassifierFactory.getInstance());
         this.props.engine.getNodeFactories().registerFactory(OversamplingFactory.getInstance());
