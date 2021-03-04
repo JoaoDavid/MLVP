@@ -23,6 +23,7 @@ const BaseModal = (props: BaseModalProps) => {
 
     const saveTitle = (title: string) => {
         setTitle(title);
+        props.saveTitle(title);
     }
 
     const startEditingText = () => {
@@ -31,7 +32,7 @@ const BaseModal = (props: BaseModalProps) => {
 
     const finishEditingText = () => {
         setEdit(false);
-        props.saveTitle(title);
+        saveTitle(title);
     }
 
     let currTitleElement;
@@ -51,7 +52,7 @@ const BaseModal = (props: BaseModalProps) => {
                 finishEditingText()
             }}>
                 <Modal.Header closeButton>
-                    <div style={{height: "30px"}}onClick={startEditingText}>
+                    <div style={{height: "30px"}} onClick={startEditingText}>
                         {currTitleElement}
                     </div>
                 </Modal.Header>

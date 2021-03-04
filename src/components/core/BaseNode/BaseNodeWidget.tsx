@@ -27,6 +27,11 @@ export class BaseNodeWidget extends React.Component<CoreNodeProps> {
         show: false,
     }
 
+    updateTitle = (title: string) => {
+        this.props.node.setTitle(title);
+        this.setState({});
+    }
+
     generatePort = (port: BasePortModel) => {
         return <BasePortWidget engine={this.props.engine} port={port} key={port.getID()}/>;
     };
@@ -63,7 +68,7 @@ export class BaseNodeWidget extends React.Component<CoreNodeProps> {
                            show={this.state.show}
                            title={this.props.node.getTitle()}
                            footer={this.props.node.getOptions().name}
-                           saveTitle={this.props.node.setTitle}
+                           saveTitle={this.updateTitle}
                 >
                     {this.props.modalChildren}
                 </BaseModal>
