@@ -72,8 +72,8 @@ export class CSVModel extends BaseNodeModel {
                             this.labels = this.processDataset(results.data);
                             console.log("numCols:" + this.numCols + " numRows:" + this.numRows);
                             console.log(this.labels);
-                            complete(results.data);
                         }
+                        complete(results.data);
                     }
                 });
             });

@@ -11,17 +11,14 @@ interface CSVNodeProps {
 }
 
 type CSVNodeState = {
-    model: CSVModel;
+
 };
 
 class CSVWidget extends React.Component<CSVNodeProps, CSVNodeState> {
 
-    state = {
-        model: this.props.node,
-    }
 
     loadCSV = (selectorFiles: FileList) => {
-        this.state.model.loadCSV(selectorFiles).then((r:any) => {
+        this.props.node.loadCSV(selectorFiles).then((r:any) => {
             this.setState({});
         });
     }
@@ -30,9 +27,9 @@ class CSVWidget extends React.Component<CSVNodeProps, CSVNodeState> {
         const modal = <CSVModal changed={this.loadCSV} node={this.props.node}/>;
         return (
             <BaseNodeWidget node={this.props.node} engine={this.props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
-                <p>{this.state.model.getFileName() || "File:"}</p>
-                <p>Rows: {this.state.model.getRows()}</p>
-                <p>Columns: {this.state.model.getCols()}</p>
+                <p>{this.props.node.getFileName() || "File:"}</p>
+                <p>Rows: {this.props.node.getRows()}</p>
+                <p>Columns: {this.props.node.getCols()}</p>
             </BaseNodeWidget>
         );
     }
