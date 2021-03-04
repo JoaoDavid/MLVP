@@ -144,7 +144,7 @@ def random_forest_classifier(id_input, n_trees, max_depth):
     return And(
         # requires
         n_trees > 0,
-        max_depth > 0,
+        Or(max_depth > 0, max_depth == -1),
         input_ds.balanced,
         input_ds.cols > 1
     )

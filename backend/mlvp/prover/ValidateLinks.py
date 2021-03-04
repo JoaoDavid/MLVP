@@ -9,16 +9,14 @@ class ValidateLinks:
         self.solver = Solver()
 
     def validate(self):
-        # print(str(self.json_links_data))
+        print("Number of links: " + str(len(self.json_links_data)))
         for link_json in self.json_links_data:
             self.solver.add(link(link_json['sourcePortId'], link_json['targetPortId']))
-            print(link_json)
             self.__parse_link(link_json['sourceNode'])
             self.__parse_link(link_json['targetNode'])
         return self.solver.check()
 
     def __parse_link(self, data):
-        print(data)
         if data['type'] == 'NODE_ABSTRACT_DS':
             id_output = self.__find_port(data['ports'], False, "Dataset")
             self.solver.add(abstract_ds(id_output, data['numCols'], data['numRows']))
@@ -46,7 +44,8 @@ class ValidateLinks:
             self.solver.add(pca(id_input, id_output, data['randomState'], 2))
         elif data['type'] == 'NODE_RANDOM_FOREST_CLASSIFIER':
             id_input = self.__find_port(data['ports'], True, "Dataset")
-            self.solver.add(random_forest_classifier(id_input, data['numTrees'], data['maxDepth']))
+            maxDepth = -1 if data['maxDepth'] == "None" else data['maxDepth']
+            self.solver.add(random_forest_classifier(id_input, data['numTrees'], maxDepth))
         elif data['type'] == 'NODE_ACCURACY_CLASSIFIER':
             id_input_ds = self.__find_port(data['ports'], True, "Dataset")
             self.solver.add(evaluate_classifier(id_input_ds))
