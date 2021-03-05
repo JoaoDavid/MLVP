@@ -14,7 +14,7 @@ export class BasePortWidget extends React.Component<BasePortWidgetProps> {
     render() {
         const renderTooltip = (
             <Tooltip id={"batata"}>
-                {this.props.port.getName()}
+                {this.props.port.getName() + "\n" + this.props.port.getID()}
             </Tooltip>
         );
         return (

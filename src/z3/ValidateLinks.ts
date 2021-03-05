@@ -39,6 +39,7 @@ export class ValidateLinks {
         const nodes = [];
         model_links.forEach((link) => {
             links.push({
+                linkId: link.getID(),
                 sourcePortId: link.getSourcePort().getID(),
                 targetPortId: link.getTargetPort().getID(),
             });

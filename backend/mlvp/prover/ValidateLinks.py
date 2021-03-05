@@ -12,11 +12,11 @@ class ValidateLinks:
 
     def validate(self):
         print("Number of links: " + str(len(self.json_links)))
-
         for node_json in self.json_nodes:
             self.__parse_node(node_json)
         for link_json in self.json_links:
             self.assertions.append(link(link_json['sourcePortId'], link_json['targetPortId']))
+
 
         self.solver.add(self.assertions)
         result = {}
@@ -81,15 +81,21 @@ class ValidateLinks:
         if r > l and len(array) > 1:
 
             mid = l + (r - l) // 2
-
+            print("mid " + str(mid))
             # If element is present at the middle itself
             self.solver.push()
-            if self.solver.add(array[:mid]) == sat:
+            self.solver.add(array[:mid])
+            if self.solver.check() == sat:
                 return self.__binary_search_for_unsat(array[mid:], mid, r)
             else:
                 self.solver.pop()
                 return self.__binary_search_for_unsat(array[:mid], l, mid - 1)
         else:
             # Element is not present in the array
-            print(str(array))
-            return array
+            print(str(array[2]))
+            print(self.solver.check())
+            print(len(array))
+            print(self.solver.add(array[:3]))
+            print(self.solver.check())
+
+            return array[r]
