@@ -1,4 +1,4 @@
-import {DiagramEngine, LinkModel} from '@projectstorm/react-diagrams-core';
+import {DiagramEngine, LinkModel, NodeModel} from '@projectstorm/react-diagrams-core';
 import axios from "axios";
 
 export class ValidateLinks {
@@ -32,29 +32,25 @@ export class ValidateLinks {
 
 
     validLink = async () => {
-        const data: {
-            sourcePortId: string,
-            targetPortId: string,
-            sourceNode: object,
-            targetNode: object,
-        }[] = [];
-        const links: LinkModel[] = this.engine.getModel().getLinks();
-        console.log("validateLinks  LINKS");
-        console.log(links);
-        links.forEach((link) => {
-            data.push({
+
+        const model_links: LinkModel[] = this.engine.getModel().getLinks();
+        const model_nodes: NodeModel[] = this.engine.getModel().getNodes();
+        const links = [];
+        const nodes = [];
+        model_links.forEach((link) => {
+            links.push({
                 sourcePortId: link.getSourcePort().getID(),
                 targetPortId: link.getTargetPort().getID(),
-                sourceNode: link.getSourcePort().getNode().serialize(),
-                targetNode: link.getTargetPort().getNode().serialize(),
             });
-            console.log(link.getSourcePort().getNode());
-            console.log(link.getTargetPort().getNode());
         });
-        const isSat = await this.sendReq(data);
-        console.log(isSat);
-        console.log(isSat === "sat");
-        return isSat === "sat";
+        model_nodes.forEach((node) => {
+            nodes.push(node.serialize());
+        });
+        let data = {links: links, nodes: nodes}
+        console.log(data)
+        const response = await this.sendReq(data);
+        console.log(response)
+        return response.canLink;
     }
 
     sendReq = async (data) => {

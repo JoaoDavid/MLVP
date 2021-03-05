@@ -171,21 +171,21 @@ def cross_validation(id_input_ds, n_folds):
     )
 
 
-s = Solver()
-s.add(import_from_csv("a", 5, 8, {"batata": 5, "alface": 3}))
-# s.add(split_dataset("b", "c", "d", 0.5, 0.5, False, True))
-# s.add(oversampling("b", "c", 3))
-s.add(link("a", "b"))
-s.add(undersampling("b", "c", 3))
-s.add(link("c", "d"))
-s.add(split_dataset("d", "e", "f", 0.5, 0.5, False, True))
-s.add(link("e", "g"))
-s.add(pca("g", "h", 0, 3))
-
-if s.check() == sat:
-    m = s.model()
-    m_sorted = sorted([str(d) + " = " + str(m[d]) for d in m], key=lambda x: str(x[0]))
-    for y in m_sorted:
-        print(y)
-else:
-    print("UNSAT")
+# s = Solver()
+# s.add(import_from_csv("a", 5, 8, {"batata": 5, "alface": 3}))
+# # s.add(split_dataset("b", "c", "d", 0.5, 0.5, False, True))
+# # s.add(oversampling("b", "c", 3))
+# s.add(link("a", "b"))
+# s.add(undersampling("b", "c", 3))
+# s.add(link("c", "d"))
+# s.add(split_dataset("d", "e", "f", 0.5, 0.5, False, True))
+# s.add(link("e", "g"))
+# s.add(pca("g", "h", 0, 3))
+#
+# if s.check() == sat:
+#     m = s.model()
+#     m_sorted = sorted([str(d) + " = " + str(m[d]) for d in m], key=lambda x: str(x[0]))
+#     for y in m_sorted:
+#         print(y)
+# else:
+#     print("UNSAT")

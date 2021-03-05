@@ -67,7 +67,8 @@ export class BaseNodeWidget extends React.Component<CoreNodeProps> {
                            handleShow={this.handleShowModal}
                            show={this.state.show}
                            title={this.props.node.getTitle()}
-                           footer={this.props.node.getOptions().name}
+                           // footer={this.props.node.getOptions().name}
+                           footer={this.props.node.getOptions().id}
                            saveTitle={this.updateTitle}
                 >
                     {this.props.modalChildren}
