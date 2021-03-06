@@ -24,7 +24,7 @@ interface AppProps {
 }
 
 type AppState = {
-
+    problems: string[]
 };
 
 class App extends React.Component<AppProps, AppState> {
@@ -34,26 +34,56 @@ class App extends React.Component<AppProps, AppState> {
     private readonly engine: DiagramEngine;
     private readonly validateLinks: ValidateLinks;
 
+    state = {
+        problems: []
+    }
+
     constructor(props: AppProps) {
         super(props);
-        this.engine = createEngine({registerDefaultZoomCanvasAction:false});
+        this.engine = createEngine({registerDefaultZoomCanvasAction: false});
         this.validateLinks = new ValidateLinks(this.engine);
         this.newCanvas();
-        this.engine.getActionEventBus().registerAction(new MyZoomCanvasAction({inverseZoom:true}));
+        this.engine.getActionEventBus().registerAction(new MyZoomCanvasAction({inverseZoom: true}));
         this.engine.getStateMachine().pushState(new DiagramStateManager(this.validateLinks));
         this.engine.maxNumberPointsPerLink = 0;
 
     }
 
+    registerListeners = (model: MyDiagramModel) => {
+        model.registerListener({
+            linksUpdated: (event) => {
+                console.log('linksUpdated');
+                console.log(event);
+            },
+            linkCreated: (event) => {
+                console.log('linkCreated');
+                console.log(event);
+            },
+            nodePropsUpdated: (event) => {
+                console.log("nodePropsUpdated");
+                console.log(event);
+            },
+            nodesUpdated: (event) => {
+                console.log("nodesUpdated");
+                console.log(event);
+            },
+            problemsFound: (event) => {
+                console.log("problemsFound");
+                console.log(event);
+                this.setState({problems: event.problems})
+            }
+        });
+    }
+
     loadDemos = () => {
-        const map = new Map<String, ()=>void>();
-        map.set("Simple Pipeline", ()=>{
+        const map = new Map<String, () => void>();
+        map.set("Simple Pipeline", () => {
             this.loadDemoAux(splitEvaluate);
         });
-        map.set("Test", ()=>{
+        map.set("Test", () => {
             this.loadDemoAux(testJson);
         });
-        map.set("Balanced DS Split", ()=>{
+        map.set("Balanced DS Split", () => {
             this.loadDemoAux(conBalancedDsToClassifier);
         });
         return map;
@@ -73,8 +103,9 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     newCanvas = () => {
-        this.engine.setModel(new MyDiagramModel());
-        this.validateLinks.registerListener();
+        const model = new MyDiagramModel();
+        this.engine.setModel(model);
+        this.registerListeners(model);
     }
 
     openSave = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -117,7 +148,7 @@ class App extends React.Component<AppProps, AppState> {
                     <SideBar catAndNames={this.loadMapCategoryNodes()} format={this.dragDropFormat}/>
                     <Canvas dragDropFormat={this.dragDropFormat} engine={this.engine}/>
                 </div>
-                <BottomNav/>
+                <BottomNav problems={this.state.problems}/>
             </div>
         );
     }

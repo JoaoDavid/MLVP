@@ -66,14 +66,15 @@ export class MyDragNewLinkState extends AbstractDisplacementState<DiagramEngine>
                             this.validateLinks.validLink().then((res) => {
                                 if(res) {
                                     //link created between nodes
+                                    this.validateLinks.eventLinkCreated(this.link);
+                                } else {
                                     this.engine.getModel().fireEvent(
                                         {
                                             sourceNode: this.link.getSourcePort().getNode(),
                                             targetNode: this.link.getTargetPort().getNode(),
                                         },
-                                        'linkCreated'
+                                        'problems'
                                     );
-                                } else {
                                     this.link.remove();
                                     this.engine.repaintCanvas();
                                 }

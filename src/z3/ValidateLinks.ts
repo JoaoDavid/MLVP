@@ -9,25 +9,24 @@ export class ValidateLinks {
         this.engine = engine;
     }
 
-    registerListener = () => {
-        this.engine.getModel().registerListener({
-            linksUpdated: (event) => {
-                console.log('linksUpdated');
-                console.log(event);
+
+    eventLinkCreated = (link:LinkModel) => {
+        this.engine.getModel().fireEvent(
+            {
+                sourceNode: link.getSourcePort().getNode(),
+                targetNode: link.getTargetPort().getNode(),
             },
-            linkCreated: (event) => {
-                console.log('linkCreated');
-                console.log(event);
+            'linkCreated'
+        );
+    }
+
+    eventProblemsFound = (problems: string[]) => {
+        this.engine.getModel().fireEvent(
+            {
+                problems: problems,
             },
-            nodePropsUpdated: (event) => {
-                console.log("nodePropsUpdated");
-                console.log(event);
-            },
-            nodesUpdated: (event) => {
-                console.log("nodesUpdated");
-                console.log(event);
-            }
-        });
+            'problemsFound'
+        );
     }
 
 
@@ -51,6 +50,10 @@ export class ValidateLinks {
         console.log(data)
         const response = await this.sendReq(data);
         console.log(JSON.stringify(response, null, 4));
+        const canLink = response.canLink;
+        if (!canLink) {
+            this.eventProblemsFound(response.problems);
+        }
         return response.canLink;
     }
 

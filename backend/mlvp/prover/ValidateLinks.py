@@ -34,8 +34,8 @@ class ValidateLinks:
                     node = self.json_nodes[i]
                     print(node)
                     result["nodeId"] = str(node["id"])
-                    unsat_node_assertion = self.__parse_node(node)
-                    result["unsat_assertions"] = self.__find_unsat_node_assertion(unsat_node_assertion)
+                    problems = self.__parse_node(node)
+                    result["problems"] = self.__find_unsat_node_assertion(problems)
 
                     break
 
