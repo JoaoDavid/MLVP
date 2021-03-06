@@ -50,7 +50,7 @@ export class ValidateLinks {
         let data = {links: links, nodes: nodes}
         console.log(data)
         const response = await this.sendReq(data);
-        console.log(response)
+        console.log(JSON.stringify(response, null, 4));
         return response.canLink;
     }
 

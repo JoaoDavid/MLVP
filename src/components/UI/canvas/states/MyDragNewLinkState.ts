@@ -64,8 +64,6 @@ export class MyDragNewLinkState extends AbstractDisplacementState<DiagramEngine>
                             this.adjustPorts(this.port, model);
 
                             this.validateLinks.validLink().then((res) => {
-                                // let res = true;
-                                console.log("res " + res)
                                 if(res) {
                                     //link created between nodes
                                     this.engine.getModel().fireEvent(
@@ -76,7 +74,6 @@ export class MyDragNewLinkState extends AbstractDisplacementState<DiagramEngine>
                                         'linkCreated'
                                     );
                                 } else {
-                                    console.log("vai remover link, deu unsat")
                                     this.link.remove();
                                     this.engine.repaintCanvas();
                                 }

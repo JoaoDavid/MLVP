@@ -33,9 +33,9 @@ class ValidateLinks:
                 if self.solver.check() == sat:
                     node = self.json_nodes[i]
                     print(node)
-                    result["node"] = str(node)
-                    error_node_assertion = self.__parse_node(node)
-                    result["assertion"] = str(self.__find_unsat_node_assertion(error_node_assertion))
+                    result["nodeId"] = str(node["id"])
+                    unsat_node_assertion = self.__parse_node(node)
+                    result["unsat_assertions"] = self.__find_unsat_node_assertion(unsat_node_assertion)
 
                     break
 
@@ -104,8 +104,10 @@ class ValidateLinks:
             return array
 
     def __find_unsat_node_assertion(self, node_assertions):
+        unsat_assertions = []
         for curr_asser in node_assertions:
             self.solver.add(curr_asser)
             if self.solver.check() == unsat:
                 print(str(curr_asser))
-                return str(curr_asser)
+                unsat_assertions.append(str(curr_asser))
+        return unsat_assertions
