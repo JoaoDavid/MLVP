@@ -153,6 +153,7 @@ def random_forest_classifier(id_input, n_trees, max_depth):
         z3_n_trees > 0,
         Or(z3_max_depth > 0, z3_max_depth == -1),
         input_ds.balanced,
+        input_ds.rows > 0,
         input_ds.cols > 1
     ]
 

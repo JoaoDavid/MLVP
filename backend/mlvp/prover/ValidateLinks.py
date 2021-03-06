@@ -31,11 +31,11 @@ class ValidateLinks:
                 self.solver.pop()
                 self.solver.check()
                 if self.solver.check() == sat:
-                    node = self.json_nodes[len(self.json_nodes) - i]
+                    node = self.json_nodes[i]
                     print(node)
                     result["node"] = str(node)
                     error_node_assertion = self.__parse_node(node)
-                    result["assertion"] = str(self.__parse_node(node))
+                    result["assertion"] = str(self.__find_unsat_node_assertion(error_node_assertion))
 
                     break
 
@@ -47,7 +47,6 @@ class ValidateLinks:
             return abstract_ds(id_output, data['numCols'], data['numRows'])
         elif data['type'] == 'NODE_IMPORT_CSV':
             id_output = self.__find_port(data['ports'], False, "Dataset")
-            print(data['labels'])
             return import_from_csv(id_output, data['numCols'], data['numRows'], data['labels'])
         elif data['type'] == 'NODE_SPLIT_DATASET':
             id_input = self.__find_port(data['ports'], True, "Dataset")
@@ -103,3 +102,10 @@ class ValidateLinks:
             print(self.solver.check())
             print(self.solver.check())
             return array
+
+    def __find_unsat_node_assertion(self, node_assertions):
+        for curr_asser in node_assertions:
+            self.solver.add(curr_asser)
+            if self.solver.check() == unsat:
+                print(str(curr_asser))
+                return str(curr_asser)
