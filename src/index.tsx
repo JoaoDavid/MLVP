@@ -13,6 +13,10 @@ if(process.env.NODE_ENV === 'production'){
     axios.defaults.baseURL = 'http://194.117.20.237:443';
 }
 
+document.addEventListener("contextmenu", (event) => {
+    event.preventDefault();
+});
+
 ReactDOM.render(
   <React.StrictMode>
     <App />
