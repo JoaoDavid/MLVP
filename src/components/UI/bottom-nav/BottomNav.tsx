@@ -16,18 +16,25 @@ const BottomNav = (props: BottomNavProps) => {
     let problemsBox = null;
     if (props.problems.length > 0) {
         props.problems.forEach((problem) => {
-            showProblems.push((<p className={classes.Problem}>{problem}</p>));
+            showProblems.push((<div className={classes.Problem}>{problem}</div>));
         });
         problemsBox = (<div className={classes.Box}> {showProblems} </div>);
     }
 
 
-
     console.log(props.problems);
 
     return (
-        <div>
-
+        <div className={classes.Unselectable}>
+            <div className={classes.Box}>
+                <div>
+                    problem a
+                </div>
+                <div>
+                    problem b
+                </div>
+                {showProblems}
+            </div>
             <div className={classes.BottomNav}>
                 <span className={classes.ToggleOn}>Problems</span>
                 <span className={classes.Toggle}>Terminal</span>
