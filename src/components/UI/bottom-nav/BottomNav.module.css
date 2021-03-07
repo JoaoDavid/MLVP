@@ -3,3 +3,12 @@
     text-align: right;
     color: rgb(154, 157, 160);
 }
+
+.Box {
+    height: 200px;
+    background-color: rgb(76, 76, 76);
+}
+
+.Problem {
+    color: white;
+}

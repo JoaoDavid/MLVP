@@ -58,6 +58,7 @@ class App extends React.Component<AppProps, AppState> {
             linkCreated: (event) => {
                 console.log('linkCreated');
                 console.log(event);
+                this.setState({problems: []})
             },
             nodePropsUpdated: (event) => {
                 console.log("nodePropsUpdated");
@@ -70,6 +71,7 @@ class App extends React.Component<AppProps, AppState> {
             problemsFound: (event) => {
                 console.log("problemsFound");
                 console.log(event);
+                console.log(event.problems);
                 this.setState({problems: event.problems})
             }
         });

@@ -7,23 +7,30 @@ interface BottomNavProps {
 
 const BottomNav = (props: BottomNavProps) => {
     let dev = (<span>Project under development</span>);
-    if(process.env.NODE_ENV === 'development'){
+    if (process.env.NODE_ENV === 'development') {
         dev = (<span style={{color: "yellow"}}>DEVELOPMENT VERSION</span>);
     }
-    let showProblems = null;
+    const showProblems: JSX.Element[] = [];
 
+
+    let problemsBox = null;
     if (props.problems.length > 0) {
-        /*props.problems.forEach((problem)=>{
-            return (<span style={{color: "yellow"}}>{problem}</span>);
-        });*/
-        showProblems = props.problems[0];
+        props.problems.forEach((problem) => {
+            showProblems.push((<p className={classes.Problem}>{problem}</p>));
+        });
+        problemsBox = (<div className={classes.Box}> {showProblems} </div>);
     }
+
+
+
     console.log(props.problems);
 
     return (
-        <div className={classes.BottomNav}>
-            {/*{dev}*/}
-            {showProblems}
+        <div>
+            {problemsBox}
+            <div className={classes.BottomNav}>
+                {dev}
+            </div>
         </div>
     )
 }

@@ -106,8 +106,10 @@ class ValidateLinks:
     def __find_unsat_node_assertion(self, node_assertions):
         unsat_assertions = []
         for curr_asser in node_assertions:
+            self.solver.push()
             self.solver.add(curr_asser)
             if self.solver.check() == unsat:
                 print(str(curr_asser))
                 unsat_assertions.append(str(curr_asser))
+                self.solver.pop()
         return unsat_assertions
