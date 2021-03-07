@@ -27,9 +27,11 @@ const BottomNav = (props: BottomNavProps) => {
 
     return (
         <div>
-            {problemsBox}
+
             <div className={classes.BottomNav}>
-                {dev}
+                <span className={classes.ToggleOn}>Problems</span>
+                <span className={classes.Toggle}>Terminal</span>
+                <span className={classes.Toggle}>Log</span>
             </div>
         </div>
     )
