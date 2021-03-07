@@ -30,10 +30,18 @@ export class ValidateLinks {
     }
 
 
-    validLink = async () => {
+    validLink = async (newLink: LinkModel) => {
 
         const model_links: LinkModel[] = this.engine.getModel().getLinks();
         const model_nodes: NodeModel[] = this.engine.getModel().getNodes();
+        const index = model_nodes.indexOf(newLink.getTargetPort().getNode(), 0);
+
+        // place the target node at the end of the model_nodes array
+        if (index > -1) {
+            console.log("found it")
+            model_nodes.splice(index, 1);
+            model_nodes.push(newLink.getTargetPort().getNode());
+        }
         const links = [];
         const nodes = [];
         model_links.forEach((link) => {
