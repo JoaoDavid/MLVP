@@ -1,24 +1,31 @@
-import React from 'react';
+import React, {useState} from 'react';
 import classes from './BottomNav.module.css';
 
 interface BottomNavProps {
-    problems: string[],
+    problems: Map<String, String[]>,
 }
 
 const BottomNav = (props: BottomNavProps) => {
+    const [index, setIndex] = useState(0);
+    const showBox: boolean[] = [false, false, false];
+    const box: JSX.Element[] = [];
+
+
     let dev = (<span>Project under development</span>);
     if (process.env.NODE_ENV === 'development') {
         dev = (<span style={{color: "yellow"}}>DEVELOPMENT VERSION</span>);
     }
-    const showProblems: JSX.Element[] = [];
 
 
-    let problemsBox = null;
-    if (props.problems.length > 0) {
-        props.problems.forEach((problem) => {
-            showProblems.push((<div className={classes.Problem}>{problem}</div>));
+
+    if (props.problems.size > 0) {
+        props.problems.forEach((problems, node) => {
+            const nodeProblems: JSX.Element[] = [];
+            problems.forEach( (problem) => {
+                nodeProblems.push((<div className={classes.Problem}>{problem}</div>));
+            });
+            box.push(<div className={classes.Box}> {node} {nodeProblems} </div>)
         });
-        problemsBox = (<div className={classes.Box}> {showProblems} </div>);
     }
 
 
@@ -33,7 +40,7 @@ const BottomNav = (props: BottomNavProps) => {
                 <div>
                     problem b
                 </div>
-                {showProblems}
+                {box}
             </div>
             <div className={classes.BottomNav}>
                 <span className={classes.ToggleOn}>Problems</span>

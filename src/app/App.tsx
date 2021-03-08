@@ -18,13 +18,15 @@ import conBalancedDsToClassifier from '../demos/train-classifier-balanced-ds.jso
 import {MyZoomCanvasAction} from "../components/UI/canvas/actions/MyZoomCanvasAction";
 import {DiagramStateManager} from "../components/UI/canvas/states/DiagramStateManager";
 import {ValidateLinks} from "../z3/ValidateLinks";
+import {BaseNodeModel} from "../components/core/BaseNode/BaseNodeModel";
+import {BasePortModel} from "../components/core/BasePort/BasePortModel";
 
 interface AppProps {
 
 }
 
 type AppState = {
-    problems: string[]
+    problems: Map<String, String[]>,
 };
 
 class App extends React.Component<AppProps, AppState> {
@@ -35,7 +37,7 @@ class App extends React.Component<AppProps, AppState> {
     private readonly validateLinks: ValidateLinks;
 
     state = {
-        problems: []
+        problems: new Map(),
     }
 
     constructor(props: AppProps) {
@@ -58,7 +60,9 @@ class App extends React.Component<AppProps, AppState> {
             linkCreated: (event) => {
                 console.log('linkCreated');
                 console.log(event);
-                this.setState({problems: []})
+                this.state.problems.clear();
+                const newState = {...this.state}
+                this.setState(newState);
             },
             nodePropsUpdated: (event) => {
                 console.log("nodePropsUpdated");
@@ -72,9 +76,23 @@ class App extends React.Component<AppProps, AppState> {
                 console.log("problemsFound");
                 console.log(event);
                 console.log(event.problems);
-                this.setState({problems: event.problems})
+                const map = this.processProblems(event.problems);
+                this.setState({problems: map})
             }
         });
+    }
+
+    processProblems = (problems: string[]) => {
+        const map = new Map<String, String[]>();
+        problems.forEach((problem) => {
+            const infoArr = problem.split("_"); // length == 3
+            const node = this.engine.getModel().getNode(infoArr[0]) as BaseNodeModel;
+            const port = node.getPortFromID(infoArr[1]) as BasePortModel;
+            const value = map.get(node.getID()) || [];
+            value.push(port.getName() + " " + infoArr[2]);
+            map.set(node.getID(), value);
+        })
+        return map;
     }
 
     loadDemos = () => {
