@@ -1,5 +1,11 @@
 import {DiagramEngine, LinkModel, NodeModel} from '@projectstorm/react-diagrams-core';
 import axios from "axios";
+import {MyDiagramListener} from "../components/UI/canvas/diagram/MyDiagramModel";
+
+export interface AssertionsReqData {
+    links: string[],
+    nodes: string[],
+}
 
 export class ValidateLinks {
 
@@ -67,7 +73,7 @@ export class ValidateLinks {
         return response.canLink;
     }
 
-    sendReq = async (data) => {
+    sendReq = async (data: AssertionsReqData) => {
         return axios.post('/z3', data)
             .then(res => res.data)
             .catch(error => {

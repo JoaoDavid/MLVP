@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import classes from './BottomNav.module.css';
+import {BaseNodeModel} from "../../core/BaseNode/BaseNodeModel";
 
 interface BottomNavProps {
-    problems: Map<String, String[]>,
+    problems: Map<BaseNodeModel, String[]>,
 }
 
 const BottomNav = (props: BottomNavProps) => {
@@ -23,7 +24,7 @@ const BottomNav = (props: BottomNavProps) => {
             problems.forEach((problem) => {
                 nodeProblems.push((<div className={classes.Problem}>{problem}</div>));
             });
-            box.push(<div className={classes.Box}> {node} {nodeProblems} </div>)
+            box.push(<div className={classes.Box}> {node.getTitle()} {nodeProblems} </div>)
         });
     }
 

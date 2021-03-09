@@ -26,7 +26,7 @@ interface AppProps {
 }
 
 type AppState = {
-    problems: Map<String, String[]>,
+    problems: Map<BaseNodeModel, String[]>,
 };
 
 class App extends React.Component<AppProps, AppState> {
@@ -83,14 +83,21 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     processProblems = (problems: string[]) => {
-        const map = new Map<String, String[]>();
+        const map = new Map<BaseNodeModel, String[]>();
         problems.forEach((problem) => {
+            console.log("PROBLEM: " + problem);
             const infoArr = problem.split("_"); // length == 3
             const node = this.engine.getModel().getNode(infoArr[0]) as BaseNodeModel;
+            console.log(infoArr[0])
+            console.log(node)
             const port = node.getPortFromID(infoArr[1]) as BasePortModel;
-            const value = map.get(node.getID()) || [];
-            value.push(port.getName() + " " + infoArr[2]);
-            map.set(node.getID(), value);
+            const value = map.get(node) || [];
+            if (port == null) { // Node property violation
+                value.push("Property violation: " + infoArr[2]);
+            } else { // Node's port property violation
+                value.push(port.getName() + " Port requirement violation: " + infoArr[2]);
+            }
+            map.set(node, value);
         })
         return map;
     }
