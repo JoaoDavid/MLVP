@@ -4,6 +4,20 @@ from mlvp.prover.VarNames import *
 from mlvp.prover.PortProperties import Dataset
 
 
+def link(id_source_node: str, id_source_port: str, id_target_node: str, id_target_port: str):
+    id_source_port = Dataset(id_source_node, id_source_port)
+    port_to = Dataset(id_target_node, id_target_port)
+
+    return [
+        id_source_port.cols == port_to.cols,
+        id_source_port.rows == port_to.rows,
+        id_source_port.balanced == port_to.balanced,
+        id_source_port.n_labels == port_to.n_labels,
+        id_source_port.max_label_count == port_to.max_label_count,
+        id_source_port.min_label_count == port_to.min_label_count,
+    ]
+
+
 def abstract_ds(id_node: str, id_output: str, n_cols: int, n_rows: int):
     output = Dataset(id_node, id_output)
 
@@ -39,9 +53,9 @@ def split_dataset(id_node: str, id_input, id_output_train, id_output_test, test_
     train_ds = Dataset(id_node, id_output_train)
     test_ds = Dataset(id_node, id_output_test)
 
-    shuffle_input = Bool(id_input + SHUFFLED)
-    shuffle_train = Bool(id_output_train + SHUFFLED)
-    shuffle_test = Bool(id_output_test + SHUFFLED)
+    shuffle_input = Bool(id_node + "_" + id_input + SHUFFLED)
+    shuffle_train = Bool(id_node + "_" + id_output_train + SHUFFLED)
+    shuffle_test = Bool(id_node + "_" + id_output_test + SHUFFLED)
     output_shuffles = Or(shuffle_input, shuffle)
 
     return [
@@ -59,20 +73,6 @@ def split_dataset(id_node: str, id_input, id_output_train, id_output_test, test_
 
         shuffle_train == output_shuffles,
         shuffle_test == output_shuffles
-    ]
-
-
-def link(id_source_node: str, id_source_port: str, id_target_node: str, id_target_port: str):
-    id_source_port = Dataset(id_source_node, id_source_port)
-    port_to = Dataset(id_target_node, id_target_port)
-
-    return [
-        id_source_port.cols == port_to.cols,
-        id_source_port.rows == port_to.rows,
-        id_source_port.balanced == port_to.balanced,
-        id_source_port.n_labels == port_to.n_labels,
-        id_source_port.max_label_count == port_to.max_label_count,
-        id_source_port.min_label_count == port_to.min_label_count,
     ]
 
 
@@ -141,16 +141,26 @@ def pca(id_node: str, id_input, id_output, random_state, n_components):
     ]
 
 
+# When creating node property assertions,
+# first assert that the z3 variable is equal to the received as parameter
+# then use the received as parameter to assert whatever you want about it
+# in the case of the rfc node, the number of trees must be greater than zero
+# therefore we have, the z3 var declaration
+# z3_n_trees = Int(id_node + "_" + id_node + "_n-trees")
+# then the assertions
+# z3_n_trees == n_trees,
+# z3_n_trees > 0,
+
 def random_forest_classifier(id_node: str, id_input, n_trees, max_depth):
     input_ds = Dataset(id_node, id_input)
-    z3_n_trees = Int("rfc" + "_n_trees")
-    z3_n_trees = n_trees
-    z3_max_depth = Int("rfc" + "_max_depth")
-    z3_max_depth = max_depth
+    z3_n_trees = Int(id_node + "_" + id_node + "_n-trees")
+    z3_max_depth = Int(id_node + "_" + id_node + "_max-depth")
 
     return [
         # requires
+        z3_n_trees == n_trees,
         z3_n_trees > 0,
+        z3_max_depth == max_depth,
         Or(z3_max_depth > 0, z3_max_depth == -1),
         input_ds.balanced,
         input_ds.rows > 0,
@@ -171,10 +181,11 @@ def evaluate_classifier(id_node: str, id_input_ds):
 def cross_validation(id_node: str, id_input_ds, n_folds):
     input_ds = Dataset(id_node, id_input_ds)
 
-    z3_n_folds = Int("cross_val" + "_n_folds")
-    z3_n_folds = n_folds
+    z3_n_folds = Int(id_node + "_" + id_node + "_n-folds")
+
     return [
         # requires
+        z3_n_folds == n_folds,
         z3_n_folds > 1,
         input_ds.balanced,
         input_ds.cols > 1
