@@ -44,6 +44,10 @@ export class BaseNodeWidget extends React.Component<CoreNodeProps> {
         this.setState({show: true});
     }
 
+    componentDidUpdate (prevProps, prevState, snapshot) {
+        console.log("componentDidUpdate");
+    }
+
     render() {
         const nodeClasses = [classes.Node];
         if (this.props.node.isSelected()) {
@@ -67,8 +71,8 @@ export class BaseNodeWidget extends React.Component<CoreNodeProps> {
                            handleShow={this.handleShowModal}
                            show={this.state.show}
                            title={this.props.node.getTitle()}
-                           // footer={this.props.node.getOptions().name}
-                           footer={this.props.node.getOptions().id}
+                           footer={this.props.node.getOptions().name}
+                           // footer={this.props.node.getOptions().id}
                            saveTitle={this.updateTitle}
                 >
                     {this.props.modalChildren}

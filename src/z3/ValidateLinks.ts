@@ -1,10 +1,14 @@
 import {DiagramEngine, LinkModel, NodeModel} from '@projectstorm/react-diagrams-core';
 import axios from "axios";
-import {MyDiagramListener} from "../components/UI/canvas/diagram/MyDiagramModel";
 
 export interface AssertionsReqData {
     links: string[],
     nodes: string[],
+}
+export interface AssertionProblem {
+    canLink: boolean,
+    nodeId: string,
+    problems: string[],
 }
 
 export class ValidateLinks {
@@ -26,10 +30,10 @@ export class ValidateLinks {
         );
     }
 
-    eventProblemsFound = (problems: string[]) => {
+    eventProblemsFound = (assertionProblem: AssertionProblem) => {
         this.engine.getModel().fireEvent(
             {
-                problems: problems,
+                assertionProblem: assertionProblem,
             },
             'problemsFound'
         );
@@ -68,7 +72,8 @@ export class ValidateLinks {
         console.log(JSON.stringify(response, null, 4));
         const canLink = response.canLink;
         if (!canLink) {
-            this.eventProblemsFound(response.problems);
+            console.log(response);
+            this.eventProblemsFound(response);
         }
         return response.canLink;
     }

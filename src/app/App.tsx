@@ -17,7 +17,7 @@ import testJson from '../demos/test.json';
 import conBalancedDsToClassifier from '../demos/train-classifier-balanced-ds.json';
 import {MyZoomCanvasAction} from "../components/UI/canvas/actions/MyZoomCanvasAction";
 import {DiagramStateManager} from "../components/UI/canvas/states/DiagramStateManager";
-import {ValidateLinks} from "../z3/ValidateLinks";
+import {AssertionProblem, ValidateLinks} from "../z3/ValidateLinks";
 import {BaseNodeModel} from "../components/core/BaseNode/BaseNodeModel";
 import {BasePortModel} from "../components/core/BasePort/BasePortModel";
 
@@ -75,19 +75,20 @@ class App extends React.Component<AppProps, AppState> {
             problemsFound: (event) => {
                 console.log("problemsFound");
                 console.log(event);
-                console.log(event.problems);
-                const map = this.processProblems(event.problems);
+                console.log(event.assertionProblem);
+                const map = this.processProblems(event.assertionProblem);
                 this.setState({problems: map})
             }
         });
     }
 
-    processProblems = (problems: string[]) => {
+    processProblems = (assertionProblem: AssertionProblem) => {
         const map = new Map<BaseNodeModel, String[]>();
-        problems.forEach((problem) => {
+        console.log(assertionProblem)
+        assertionProblem.problems.forEach((problem) => {
             console.log("PROBLEM: " + problem);
             const infoArr = problem.split("_"); // length == 3
-            const node = this.engine.getModel().getNode(infoArr[0]) as BaseNodeModel;
+            const node = this.engine.getModel().getNode(assertionProblem.nodeId) as BaseNodeModel;
             console.log(infoArr[0])
             console.log(node)
             const port = node.getPortFromID(infoArr[1]) as BasePortModel;
