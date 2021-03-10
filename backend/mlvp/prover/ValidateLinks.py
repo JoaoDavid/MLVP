@@ -32,7 +32,7 @@ class ValidateLinks:
                 self.solver.check()
                 if self.solver.check() == sat:
                     node = self.json_nodes[i]
-                    print(node)
+                    print(node['title'])
                     result["nodeId"] = str(node["id"])
                     problems = self.__parse_node(node)
                     result["problems"] = self.__find_unsat_node_assertion(problems)

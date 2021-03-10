@@ -36,6 +36,14 @@ def import_from_csv(id_node: str, id_output: str, n_cols: int, n_rows: int, labe
 
     list_balanced = [label_counts[i] == label_counts[i + 1] for i in range(len(labels) - 1)]
     # list_balanced = [abs(label_counts[i] - label_counts[i + 1]) <= 1 for i in range(len(labels) - 1)]
+
+    label_counts_assertions = []
+    if len(labels) > 0:
+        label_counts_assertions = [
+            output.max_label_count == max(label_counts),
+            output.min_label_count == min(label_counts)
+        ]
+        
     return [
         output.cols == n_cols,
         output.rows == n_rows,
@@ -43,9 +51,7 @@ def import_from_csv(id_node: str, id_output: str, n_cols: int, n_rows: int, labe
         And(labels_values),
         output.balanced == And(list_balanced),
         output.n_labels == len(label_counts),
-        output.max_label_count == max(label_counts),
-        output.min_label_count == min(label_counts)
-    ]
+    ] + label_counts_assertions
 
 
 def split_dataset(id_node: str, id_input, id_output_train, id_output_test, test_size, train_size, shuffle, stratify):
