@@ -24,7 +24,7 @@ const BottomNav = (props: BottomNavProps) => {
             problems.forEach((problem) => {
                 nodeProblems.push((<div className={classes.Problem}>{problem}</div>));
             });
-            box.push(<div> {node.getTitle()} {nodeProblems} </div>)
+            box.push(<div> {node.getTitle() + " (" + node.getOptions().name + ")"} {nodeProblems} </div>)
         });
     }
 

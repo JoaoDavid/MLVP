@@ -113,7 +113,7 @@ class ValidateLinks:
             self.solver.push()
             self.solver.add(curr_asser)
             if self.solver.check() == unsat:
-                print(self.__traverse_z3_assertion(curr_asser))
+                print(self.__convert_ids(curr_asser))
                 unsat_assertions.append(str(curr_asser))
                 self.solver.pop()
         return unsat_assertions
@@ -121,17 +121,32 @@ class ValidateLinks:
     def __convert_assertions_to_str(self, node_assertions):
         assertions = []
         for curr_asser in node_assertions:
-            assertions.append(str(curr_asser))
+            # assertions.append(str(curr_asser))
+            assertions.append(self.__convert_ids(curr_asser))
         return assertions
 
-    def __traverse_z3_assertion(self, expr: ExprRef):
+
+    def __convert_ids(self, expr: ExprRef):
+        BINARY_OPERATOR = "({left} {b_op} {right})"
+        UNARY_OPERATOR = "({u_op} {expr})"
         print(expr)
         res = str(expr) + " ola"
         if expr.num_args() == 0:
-            # print("deu zero")
-            return res
-        acc = ""
-        print(type(expr.decl()))
-        for child in expr.children():
-            acc += " " + self.__traverse_z3_assertion(child)
-        return acc
+            return str(expr)
+        else:
+            children = expr.children()
+            decl = str(expr.decl())
+            if decl in ["==", "!=", "<", "<=", ">", ">=", "+", "-", "*", "/"]:
+                return BINARY_OPERATOR.format(left=self.__convert_ids(children[0]), b_op=decl, right=self.__convert_ids(children[1]))
+            elif decl == "Not":
+                return UNARY_OPERATOR.format(u_op="~", expr=self.__convert_ids(children[0]))
+            elif decl == "And":
+                return BINARY_OPERATOR.format(left=self.__convert_ids(children[0]), b_op="&&", right=self.__convert_ids(children[1]))
+            elif decl == "Or":
+                return BINARY_OPERATOR.format(left=self.__convert_ids(children[0]), b_op="||", right=self.__convert_ids(children[1]))
+            elif decl == "Implies":
+                return BINARY_OPERATOR.format(left=self.__convert_ids(children[0]), b_op="-->", right=self.__convert_ids(children[1]))
+            elif decl in ["ToInt", "ToReal"]:
+                return self.__convert_ids(children[0])
+
+
