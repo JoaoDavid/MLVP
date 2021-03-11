@@ -11,6 +11,7 @@ class ValidateLinks:
         self.assertions = []
         self.solver = Solver()
         self.map_assertions = {}
+        self.map_ports = {}  # k=port_id v=port_name
 
     def validate(self):
         print("Number of links: " + str(len(self.json_links)))
@@ -84,6 +85,7 @@ class ValidateLinks:
     def __find_port(self, ports, is_in, name):
         for port in ports:
             if name == port['name'] and is_in == port['in']:
+                self.map_ports[port['id']] = port['name']
                 return port['id']
 
     def __binary_search_for_unsat(self, array, l, r):
@@ -132,7 +134,16 @@ class ValidateLinks:
         print(expr)
         res = str(expr) + " ola"
         if expr.num_args() == 0:
-            return str(expr)
+            arr = str(expr).split("_")
+            print(arr)
+            print(self.map_ports)
+            res = "None" if arr[0] == "-1" else arr[0]
+            if len(arr) > 1:
+                if arr[0] != "node":
+                    res = self.map_ports[arr[0]] + " Port " + arr[1]
+                else:
+                    res = "Property " + arr[1]
+            return res
         else:
             children = expr.children()
             decl = str(expr.decl())

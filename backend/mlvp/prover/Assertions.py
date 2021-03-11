@@ -63,6 +63,7 @@ def split_dataset(id_input, id_output_train, id_output_test, test_size, train_si
     shuffle_train = Bool(id_output_train + SEP + SHUFFLED)
     shuffle_test = Bool(id_output_test + SEP + SHUFFLED)
     output_shuffles = Or(shuffle_input, shuffle)
+    z3_stratify = Bool("node" + SEP + "stratify")
 
     return [
         # requires
@@ -75,7 +76,8 @@ def split_dataset(id_input, id_output_train, id_output_test, test_size, train_si
         train_ds.cols == test_ds.cols,
         train_ds.n_labels == ToInt(ToReal(input_ds.n_labels) * train_size),
         test_ds.n_labels == ToInt(ToReal(input_ds.n_labels) * test_size),
-        Implies(stratify, And(train_ds.balanced, test_ds.balanced)),
+        z3_stratify == stratify,
+        Implies(z3_stratify, And(train_ds.balanced, test_ds.balanced)),
 
         shuffle_train == output_shuffles,
         shuffle_test == output_shuffles
@@ -152,7 +154,7 @@ def pca(id_input, id_output, random_state, n_components):
 # then use the received as parameter to assert whatever you want about it
 # in the case of the rfc node, the number of trees must be greater than zero
 # therefore we have, the z3 var declaration
-# z3_n_trees = Int(id_node + "_" + id_node + "_n-trees")
+# z3_n_trees = Int("node" + SEP + "n-trees")
 # then the assertions
 # z3_n_trees == n_trees,
 # z3_n_trees > 0,
