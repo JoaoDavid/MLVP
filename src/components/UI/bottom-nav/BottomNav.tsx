@@ -3,7 +3,7 @@ import classes from './BottomNav.module.css';
 import {BaseNodeModel} from "../../core/BaseNode/BaseNodeModel";
 
 interface BottomNavProps {
-    problems: Map<BaseNodeModel, String[]>,
+    problems: Map<BaseNodeModel, string[]>,
 }
 
 const BottomNav = (props: BottomNavProps) => {
@@ -24,7 +24,7 @@ const BottomNav = (props: BottomNavProps) => {
             problems.forEach((problem) => {
                 nodeProblems.push((<div className={classes.Problem}>{problem}</div>));
             });
-            box.push(<div className={classes.Box}> {node.getTitle()} {nodeProblems} </div>)
+            box.push(<div> {node.getTitle()} {nodeProblems} </div>)
         });
     }
 
@@ -34,8 +34,9 @@ const BottomNav = (props: BottomNavProps) => {
 
     return (
         <div className={classes.Unselectable}>
-            {box}
-
+            <div className={classes.Box}>
+                {box}
+            </div>
             <div className={classes.BottomNav}>
                 <span className={classes.ToggleOn}>Problems</span>
                 <span className={classes.Toggle}>Terminal</span>

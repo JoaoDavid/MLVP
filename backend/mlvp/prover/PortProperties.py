@@ -4,8 +4,8 @@ from mlvp.prover.VarNames import *
 
 class Dataset:
 
-    def __init__(self, id_node: str, id_port: str):
-        prefix = id_node + "_" + id_port
+    def __init__(self, id_port: str):
+        prefix = id_port + SEP
         self.cols = Int(prefix + N_COLS)
         self.rows = Int(prefix + N_ROWS)
         self.n_labels = Int(prefix + N_LABELS)

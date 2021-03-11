@@ -4,9 +4,9 @@ from mlvp.prover.VarNames import *
 from mlvp.prover.PortProperties import Dataset
 
 
-def link(id_source_node: str, id_source_port: str, id_target_node: str, id_target_port: str):
-    id_source_port = Dataset(id_source_node, id_source_port)
-    port_to = Dataset(id_target_node, id_target_port)
+def link(id_source_port: str, id_target_port: str):
+    id_source_port = Dataset(id_source_port)
+    port_to = Dataset(id_target_port)
 
     return [
         id_source_port.cols == port_to.cols,
@@ -18,8 +18,8 @@ def link(id_source_node: str, id_source_port: str, id_target_node: str, id_targe
     ]
 
 
-def abstract_ds(id_node: str, id_output: str, n_cols: int, n_rows: int):
-    output = Dataset(id_node, id_output)
+def abstract_ds(id_output: str, n_cols: int, n_rows: int):
+    output = Dataset(id_output)
 
     return [
         output.cols == n_cols,
@@ -27,8 +27,8 @@ def abstract_ds(id_node: str, id_output: str, n_cols: int, n_rows: int):
     ]
 
 
-def import_from_csv(id_node: str, id_output: str, n_cols: int, n_rows: int, labels: Dict[str, int]):
-    output = Dataset(id_node, id_output)
+def import_from_csv(id_output: str, n_cols: int, n_rows: int, labels: Dict[str, int]):
+    output = Dataset(id_output)
 
     label_names = [Int(id_output + "_label_" + key) for key in labels.keys()]
     label_counts = list(labels.values())
@@ -54,14 +54,14 @@ def import_from_csv(id_node: str, id_output: str, n_cols: int, n_rows: int, labe
     ] + label_counts_assertions
 
 
-def split_dataset(id_node: str, id_input, id_output_train, id_output_test, test_size, train_size, shuffle, stratify):
-    input_ds = Dataset(id_node, id_input)
-    train_ds = Dataset(id_node, id_output_train)
-    test_ds = Dataset(id_node, id_output_test)
+def split_dataset(id_input, id_output_train, id_output_test, test_size, train_size, shuffle, stratify):
+    input_ds = Dataset(id_input)
+    train_ds = Dataset(id_output_train)
+    test_ds = Dataset(id_output_test)
 
-    shuffle_input = Bool(id_node + "_" + id_input + SHUFFLED)
-    shuffle_train = Bool(id_node + "_" + id_output_train + SHUFFLED)
-    shuffle_test = Bool(id_node + "_" + id_output_test + SHUFFLED)
+    shuffle_input = Bool(id_input + SEP + SHUFFLED)
+    shuffle_train = Bool(id_output_train + SEP + SHUFFLED)
+    shuffle_test = Bool(id_output_test + SEP + SHUFFLED)
     output_shuffles = Or(shuffle_input, shuffle)
 
     return [
@@ -82,9 +82,9 @@ def split_dataset(id_node: str, id_input, id_output_train, id_output_test, test_
     ]
 
 
-def oversampling(id_node: str, id_input, id_output, random_state):
-    input_ds = Dataset(id_node, id_input)
-    output_ds = Dataset(id_node, id_output)
+def oversampling(id_input, id_output, random_state):
+    input_ds = Dataset(id_input)
+    output_ds = Dataset(id_output)
 
     return [
         input_ds.cols == output_ds.cols,
@@ -104,9 +104,9 @@ def oversampling(id_node: str, id_input, id_output, random_state):
     ]
 
 
-def undersampling(id_node: str, id_input, id_output, random_state):
-    input_ds = Dataset(id_node, id_input)
-    output_ds = Dataset(id_node, id_output)
+def undersampling(id_input, id_output, random_state):
+    input_ds = Dataset(id_input)
+    output_ds = Dataset(id_output)
 
     return [
         input_ds.cols == output_ds.cols,
@@ -126,9 +126,9 @@ def undersampling(id_node: str, id_input, id_output, random_state):
     ]
 
 
-def pca(id_node: str, id_input, id_output, random_state, n_components):
-    input_ds = Dataset(id_node, id_input)
-    output_ds = Dataset(id_node, id_output)
+def pca(id_input, id_output, random_state, n_components):
+    input_ds = Dataset(id_input)
+    output_ds = Dataset(id_output)
 
     z3_n_components = Int("pca" + "_n_components")
     z3_n_components = n_components
@@ -157,10 +157,10 @@ def pca(id_node: str, id_input, id_output, random_state, n_components):
 # z3_n_trees == n_trees,
 # z3_n_trees > 0,
 
-def random_forest_classifier(id_node: str, id_input, n_trees, max_depth):
-    input_ds = Dataset(id_node, id_input)
-    z3_n_trees = Int(id_node + "_" + id_node + "_n-trees")
-    z3_max_depth = Int(id_node + "_" + id_node + "_max-depth")
+def random_forest_classifier(id_input, n_trees, max_depth):
+    input_ds = Dataset(id_input)
+    z3_n_trees = Int("node" + SEP + "n-trees")
+    z3_max_depth = Int("node" + SEP + "max-depth")
 
     return [
         # requires
@@ -170,12 +170,12 @@ def random_forest_classifier(id_node: str, id_input, n_trees, max_depth):
         Or(z3_max_depth > 0, z3_max_depth == -1),
         input_ds.balanced,
         input_ds.rows > 0,
-        input_ds.cols > 1
+        input_ds.cols > IntVal(1)
     ]
 
 
-def evaluate_classifier(id_node: str, id_input_ds):
-    input_ds = Dataset(id_node, id_input_ds)
+def evaluate_classifier(id_input_ds):
+    input_ds = Dataset(id_input_ds)
 
     return [
         # requires
@@ -184,10 +184,10 @@ def evaluate_classifier(id_node: str, id_input_ds):
     ]
 
 
-def cross_validation(id_node: str, id_input_ds, n_folds):
-    input_ds = Dataset(id_node, id_input_ds)
+def cross_validation(id_input_ds, n_folds):
+    input_ds = Dataset(id_input_ds)
 
-    z3_n_folds = Int(id_node + "_" + id_node + "_n-folds")
+    z3_n_folds = Int("node" + SEP + "n-folds")
 
     return [
         # requires

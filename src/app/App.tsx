@@ -26,7 +26,7 @@ interface AppProps {
 }
 
 type AppState = {
-    problems: Map<BaseNodeModel, String[]>,
+    problems: Map<BaseNodeModel, string[]>,
 };
 
 class App extends React.Component<AppProps, AppState> {
@@ -76,32 +76,43 @@ class App extends React.Component<AppProps, AppState> {
                 console.log("problemsFound");
                 console.log(event);
                 console.log(event.assertionProblem);
-                const map = this.processProblems(event.assertionProblem);
+                const map = this.processProblems2(event.assertionProblem);
                 this.setState({problems: map})
             }
         });
     }
 
     processProblems = (assertionProblem: AssertionProblem) => {
-        const map = new Map<BaseNodeModel, String[]>();
+        const map = new Map<BaseNodeModel, string[]>();
         console.log(assertionProblem)
         assertionProblem.problems.forEach((problem) => {
             console.log("PROBLEM: " + problem);
-            const infoArr = problem.split("_"); // length == 3
+            const infoArr = problem.split("_"); // length == 2
             const node = this.engine.getModel().getNode(assertionProblem.nodeId) as BaseNodeModel;
-            console.log(infoArr[0])
-            console.log(node)
-            const port = node.getPortFromID(infoArr[1]) as BasePortModel;
+
+            const port = node.getPortFromID(infoArr[0]) as BasePortModel;
             const value = map.get(node) || [];
-            if (port == null) { // Node property violation
-                value.push("Property violation: " + infoArr[2]);
+/*            if (port == null) { // Node property violation
+                value.push("Property violation: " + infoArr[1]);
             } else { // Node's port property violation
-                value.push(port.getName() + " Port requirement violation: " + infoArr[2]);
-            }
+                value.push(port.getName() + " Port requirement violation: " + infoArr[1]);
+            }*/
+            value.push(problem)
             map.set(node, value);
         })
         return map;
     }
+
+    processProblems2 = (assertionProblem: AssertionProblem) => {
+        const map = new Map<BaseNodeModel, string[]>();
+
+        for (let k of Object.keys(assertionProblem.nodeAssertions)) {
+            const node = this.engine.getModel().getNode(k) as BaseNodeModel;
+            map.set(node, assertionProblem.nodeAssertions[k]);
+        }
+        return map;
+    }
+
 
     loadDemos = () => {
         const map = new Map<String, () => void>();

@@ -9,6 +9,7 @@ export interface AssertionProblem {
     canLink: boolean,
     nodeId: string,
     problems: string[],
+    nodeAssertions: Map<string, string[]>,
 }
 
 export class ValidateLinks {
