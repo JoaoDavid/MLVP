@@ -30,11 +30,11 @@ def abstract_ds(id_output: str, n_cols: int, n_rows: int):
 def import_from_csv(id_output: str, n_cols: int, n_rows: int, labels: Dict[str, int]):
     output = Dataset(id_output)
 
-    label_names = [Int(id_output + "_label_" + key) for key in labels.keys()]
+    label_names = [Int(id_output + "_label-" + key) for key in labels.keys()]
     label_counts = list(labels.values())
-    labels_values = [label_names[i] == label_counts[i] for i in range(len(labels))]
+    labels_values = [label_names[i] == (label_counts[i]) for i in range(len(labels))]
 
-    list_balanced = [label_counts[i] == label_counts[i + 1] for i in range(len(labels) - 1)]
+    list_balanced = [IntVal(label_counts[i]) == IntVal(label_counts[i + 1]) for i in range(len(labels) - 1)]
     # list_balanced = [abs(label_counts[i] - label_counts[i + 1]) <= 1 for i in range(len(labels) - 1)]
 
     label_counts_assertions = []
@@ -43,15 +43,16 @@ def import_from_csv(id_output: str, n_cols: int, n_rows: int, labels: Dict[str, 
             output.max_label_count == max(label_counts),
             output.min_label_count == min(label_counts)
         ]
-        
+
+    print(And(list_balanced).num_args())
     return [
         output.cols == n_cols,
         output.rows == n_rows,
         output.rows == sum(label_counts),
-        And(labels_values),
+        # And(labels_values),
         output.balanced == And(list_balanced),
         output.n_labels == len(label_counts),
-    ] + label_counts_assertions
+    ] + label_counts_assertions + labels_values
 
 
 def split_dataset(id_input, id_output_train, id_output_test, test_size, train_size, shuffle, stratify):
@@ -62,7 +63,8 @@ def split_dataset(id_input, id_output_train, id_output_test, test_size, train_si
     shuffle_input = Bool(id_input + SEP + SHUFFLED)
     shuffle_train = Bool(id_output_train + SEP + SHUFFLED)
     shuffle_test = Bool(id_output_test + SEP + SHUFFLED)
-    output_shuffles = Or(shuffle_input, shuffle)
+    z3_shuffle = Bool("node" + SEP + "shuffle")
+    output_shuffles = Or(shuffle_input, z3_shuffle)
     z3_stratify = Bool("node" + SEP + "stratify")
 
     return [
@@ -78,7 +80,7 @@ def split_dataset(id_input, id_output_train, id_output_test, test_size, train_si
         test_ds.n_labels == ToInt(ToReal(input_ds.n_labels) * test_size),
         z3_stratify == stratify,
         Implies(z3_stratify, And(train_ds.balanced, test_ds.balanced)),
-
+        z3_shuffle == shuffle,
         shuffle_train == output_shuffles,
         shuffle_test == output_shuffles
     ]
@@ -131,12 +133,12 @@ def undersampling(id_input, id_output, random_state):
 def pca(id_input, id_output, random_state, n_components):
     input_ds = Dataset(id_input)
     output_ds = Dataset(id_output)
+    z3_n_components = Int("node" + SEP + "n-components")
 
-    z3_n_components = Int("pca" + "_n_components")
-    z3_n_components = n_components
 
     return [
         # requires
+        z3_n_components == n_components,
         z3_n_components < input_ds.cols,
         z3_n_components > 0,
         # ensures

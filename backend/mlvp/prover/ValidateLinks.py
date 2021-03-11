@@ -131,12 +131,9 @@ class ValidateLinks:
     def __convert_ids(self, expr: ExprRef):
         BINARY_OPERATOR = "({left} {b_op} {right})"
         UNARY_OPERATOR = "({u_op} {expr})"
-        print(expr)
         res = str(expr) + " ola"
         if expr.num_args() == 0:
             arr = str(expr).split("_")
-            print(arr)
-            print(self.map_ports)
             res = "None" if arr[0] == "-1" else arr[0]
             if len(arr) > 1:
                 if arr[0] != "node":
