@@ -20,13 +20,15 @@ import {DiagramStateManager} from "../components/UI/canvas/states/DiagramStateMa
 import {AssertionProblem, ValidateLinks} from "../z3/ValidateLinks";
 import {BaseNodeModel} from "../components/core/BaseNode/BaseNodeModel";
 import {BasePortModel} from "../components/core/BasePort/BasePortModel";
+import {DefaultLinkModel} from "@projectstorm/react-diagrams-defaults";
 
 interface AppProps {
 
 }
 
 type AppState = {
-    problems: Map<BaseNodeModel, string[]>,
+    nodeProblems: Map<BaseNodeModel, string[]>,
+    linkProblems: Map<DefaultLinkModel, string[]>,
 };
 
 class App extends React.Component<AppProps, AppState> {
@@ -37,7 +39,8 @@ class App extends React.Component<AppProps, AppState> {
     private readonly validateLinks: ValidateLinks;
 
     state = {
-        problems: new Map(),
+        nodeProblems: new Map(),
+        linkProblems: new Map(),
     }
 
     constructor(props: AppProps) {
@@ -60,7 +63,8 @@ class App extends React.Component<AppProps, AppState> {
             linkCreated: (event) => {
                 console.log('linkCreated');
                 console.log(event);
-                this.state.problems.clear();
+                this.state.nodeProblems.clear();
+                this.state.linkProblems.clear();
                 const newState = {...this.state}
                 this.setState(newState);
             },
@@ -76,8 +80,12 @@ class App extends React.Component<AppProps, AppState> {
                 console.log("problemsFound");
                 console.log(event);
                 console.log(event.assertionProblem);
-                const map = this.processProblems2(event.assertionProblem);
-                this.setState({problems: map})
+                const mapNodes = this.processNodeProblems(event.assertionProblem);
+                const mapLinks = this.processLinkProblems(event.assertionProblem);
+                this.setState({
+                    nodeProblems: mapNodes,
+                    linkProblems: mapLinks,
+                })
             }
         });
     }
@@ -103,12 +111,23 @@ class App extends React.Component<AppProps, AppState> {
         return map;
     }
 
-    processProblems2 = (assertionProblem: AssertionProblem) => {
+    processNodeProblems = (assertionProblem: AssertionProblem) => {
         const map = new Map<BaseNodeModel, string[]>();
 
         for (let k of Object.keys(assertionProblem.nodeAssertions)) {
             const node = this.engine.getModel().getNode(k) as BaseNodeModel;
             map.set(node, assertionProblem.nodeAssertions[k]);
+        }
+        return map;
+    }
+
+    processLinkProblems = (assertionProblem: AssertionProblem) => {
+        const map = new Map<DefaultLinkModel, string[]>();
+
+        for (let k of Object.keys(assertionProblem.linkAssertions)) {
+            const link = this.engine.getModel().getLink(k) as DefaultLinkModel;
+            console.log(link)
+            map.set(link, assertionProblem.linkAssertions[k]);
         }
         return map;
     }
@@ -187,7 +206,7 @@ class App extends React.Component<AppProps, AppState> {
                     <SideBar catAndNames={this.loadMapCategoryNodes()} format={this.dragDropFormat}/>
                     <Canvas dragDropFormat={this.dragDropFormat} engine={this.engine}/>
                 </div>
-                <BottomNav problems={this.state.problems}/>
+                <BottomNav nodeProblems={this.state.nodeProblems} linkProblems={this.state.linkProblems}/>
             </div>
         );
     }

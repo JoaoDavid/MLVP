@@ -10,6 +10,7 @@ export interface AssertionProblem {
     nodeId: string,
     problems: string[],
     nodeAssertions: Map<string, string[]>,
+    linkAssertions: Map<string, string[]>,
 }
 
 export class ValidateLinks {

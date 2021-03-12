@@ -11,19 +11,24 @@ class ValidateLinks:
         self.assertions = []
         self.solver = Solver()
         self.map_assertions = {}
+        self.link_assertions = {}
         self.map_ports = {}  # k=port_id v=port_name
 
     def validate(self):
         print("Number of links: " + str(len(self.json_links)))
-
-        for link_json in self.json_links:
-            self.solver.add(link(link_json['sourcePortId'], link_json['targetPortId']))
 
         for node_json in self.json_nodes:
             self.solver.push()
             node_assertions = self.__parse_node(node_json)
             self.solver.add(node_assertions)
 
+        for link_json in self.json_links:
+            print(link_json)
+            link_assertions = link(link_json['sourcePortId'], link_json['targetPortId'])
+            self.link_assertions[link_json['linkId']] = self.__convert_assertions_to_str(link_assertions)
+            self.solver.add(link_assertions)
+
+        print(self.link_assertions)
         # self.solver.add(self.assertions)
         result = {}
         if self.solver.check() == sat:
@@ -44,6 +49,7 @@ class ValidateLinks:
                     result["problems"] = self.__find_unsat_node_assertion(problems)
 
         result["nodeAssertions"] = self.map_assertions
+        result["linkAssertions"] = self.link_assertions
         return json.dumps(result, indent=4)
 
     def __parse_node(self, data):

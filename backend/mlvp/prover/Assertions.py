@@ -30,7 +30,7 @@ def abstract_ds(id_output: str, n_cols: int, n_rows: int):
 def import_from_csv(id_output: str, n_cols: int, n_rows: int, labels: Dict[str, int]):
     output = Dataset(id_output)
 
-    label_names = [Int(id_output + "_label-" + key) for key in labels.keys()]
+    label_names = [Int(id_output + SEP + "label-" + key) for key in labels.keys()]
     label_counts = list(labels.values())
     labels_values = [label_names[i] == (label_counts[i]) for i in range(len(labels))]
 
