@@ -91,16 +91,17 @@ class ParseJSON:
             source_node = self.nodes[data['source']]
             source_port = source_node.ports[data['sourcePort']]
             target_node = self.nodes[data['target']]
+            target_port = target_node.ports[data['targetPort']]
             # add children and parents to the respective arrays
             source_node.children.append(target_node)
-            target_node.parent_links.append(ParentLink(source_node, source_port))
+            target_node.parent_links.append(ParentLink(link_id, source_node, source_port, target_port))
 
     def __parse_ports(self, json_ports):
         ports = {}
         for p in json_ports:
             name = p['name']
             if "Dataset" in name:
-                ports[p['id']] = DatasetPort(p['name'], bool(p['in']))
+                ports[p['id']] = DatasetPort(p['id'], p['name'], bool(p['in']))
             elif "Classifier" in name:
-                ports[p['id']] = ModelPort(p['name'], bool(p['in']))
+                ports[p['id']] = ModelPort(p['id'], p['name'], bool(p['in']))
         return ports
