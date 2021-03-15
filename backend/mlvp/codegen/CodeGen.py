@@ -29,7 +29,6 @@ class CodeGen:
     def generate_code(self):
         self.__write_imports()
         for root in self.roots:
-            print(root)
             self.__write_nodes(root)
 
         self.out_file.close()
@@ -39,7 +38,6 @@ class CodeGen:
         return file_text
 
     def __write_nodes(self, node: Node):
-        print(node)
         if not node.visited:
             node.visited = True
             for parent_link in node.parent_links:
@@ -47,20 +45,18 @@ class CodeGen:
             # parents are all visited
             curr_count = self.emitter.get_count()
             parent_links = node.parent_links
+            print(node.__class__.__name__)
             if isinstance(node, ImportFromCSV):
-                print("ImportFromCSV")
                 df_var = "df" + str(curr_count)
                 x = "x" + str(curr_count)
                 y = "y" + str(curr_count)
                 out_ds = node.get_port(False, "Dataset")
                 self.emitter.set(out_ds, (x, y))
-                print(df_var)
                 self.out_file.write(
                     LOAD_CSV.format(var=df_var, pandas_var=PANDAS_VAR, file_name=node.file_name))
                 self.out_file.write(FEATURES.format(x=x, var=df_var, target=node.target))
                 self.out_file.write(TARGET.format(y=y, var=df_var, target=node.target))
             elif isinstance(node, SplitDataset):
-                print("SplitDataset")
                 parent_port = parent_links[0].source_port
                 x, y = self.emitter.get(parent_port)
                 x_train = x + "_train" + str(curr_count)
@@ -76,8 +72,7 @@ class CodeGen:
                 self.emitter.set(out_train_ds, (x_train, y_train))
                 self.emitter.set(out_test_ds, (x_test, y_test))
             elif isinstance(node, Oversampling):
-                print("Oversampling")
-                parent_port = parent_links[0].parent_source_port
+                parent_port = parent_links[0].source_port
                 x, y = self.emitter.get(parent_port)
                 ros_var = "ros" + str(curr_count)
                 x_ros_res = "x_ros_res" + str(curr_count)
@@ -87,8 +82,7 @@ class CodeGen:
                 out_ds = node.get_port(False, "Balanced Dataset")
                 self.emitter.set(out_ds, (x_ros_res, y_ros_res))
             elif isinstance(node, UnderSampling):
-                print("UnderSampling")
-                parent_port = parent_links[0].parent_source_port
+                parent_port = parent_links[0].source_port
                 x, y = self.emitter.get(parent_port)
                 rus_var = "rus" + str(curr_count)
                 x_rus_res = "x_rus_res" + str(curr_count)
@@ -98,8 +92,7 @@ class CodeGen:
                 out_ds = node.get_port(False, "Balanced Dataset")
                 self.emitter.set(out_ds, (x_rus_res, y_rus_res))
             elif isinstance(node, PCA):
-                print("PCA")
-                parent_port = parent_links[0].parent_source_port
+                parent_port = parent_links[0].source_port
                 x, y = self.emitter.get(parent_port)
                 pca_var = "pca" + str(curr_count)
                 x_pca = "x_pca" + str(curr_count)
@@ -109,23 +102,20 @@ class CodeGen:
                 out_ds = node.get_port(False, "Reduced Dataset")
                 self.emitter.set(out_ds, (x_pca, y))
             elif isinstance(node, RandomForestClassifier):
-                print("RandomForestClassifier")
                 clf_var = "clf" + str(curr_count)
                 out_clf = node.get_port(False, "Classifier")
                 self.emitter.set(out_clf, clf_var)
-                parent_port = parent_links[0].parent_source_port
-                print(parent_port)
+                parent_port = parent_links[0].source_port
                 x, y = self.emitter.get(parent_port)
                 self.out_file.write(
                     RANDOM_FOREST_INIT.format(var=clf_var, num_trees=node.num_trees, criterion=node.criterion,
                                               max_depth=node.max_depth))
                 self.out_file.write(MODEL_FIT.format(var=clf_var, x=x, y=y))
             elif isinstance(node, ModelAccuracy):
-                print("ModelAccuracy")
                 y_predicted = "y_predicted" + str(curr_count)
                 clf_var, x, y = "", "", ""
                 for curr in parent_links:
-                    parent_port = curr.parent_source_port
+                    parent_port = curr.source_port
                     if isinstance(parent_port, ModelPort):
                         clf_var = self.emitter.get(parent_port)
                     elif isinstance(parent_port, DatasetPort):
@@ -135,11 +125,10 @@ class CodeGen:
                 self.out_file.write(score + " = " + ACCURACY_SCORE_CALL.format(y_true=y, y_pred=y_predicted))
                 self.out_file.write("print("+score+")\n")
             elif isinstance(node, CrossValidation):
-                print("CrossValidation")
                 score = "score" + str(curr_count)
                 model_var, x, y = "", "", ""
                 for curr in parent_links:
-                    parent_port = curr.parent_source_port
+                    parent_port = curr.source_port
                     if isinstance(parent_port, ModelPort):
                         model_var = self.emitter.get(parent_port)
                     elif isinstance(parent_port, DatasetPort):
