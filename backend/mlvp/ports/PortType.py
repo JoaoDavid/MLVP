@@ -9,3 +9,9 @@ class PortType(ABC):
         self.name = name
         self.in_port = in_port
         pass
+
+    def __str__(self):
+        return 'Class: {self.__class__.__name__} \n' \
+               'Port Id: {self.port_id} \n' \
+               'Name: {self.name} \n' \
+               'In Port: {self.in_port} \n'.format(self=self)
