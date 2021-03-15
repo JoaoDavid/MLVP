@@ -52,7 +52,7 @@ class CodeGen:
                 df_var = "df" + str(curr_count)
                 x = "x" + str(curr_count)
                 y = "y" + str(curr_count)
-                out_ds = self.__find_port(node.ports, False, "Dataset")
+                out_ds = node.get_port(False, "Dataset")
                 self.emitter.set(out_ds, (x, y))
                 print(df_var)
                 self.out_file.write(
@@ -61,7 +61,7 @@ class CodeGen:
                 self.out_file.write(TARGET.format(y=y, var=df_var, target=node.target))
             elif isinstance(node, SplitDataset):
                 print("SplitDataset")
-                parent_port = parent_links[0].parent_source_port
+                parent_port = parent_links[0].source_port
                 x, y = self.emitter.get(parent_port)
                 x_train = x + "_train" + str(curr_count)
                 y_train = y + "_train" + str(curr_count)
@@ -71,8 +71,8 @@ class CodeGen:
                     TRAIN_TEST_SPLIT_CALL.format(x_train=x_train, x_test=x_test, y_train=y_train, y_test=y_test, x=x,
                                                  y=y, test_size=node.test_size, train_size=node.train_size,
                                                  shuffle=node.shuffle))
-                out_train_ds = self.__find_port(node.ports, False, "Train Dataset")
-                out_test_ds = self.__find_port(node.ports, False, "Test Dataset")
+                out_train_ds = node.get_port(False, "Train Dataset")
+                out_test_ds = node.get_port(False, "Test Dataset")
                 self.emitter.set(out_train_ds, (x_train, y_train))
                 self.emitter.set(out_test_ds, (x_test, y_test))
             elif isinstance(node, Oversampling):
@@ -84,7 +84,7 @@ class CodeGen:
                 y_ros_res = "y_ros_res" + str(curr_count)
                 self.out_file.write(SAMPLER_INIT.format(var=ros_var, sampler=RANDOM_OVERSAMPLER, random_state=node.random_state))
                 self.out_file.write(FIT_RESAMPLE.format(x_res=x_ros_res, y_res=y_ros_res, var=ros_var, x=x, y=y))
-                out_ds = self.__find_port(node.ports, False, "Balanced Dataset")
+                out_ds = node.get_port(False, "Balanced Dataset")
                 self.emitter.set(out_ds, (x_ros_res, y_ros_res))
             elif isinstance(node, UnderSampling):
                 print("UnderSampling")
@@ -95,7 +95,7 @@ class CodeGen:
                 y_rus_res = "y_rus_res" + str(curr_count)
                 self.out_file.write(SAMPLER_INIT.format(var=rus_var, sampler=RANDOM_UNDERSAMPLER, random_state=node.random_state))
                 self.out_file.write(FIT_RESAMPLE.format(x_res=x_rus_res, y_res=y_rus_res, var=rus_var, x=x, y=y))
-                out_ds = self.__find_port(node.ports, False, "Balanced Dataset")
+                out_ds = node.get_port(False, "Balanced Dataset")
                 self.emitter.set(out_ds, (x_rus_res, y_rus_res))
             elif isinstance(node, PCA):
                 print("PCA")
@@ -106,12 +106,12 @@ class CodeGen:
                 # y_pca = "y_pca" + str(curr_count)
                 self.out_file.write(PCA_INIT.format(pca_var=pca_var, random_state=node.random_state))
                 self.out_file.write(FIT_TRANSFORM_CALL.format(x_pca=x_pca, pca_var=pca_var, x=x))
-                out_ds = self.__find_port(node.ports, False, "Reduced Dataset")
+                out_ds = node.get_port(False, "Reduced Dataset")
                 self.emitter.set(out_ds, (x_pca, y))
             elif isinstance(node, RandomForestClassifier):
                 print("RandomForestClassifier")
                 clf_var = "clf" + str(curr_count)
-                out_clf = self.__find_port(node.ports, False, "Classifier")
+                out_clf = node.get_port(False, "Classifier")
                 self.emitter.set(out_clf, clf_var)
                 parent_port = parent_links[0].parent_source_port
                 print(parent_port)
@@ -149,9 +149,3 @@ class CodeGen:
             self.out_file.write("\n")
             for child in node.children:
                 self.__write_nodes(child)
-
-    def __find_port(self, ports, is_in, name):
-        for _, port in ports.items():
-            if name == port.name and port.in_port == is_in:
-                print("found")
-                return port

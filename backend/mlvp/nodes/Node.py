@@ -11,3 +11,8 @@ class Node(ABC):
         self.children = []
         self.visited = False
         pass
+
+    def get_port(self, name: str, is_in: bool):
+        for _, port in self.ports.items():
+            if name == port.name and port.in_port == is_in:
+                return port
