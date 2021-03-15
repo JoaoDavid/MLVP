@@ -16,3 +16,10 @@ class Node(ABC):
         for _, port in self.ports.items():
             if name == port.name and port.in_port == is_in:
                 return port
+
+    def __str__(self):
+        return 'Class: {self.__class__.__name__} \n' \
+               'Node Id: {self.node_id} \n' \
+               'Parent Links: {self.parent_links} \n' \
+               'Ports: {self.ports} \n' \
+               'Children: {self.children} \n'.format(self=self)
