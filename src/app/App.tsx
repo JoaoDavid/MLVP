@@ -17,7 +17,7 @@ import testJson from '../demos/test.json';
 import conBalancedDsToClassifier from '../demos/train-classifier-balanced-ds.json';
 import {MyZoomCanvasAction} from "../components/UI/canvas/actions/MyZoomCanvasAction";
 import {DiagramStateManager} from "../components/UI/canvas/states/DiagramStateManager";
-import {AssertionProblem, ValidateLinks} from "../z3/ValidateLinks";
+import {VerificationResponse, ValidateLinks} from "../z3/ValidateLinks";
 import {BaseNodeModel} from "../components/core/BaseNode/BaseNodeModel";
 import {BasePortModel} from "../components/core/BasePort/BasePortModel";
 import {DefaultLinkModel} from "@projectstorm/react-diagrams-defaults";
@@ -90,28 +90,7 @@ class App extends React.Component<AppProps, AppState> {
         });
     }
 
-    processProblems = (assertionProblem: AssertionProblem) => {
-        const map = new Map<BaseNodeModel, string[]>();
-        console.log(assertionProblem)
-        assertionProblem.problems.forEach((problem) => {
-            console.log("PROBLEM: " + problem);
-            const infoArr = problem.split("_"); // length == 2
-            const node = this.engine.getModel().getNode(assertionProblem.nodeId) as BaseNodeModel;
-
-            const port = node.getPortFromID(infoArr[0]) as BasePortModel;
-            const value = map.get(node) || [];
-/*            if (port == null) { // Node property violation
-                value.push("Property violation: " + infoArr[1]);
-            } else { // Node's port property violation
-                value.push(port.getName() + " Port requirement violation: " + infoArr[1]);
-            }*/
-            value.push(problem)
-            map.set(node, value);
-        })
-        return map;
-    }
-
-    processNodeProblems = (assertionProblem: AssertionProblem) => {
+    processNodeProblems = (assertionProblem: VerificationResponse) => {
         const map = new Map<BaseNodeModel, string[]>();
 
         for (let k of Object.keys(assertionProblem.nodeAssertions)) {
@@ -121,7 +100,7 @@ class App extends React.Component<AppProps, AppState> {
         return map;
     }
 
-    processLinkProblems = (assertionProblem: AssertionProblem) => {
+    processLinkProblems = (assertionProblem: VerificationResponse) => {
         const map = new Map<DefaultLinkModel, string[]>();
 
         for (let k of Object.keys(assertionProblem.linkAssertions)) {
