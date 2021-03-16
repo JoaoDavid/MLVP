@@ -29,6 +29,7 @@ class Verification:
         for assertion in self.all_link_assertions:
             self.solver.add(assertion[1])
 
+        self.solver.push()
         for assertion in self.all_node_assertions:
             self.solver.add(assertion[1])
 
@@ -37,7 +38,14 @@ class Verification:
             result["canLink"] = True
         else:
             result["canLink"] = False
-            self.__find_source_unsat()
+            self.solver.pop()
+            first_problem_index = self.__find_source_unsat(self.all_node_assertions)
+            self.solver.pop(first_problem_index + 1)
+            self.solver.add(self.all_node_assertions[first_problem_index])
+            second_problem_index = self.__find_source_unsat(self.all_node_assertions[:first_problem_index])
+            print(self.all_node_assertions[first_problem_index])
+            print(self.all_node_assertions[second_problem_index])
+
 
         result["nodeAssertions"] = self.node_assertions
         result["linkAssertions"] = self.link_assertions
@@ -114,12 +122,8 @@ class Verification:
                 self.link_assertions[parent_link.link_id] = self.__assertions_to_str(link_assertions)
                 self.all_link_assertions.append((parent_link, link_assertions))
 
-    def __find_source_unsat(self):
-        self.solver.reset()
-        for assertion in self.all_link_assertions:
-            self.solver.add(assertion[1])
-
-        for index, assertion in enumerate(self.all_node_assertions):
+    def __find_source_unsat(self, list_tuple_assertions):
+        for index, assertion in enumerate(list_tuple_assertions):
             self.solver.push()
             self.solver.add(assertion[1])
             if self.solver.check() == unsat:
