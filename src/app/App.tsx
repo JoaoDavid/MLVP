@@ -13,13 +13,10 @@ import BottomNav from "../components/UI/bottom-nav/BottomNav";
 import Canvas from "../components/UI/canvas/Canvas";
 import {MyDiagramModel} from "../components/UI/canvas/diagram/MyDiagramModel";
 import splitEvaluate from '../demos/split-n-evaluate.json';
-import testJson from '../demos/test.json';
-import conBalancedDsToClassifier from '../demos/train-classifier-balanced-ds.json';
 import {MyZoomCanvasAction} from "../components/UI/canvas/actions/MyZoomCanvasAction";
 import {DiagramStateManager} from "../components/UI/canvas/states/DiagramStateManager";
 import {VerificationResponse, ValidateLinks} from "../z3/ValidateLinks";
 import {BaseNodeModel} from "../components/core/BaseNode/BaseNodeModel";
-import {BasePortModel} from "../components/core/BasePort/BasePortModel";
 import {DefaultLinkModel} from "@projectstorm/react-diagrams-defaults";
 
 interface AppProps {
@@ -117,12 +114,6 @@ class App extends React.Component<AppProps, AppState> {
         const map = new Map<String, () => void>();
         map.set("Simple Pipeline", () => {
             this.loadDemoAux(splitEvaluate);
-        });
-        map.set("Test", () => {
-            this.loadDemoAux(testJson);
-        });
-        map.set("Balanced DS Split", () => {
-            this.loadDemoAux(conBalancedDsToClassifier);
         });
         return map;
     }
