@@ -130,7 +130,7 @@ class Verification:
             elif isinstance(node, PCA):
                 id_input = node.get_port(True, "Dataset").port_id
                 id_output = node.get_port(False, "Reduced Dataset").port_id
-                node_assertions = pca(id_input, id_output, node.random_state, 2)
+                node_assertions = pca(id_input, id_output, node.random_state, node.num_components)
                 self.all_node_assertions.append((node, node_assertions))
 
             elif isinstance(node, RandomForestClassifier):
@@ -158,7 +158,7 @@ class Verification:
                 link_assertions = link(parent_link.source_port.port_id, parent_link.target_port.port_id)
                 ports = {parent_link.source_port.port_id: parent_link.source_port,
                          parent_link.target_port.port_id: parent_link.target_port}
-                self.link_assertions[parent_link.link_id] = assertions_to_str(ports, link_assertions)
+                # self.link_assertions[parent_link.link_id] = assertions_to_str(ports, link_assertions)
                 self.all_link_assertions.append((parent_link, link_assertions))
 
     def __find_source_unsat(self, list_tuple_assertions):

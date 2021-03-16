@@ -25,11 +25,17 @@ class PCAWidget extends React.Component<PCAProps, PCAState> {
         this.setState({});
     }
 
+    numComponentsChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        this.state.node.setNumComponents(+event.target.value);
+        this.setState({});
+    }
+
     render() {
-        const modal = <PCAModal node={this.props.node} randomStateChanged={this.randomStateChanged}/>;
+        const modal = <PCAModal node={this.props.node} randomStateChanged={this.randomStateChanged} numComponentsChanged={this.numComponentsChanged}/>;
         return (
             <BaseNodeWidget node={this.props.node} engine={this.props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
                 <p>Random State: {this.state.node.getRandomState()}</p>
+                <p>Num Components: {this.state.node.getNumComponents()}</p>
             </BaseNodeWidget>
         );
     }

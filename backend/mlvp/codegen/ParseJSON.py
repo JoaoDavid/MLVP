@@ -63,7 +63,7 @@ class ParseJSON:
                 self.libraries.add(
                     FROM_IMPORT.format(package=IMBLEARN + "." + UNDER_SAMPLING, class_to_import=RANDOM_UNDERSAMPLER))
             elif data['type'] == 'NODE_PCA':
-                node = PCA(node_id=node_id, random_state=data['randomState'])
+                node = PCA(node_id=node_id, random_state=data['randomState'], num_components=data['numComponents'])
                 node.ports = self.__parse_ports(data['ports'])
                 self.nodes[node_id] = node
                 self.libraries.add(

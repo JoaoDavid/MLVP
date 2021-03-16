@@ -97,7 +97,7 @@ class CodeGen:
                 pca_var = "pca" + str(curr_count)
                 x_pca = "x_pca" + str(curr_count)
                 # y_pca = "y_pca" + str(curr_count)
-                self.out_file.write(PCA_INIT.format(pca_var=pca_var, random_state=node.random_state))
+                self.out_file.write(PCA_INIT.format(pca_var=pca_var, random_state=node.random_state, n_components=node.num_components))
                 self.out_file.write(FIT_TRANSFORM_CALL.format(x_pca=x_pca, pca_var=pca_var, x=x))
                 out_ds = node.get_port(False, "Reduced Dataset")
                 self.emitter.set(out_ds, (x_pca, y))

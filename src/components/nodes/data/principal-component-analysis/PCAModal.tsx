@@ -8,6 +8,7 @@ import {PCAModel} from "./PCAModel";
 interface PCAModalProps {
     node: PCAModel;
     randomStateChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    numComponentsChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const PCAModal = (props: PCAModalProps) => {
@@ -18,6 +19,10 @@ const PCAModal = (props: PCAModalProps) => {
                     <Col>
                         <Form.Label>Random State</Form.Label>
                         <Form.Control type="number" value={props.node.getRandomState()} onChange={props.randomStateChanged} />
+                    </Col>
+                    <Col>
+                        <Form.Label>Num Components</Form.Label>
+                        <Form.Control type="number" min={1} value={props.node.getNumComponents()} onChange={props.numComponentsChanged} />
                     </Col>
                 </Row>
             </Form.Group>
