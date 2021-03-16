@@ -45,7 +45,7 @@ class ParseJSON:
                 self.roots.append(node)
             elif data['type'] == 'NODE_SPLIT_DATASET':
                 node = SplitDataset(node_id=node_id, test_size=data['testSize'],
-                                    train_size=data['trainSize'], shuffle=data['shuffle'])
+                                    train_size=data['trainSize'], shuffle=bool(data['shuffle']))
                 node.ports = self.__parse_ports(data['ports'])
                 self.nodes[node_id] = node
                 self.libraries.add(
