@@ -5,7 +5,7 @@ from mlvp.nodes import *
 from mlvp.ports import *
 
 
-def __assertions_to_str(assertions):
+def assertions_to_str(assertions):
     res = []
     for assertion in assertions:
         res.append(str(assertion))
@@ -41,7 +41,7 @@ class Verification:
             self.solver.pop()
             first_problem_index = self.__find_source_unsat(self.all_node_assertions)
             self.solver.pop(first_problem_index + 1)
-            self.solver.add(self.all_node_assertions[first_problem_index])
+            self.solver.add(self.all_node_assertions[first_problem_index][1])
             second_problem_index = self.__find_source_unsat(self.all_node_assertions[:first_problem_index])
             print(self.all_node_assertions[first_problem_index])
             print(self.all_node_assertions[second_problem_index])
@@ -119,7 +119,7 @@ class Verification:
         for parent_link in parent_links:
             if isinstance(parent_link.source_port, DatasetPort):
                 link_assertions = link(parent_link.source_port.port_id, parent_link.target_port.port_id)
-                self.link_assertions[parent_link.link_id] = self.__assertions_to_str(link_assertions)
+                self.link_assertions[parent_link.link_id] = assertions_to_str(link_assertions)
                 self.all_link_assertions.append((parent_link, link_assertions))
 
     def __find_source_unsat(self, list_tuple_assertions):

@@ -70,7 +70,8 @@ export class ValidateLinks {
         model_nodes.forEach((node) => {
             nodes.push(node.serialize());
         });
-        let data = {links: links, nodes: nodes}
+        // let data = {links: links, nodes: nodes}
+        const data = this.engine.getModel().serialize();
         console.log(data)
         const response = await this.sendReq(data);
         console.log(JSON.stringify(response, null, 4));
@@ -82,7 +83,7 @@ export class ValidateLinks {
         return response.canLink;
     }
 
-    sendReq = async (data: VerificationRequest) => {
+    sendReq = async (data) => {
         return axios.post('/z3', data)
             .then(res => res.data)
             .catch(error => {
