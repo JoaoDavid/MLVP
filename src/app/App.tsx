@@ -78,27 +78,28 @@ class App extends React.Component<AppProps, AppState> {
                 console.log("problemsFound");
                 console.log(event);
                 console.log(event.assertionProblem);
-                const mapNodes = this.processNodeProblems(event.assertionProblem);
-                const mapLinks = this.processLinkProblems(event.assertionProblem);
+                const allNodeAssertions = this.processNodeAssertions(event.assertionProblem.nodeAssertions);
+                const allLinkAssertions = this.processLinkAssertions(event.assertionProblem);
+                const unsatNodeAssertions = this.processNodeAssertions(event.assertionProblem.unsatNodeAssertions);
                 this.setState({
-                    nodeProblems: mapNodes,
-                    linkProblems: mapLinks,
+                    nodeProblems: allNodeAssertions,
+                    linkProblems: allLinkAssertions,
                 })
             }
         });
     }
 
-    processNodeProblems = (assertionProblem: VerificationResponse) => {
+    processNodeAssertions = (mapNodeAssertions) => {
         const map = new Map<BaseNodeModel, string[]>();
 
-        for (let k of Object.keys(assertionProblem.nodeAssertions)) {
+        for (let k of Object.keys(mapNodeAssertions)) {
             const node = this.engine.getModel().getNode(k) as BaseNodeModel;
-            map.set(node, assertionProblem.nodeAssertions[k]);
+            map.set(node, mapNodeAssertions[k]);
         }
         return map;
     }
 
-    processLinkProblems = (assertionProblem: VerificationResponse) => {
+    processLinkAssertions = (assertionProblem: VerificationResponse) => {
         const map = new Map<DefaultLinkModel, string[]>();
 
         for (let k of Object.keys(assertionProblem.linkAssertions)) {

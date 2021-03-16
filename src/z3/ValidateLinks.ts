@@ -13,6 +13,7 @@ export interface VerificationResponse {
     canLink: boolean,
     nodeAssertions: Map<string, string[]>,
     linkAssertions: Map<string, string[]>,
+    unsatNodeAssertions: Map<string, string[]>,
 }
 
 export class ValidateLinks {

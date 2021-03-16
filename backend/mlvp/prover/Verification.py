@@ -55,6 +55,7 @@ class Verification:
         self.roots = roots
         self.node_assertions = {}
         self.link_assertions = {}
+        self.unsat_node_assertions = {}
         self.all_link_assertions = []  # list of tuples of type: (link, link_assertions)
         self.all_node_assertions = []  # list of tuples of type: (node, node_assertions)
 
@@ -86,6 +87,7 @@ class Verification:
 
         result["nodeAssertions"] = self.node_assertions
         result["linkAssertions"] = self.link_assertions
+        result["unsatNodeAssertions"] = self.unsat_node_assertions
         return json.dumps(result, indent=4)
 
     # traverse the pipeline, appending the corresponding assertions to the all_node_assertions list
@@ -101,11 +103,13 @@ class Verification:
                 out_ds = node.get_port(False, "Dataset").port_id
                 node_assertions = abstract_ds(out_ds, node.num_cols, node.num_rows)
                 self.all_node_assertions.append((node, node_assertions))
+                self.node_assertions[node.node_id] = assertions_to_str(node.ports, node_assertions)
 
             elif isinstance(node, ImportFromCSV):
                 out_ds = node.get_port(False, "Dataset").port_id
                 node_assertions = import_from_csv(out_ds, node.num_cols, node.num_rows, node.labels)
                 self.all_node_assertions.append((node, node_assertions))
+                self.node_assertions[node.node_id] = assertions_to_str(node.ports, node_assertions)
 
             elif isinstance(node, SplitDataset):
                 id_input = node.get_port(True, "Dataset").port_id
@@ -114,40 +118,47 @@ class Verification:
                 node_assertions = split_dataset(id_input, id_output_train, id_output_test, node.test_size,
                                                 node.train_size, node.shuffle, True)
                 self.all_node_assertions.append((node, node_assertions))
+                self.node_assertions[node.node_id] = assertions_to_str(node.ports, node_assertions)
 
             elif isinstance(node, Oversampling):
                 id_input = node.get_port(True, "Dataset").port_id
                 id_output = node.get_port(False, "Balanced Dataset").port_id
                 node_assertions = oversampling(id_input, id_output, node.random_state)
                 self.all_node_assertions.append((node, node_assertions))
+                self.node_assertions[node.node_id] = assertions_to_str(node.ports, node_assertions)
 
             elif isinstance(node, UnderSampling):
                 id_input = node.get_port(True, "Dataset").port_id
                 id_output = node.get_port(False, "Balanced Dataset").port_id
                 node_assertions = undersampling(id_input, id_output, node.random_state)
                 self.all_node_assertions.append((node, node_assertions))
+                self.node_assertions[node.node_id] = assertions_to_str(node.ports, node_assertions)
 
             elif isinstance(node, PCA):
                 id_input = node.get_port(True, "Dataset").port_id
                 id_output = node.get_port(False, "Reduced Dataset").port_id
                 node_assertions = pca(id_input, id_output, node.random_state, node.num_components)
                 self.all_node_assertions.append((node, node_assertions))
+                self.node_assertions[node.node_id] = assertions_to_str(node.ports, node_assertions)
 
             elif isinstance(node, RandomForestClassifier):
                 id_input = node.get_port(True, "Dataset").port_id
                 max_depth = -1 if node.max_depth == "None" else node.max_depth
                 node_assertions = random_forest_classifier(id_input, node.num_trees, max_depth)
                 self.all_node_assertions.append((node, node_assertions))
+                self.node_assertions[node.node_id] = assertions_to_str(node.ports, node_assertions)
 
             elif isinstance(node, ModelAccuracy):
                 id_input_ds = node.get_port(True, "Dataset").port_id
                 node_assertions = evaluate_classifier(id_input_ds)
                 self.all_node_assertions.append((node, node_assertions))
+                self.node_assertions[node.node_id] = assertions_to_str(node.ports, node_assertions)
 
             elif isinstance(node, CrossValidation):
                 id_input_ds = node.get_port(True, "Dataset").port_id
                 node_assertions = cross_validation(id_input_ds, node.number_folds)
                 self.all_node_assertions.append((node, node_assertions))
+                self.node_assertions[node.node_id] = assertions_to_str(node.ports, node_assertions)
 
             for child in node.children:
                 self.__traverse_pipeline(child)
@@ -158,7 +169,7 @@ class Verification:
                 link_assertions = link(parent_link.source_port.port_id, parent_link.target_port.port_id)
                 ports = {parent_link.source_port.port_id: parent_link.source_port,
                          parent_link.target_port.port_id: parent_link.target_port}
-                # self.link_assertions[parent_link.link_id] = assertions_to_str(ports, link_assertions)
+                self.link_assertions[parent_link.link_id] = assertions_to_str(ports, link_assertions)
                 self.all_link_assertions.append((parent_link, link_assertions))
 
     def __find_source_unsat(self, list_tuple_assertions):
@@ -171,7 +182,7 @@ class Verification:
                 # found node that causes the unsat
                 print("Found source of UNSAT at index " + str(index))
                 specific_assertions = self.__find_unsat_node_assertion(assertions)
-                self.node_assertions[node.node_id] = assertions_to_str(node.ports, specific_assertions)
+                self.unsat_node_assertions[node.node_id] = assertions_to_str(node.ports, specific_assertions)
                 self.solver.push()
                 self.solver.add(assertions[1])
                 return index
