@@ -2,13 +2,7 @@ from mlvp.codegen.templates.CodeTemplate import *
 from mlvp.codegen.templates.LibNames import *
 from mlvp.ports import ParentLink
 from mlvp.ports import DatasetPort, ModelPort
-from mlvp.nodes import ImportFromCSV
-from mlvp.nodes import ModelAccuracy
-from mlvp.nodes import RandomForestClassifier
-from mlvp.nodes import SplitDataset
-from mlvp.nodes import Oversampling, UnderSampling
-from mlvp.nodes import PCA
-from mlvp.nodes import CrossValidation
+from mlvp.nodes import *
 
 
 class ParseJSON:
@@ -35,7 +29,12 @@ class ParseJSON:
 
     def __parse_nodes(self):
         for node_id, data in self.json_nodes.items():
-            if data['type'] == 'NODE_IMPORT_CSV':
+            if data['type'] == 'NODE_ABSTRACT_DS':
+                node = AbstractDataset(node_id=node_id, num_cols=data['numCols'], num_rows=data['numRows'])
+                node.ports = self.__parse_ports(data['ports'])
+                self.nodes[node_id] = node
+                self.roots.append(node)
+            elif data['type'] == 'NODE_IMPORT_CSV':
                 node = ImportFromCSV(node_id=node_id, file_name=data['fileName'],
                                                         num_cols=data['numCols'], num_rows=data['numRows'],
                                                         target=data['columnNames'][-1])

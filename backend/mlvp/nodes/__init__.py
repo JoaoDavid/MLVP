@@ -1,3 +1,4 @@
+from .data.AbstractDataset import AbstractDataset
 from .data.ImportFromCSV import ImportFromCSV
 from .data.SplitDataset import SplitDataset
 from .data.Oversampling import Oversampling
