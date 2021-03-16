@@ -100,9 +100,9 @@ class ParseJSON:
     def __parse_ports(self, json_ports):
         ports = {}
         for p in json_ports:
-            name = p['name']
-            if "Dataset" in name:
+            port_type = p['type']
+            if "PORT_DATASET" in port_type:
                 ports[p['id']] = DatasetPort(p['id'], p['name'], bool(p['in']))
-            elif "Classifier" in name:
+            elif "PORT_CLASSIFIER" in port_type:
                 ports[p['id']] = ModelPort(p['id'], p['name'], bool(p['in']))
         return ports
