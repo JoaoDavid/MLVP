@@ -80,7 +80,7 @@ class ParseJSON:
                 node.ports = self.__parse_ports(data['ports'])
                 self.nodes[node_id] = node
                 self.libraries.add(FROM_IMPORT.format(package=SKLEARN + "." + METRICS, class_to_import=ACCURACY_SCORE))
-            elif data['type'] == 'NODE_CROSS_VALIDATION':
+            elif data['type'] == 'NODE_CROSS_VALIDATION_CLASSIFIER':
                 node = CrossValidation(node_id=node_id, number_folds=data['numberFolds'])
                 node.ports = self.__parse_ports(data['ports'])
                 self.nodes[node_id] = node

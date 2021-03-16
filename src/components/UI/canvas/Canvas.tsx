@@ -12,7 +12,7 @@ import {SplitDatasetFactory} from "../../nodes/data/split-dataset/SplitDatasetFa
 import {OversamplingFactory} from "../../nodes/data/oversampling/OversamplingFactory";
 import {UndersamplingFactory} from "../../nodes/data/undersampling/UndersamplingFactory";
 import {PCAFactory} from "../../nodes/data/principal-component-analysis/PCAFactory";
-import {CrossValidationFactory} from "../../nodes/evaluate/cross-validation/CrossValidationFactory";
+import {CrossValidationClassifierFactory} from "../../nodes/evaluate/classifier/cross-validation/CrossValidationClassifierFactory";
 import {DatasetPortFactory} from "../../ports/dataset/DatasetPortFactory";
 import {ClassifierPortFactory} from "../../ports/model/ClassifierPortFactory";
 
@@ -42,7 +42,7 @@ class Canvas extends React.Component<CanvasProps, CanvasState> {
         this.props.engine.getNodeFactories().registerFactory(PCAFactory.getInstance());
         this.props.engine.getNodeFactories().registerFactory(AccuracyClassifierFactory.getInstance());
         this.props.engine.getNodeFactories().registerFactory(SplitDatasetFactory.getInstance());
-        this.props.engine.getNodeFactories().registerFactory(CrossValidationFactory.getInstance());
+        this.props.engine.getNodeFactories().registerFactory(CrossValidationClassifierFactory.getInstance());
     }
 
     registerPortFactories = () => {

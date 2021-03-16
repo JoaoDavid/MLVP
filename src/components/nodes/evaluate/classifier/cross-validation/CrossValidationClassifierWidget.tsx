@@ -1,20 +1,20 @@
 import * as React from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams-core';
-import {CrossValidationModel} from './CrossValidationModel';
-import BaseNodeWidget from '../../../core/BaseNode/BaseNodeWidget';
-import CrossValidationModal from "./CrossValidationModal";
-import {EVALUATE_CONFIG} from '../EvaluateConfig';
+import {CrossValidationClassifierModel} from './CrossValidationClassifierModel';
+import BaseNodeWidget from '../../../../core/BaseNode/BaseNodeWidget';
+import CrossValidationClassifierModal from "./CrossValidationClassifierModal";
+import {EVALUATE_CONFIG} from '../../EvaluateConfig';
 
 interface CrossValidationProps {
-    node: CrossValidationModel;
+    node: CrossValidationClassifierModel;
     engine: DiagramEngine;
 }
 
 type CrossValidationState = {
-    node: CrossValidationModel;
+    node: CrossValidationClassifierModel;
 };
 
-class CrossValidationWidget extends React.Component<CrossValidationProps, CrossValidationState> {
+class CrossValidationClassifierWidget extends React.Component<CrossValidationProps, CrossValidationState> {
 
     state = {
         node: this.props.node,
@@ -33,7 +33,7 @@ class CrossValidationWidget extends React.Component<CrossValidationProps, CrossV
 
 
     render() {
-        const modal = <CrossValidationModal node={this.props.node} numberFoldsChanged={this.numberFoldsChanged}/>;
+        const modal = <CrossValidationClassifierModal node={this.props.node} numberFoldsChanged={this.numberFoldsChanged}/>;
         return (
             <BaseNodeWidget node={this.props.node} engine={this.props.engine} color={EVALUATE_CONFIG.color} modalChildren={modal}>
                 <p>Number of folds: {this.state.node.getNumberFolds()}</p>
@@ -43,4 +43,4 @@ class CrossValidationWidget extends React.Component<CrossValidationProps, CrossV
 
 }
 
-export default CrossValidationWidget;
+export default CrossValidationClassifierWidget;
