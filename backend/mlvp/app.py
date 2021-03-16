@@ -18,8 +18,10 @@ def validate_links(data):
     return response
 
 
-def pipeline_verification(data):
-    verification = Verification(request=data)
+def pipeline_verification(diagram):
+    parser = ParseJSON(json_diagram=diagram)
+    _, roots = parser.parse()
+    verification = Verification(roots)
     response = verification.verify()
-    # print(response)
+    print(response)
     return str(response)
