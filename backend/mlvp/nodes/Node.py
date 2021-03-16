@@ -11,3 +11,16 @@ class Node(ABC):
         self.children = []
         self.visited = False
         pass
+
+    def get_port(self, in_port: bool, name: str):
+        for _, port in self.ports.items():
+            if name == port.name and port.in_port == in_port:
+                return port
+
+    def __str__(self):
+        return 'Class: {self.__class__.__name__} \n' \
+               'Node Id: {self.node_id} \n' \
+               'Parent Links: {self.parent_links} \n' \
+               'Ports: {self.ports} \n' \
+               'Children: {self.children} \n' \
+               'Visited: {self.visited} \n'.format(self=self)

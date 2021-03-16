@@ -1,16 +1,19 @@
 import {DiagramEngine, LinkModel, NodeModel} from '@projectstorm/react-diagrams-core';
 import axios from "axios";
 
-export interface AssertionsReqData {
+export interface VerificationRequest {
     links: string[],
     nodes: string[],
 }
-export interface AssertionProblem {
+export interface VerificationRequest2 {
+    links: Map<string, string[]>,
+    nodes: Map<string, string[]>,
+}
+export interface VerificationResponse {
     canLink: boolean,
-    nodeId: string,
-    problems: string[],
     nodeAssertions: Map<string, string[]>,
     linkAssertions: Map<string, string[]>,
+    unsatNodeAssertions: Map<string, string[]>,
 }
 
 export class ValidateLinks {
@@ -32,7 +35,7 @@ export class ValidateLinks {
         );
     }
 
-    eventProblemsFound = (assertionProblem: AssertionProblem) => {
+    eventProblemsFound = (assertionProblem: VerificationResponse) => {
         this.engine.getModel().fireEvent(
             {
                 assertionProblem: assertionProblem,
@@ -68,7 +71,8 @@ export class ValidateLinks {
         model_nodes.forEach((node) => {
             nodes.push(node.serialize());
         });
-        let data = {links: links, nodes: nodes}
+        // let data = {links: links, nodes: nodes}
+        const data = this.engine.getModel().serialize();
         console.log(data)
         const response = await this.sendReq(data);
         console.log(JSON.stringify(response, null, 4));
@@ -80,7 +84,7 @@ export class ValidateLinks {
         return response.canLink;
     }
 
-    sendReq = async (data: AssertionsReqData) => {
+    sendReq = async (data) => {
         return axios.post('/z3', data)
             .then(res => res.data)
             .catch(error => {

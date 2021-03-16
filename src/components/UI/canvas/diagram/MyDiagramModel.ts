@@ -1,10 +1,10 @@
 import {DiagramModel} from '@projectstorm/react-diagrams';
 import {LinkModel} from "@projectstorm/react-diagrams-core";
 import {BaseEntityEvent, BaseEntityListener, CanvasModelGenerics} from "@projectstorm/react-canvas-core";
-import {AssertionProblem} from "../../../../z3/ValidateLinks";
+import {VerificationResponse} from "../../../../z3/ValidateLinks";
 
 export interface MyDiagramListener extends BaseEntityListener {
-    problemsFound?(event: BaseEntityEvent & { assertionProblem: AssertionProblem }): void;
+    problemsFound?(event: BaseEntityEvent & { assertionProblem: VerificationResponse }): void;
 }
 
 export interface DiagramModelGenerics extends CanvasModelGenerics {

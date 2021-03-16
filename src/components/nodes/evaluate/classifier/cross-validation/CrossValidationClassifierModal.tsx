@@ -2,15 +2,15 @@ import * as React from 'react';
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {CrossValidationModel} from "./CrossValidationModel";
+import {CrossValidationClassifierModel} from "./CrossValidationClassifierModel";
 
 
 interface CrossValidationModalProps {
-    node: CrossValidationModel;
+    node: CrossValidationClassifierModel;
     numberFoldsChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const CrossValidationModal = (props: CrossValidationModalProps) => {
+const CrossValidationClassifierModal = (props: CrossValidationModalProps) => {
     return (
         <Form>
             <Form.Group>
@@ -25,4 +25,4 @@ const CrossValidationModal = (props: CrossValidationModalProps) => {
     )
 }
 
-export default CrossValidationModal;
+export default CrossValidationClassifierModal;
