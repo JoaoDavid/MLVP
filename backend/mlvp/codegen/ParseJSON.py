@@ -35,9 +35,10 @@ class ParseJSON:
                 self.nodes[node_id] = node
                 self.roots.append(node)
             elif data['type'] == 'NODE_IMPORT_CSV':
+                target = None if len(data['columnNames']) == 0 else data['columnNames'][-1]
                 node = ImportFromCSV(node_id=node_id, file_name=data['fileName'],
                                      num_cols=data['numCols'], num_rows=data['numRows'],
-                                     target=data['columnNames'][-1],
+                                     target=target,
                                      labels=data['labels'])
                 node.ports = self.__parse_ports(data['ports'])
                 self.nodes[node_id] = node
