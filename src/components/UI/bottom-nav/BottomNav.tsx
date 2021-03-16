@@ -4,8 +4,9 @@ import {BaseNodeModel} from "../../core/BaseNode/BaseNodeModel";
 import {DefaultLinkModel} from "@projectstorm/react-diagrams-defaults";
 
 interface BottomNavProps {
-    nodeProblems: Map<BaseNodeModel, string[]>,
-    linkProblems: Map<DefaultLinkModel, string[]>,
+    unsatNodeAssertions: Map<BaseNodeModel, string[]>,
+    allNodeAssertions: Map<BaseNodeModel, string[]>,
+    allLinkAssertions: Map<DefaultLinkModel, string[]>,
 }
 
 const BottomNav = (props: BottomNavProps) => {
@@ -20,8 +21,8 @@ const BottomNav = (props: BottomNavProps) => {
     }
 
 
-    if (props.nodeProblems.size > 0) {
-        props.nodeProblems.forEach((problems, node) => {
+    if (props.unsatNodeAssertions.size > 0) {
+        props.unsatNodeAssertions.forEach((problems, node) => {
             const nodeProblems: JSX.Element[] = [];
             problems.forEach((problem) => {
                 nodeProblems.push((<div className={classes.Problem}>{problem}</div>));
@@ -30,8 +31,8 @@ const BottomNav = (props: BottomNavProps) => {
         });
     }
 
-    if (props.linkProblems.size > 0) {
-        props.linkProblems.forEach((problems, link) => {
+/*    if (props.allLinkAssertions.size > 0) {
+        props.allLinkAssertions.forEach((problems, link) => {
             const linkProblems: JSX.Element[] = [];
             problems.forEach((problem) => {
                 linkProblems.push((<div className={classes.Problem}>{problem}</div>));
@@ -40,11 +41,7 @@ const BottomNav = (props: BottomNavProps) => {
             const targetNode = link.getTargetPort().getNode() as BaseNodeModel;
             box.push(<div> {"Link from " + sourceNode.getTitle() + " to " + targetNode.getTitle()} {linkProblems} </div>)
         });
-    }
-
-
-    console.log(props.nodeProblems);
-
+    }*/
 
     return (
         <div className={classes.Unselectable}>

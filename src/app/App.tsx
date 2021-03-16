@@ -24,8 +24,9 @@ interface AppProps {
 }
 
 type AppState = {
-    nodeProblems: Map<BaseNodeModel, string[]>,
-    linkProblems: Map<DefaultLinkModel, string[]>,
+    unsatNodeAssertions: Map<BaseNodeModel, string[]>,
+    allNodeAssertions: Map<BaseNodeModel, string[]>,
+    allLinkAssertions: Map<DefaultLinkModel, string[]>,
 };
 
 class App extends React.Component<AppProps, AppState> {
@@ -37,8 +38,9 @@ class App extends React.Component<AppProps, AppState> {
     private generated_nodes_counter = 0;
 
     state = {
-        nodeProblems: new Map(),
-        linkProblems: new Map(),
+        unsatNodeAssertions: new Map(),
+        allNodeAssertions: new Map(),
+        allLinkAssertions: new Map(),
     }
 
     constructor(props: AppProps) {
@@ -61,8 +63,9 @@ class App extends React.Component<AppProps, AppState> {
             linkCreated: (event) => {
                 console.log('linkCreated');
                 console.log(event);
-                this.state.nodeProblems.clear();
-                this.state.linkProblems.clear();
+                this.state.unsatNodeAssertions.clear();
+                this.state.allNodeAssertions.clear();
+                this.state.allLinkAssertions.clear();
                 const newState = {...this.state}
                 this.setState(newState);
             },
@@ -82,8 +85,9 @@ class App extends React.Component<AppProps, AppState> {
                 const allLinkAssertions = this.processLinkAssertions(event.assertionProblem);
                 const unsatNodeAssertions = this.processNodeAssertions(event.assertionProblem.unsatNodeAssertions);
                 this.setState({
-                    nodeProblems: allNodeAssertions,
-                    linkProblems: allLinkAssertions,
+                    unsatNodeAssertions: unsatNodeAssertions,
+                    allNodeAssertions: allNodeAssertions,
+                    allLinkAssertions: allLinkAssertions,
                 })
             }
         });
@@ -197,7 +201,10 @@ class App extends React.Component<AppProps, AppState> {
                     <SideBar catAndNames={this.loadMapCategoryNodes()} format={this.dragDropFormat}/>
                     <Canvas engine={this.engine}  onDropCanvas={this.onDropCanvas}/>
                 </div>
-                <BottomNav nodeProblems={this.state.nodeProblems} linkProblems={this.state.linkProblems}/>
+                <BottomNav unsatNodeAssertions={this.state.unsatNodeAssertions}
+                           allNodeAssertions={this.state.allNodeAssertions}
+                           allLinkAssertions={this.state.allLinkAssertions}
+                />
             </div>
         );
     }
