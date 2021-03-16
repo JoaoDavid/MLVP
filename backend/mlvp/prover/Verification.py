@@ -76,19 +76,11 @@ class Verification:
             result["canLink"] = False
             self.solver.pop()
             first_problem_index = self.__find_source_unsat(self.all_node_assertions)
-            first_problem_node = self.all_node_assertions[first_problem_index][0]
-            first_problem_assertions = self.all_node_assertions[first_problem_index][1]
 
             self.solver.pop(first_problem_index + 1)
             self.solver.add(self.all_node_assertions[first_problem_index][1])
             second_problem_index = self.__find_source_unsat(self.all_node_assertions[:first_problem_index])
-            second_problem_node = self.all_node_assertions[second_problem_index][0]
-            second_problem_assertions = self.all_node_assertions[second_problem_index][1]
 
-            self.node_assertions[first_problem_node.node_id] = assertions_to_str(first_problem_node.ports,
-                                                                                 first_problem_assertions)
-            self.node_assertions[second_problem_node.node_id] = assertions_to_str(second_problem_node.ports,
-                                                                                  second_problem_assertions)
             print(self.all_node_assertions[first_problem_index])
             print(self.all_node_assertions[second_problem_index])
 
@@ -170,10 +162,32 @@ class Verification:
                 self.all_link_assertions.append((parent_link, link_assertions))
 
     def __find_source_unsat(self, list_tuple_assertions):
-        for index, assertion in enumerate(list_tuple_assertions):
+        for index, assertions in enumerate(list_tuple_assertions):
+            node = assertions[0]
             self.solver.push()
-            self.solver.add(assertion[1])
+            self.solver.add(assertions[1])
             if self.solver.check() == unsat:
+                self.solver.pop()
                 # found node that causes the unsat
                 print("Found source of UNSAT at index " + str(index))
+                specific_assertions = self.__find_unsat_node_assertion(assertions)
+                self.node_assertions[node.node_id] = assertions_to_str(node.ports, specific_assertions)
+                self.solver.push()
+                self.solver.add(assertions[1])
                 return index
+
+    def __find_unsat_node_assertion(self, node_assertions):
+        print("node_assertions")
+        print(node_assertions)
+        unsat_assertions = []
+        pop_counter = 0
+        for curr_asser in node_assertions[1]:
+            self.solver.push()
+            self.solver.add(curr_asser)
+            if self.solver.check() == unsat:
+                unsat_assertions.append(curr_asser)
+                self.solver.pop()
+            else:
+                pop_counter += 1
+        self.solver.pop(pop_counter)
+        return unsat_assertions
