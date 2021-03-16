@@ -36,15 +36,16 @@ class ParseJSON:
                 self.roots.append(node)
             elif data['type'] == 'NODE_IMPORT_CSV':
                 node = ImportFromCSV(node_id=node_id, file_name=data['fileName'],
-                                                        num_cols=data['numCols'], num_rows=data['numRows'],
-                                                        target=data['columnNames'][-1])
+                                     num_cols=data['numCols'], num_rows=data['numRows'],
+                                     target=data['columnNames'][-1],
+                                     labels=data['labels'])
                 node.ports = self.__parse_ports(data['ports'])
                 self.nodes[node_id] = node
                 self.libraries.add(IMPORT_AS.format(lib_name=PANDAS, lib_var=PANDAS_VAR))
                 self.roots.append(node)
             elif data['type'] == 'NODE_SPLIT_DATASET':
                 node = SplitDataset(node_id=node_id, test_size=data['testSize'],
-                                                  train_size=data['trainSize'], shuffle=data['shuffle'])
+                                    train_size=data['trainSize'], shuffle=data['shuffle'])
                 node.ports = self.__parse_ports(data['ports'])
                 self.nodes[node_id] = node
                 self.libraries.add(
@@ -69,7 +70,7 @@ class ParseJSON:
                     FROM_IMPORT.format(package=SKLEARN + "." + DECOMPOSITION, class_to_import=PCA))
             elif data['type'] == 'NODE_RANDOM_FOREST_CLASSIFIER':
                 node = RandomForestClassifier(node_id=node_id, num_trees=data['numTrees'],
-                                                  criterion=data['criterion'], max_depth=data['maxDepth'])
+                                              criterion=data['criterion'], max_depth=data['maxDepth'])
                 node.ports = self.__parse_ports(data['ports'])
                 self.nodes[node_id] = node
                 self.libraries.add(
@@ -83,7 +84,8 @@ class ParseJSON:
                 node = CrossValidation(node_id=node_id, number_folds=data['numberFolds'])
                 node.ports = self.__parse_ports(data['ports'])
                 self.nodes[node_id] = node
-                self.libraries.add(FROM_IMPORT.format(package=SKLEARN + "." + MODEL_SELECTION, class_to_import=CROSS_VAL_SCORE))
+                self.libraries.add(
+                    FROM_IMPORT.format(package=SKLEARN + "." + MODEL_SELECTION, class_to_import=CROSS_VAL_SCORE))
 
     def __parse_links(self):
         for link_id, data in self.json_links.items():

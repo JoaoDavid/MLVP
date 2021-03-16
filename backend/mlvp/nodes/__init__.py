@@ -1,3 +1,4 @@
+from .Node import Node
 from .data.AbstractDataset import AbstractDataset
 from .data.ImportFromCSV import ImportFromCSV
 from .data.SplitDataset import SplitDataset
