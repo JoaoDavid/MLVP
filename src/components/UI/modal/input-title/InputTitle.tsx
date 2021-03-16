@@ -25,7 +25,7 @@ const InputTitle = (props: InputTitleProps) => {
     }, []);
 
     return (
-        <input className={classes.InputTitle} ref={inputElement} onChange={changeTextHandler} value={title} onBlur={props.finishEditingText} maxLength={25}/>
+        <input className={classes.InputTitle} ref={inputElement} onChange={changeTextHandler} value={title} onBlur={props.finishEditingText} maxLength={40}/>
     )
 }
 

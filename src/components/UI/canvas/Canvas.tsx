@@ -17,8 +17,8 @@ import {DatasetPortFactory} from "../../ports/dataset/DatasetPortFactory";
 import {ClassifierPortFactory} from "../../ports/model/ClassifierPortFactory";
 
 interface CanvasProps {
-    dragDropFormat: string,
     engine: DiagramEngine,
+    onDropCanvas: (event: DragEvent<HTMLDivElement>) => void,
 }
 
 type CanvasState = {
@@ -65,22 +65,7 @@ class Canvas extends React.Component<CanvasProps, CanvasState> {
         return factory.generateModel({}) as BaseNodeModel;
     }
 
-    onDropDiagram = (event: DragEvent<HTMLDivElement>) => {
-        event.preventDefault();
-        const data = event.dataTransfer.getData(this.props.dragDropFormat);
-        try {
-            const inJSON = JSON.parse(data);
-            console.log(data);
-            const factory = this.props.engine.getNodeFactories().getFactory(inJSON.codeName);
-            const node = this.generateModel(factory);
-            let point = this.props.engine.getRelativeMousePoint(event);
-            node.setPosition(point);
-            this.props.engine.getModel().addNode(node);
-            this.props.engine.repaintCanvas();
-        } catch (e) {
-            //console.log(e);
-        }
-    }
+
 
     render() {
         return (
@@ -88,7 +73,7 @@ class Canvas extends React.Component<CanvasProps, CanvasState> {
                  onDragOver={(event) => {
                      event.preventDefault()
                  }}
-                 onDrop={this.onDropDiagram}
+                 onDrop={this.props.onDropCanvas}
             >
                 <CanvasWidget className={classes.DiagramContainer} engine={this.props.engine}/>
             </div>

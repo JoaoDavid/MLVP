@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {DragEvent} from 'react';
 import classes from './App.module.css';
 import createEngine, {DiagramEngine} from '@projectstorm/react-diagrams';
 import TopNav from '../components/UI/top-nav/TopNav';
@@ -37,6 +37,7 @@ class App extends React.Component<AppProps, AppState> {
     private lastSave: any = {};
     private readonly engine: DiagramEngine;
     private readonly validateLinks: ValidateLinks;
+    private generated_nodes_counter = 0;
 
     state = {
         nodeProblems: new Map(),
@@ -143,6 +144,25 @@ class App extends React.Component<AppProps, AppState> {
         const model = new MyDiagramModel();
         this.engine.setModel(model);
         this.registerListeners(model);
+        this.generated_nodes_counter = 0;
+    }
+
+    onDropCanvas = (event: DragEvent<HTMLDivElement>) => {
+        event.preventDefault();
+        const data = event.dataTransfer.getData(this.dragDropFormat);
+        try {
+            const inJSON = JSON.parse(data);
+            console.log(data);
+            const factory = this.engine.getNodeFactories().getFactory(inJSON.codeName);
+            const node = factory.generateModel({}) as BaseNodeModel;
+            let point = this.engine.getRelativeMousePoint(event);
+            node.setPosition(point);
+            node.setTitle(node.getTitle() + " " + ++this.generated_nodes_counter);
+            this.engine.getModel().addNode(node);
+            this.engine.repaintCanvas();
+        } catch (e) {
+            //console.log(e);
+        }
     }
 
     openSave = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -183,7 +203,7 @@ class App extends React.Component<AppProps, AppState> {
                         generateCodeReq={this.generateCodeReq} loadDemos={this.loadDemos()}/>
                 <div className={classes.Container}>
                     <SideBar catAndNames={this.loadMapCategoryNodes()} format={this.dragDropFormat}/>
-                    <Canvas dragDropFormat={this.dragDropFormat} engine={this.engine}/>
+                    <Canvas engine={this.engine}  onDropCanvas={this.onDropCanvas}/>
                 </div>
                 <BottomNav nodeProblems={this.state.nodeProblems} linkProblems={this.state.linkProblems}/>
             </div>
