@@ -11,24 +11,24 @@ interface BottomNavProps {
 
 const BottomNav = (props: BottomNavProps) => {
     const tabs = ["Problems", "Assertions", "Log"]
-    const content: JSX.Element[] = [];
     const [activeTab, setActiveTab] = useState(tabs[0]);
 
     const handleClick = (e, newActiveTab) => {
         e.preventDefault();
-        if (activeTab != newActiveTab) {
+        if (activeTab !== newActiveTab) {
             setActiveTab(newActiveTab);
         } else {
             setActiveTab("disabled");
         }
     };
 
+    const unsat: JSX.Element[] = [];
     props.unsatNodeAssertions.forEach((nodeAssertions, node) => {
         const nodeProblems: JSX.Element[] = [];
         nodeAssertions.forEach((assertion) => {
             nodeProblems.push((<li>{assertion}</li>));
         });
-        content.push(<div>
+        unsat.push(<div>
             <ul className={classes.list}>
                 <li>{node.getTitle()}</li>
                 <ul className={classes.list}>
@@ -62,21 +62,21 @@ const BottomNav = (props: BottomNavProps) => {
         const sourceNode = link.getSourcePort().getNode() as BaseNodeModel;
         const targetNode = link.getTargetPort().getNode() as BaseNodeModel;
         assertions.push(
-            <ul>
+            <ul className={classes.list}>
                 <li>{"Link from " + sourceNode.getTitle() + " to " + targetNode.getTitle()}</li>
-                <ul>
+                <ul className={classes.list}>
                     {linkProblems}
                 </ul>
             </ul>)
     });
 
-    content.push(<div>{assertions}</div>)
+
 
     let current_content = null;
-    if(activeTab == tabs[0]) {
-        current_content = content[0];
-    } else if (activeTab == tabs[1]) {
-        current_content = content[1];
+    if(activeTab === tabs[0]) {
+        current_content = unsat;
+    } else if (activeTab === tabs[1]) {
+        current_content = assertions;
     } else {
         current_content = (<div></div>)
     }
@@ -91,7 +91,7 @@ const BottomNav = (props: BottomNavProps) => {
                     {tabs.map((tab) => {
                         return (
                             <li
-                                className={tab == activeTab ? classes.current : ""}
+                                className={tab === activeTab ? classes.current : ""}
                                 key={tab}
                                 onClick={(e) => handleClick(e, tab)}
                             >
