@@ -10,48 +10,96 @@ interface BottomNavProps {
 }
 
 const BottomNav = (props: BottomNavProps) => {
-    const [index, setIndex] = useState(0);
-    const showBox: boolean[] = [false, false, false];
-    const box: JSX.Element[] = [];
+    const tabs = ["Problems", "Assertions", "Log"]
+    const [activeTab, setActiveTab] = useState(tabs[0]);
 
+    const handleClick = (e, newActiveTab) => {
+        e.preventDefault();
+        if (activeTab !== newActiveTab) {
+            setActiveTab(newActiveTab);
+        } else {
+            setActiveTab("disabled");
+        }
+    };
 
-    let dev = (<span>Project under development</span>);
-    if (process.env.NODE_ENV === 'development') {
-        dev = (<span style={{color: "yellow"}}>DEVELOPMENT VERSION</span>);
-    }
-
-
-    if (props.unsatNodeAssertions.size > 0) {
-        props.unsatNodeAssertions.forEach((problems, node) => {
-            const nodeProblems: JSX.Element[] = [];
-            problems.forEach((problem) => {
-                nodeProblems.push((<div className={classes.Problem}>{problem}</div>));
-            });
-            box.push(<div> {node.getTitle() + " (" + node.getOptions().name + ")"} {nodeProblems} </div>)
+    const unsat: JSX.Element[] = [];
+    props.unsatNodeAssertions.forEach((nodeAssertions, node) => {
+        const nodeProblems: JSX.Element[] = [];
+        nodeAssertions.forEach((assertion) => {
+            nodeProblems.push((<li>{assertion}</li>));
         });
-    }
+        unsat.push(<div>
+            <ul className={classes.list}>
+                <li>{node.getTitle()}</li>
+                <ul className={classes.list}>
+                    {nodeProblems}
+                </ul>
+            </ul>
+        </div>)
+    });
 
-/*    if (props.allLinkAssertions.size > 0) {
-        props.allLinkAssertions.forEach((problems, link) => {
-            const linkProblems: JSX.Element[] = [];
-            problems.forEach((problem) => {
-                linkProblems.push((<div className={classes.Problem}>{problem}</div>));
-            });
-            const sourceNode = link.getSourcePort().getNode() as BaseNodeModel;
-            const targetNode = link.getTargetPort().getNode() as BaseNodeModel;
-            box.push(<div> {"Link from " + sourceNode.getTitle() + " to " + targetNode.getTitle()} {linkProblems} </div>)
+
+    const assertions: JSX.Element[] = [];
+    props.allNodeAssertions.forEach((nodeAssertions, node) => {
+        const nodeProblems: JSX.Element[] = [];
+        nodeAssertions.forEach((assertion) => {
+            nodeProblems.push((<li>{assertion}</li>));
         });
-    }*/
+        assertions.push(
+            <ul className={classes.list}>
+                <li>{node.getTitle()}</li>
+                <ul className={classes.list}>
+                    {nodeProblems}
+                </ul>
+            </ul>)
+    });
+
+    props.allLinkAssertions.forEach((linkAssertions, link) => {
+        const linkProblems: JSX.Element[] = [];
+        linkAssertions.forEach((assertion) => {
+            linkProblems.push((<li>{assertion}</li>));
+        });
+        const sourceNode = link.getSourcePort().getNode() as BaseNodeModel;
+        const targetNode = link.getTargetPort().getNode() as BaseNodeModel;
+        assertions.push(
+            <ul className={classes.list}>
+                <li>{"Link from " + sourceNode.getTitle() + " to " + targetNode.getTitle()}</li>
+                <ul className={classes.list}>
+                    {linkProblems}
+                </ul>
+            </ul>)
+    });
+
+
+
+    let current_content = null;
+    if(activeTab === tabs[0]) {
+        current_content = unsat;
+    } else if (activeTab === tabs[1]) {
+        current_content = assertions;
+    } else {
+        current_content = (<div></div>)
+    }
 
     return (
         <div className={classes.Unselectable}>
             <div className={classes.Box}>
-                {box}
+                {current_content}
             </div>
             <div className={classes.BottomNav}>
-                <span className={classes.ToggleOn}>Problems</span>
-                <span className={classes.Toggle}>Terminal</span>
-                <span className={classes.Toggle}>Log</span>
+                <ul className={classes.tabs}>
+                    {tabs.map((tab) => {
+                        return (
+                            <li
+                                className={tab === activeTab ? classes.current : ""}
+                                key={tab}
+                                onClick={(e) => handleClick(e, tab)}
+                            >
+                                {tab}
+                            </li>
+                        );
+                    })}
+                </ul>
             </div>
         </div>
     )
