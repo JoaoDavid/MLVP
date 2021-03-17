@@ -63,7 +63,7 @@ export class MyDragNewLinkState extends AbstractDisplacementState<DiagramEngine>
                         if (this.port.canLinkToPort(model)) {
                             this.adjustPorts(this.port, model);
 
-                            this.validateLinks.validLink(this.link).then((res) => {
+                            this.validateLinks.validLink().then((res) => {
                                 if(res) {
                                     //link created between nodes
                                     this.validateLinks.eventLinkCreated(this.link);
