@@ -31,16 +31,15 @@
 .Box {
     border-top: 3px solid rgba(51,58,64,255);
     max-height: 200px;
-    /*height: 200px;*/
+    height: 200px;
     background-color: rgb(68, 72, 78);
     color: rgba(255, 255, 255, 0.5);
-    padding-left: 20px;
     overflow: auto;
     overflow-x: hidden ;
 }
 
-.Problem {
-    padding-left: 30px;
+.list {
+    list-style: none;
 }
 
 .Unselectable {
