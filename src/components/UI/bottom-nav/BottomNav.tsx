@@ -10,8 +10,18 @@ interface BottomNavProps {
 }
 
 const BottomNav = (props: BottomNavProps) => {
-    const [index, setIndex] = useState(0);
-    const showBox: boolean[] = [false, false, false];
+    const tabs = ["Problems", "Assertions", "Log"]
+    const [activeTab, setActiveTab] = useState(tabs[0]);
+
+    const handleClick = (e, newActiveTab) => {
+        e.preventDefault();
+        if (activeTab != newActiveTab) {
+            setActiveTab(newActiveTab);
+        } else {
+            setActiveTab("disabled");
+        }
+    };
+
     const box: JSX.Element[] = [];
 
 
@@ -31,27 +41,37 @@ const BottomNav = (props: BottomNavProps) => {
         });
     }
 
-/*    if (props.allLinkAssertions.size > 0) {
-        props.allLinkAssertions.forEach((problems, link) => {
-            const linkProblems: JSX.Element[] = [];
-            problems.forEach((problem) => {
-                linkProblems.push((<div className={classes.Problem}>{problem}</div>));
+    /*    if (props.allLinkAssertions.size > 0) {
+            props.allLinkAssertions.forEach((problems, link) => {
+                const linkProblems: JSX.Element[] = [];
+                problems.forEach((problem) => {
+                    linkProblems.push((<div className={classes.Problem}>{problem}</div>));
+                });
+                const sourceNode = link.getSourcePort().getNode() as BaseNodeModel;
+                const targetNode = link.getTargetPort().getNode() as BaseNodeModel;
+                box.push(<div> {"Link from " + sourceNode.getTitle() + " to " + targetNode.getTitle()} {linkProblems} </div>)
             });
-            const sourceNode = link.getSourcePort().getNode() as BaseNodeModel;
-            const targetNode = link.getTargetPort().getNode() as BaseNodeModel;
-            box.push(<div> {"Link from " + sourceNode.getTitle() + " to " + targetNode.getTitle()} {linkProblems} </div>)
-        });
-    }*/
+        }*/
 
     return (
         <div className={classes.Unselectable}>
-            <div className={classes.Box}>
+            <div className={classes.content}>
                 {box}
             </div>
             <div className={classes.BottomNav}>
-                <span className={classes.ToggleOn}>Problems</span>
-                <span className={classes.Toggle}>Terminal</span>
-                <span className={classes.Toggle}>Log</span>
+                <ul className={classes.tabs}>
+                    {tabs.map((tab) => {
+                        return (
+                            <li
+                                className={tab == activeTab ? classes.current : ""}
+                                key={tab}
+                                onClick={(e) => handleClick(e, tab)}
+                            >
+                                {tab}
+                            </li>
+                        );
+                    })}
+                </ul>
             </div>
         </div>
     )

@@ -1,34 +1,31 @@
 .BottomNav {
     overflow: hidden;
     background-color: rgb(68, 72, 78);
+    /*border-top: 3px solid rgba(51,58,64,255);*/
+    text-align: left;
+}
+
+.tabs {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
     border-top: 3px solid rgba(51,58,64,255);
 }
 
-.Toggle {
-    float: left;
-    display: block;
+.tabs > li {
+    padding: 0.2em 1em;
     color: rgba(255, 255, 255, 0.5);
-    text-align: center;
-    padding: 5px 10px;
-    text-decoration: none;
-    font-size: 15px;
 }
 
-.Toggle:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.5);
-    text-decoration: none;
-}
-
-.ToggleOn, .ToggleOn:hover {
-    float: left;
-    display: block;
+.current {
     color: rgba(255, 255, 255, 0.5);
     background-color: rgba(51,58,64,255);
-    text-align: center;
-    padding: 5px 10px;
-    text-decoration: none;
-    font-size: 15px;
+}
+
+.content {
+    padding: 1em 2em;
+    background-color: rgb(68, 72, 78);
 }
 
 .Box {
