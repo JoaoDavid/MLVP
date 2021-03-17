@@ -91,7 +91,7 @@ const BottomNav = (props: BottomNavProps) => {
                     {tabs.map((tab) => {
                         return (
                             <li
-                                className={tab === activeTab ? classes.current : ""}
+                                className={tab === activeTab ? classes.current : classes.NotCurrent}
                                 key={tab}
                                 onClick={(e) => handleClick(e, tab)}
                             >
