@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {DragEvent} from 'react';
 import classes from './App.module.css';
 import createEngine, {DiagramEngine} from '@projectstorm/react-diagrams';
 import TopNav from '../components/UI/top-nav/TopNav';
@@ -13,17 +13,20 @@ import BottomNav from "../components/UI/bottom-nav/BottomNav";
 import Canvas from "../components/UI/canvas/Canvas";
 import {MyDiagramModel} from "../components/UI/canvas/diagram/MyDiagramModel";
 import splitEvaluate from '../demos/split-n-evaluate.json';
-import testJson from '../demos/test.json';
 import {MyZoomCanvasAction} from "../components/UI/canvas/actions/MyZoomCanvasAction";
 import {DiagramStateManager} from "../components/UI/canvas/states/DiagramStateManager";
-import {ValidateLinks} from "../z3/ValidateLinks";
+import {VerificationResponse, ValidateLinks} from "../z3/ValidateLinks";
+import {BaseNodeModel} from "../components/core/BaseNode/BaseNodeModel";
+import {DefaultLinkModel} from "@projectstorm/react-diagrams-defaults";
 
 interface AppProps {
 
 }
 
 type AppState = {
-
+    unsatNodeAssertions: Map<BaseNodeModel, string[]>,
+    allNodeAssertions: Map<BaseNodeModel, string[]>,
+    allLinkAssertions: Map<DefaultLinkModel, string[]>,
 };
 
 class App extends React.Component<AppProps, AppState> {
@@ -32,25 +35,90 @@ class App extends React.Component<AppProps, AppState> {
     private lastSave: any = {};
     private readonly engine: DiagramEngine;
     private readonly validateLinks: ValidateLinks;
+    private generated_nodes_counter = 0;
+
+    state = {
+        unsatNodeAssertions: new Map(),
+        allNodeAssertions: new Map(),
+        allLinkAssertions: new Map(),
+    }
 
     constructor(props: AppProps) {
         super(props);
-        this.engine = createEngine({registerDefaultZoomCanvasAction:false});
+        this.engine = createEngine({registerDefaultZoomCanvasAction: false});
         this.validateLinks = new ValidateLinks(this.engine);
         this.newCanvas();
-        this.engine.getActionEventBus().registerAction(new MyZoomCanvasAction({inverseZoom:true}));
+        this.engine.getActionEventBus().registerAction(new MyZoomCanvasAction({inverseZoom: true}));
         this.engine.getStateMachine().pushState(new DiagramStateManager(this.validateLinks));
         this.engine.maxNumberPointsPerLink = 0;
 
     }
 
-    loadDemos = () => {
-        const map = new Map<String, ()=>void>();
-        map.set("Simple Pipeline", ()=>{
-            this.loadDemoAux(splitEvaluate);
+    registerListeners = (model: MyDiagramModel) => {
+        model.registerListener({
+            linksUpdated: (event) => {
+                console.log('linksUpdated');
+                console.log(event);
+            },
+            linkCreated: (event) => {
+                console.log('linkCreated');
+                console.log(event);
+                this.state.unsatNodeAssertions.clear();
+                this.state.allNodeAssertions.clear();
+                this.state.allLinkAssertions.clear();
+                const newState = {...this.state}
+                this.setState(newState);
+            },
+            nodePropsUpdated: (event) => {
+                console.log("nodePropsUpdated");
+                console.log(event);
+            },
+            nodesUpdated: (event) => {
+                console.log("nodesUpdated");
+                console.log(event);
+            },
+            problemsFound: (event) => {
+                console.log("problemsFound");
+                console.log(event);
+                console.log(event.assertionProblem);
+                const allNodeAssertions = this.processNodeAssertions(event.assertionProblem.nodeAssertions);
+                const allLinkAssertions = this.processLinkAssertions(event.assertionProblem);
+                const unsatNodeAssertions = this.processNodeAssertions(event.assertionProblem.unsatNodeAssertions);
+                this.setState({
+                    unsatNodeAssertions: unsatNodeAssertions,
+                    allNodeAssertions: allNodeAssertions,
+                    allLinkAssertions: allLinkAssertions,
+                })
+            }
         });
-        map.set("Test", ()=>{
-            this.loadDemoAux(testJson);
+    }
+
+    processNodeAssertions = (mapNodeAssertions) => {
+        const map = new Map<BaseNodeModel, string[]>();
+
+        for (let k of Object.keys(mapNodeAssertions)) {
+            const node = this.engine.getModel().getNode(k) as BaseNodeModel;
+            map.set(node, mapNodeAssertions[k]);
+        }
+        return map;
+    }
+
+    processLinkAssertions = (assertionProblem: VerificationResponse) => {
+        const map = new Map<DefaultLinkModel, string[]>();
+
+        for (let k of Object.keys(assertionProblem.linkAssertions)) {
+            const link = this.engine.getModel().getLink(k) as DefaultLinkModel;
+            console.log(link)
+            map.set(link, assertionProblem.linkAssertions[k]);
+        }
+        return map;
+    }
+
+
+    loadDemos = () => {
+        const map = new Map<String, () => void>();
+        map.set("Simple Pipeline", () => {
+            this.loadDemoAux(splitEvaluate);
         });
         return map;
     }
@@ -69,8 +137,28 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     newCanvas = () => {
-        this.engine.setModel(new MyDiagramModel());
-        this.validateLinks.registerListener();
+        const model = new MyDiagramModel();
+        this.engine.setModel(model);
+        this.registerListeners(model);
+        this.generated_nodes_counter = 0;
+    }
+
+    onDropCanvas = (event: DragEvent<HTMLDivElement>) => {
+        event.preventDefault();
+        const data = event.dataTransfer.getData(this.dragDropFormat);
+        try {
+            const inJSON = JSON.parse(data);
+            console.log(data);
+            const factory = this.engine.getNodeFactories().getFactory(inJSON.codeName);
+            const node = factory.generateModel({}) as BaseNodeModel;
+            let point = this.engine.getRelativeMousePoint(event);
+            node.setPosition(point);
+            node.setTitle(node.getTitle() + " " + ++this.generated_nodes_counter);
+            this.engine.getModel().addNode(node);
+            this.engine.repaintCanvas();
+        } catch (e) {
+            //console.log(e);
+        }
     }
 
     openSave = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -111,9 +199,12 @@ class App extends React.Component<AppProps, AppState> {
                         generateCodeReq={this.generateCodeReq} loadDemos={this.loadDemos()}/>
                 <div className={classes.Container}>
                     <SideBar catAndNames={this.loadMapCategoryNodes()} format={this.dragDropFormat}/>
-                    <Canvas dragDropFormat={this.dragDropFormat} engine={this.engine}/>
+                    <Canvas engine={this.engine}  onDropCanvas={this.onDropCanvas}/>
                 </div>
-                <BottomNav/>
+                <BottomNav unsatNodeAssertions={this.state.unsatNodeAssertions}
+                           allNodeAssertions={this.state.allNodeAssertions}
+                           allLinkAssertions={this.state.allLinkAssertions}
+                />
             </div>
         );
     }

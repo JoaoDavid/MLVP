@@ -1,5 +1,56 @@
 .BottomNav {
+    overflow: hidden;
     background-color: rgb(68, 72, 78);
-    text-align: right;
-    color: rgb(154, 157, 160);
+    border-top: 3px solid rgba(51,58,64,255);
 }
+
+.Toggle {
+    float: left;
+    display: block;
+    color: rgba(255, 255, 255, 0.5);
+    text-align: center;
+    padding: 5px 10px;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.Toggle:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+}
+
+.ToggleOn, .ToggleOn:hover {
+    float: left;
+    display: block;
+    color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(51,58,64,255);
+    text-align: center;
+    padding: 5px 10px;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.Box {
+    border-top: 3px solid rgba(51,58,64,255);
+    max-height: 200px;
+    /*height: 200px;*/
+    background-color: rgb(68, 72, 78);
+    color: rgba(255, 255, 255, 0.5);
+    padding-left: 20px;
+    overflow: auto;
+    overflow-x: hidden ;
+}
+
+.Problem {
+    padding-left: 30px;
+}
+
+.Unselectable {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10+ and Edge */
+    user-select: none; /* Standard syntax */
+}
+
+
+

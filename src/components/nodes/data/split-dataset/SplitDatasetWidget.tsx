@@ -22,23 +22,21 @@ class SplitDatasetWidget extends React.Component<SplitDatasetProps, SplitDataset
 
     testSizeChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.state.node.setTestSize(+event.target.value);
-        this.updateState();
+        this.setState({});
     }
 
     trainSizeChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.state.node.setTrainSize(+event.target.value);
-        this.updateState();
+        this.setState({});
     }
 
     shuffleChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.state.node.setShuffle(event.target.value);
-        this.updateState();
+        this.setState({});
     }
 
     private updateState = () => {
-        const newState = {...this.state};
-        this.setState(newState);
-        console.log(this.state.node);
+        this.setState({});
         this.props.engine.getModel().fireEvent(
             {
                 node: this,

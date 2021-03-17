@@ -22,35 +22,29 @@ class RandomForestClassifierWidget extends React.Component<NodeProps, NodeState>
 
     numTreesChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.state.node.setNumTrees(+event.target.value);
-        this.updateState();
+        this.setState({});
     }
 
-    maxDepthChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.state.node.setMaxDepth(+event.target.value);
-        this.updateState();
+    setMaxTrees = (value: number) => {
+        this.state.node.setMaxDepth(value);
+        this.setState({});
     }
 
     criterionChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.state.node.setCriterion(event.target.value);
-        this.updateState();
-    }
-
-    private updateState = () => {
-        const newState = {...this.state};
-        this.setState(newState);
-        console.log(this.state.node);
+        this.setState({});
     }
 
     render() {
         const modal = <RandomForestClassifierModal node={this.state.node} numTreesChanged={this.numTreesChanged}
-                                                   maxDepthChanged={this.maxDepthChanged}
+                                                   setMaxTrees={this.setMaxTrees}
                                                    criterionChanged={this.criterionChanged}/>;
 
         return (
             <BaseNodeWidget node={this.state.node} engine={this.props.engine} color={MODEL_CONFIG.color}
                             modalChildren={modal}>
                 <p>Trees: {this.state.node.getNumTrees()}</p>
-                <p>Max Depth: {this.state.node.getMaxDepth() || "None"}</p>
+                <p>Max Depth: {this.state.node.getMaxDepth()>0?this.state.node.getMaxDepth():"None"}</p>
                 <p>Criterion: {this.state.node.getCriterion().toString()}</p>
             </BaseNodeWidget>
         )

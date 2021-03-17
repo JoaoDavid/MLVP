@@ -61,7 +61,7 @@ export class CSVModel extends BaseNodeModel {
                     worker: false, // Don't bog down the main thread if its a big file
                     download: true,
                     header: false,
-                    fastMode: true,
+                    fastMode: false,
                     skipEmptyLines: true,
                     complete: (results: any) => {
                         if (results.data.length > 0) {
@@ -72,8 +72,8 @@ export class CSVModel extends BaseNodeModel {
                             this.labels = this.processDataset(results.data);
                             console.log("numCols:" + this.numCols + " numRows:" + this.numRows);
                             console.log(this.labels);
-                            complete(results.data);
                         }
+                        complete(results.data);
                     }
                 });
             });

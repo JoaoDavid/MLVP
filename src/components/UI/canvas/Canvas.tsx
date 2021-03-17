@@ -4,6 +4,7 @@ import classes from "./Canvas.module.css";
 import {AbstractReactFactory, CanvasWidget} from "@projectstorm/react-canvas-core";
 import {NodeModel} from "@projectstorm/react-diagrams-core";
 import {BaseNodeModel} from "../../core/BaseNode/BaseNodeModel";
+import {AbstractDsFactory} from "../../nodes/data/import-dataset/abstract/AbstractDsFactory";
 import {CSVFactory} from "../../nodes/data/import-dataset/csv/CSVFactory";
 import {RandomForestClassifierFactory} from "../../nodes/model/classifier/random-forest-classifier/RandomForestClassifierFactory";
 import {AccuracyClassifierFactory} from "../../nodes/evaluate/classifier/accuracy/AccuracyClassifierFactory";
@@ -11,13 +12,13 @@ import {SplitDatasetFactory} from "../../nodes/data/split-dataset/SplitDatasetFa
 import {OversamplingFactory} from "../../nodes/data/oversampling/OversamplingFactory";
 import {UndersamplingFactory} from "../../nodes/data/undersampling/UndersamplingFactory";
 import {PCAFactory} from "../../nodes/data/principal-component-analysis/PCAFactory";
-import {CrossValidationFactory} from "../../nodes/evaluate/cross-validation/CrossValidationFactory";
+import {CrossValidationClassifierFactory} from "../../nodes/evaluate/classifier/cross-validation/CrossValidationClassifierFactory";
 import {DatasetPortFactory} from "../../ports/dataset/DatasetPortFactory";
 import {ClassifierPortFactory} from "../../ports/model/ClassifierPortFactory";
 
 interface CanvasProps {
-    dragDropFormat: string,
     engine: DiagramEngine,
+    onDropCanvas: (event: DragEvent<HTMLDivElement>) => void,
 }
 
 type CanvasState = {
@@ -33,6 +34,7 @@ class Canvas extends React.Component<CanvasProps, CanvasState> {
     }
 
     registerNodeFactories = () => {
+        this.props.engine.getNodeFactories().registerFactory(AbstractDsFactory.getInstance());
         this.props.engine.getNodeFactories().registerFactory(CSVFactory.getInstance());
         this.props.engine.getNodeFactories().registerFactory(RandomForestClassifierFactory.getInstance());
         this.props.engine.getNodeFactories().registerFactory(OversamplingFactory.getInstance());
@@ -40,7 +42,7 @@ class Canvas extends React.Component<CanvasProps, CanvasState> {
         this.props.engine.getNodeFactories().registerFactory(PCAFactory.getInstance());
         this.props.engine.getNodeFactories().registerFactory(AccuracyClassifierFactory.getInstance());
         this.props.engine.getNodeFactories().registerFactory(SplitDatasetFactory.getInstance());
-        this.props.engine.getNodeFactories().registerFactory(CrossValidationFactory.getInstance());
+        this.props.engine.getNodeFactories().registerFactory(CrossValidationClassifierFactory.getInstance());
     }
 
     registerPortFactories = () => {
@@ -63,22 +65,7 @@ class Canvas extends React.Component<CanvasProps, CanvasState> {
         return factory.generateModel({}) as BaseNodeModel;
     }
 
-    onDropDiagram = (event: DragEvent<HTMLDivElement>) => {
-        event.preventDefault();
-        const data = event.dataTransfer.getData(this.props.dragDropFormat);
-        try {
-            const inJSON = JSON.parse(data);
-            console.log(data);
-            const factory = this.props.engine.getNodeFactories().getFactory(inJSON.codeName);
-            const node = this.generateModel(factory);
-            let point = this.props.engine.getRelativeMousePoint(event);
-            node.setPosition(point);
-            this.props.engine.getModel().addNode(node);
-            this.props.engine.repaintCanvas();
-        } catch (e) {
-            //console.log(e);
-        }
-    }
+
 
     render() {
         return (
@@ -86,7 +73,7 @@ class Canvas extends React.Component<CanvasProps, CanvasState> {
                  onDragOver={(event) => {
                      event.preventDefault()
                  }}
-                 onDrop={this.onDropDiagram}
+                 onDrop={this.props.onDropCanvas}
             >
                 <CanvasWidget className={classes.DiagramContainer} engine={this.props.engine}/>
             </div>

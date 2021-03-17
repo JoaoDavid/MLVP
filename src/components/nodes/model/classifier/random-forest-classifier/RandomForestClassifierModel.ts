@@ -13,7 +13,7 @@ export class RandomForestClassifierModel extends BaseNodeModel {
 
     private numTrees: number = 100; //int
     private criterion: CriterionEnum = CriterionEnum.GINI;
-    private maxDepth: number = 0; //int
+    private maxDepth: number = -1; //int
 
     constructor() {
         super(NODE_RANDOM_FOREST_CLASSIFIER.codeName, NODE_RANDOM_FOREST_CLASSIFIER.name);
@@ -64,7 +64,7 @@ export class RandomForestClassifierModel extends BaseNodeModel {
         super.deserialize(event);
         this.numTrees = event.data.numTrees;
         this.criterion = event.data.criterion;
-        this.maxDepth = event.data.maxDepth === 'None'?0:event.data.maxDepth;
+        this.maxDepth = event.data.maxDepth === 'None'?-1:event.data.maxDepth;
     }
 
     serialize(): any {
@@ -72,7 +72,7 @@ export class RandomForestClassifierModel extends BaseNodeModel {
             ...super.serialize(),
             numTrees: this.numTrees,
             criterion: this.criterion,
-            maxDepth: this.maxDepth===0?"None":this.maxDepth,
+            maxDepth: this.maxDepth===-1?"None":this.maxDepth,
         };
     }
 

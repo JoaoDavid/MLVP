@@ -2,13 +2,7 @@ from mlvp.codegen.templates.CodeTemplate import *
 from mlvp.codegen.templates.LibNames import *
 from mlvp.ports import ParentLink
 from mlvp.ports import DatasetPort, ModelPort
-from mlvp.nodes import ImportFromCSV
-from mlvp.nodes import ModelAccuracy
-from mlvp.nodes import RandomForestClassifier
-from mlvp.nodes import SplitDataset
-from mlvp.nodes import Oversampling, UnderSampling
-from mlvp.nodes import PCA
-from mlvp.nodes import CrossValidation
+from mlvp.nodes import *
 
 
 class ParseJSON:
@@ -35,17 +29,24 @@ class ParseJSON:
 
     def __parse_nodes(self):
         for node_id, data in self.json_nodes.items():
-            if data['type'] == 'NODE_IMPORT_CSV':
+            if data['type'] == 'NODE_ABSTRACT_DS':
+                node = AbstractDataset(node_id=node_id, num_cols=data['numCols'], num_rows=data['numRows'])
+                node.ports = self.__parse_ports(data['ports'])
+                self.nodes[node_id] = node
+                self.roots.append(node)
+            elif data['type'] == 'NODE_IMPORT_CSV':
+                target = None if len(data['columnNames']) == 0 else data['columnNames'][-1]
                 node = ImportFromCSV(node_id=node_id, file_name=data['fileName'],
-                                                        num_cols=data['numCols'], num_rows=data['numRows'],
-                                                        target=data['columnNames'][-1])
+                                     num_cols=data['numCols'], num_rows=data['numRows'],
+                                     target=target,
+                                     labels=data['labels'])
                 node.ports = self.__parse_ports(data['ports'])
                 self.nodes[node_id] = node
                 self.libraries.add(IMPORT_AS.format(lib_name=PANDAS, lib_var=PANDAS_VAR))
                 self.roots.append(node)
             elif data['type'] == 'NODE_SPLIT_DATASET':
                 node = SplitDataset(node_id=node_id, test_size=data['testSize'],
-                                                  train_size=data['trainSize'], shuffle=data['shuffle'])
+                                    train_size=data['trainSize'], shuffle=bool(data['shuffle']))
                 node.ports = self.__parse_ports(data['ports'])
                 self.nodes[node_id] = node
                 self.libraries.add(
@@ -63,14 +64,14 @@ class ParseJSON:
                 self.libraries.add(
                     FROM_IMPORT.format(package=IMBLEARN + "." + UNDER_SAMPLING, class_to_import=RANDOM_UNDERSAMPLER))
             elif data['type'] == 'NODE_PCA':
-                node = PCA(node_id=node_id, random_state=data['randomState'])
+                node = PCA(node_id=node_id, random_state=data['randomState'], num_components=data['numComponents'])
                 node.ports = self.__parse_ports(data['ports'])
                 self.nodes[node_id] = node
                 self.libraries.add(
                     FROM_IMPORT.format(package=SKLEARN + "." + DECOMPOSITION, class_to_import=PCA))
             elif data['type'] == 'NODE_RANDOM_FOREST_CLASSIFIER':
                 node = RandomForestClassifier(node_id=node_id, num_trees=data['numTrees'],
-                                                  criterion=data['criterion'], max_depth=data['maxDepth'])
+                                              criterion=data['criterion'], max_depth=data['maxDepth'])
                 node.ports = self.__parse_ports(data['ports'])
                 self.nodes[node_id] = node
                 self.libraries.add(
@@ -80,27 +81,29 @@ class ParseJSON:
                 node.ports = self.__parse_ports(data['ports'])
                 self.nodes[node_id] = node
                 self.libraries.add(FROM_IMPORT.format(package=SKLEARN + "." + METRICS, class_to_import=ACCURACY_SCORE))
-            elif data['type'] == 'NODE_CROSS_VALIDATION':
+            elif data['type'] == 'NODE_CROSS_VALIDATION_CLASSIFIER':
                 node = CrossValidation(node_id=node_id, number_folds=data['numberFolds'])
                 node.ports = self.__parse_ports(data['ports'])
                 self.nodes[node_id] = node
-                self.libraries.add(FROM_IMPORT.format(package=SKLEARN + "." + MODEL_SELECTION, class_to_import=CROSS_VAL_SCORE))
+                self.libraries.add(
+                    FROM_IMPORT.format(package=SKLEARN + "." + MODEL_SELECTION, class_to_import=CROSS_VAL_SCORE))
 
     def __parse_links(self):
         for link_id, data in self.json_links.items():
             source_node = self.nodes[data['source']]
             source_port = source_node.ports[data['sourcePort']]
             target_node = self.nodes[data['target']]
+            target_port = target_node.ports[data['targetPort']]
             # add children and parents to the respective arrays
             source_node.children.append(target_node)
-            target_node.parent_links.append(ParentLink(source_node, source_port))
+            target_node.parent_links.append(ParentLink(link_id, source_node, source_port, target_port))
 
     def __parse_ports(self, json_ports):
         ports = {}
         for p in json_ports:
-            name = p['name']
-            if "Dataset" in name:
-                ports[p['id']] = DatasetPort(p['name'], bool(p['in']))
-            elif "Classifier" in name:
-                ports[p['id']] = ModelPort(p['name'], bool(p['in']))
+            port_type = p['type']
+            if "PORT_DATASET" in port_type:
+                ports[p['id']] = DatasetPort(p['id'], p['name'], bool(p['in']))
+            elif "PORT_CLASSIFIER" in port_type:
+                ports[p['id']] = ModelPort(p['id'], p['name'], bool(p['in']))
         return ports

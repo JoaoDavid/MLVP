@@ -7,6 +7,11 @@ export const DATA_CONFIG:CategoryConfig = {
 }
 
 // NODES
+export const NODE_ABSTRACT_DS:NodeConfig = {
+    codeName: "NODE_ABSTRACT_DS",
+    name: "Abstract Dataset",
+}
+
 export const NODE_CSV:NodeConfig = {
     codeName: "NODE_IMPORT_CSV",
     name: "Import from CSV",
@@ -37,4 +42,4 @@ export const NODE_PCA:NodeConfig = {
     Every node declared must be added to the following array
     to be passed into the side menu props for the drag and drop feature
 */
-export const DATA_NODES:NodeConfig[] = [NODE_CSV, NODE_SPLIT_DATASET, NODE_OVERSAMPLING, NODE_UNDERSAMPLING, NODE_PCA];
+export const DATA_NODES:NodeConfig[] = [NODE_ABSTRACT_DS, NODE_CSV, NODE_SPLIT_DATASET, NODE_OVERSAMPLING, NODE_UNDERSAMPLING, NODE_PCA];

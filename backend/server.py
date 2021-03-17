@@ -1,7 +1,7 @@
 from flask import Flask, request
 from flask_cors import CORS
 from waitress import serve
-from mlvp import generate_code, validate_links
+from mlvp import generate_code, pipeline_verification
 
 app = Flask(__name__)
 CORS(app)
@@ -17,7 +17,8 @@ def codegen():
 @app.route('/z3', methods=['POST'])
 def z3():
     data = request.json
-    response = validate_links(data)
+    # response = validate_links(data)
+    response = pipeline_verification(data)
     return response
 
 

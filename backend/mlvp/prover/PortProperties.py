@@ -5,9 +5,10 @@ from mlvp.prover.VarNames import *
 class Dataset:
 
     def __init__(self, id_port: str):
-        self.cols = Int(id_port + N_COLS)
-        self.rows = Int(id_port + N_ROWS)
-        self.n_labels = Int(id_port + N_LABELS)
-        self.max_label_count = Int(id_port + MAX_LABEL_COUNT)
-        self.min_label_count = Int(id_port + MIN_LABEL_COUNT)
-        self.balanced = Bool(id_port + BALANCED)
+        prefix = id_port + SEP
+        self.cols = Int(prefix + N_COLS)
+        self.rows = Int(prefix + N_ROWS)
+        self.n_labels = Int(prefix + N_LABELS)
+        self.max_label_count = Int(prefix + MAX_LABEL_COUNT)
+        self.min_label_count = Int(prefix + MIN_LABEL_COUNT)
+        self.balanced = Bool(prefix + BALANCED)

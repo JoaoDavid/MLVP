@@ -2,18 +2,19 @@ import { NodeModel, NodeModelGenerics } from '@projectstorm/react-diagrams-core'
 import {BasePortModel} from "../BasePort/BasePortModel";
 import { BasePositionModelOptions, DeserializeEvent } from '@projectstorm/react-canvas-core';
 
-export interface CoreNodeModelOptions extends BasePositionModelOptions {
+export interface BaseNodeModelOptions extends BasePositionModelOptions {
     name: string;
 }
 
-export interface CoreNodeModelGenerics extends NodeModelGenerics {
-    OPTIONS: CoreNodeModelOptions;
+export interface BaseNodeModelGenerics extends NodeModelGenerics {
+    OPTIONS: BaseNodeModelOptions;
 }
 
-export abstract class BaseNodeModel extends NodeModel<CoreNodeModelGenerics> {
+export abstract class BaseNodeModel extends NodeModel<BaseNodeModelGenerics> {
 
     protected portsIn: BasePortModel[];
     protected portsOut: BasePortModel[];
+    private title: string;
 
     protected constructor(type: string, name: string) {
         super({
@@ -22,6 +23,7 @@ export abstract class BaseNodeModel extends NodeModel<CoreNodeModelGenerics> {
         });
         this.portsOut = [];
         this.portsIn = [];
+        this.title = name;
     }
 
     doClone(lookupTable: {}, clone: any): void {
@@ -61,6 +63,7 @@ export abstract class BaseNodeModel extends NodeModel<CoreNodeModelGenerics> {
         this.portsOut = event.data.portsOutOrder.map((id: any) => {
             return this.getPortFromID(id);
         });
+        this.title = event.data.title;
     }
 
     serialize(): any {
@@ -72,6 +75,7 @@ export abstract class BaseNodeModel extends NodeModel<CoreNodeModelGenerics> {
             portsOutOrder: this.portsOut.map((port: BasePortModel) => {
                 return port.getID();
             }),
+            title: this.title,
         };
     }
 
@@ -81,6 +85,14 @@ export abstract class BaseNodeModel extends NodeModel<CoreNodeModelGenerics> {
 
     getOutPorts(): BasePortModel[] {
         return this.portsOut;
+    }
+
+    setTitle = (title: string) => {
+        this.title = title;
+    }
+
+    getTitle = () => {
+        return this.title;
     }
 
 }

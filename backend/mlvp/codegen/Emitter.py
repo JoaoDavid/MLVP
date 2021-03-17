@@ -13,5 +13,4 @@ class Emitter:
         self.variables[node_id] = variable
 
     def get(self, node_id):
-        print(self.variables)
         return self.variables[node_id]

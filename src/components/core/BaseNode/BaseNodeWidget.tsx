@@ -27,6 +27,11 @@ export class BaseNodeWidget extends React.Component<CoreNodeProps> {
         show: false,
     }
 
+    updateTitle = (title: string) => {
+        this.props.node.setTitle(title);
+        this.setState({});
+    }
+
     generatePort = (port: BasePortModel) => {
         return <BasePortWidget engine={this.props.engine} port={port} key={port.getID()}/>;
     };
@@ -39,6 +44,10 @@ export class BaseNodeWidget extends React.Component<CoreNodeProps> {
         this.setState({show: true});
     }
 
+    componentDidUpdate (prevProps, prevState, snapshot) {
+        console.log("componentDidUpdate");
+    }
+
     render() {
         const nodeClasses = [classes.Node];
         if (this.props.node.isSelected()) {
@@ -46,11 +55,11 @@ export class BaseNodeWidget extends React.Component<CoreNodeProps> {
         }
         return (
             <div className={nodeClasses.join(' ')}
-                 data-default-node-name={this.props.node.getOptions().name}
+                 data-default-node-name={this.props.node.getTitle()}
                  style={{background: this.props.color}}
                  onDoubleClick={this.handleShowModal}
             >
-                <Title name={this.props.node.getOptions().name}/>
+                <Title name={this.props.node.getTitle()}/>
                 <div className={classes.Content}>
                     <PortContainer generatePort={this.generatePort} ports={this.props.node.getInPorts()}/>
                     <div className={classes.ChildrenDiv}>
@@ -61,7 +70,10 @@ export class BaseNodeWidget extends React.Component<CoreNodeProps> {
                 <BaseModal handleClose={this.handleCloseModal}
                            handleShow={this.handleShowModal}
                            show={this.state.show}
-                           title={this.props.node.getOptions().name}
+                           title={this.props.node.getTitle()}
+                           footer={this.props.node.getOptions().name}
+                           // footer={this.props.node.getOptions().id}
+                           saveTitle={this.updateTitle}
                 >
                     {this.props.modalChildren}
                 </BaseModal>
