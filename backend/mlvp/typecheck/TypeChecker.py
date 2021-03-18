@@ -48,7 +48,7 @@ def __convert_ids(ports, expr: ExprRef):
             return __convert_ids(ports, children[0])
 
 
-class Verification:
+class TypeChecker:
 
     def __init__(self, roots):
         self.solver = Solver()
