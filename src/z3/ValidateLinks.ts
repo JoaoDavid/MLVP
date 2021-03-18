@@ -36,20 +36,17 @@ export class ValidateLinks {
         );
     }
 
-    validLink = async () => {
+    requestTypechecking = async () => {
         const data = this.engine.getModel().serialize();
-        const response = await this.sendReq(data);
+        const response = await axios.post('/z3', data)
+            .then(res => res.data)
+            .catch(error => {
+                console.log(error);
+            });
         console.log(JSON.stringify(response, null, 4));
         this.eventTypechecking(response);
         return response.canLink;
     }
 
-    sendReq = async (data) => {
-        return axios.post('/z3', data)
-            .then(res => res.data)
-            .catch(error => {
-                console.log(error);
-            });
-    }
 
 }
