@@ -11,7 +11,7 @@ import { PortModel, DiagramEngine, DragDiagramItemsState } from '@projectstorm/r
 import {MyDragNewLinkState} from "./MyDragNewLinkState";
 import {SelectLinkState} from './SelectLinkState';
 import {LinkModel} from "@projectstorm/react-diagrams-core";
-import {Typecheck} from "../typecheck/Typecheck";
+import {TypeChecker} from "../typecheck/TypeChecker";
 
 export class DiagramStateManager extends State<DiagramEngine> {
     dragCanvas: DragCanvasState;
@@ -19,9 +19,9 @@ export class DiagramStateManager extends State<DiagramEngine> {
     dragItems: DragDiagramItemsState;
     selectLink: SelectLinkState;
 
-    private validateLinks: Typecheck;
+    private validateLinks: TypeChecker;
 
-    constructor(validateLinks: Typecheck) {
+    constructor(validateLinks: TypeChecker) {
         super({
             name: 'default-diagrams'
         });

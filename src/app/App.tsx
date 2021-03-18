@@ -15,7 +15,7 @@ import {MyDiagramModel} from "./diagram/MyDiagramModel";
 import splitEvaluate from '../demos/split-n-evaluate.json';
 import {MyZoomCanvasAction} from "./actions/MyZoomCanvasAction";
 import {DiagramStateManager} from "./states/DiagramStateManager";
-import {TypecheckingResponse, Typecheck} from "./typecheck/Typecheck";
+import {TypeCheckResponse, TypeChecker} from "./typecheck/TypeChecker";
 import {BaseNodeModel} from "../components/core/BaseNode/BaseNodeModel";
 import {DefaultLinkModel} from "@projectstorm/react-diagrams-defaults";
 
@@ -34,7 +34,7 @@ class App extends React.Component<AppProps, AppState> {
     private readonly dragDropFormat: string = "side-bar-drag-drop";
     private lastSave: any = {};
     private readonly engine: DiagramEngine;
-    private readonly typecheck: Typecheck;
+    private readonly typeChecker: TypeChecker;
     private generated_nodes_counter = 0;
 
     state = {
@@ -46,10 +46,10 @@ class App extends React.Component<AppProps, AppState> {
     constructor(props: AppProps) {
         super(props);
         this.engine = createEngine({registerDefaultZoomCanvasAction: false});
-        this.typecheck = new Typecheck(this.engine);
+        this.typeChecker = new TypeChecker(this.engine);
         this.newCanvas();
         this.engine.getActionEventBus().registerAction(new MyZoomCanvasAction({inverseZoom: true}));
-        this.engine.getStateMachine().pushState(new DiagramStateManager(this.typecheck));
+        this.engine.getStateMachine().pushState(new DiagramStateManager(this.typeChecker));
         this.engine.maxNumberPointsPerLink = 0;
 
     }
@@ -72,13 +72,12 @@ class App extends React.Component<AppProps, AppState> {
                 console.log("nodesUpdated");
                 console.log(event);
             },
-            typechecking: (event) => {
-                console.log("typechecking");
-                console.log(event);
-                console.log(event.typechecking);
-                const allNodeAssertions = this.processNodeAssertions(event.typechecking.nodeAssertions);
-                const allLinkAssertions = this.processLinkAssertions(event.typechecking);
-                const unsatNodeAssertions = this.processNodeAssertions(event.typechecking.unsatNodeAssertions);
+            typeCheckResponse: (event) => {
+                console.log("typeCheckResponse");
+                console.log(event.typeCheckResponse);
+                const allNodeAssertions = this.processNodeAssertions(event.typeCheckResponse.nodeAssertions);
+                const allLinkAssertions = this.processLinkAssertions(event.typeCheckResponse);
+                const unsatNodeAssertions = this.processNodeAssertions(event.typeCheckResponse.unsatNodeAssertions);
                 this.setState({
                     unsatNodeAssertions: unsatNodeAssertions,
                     allNodeAssertions: allNodeAssertions,
@@ -98,7 +97,7 @@ class App extends React.Component<AppProps, AppState> {
         return map;
     }
 
-    processLinkAssertions = (assertionProblem: TypecheckingResponse) => {
+    processLinkAssertions = (assertionProblem: TypeCheckResponse) => {
         const map = new Map<DefaultLinkModel, string[]>();
 
         for (let k of Object.keys(assertionProblem.linkAssertions)) {

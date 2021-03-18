@@ -1,14 +1,14 @@
 import {DiagramEngine, LinkModel} from '@projectstorm/react-diagrams-core';
 import axios from "axios";
 
-export interface TypecheckingResponse {
+export interface TypeCheckResponse {
     canLink: boolean,
     nodeAssertions: Map<string, string[]>,
     linkAssertions: Map<string, string[]>,
     unsatNodeAssertions: Map<string, string[]>,
 }
 
-export class Typecheck {
+export class TypeChecker {
 
     private engine: DiagramEngine;
 
@@ -27,16 +27,16 @@ export class Typecheck {
         );
     }
 
-    eventTypechecking = (typechecking: TypecheckingResponse) => {
+    eventTypeChecked = (typeCheckResponse: TypeCheckResponse) => {
         this.engine.getModel().fireEvent(
             {
-                typechecking: typechecking,
+                typeCheckResponse: typeCheckResponse,
             },
-            'typechecking'
+            'typeCheckResponse'
         );
     }
 
-    requestTypechecking = async () => {
+    requestTypeCheck = async () => {
         const data = this.engine.getModel().serialize();
         const response = await axios.post('/z3', data)
             .then(res => res.data)
@@ -44,7 +44,7 @@ export class Typecheck {
                 console.log(error);
             });
         console.log(JSON.stringify(response, null, 4));
-        this.eventTypechecking(response);
+        this.eventTypeChecked(response);
         return response.canLink;
     }
 
