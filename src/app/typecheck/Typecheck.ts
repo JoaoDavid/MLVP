@@ -8,7 +8,7 @@ export interface TypecheckingResponse {
     unsatNodeAssertions: Map<string, string[]>,
 }
 
-export class ValidateLinks {
+export class Typecheck {
 
     private engine: DiagramEngine;
 

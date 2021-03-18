@@ -1,7 +1,7 @@
 import {DiagramModel} from '@projectstorm/react-diagrams';
 import {LinkModel} from "@projectstorm/react-diagrams-core";
 import {BaseEntityEvent, BaseEntityListener, CanvasModelGenerics} from "@projectstorm/react-canvas-core";
-import {TypecheckingResponse} from "../../../../z3/ValidateLinks";
+import {TypecheckingResponse} from "../typecheck/Typecheck";
 
 export interface MyDiagramListener extends BaseEntityListener {
     typechecking?(event: BaseEntityEvent & { typechecking: TypecheckingResponse }): void;

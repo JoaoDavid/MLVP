@@ -8,22 +8,22 @@ import {
 import {LinkModel} from '@projectstorm/react-diagrams-core';
 import {MouseEvent} from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams';
-import {BasePortModel} from "../../../core/BasePort/BasePortModel";
-import {ValidateLinks} from "../../../../z3/ValidateLinks";
+import {BasePortModel} from "../../components/core/BasePort/BasePortModel";
+import {Typecheck} from "../typecheck/Typecheck";
 
 
 export class MyDragNewLinkState extends AbstractDisplacementState<DiagramEngine> {
 
     private readonly allowLooseLinks = false;
     private readonly allowLinksFromLockedPorts = false;
-    private validateLinks;
+    private typecheck;
 
     port: BasePortModel;
     link: LinkModel;
 
-    constructor(validateLinks: ValidateLinks) {
+    constructor(typecheck: Typecheck) {
         super({ name: 'drag-new-link' });
-        this.validateLinks = validateLinks;
+        this.typecheck = typecheck;
         this.registerNewLinkDragging();
     }
 
@@ -63,10 +63,10 @@ export class MyDragNewLinkState extends AbstractDisplacementState<DiagramEngine>
                         if (this.port.canLinkToPort(model)) {
                             this.adjustPorts(this.port, model);
 
-                            this.validateLinks.requestTypechecking().then((res) => {
+                            this.typecheck.requestTypechecking().then((res) => {
                                 if(res) {
                                     //valid link created between nodes
-                                    this.validateLinks.eventLinkCreated(this.link);
+                                    this.typecheck.eventLinkCreated(this.link);
                                 } else {
                                     this.link.remove();
                                     this.engine.repaintCanvas();

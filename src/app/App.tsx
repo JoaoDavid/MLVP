@@ -11,11 +11,11 @@ import axios from "axios";
 import download from 'js-file-download';
 import BottomNav from "../components/UI/bottom-nav/BottomNav";
 import Canvas from "../components/UI/canvas/Canvas";
-import {MyDiagramModel} from "../components/UI/canvas/diagram/MyDiagramModel";
+import {MyDiagramModel} from "./diagram/MyDiagramModel";
 import splitEvaluate from '../demos/split-n-evaluate.json';
-import {MyZoomCanvasAction} from "../components/UI/canvas/actions/MyZoomCanvasAction";
-import {DiagramStateManager} from "../components/UI/canvas/states/DiagramStateManager";
-import {TypecheckingResponse, ValidateLinks} from "../z3/ValidateLinks";
+import {MyZoomCanvasAction} from "./actions/MyZoomCanvasAction";
+import {DiagramStateManager} from "./states/DiagramStateManager";
+import {TypecheckingResponse, Typecheck} from "./typecheck/Typecheck";
 import {BaseNodeModel} from "../components/core/BaseNode/BaseNodeModel";
 import {DefaultLinkModel} from "@projectstorm/react-diagrams-defaults";
 
@@ -34,7 +34,7 @@ class App extends React.Component<AppProps, AppState> {
     private readonly dragDropFormat: string = "side-bar-drag-drop";
     private lastSave: any = {};
     private readonly engine: DiagramEngine;
-    private readonly validateLinks: ValidateLinks;
+    private readonly typecheck: Typecheck;
     private generated_nodes_counter = 0;
 
     state = {
@@ -46,10 +46,10 @@ class App extends React.Component<AppProps, AppState> {
     constructor(props: AppProps) {
         super(props);
         this.engine = createEngine({registerDefaultZoomCanvasAction: false});
-        this.validateLinks = new ValidateLinks(this.engine);
+        this.typecheck = new Typecheck(this.engine);
         this.newCanvas();
         this.engine.getActionEventBus().registerAction(new MyZoomCanvasAction({inverseZoom: true}));
-        this.engine.getStateMachine().pushState(new DiagramStateManager(this.validateLinks));
+        this.engine.getStateMachine().pushState(new DiagramStateManager(this.typecheck));
         this.engine.maxNumberPointsPerLink = 0;
 
     }
