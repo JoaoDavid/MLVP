@@ -80,10 +80,9 @@ class Verification:
 
             self.solver.pop(first_problem_index + 1)
             self.solver.add(self.all_node_assertions[first_problem_index][1])
-            second_problem_index = self.__find_source_unsat(self.all_node_assertions[:first_problem_index])
+            reversed_assertions = reversed(self.all_node_assertions[:first_problem_index])
+            self.__find_source_unsat(reversed_assertions)
 
-            print(self.all_node_assertions[first_problem_index])
-            print(self.all_node_assertions[second_problem_index])
 
         result["nodeAssertions"] = self.node_assertions
         result["linkAssertions"] = self.link_assertions
