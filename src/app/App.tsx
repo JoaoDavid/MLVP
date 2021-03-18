@@ -173,7 +173,7 @@ class App extends React.Component<AppProps, AppState> {
         console.log(JSON.stringify(this.lastSave, null, 4));
     }
 
-    generateCodeReq = () => {
+    requestCompilation = () => {
         const data = this.engine.getModel().serialize();
         axios.post('/codegen', data)
             .then(response => {
@@ -190,7 +190,7 @@ class App extends React.Component<AppProps, AppState> {
         return (
             <div className={classes.FrontPage}>
                 <TopNav newCanvas={this.newCanvas} open={this.openSave} save={this.downloadSave}
-                        generateCodeReq={this.generateCodeReq} loadDemos={this.loadDemos()}/>
+                        requestCompilation={this.requestCompilation} loadDemos={this.loadDemos()}/>
                 <div className={classes.Container}>
                     <SideBar catAndNames={this.loadMapCategoryNodes()} format={this.dragDropFormat}/>
                     <Canvas engine={this.engine}  onDropCanvas={this.onDropCanvas}/>
