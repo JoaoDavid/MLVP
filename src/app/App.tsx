@@ -63,11 +63,6 @@ class App extends React.Component<AppProps, AppState> {
             linkCreated: (event) => {
                 console.log('linkCreated');
                 console.log(event);
-                this.state.unsatNodeAssertions.clear();
-                this.state.allNodeAssertions.clear();
-                this.state.allLinkAssertions.clear();
-                const newState = {...this.state}
-                this.setState(newState);
             },
             nodePropsUpdated: (event) => {
                 console.log("nodePropsUpdated");
