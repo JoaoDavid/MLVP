@@ -112,14 +112,15 @@ class App extends React.Component<AppProps, AppState> {
     loadDemos = () => {
         const map = new Map<String, () => void>();
         map.set("Simple Pipeline", () => {
-            this.loadDemoAux(splitEvaluate);
+            this.canvasLoadDiagram(splitEvaluate);
         });
         return map;
     }
 
-    loadDemoAux = (diagram: any) => {
+    canvasLoadDiagram = (diagram: any) => {
         this.engine.getModel().deserializeModel(diagram, this.engine);
         this.engine.repaintCanvas();
+        this.typeChecker.requestTypeCheck(diagram);
     }
 
     loadMapCategoryNodes = () => {
@@ -159,8 +160,7 @@ class App extends React.Component<AppProps, AppState> {
         const fileList = event.target.files;
         if (fileList.length > 0) {
             event.target.files[0].text().then((text: string) => {
-                this.engine.getModel().deserializeModel(JSON.parse(text), this.engine);
-                this.engine.repaintCanvas();
+                this.canvasLoadDiagram(JSON.parse(text));
             });
         }
         event.target.value = "";
