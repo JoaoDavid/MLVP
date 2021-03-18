@@ -175,7 +175,7 @@ class App extends React.Component<AppProps, AppState> {
 
     requestCompilation = () => {
         const data = this.engine.getModel().serialize();
-        axios.post('/codegen', data)
+        axios.post('/compile', data)
             .then(response => {
                 console.log(response);
                 console.log(response.data);

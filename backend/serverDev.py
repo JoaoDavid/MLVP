@@ -7,14 +7,14 @@ app = Flask(__name__)
 CORS(app)
 
 
-@app.route('/codegen', methods=['POST'])
+@app.route('/compile', methods=['POST'])
 def codegen():
     data = request.json
     response = generate_code(data)
     return response
 
 
-@app.route('/z3', methods=['POST'])
+@app.route('/typeCheck', methods=['POST'])
 def z3():
     data = request.json
     response = pipeline_verification(data)

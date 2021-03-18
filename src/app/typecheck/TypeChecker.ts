@@ -38,7 +38,7 @@ export class TypeChecker {
 
     requestTypeCheck = async (diagram?) => {
         const data = diagram || this.engine.getModel().serialize();
-        const response = await axios.post('/z3', data)
+        const response = await axios.post('/typeCheck', data)
             .then(res => res.data)
             .catch(error => {
                 console.log(error);
