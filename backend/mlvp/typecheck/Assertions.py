@@ -1,7 +1,7 @@
 from typing import Dict
 from z3 import *
-from mlvp.prover.VarNames import *
-from mlvp.prover.PortProperties import Dataset
+from mlvp.typecheck.VarNames import *
+from mlvp.typecheck.PortProperties import Dataset
 
 
 def link(id_source_port: str, id_target_port: str):
