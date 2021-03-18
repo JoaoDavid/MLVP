@@ -1,7 +1,7 @@
 import {DiagramEngine, LinkModel} from '@projectstorm/react-diagrams-core';
 import axios from "axios";
 
-export interface VerificationResponse {
+export interface TypecheckingResponse {
     canLink: boolean,
     nodeAssertions: Map<string, string[]>,
     linkAssertions: Map<string, string[]>,
@@ -17,7 +17,7 @@ export class ValidateLinks {
     }
 
 
-    eventLinkCreated = (link:LinkModel) => {
+    eventLinkCreated = (link: LinkModel) => {
         this.engine.getModel().fireEvent(
             {
                 sourceNode: link.getSourcePort().getNode(),
@@ -27,24 +27,20 @@ export class ValidateLinks {
         );
     }
 
-    eventProblemsFound = (assertionProblem: VerificationResponse) => {
+    eventTypechecking = (typechecking: TypecheckingResponse) => {
         this.engine.getModel().fireEvent(
             {
-                assertionProblem: assertionProblem,
+                typechecking: typechecking,
             },
-            'problemsFound'
+            'typechecking'
         );
     }
-
 
     validLink = async () => {
         const data = this.engine.getModel().serialize();
         const response = await this.sendReq(data);
         console.log(JSON.stringify(response, null, 4));
-        const canLink = response.canLink;
-        if (!canLink) {
-            this.eventProblemsFound(response);
-        }
+        this.eventTypechecking(response);
         return response.canLink;
     }
 

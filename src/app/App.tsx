@@ -15,7 +15,7 @@ import {MyDiagramModel} from "../components/UI/canvas/diagram/MyDiagramModel";
 import splitEvaluate from '../demos/split-n-evaluate.json';
 import {MyZoomCanvasAction} from "../components/UI/canvas/actions/MyZoomCanvasAction";
 import {DiagramStateManager} from "../components/UI/canvas/states/DiagramStateManager";
-import {VerificationResponse, ValidateLinks} from "../z3/ValidateLinks";
+import {TypecheckingResponse, ValidateLinks} from "../z3/ValidateLinks";
 import {BaseNodeModel} from "../components/core/BaseNode/BaseNodeModel";
 import {DefaultLinkModel} from "@projectstorm/react-diagrams-defaults";
 
@@ -77,13 +77,13 @@ class App extends React.Component<AppProps, AppState> {
                 console.log("nodesUpdated");
                 console.log(event);
             },
-            problemsFound: (event) => {
-                console.log("problemsFound");
+            typechecking: (event) => {
+                console.log("typechecking");
                 console.log(event);
-                console.log(event.assertionProblem);
-                const allNodeAssertions = this.processNodeAssertions(event.assertionProblem.nodeAssertions);
-                const allLinkAssertions = this.processLinkAssertions(event.assertionProblem);
-                const unsatNodeAssertions = this.processNodeAssertions(event.assertionProblem.unsatNodeAssertions);
+                console.log(event.typechecking);
+                const allNodeAssertions = this.processNodeAssertions(event.typechecking.nodeAssertions);
+                const allLinkAssertions = this.processLinkAssertions(event.typechecking);
+                const unsatNodeAssertions = this.processNodeAssertions(event.typechecking.unsatNodeAssertions);
                 this.setState({
                     unsatNodeAssertions: unsatNodeAssertions,
                     allNodeAssertions: allNodeAssertions,
@@ -103,7 +103,7 @@ class App extends React.Component<AppProps, AppState> {
         return map;
     }
 
-    processLinkAssertions = (assertionProblem: VerificationResponse) => {
+    processLinkAssertions = (assertionProblem: TypecheckingResponse) => {
         const map = new Map<DefaultLinkModel, string[]>();
 
         for (let k of Object.keys(assertionProblem.linkAssertions)) {
