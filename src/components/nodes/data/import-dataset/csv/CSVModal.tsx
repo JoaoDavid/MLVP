@@ -22,7 +22,7 @@ const CSVModal = (props: CSVModalProps) => {
         labelNames.push(
             <th key={key + counter}>{key}</th>);
         labelCounts.push(
-            <td key={value + counter}>{value}</td>);
+            <td key={value + "" + counter}>{value}</td>);
     });
     return (
         <Form>

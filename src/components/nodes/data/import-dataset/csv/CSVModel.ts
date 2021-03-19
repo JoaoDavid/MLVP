@@ -24,7 +24,7 @@ export class CSVModel extends BaseNodeModel {
         this.numCols = 0;
         this.numRows = 0;
         this.columnNames = [];
-        this.labels = new Map();
+        this.labels.clear();
     }
 
     getFileName(): string {
