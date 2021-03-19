@@ -18,6 +18,7 @@ import {DiagramStateManager} from "./states/DiagramStateManager";
 import {TypeCheckResponse, TypeChecker} from "./typecheck/TypeChecker";
 import {BaseNodeModel} from "../components/core/BaseNode/BaseNodeModel";
 import {DefaultLinkModel} from "@projectstorm/react-diagrams-defaults";
+import {FactoriesManager} from "./FactoriesManager";
 
 interface AppProps {
 
@@ -34,6 +35,7 @@ class App extends React.Component<AppProps, AppState> {
     private readonly dragDropFormat: string = "side-bar-drag-drop";
     private lastSave: any = {};
     private readonly engine: DiagramEngine;
+    private readonly factoriesManager: FactoriesManager;
     private readonly typeChecker: TypeChecker;
     private generated_nodes_counter = 0;
 
@@ -47,11 +49,17 @@ class App extends React.Component<AppProps, AppState> {
         super(props);
         this.engine = createEngine({registerDefaultZoomCanvasAction: false});
         this.typeChecker = new TypeChecker(this.engine);
+        this.factoriesManager = new FactoriesManager(this.engine);
+        this.startUp();
+    }
+
+    startUp = () => {
+        this.factoriesManager.registerNodeFactories();
+        this.factoriesManager.registerPortFactories();
         this.newCanvas();
         this.engine.getActionEventBus().registerAction(new MyZoomCanvasAction({inverseZoom: true}));
         this.engine.getStateMachine().pushState(new DiagramStateManager(this.typeChecker));
         this.engine.maxNumberPointsPerLink = 0;
-
     }
 
     registerListeners = (model: MyDiagramModel) => {
