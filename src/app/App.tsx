@@ -33,7 +33,6 @@ type AppState = {
 class App extends React.Component<AppProps, AppState> {
 
     private readonly dragDropFormat: string = "side-bar-drag-drop";
-    private lastSave: any = {};
     private readonly engine: DiagramEngine;
     private readonly factoriesManager: FactoriesManager;
     private readonly typeChecker: TypeChecker;
@@ -57,7 +56,7 @@ class App extends React.Component<AppProps, AppState> {
         this.factoriesManager.registerNodeFactories();
         this.factoriesManager.registerPortFactories();
         this.newCanvas();
-        this.engine.getActionEventBus().registerAction(new MyZoomCanvasAction({inverseZoom: true}));
+        this.engine.getActionEventBus().registerAction(new MyZoomCanvasAction());
         this.engine.getStateMachine().pushState(new DiagramStateManager(this.typeChecker));
         this.engine.maxNumberPointsPerLink = 0;
     }
@@ -160,7 +159,7 @@ class App extends React.Component<AppProps, AppState> {
             this.engine.getModel().addNode(node);
             this.engine.repaintCanvas();
         } catch (e) {
-            //console.log(e);
+            console.log(e);
         }
     }
 
@@ -175,10 +174,8 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     downloadSave = () => {
-        this.lastSave = this.engine.getModel().serialize();
-        download(JSON.stringify(this.lastSave, null, 4), 'mlvp.json');
-        console.log(this.lastSave);
-        console.log(JSON.stringify(this.lastSave, null, 4));
+        const data = this.engine.getModel().serialize();
+        download(JSON.stringify(data, null, 4), 'mlvp.json');
     }
 
     requestCompilation = () => {
