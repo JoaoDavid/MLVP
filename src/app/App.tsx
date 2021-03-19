@@ -104,13 +104,13 @@ class App extends React.Component<AppProps, AppState> {
         return map;
     }
 
-    processLinkAssertions = (assertionProblem: TypeCheckResponse) => {
+    processLinkAssertions = (typeCheckResponse: TypeCheckResponse) => {
         const map = new Map<DefaultLinkModel, string[]>();
 
-        for (let k of Object.keys(assertionProblem.linkAssertions)) {
+        for (let k of Object.keys(typeCheckResponse.linkAssertions)) {
             const link = this.engine.getModel().getLink(k) as DefaultLinkModel;
             console.log(link)
-            map.set(link, assertionProblem.linkAssertions[k]);
+            map.set(link, typeCheckResponse.linkAssertions[k]);
         }
         return map;
     }
