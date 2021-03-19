@@ -24,7 +24,7 @@ class CSVWidget extends React.Component<CSVNodeProps, CSVNodeState> {
     }
 
     render() {
-        const modal = <CSVModal changed={this.loadCSV} node={this.props.node}/>;
+        const modal = <CSVModal loadCSV={this.loadCSV} node={this.props.node}/>;
         return (
             <BaseNodeWidget node={this.props.node} engine={this.props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
                 <p>{this.props.node.getFileName() || "File:"}</p>
