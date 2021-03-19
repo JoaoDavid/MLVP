@@ -4,35 +4,31 @@ import {CSVModel} from './CSVModel';
 import BaseNodeWidget from '../../../../core/BaseNode/BaseNodeWidget';
 import CSVModal from "./CSVModal";
 import {DATA_CONFIG} from '../../DataConfig';
+import {useState} from "react";
 
 interface CSVNodeProps {
     node: CSVModel;
     engine: DiagramEngine;
 }
 
-type CSVNodeState = {
+const CSVWidget = (props: CSVNodeProps) => {
+    const [, setCount] = useState(0);
+    const forceUpdate = () => setCount(prevCount => prevCount + 1);
 
-};
-
-class CSVWidget extends React.Component<CSVNodeProps, CSVNodeState> {
-
-
-    loadCSV = (selectorFiles: FileList) => {
-        this.props.node.loadCSV(selectorFiles).then((r:any) => {
-            this.setState({});
+    const loadCSV = (selectorFiles: FileList) => {
+        props.node.loadCSV(selectorFiles).then((r: any) => {
+            forceUpdate();
         });
     }
 
-    render() {
-        const modal = <CSVModal loadCSV={this.loadCSV} node={this.props.node}/>;
-        return (
-            <BaseNodeWidget node={this.props.node} engine={this.props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
-                <p>{this.props.node.getFileName() || "File:"}</p>
-                <p>Rows: {this.props.node.getRows()}</p>
-                <p>Columns: {this.props.node.getCols()}</p>
-            </BaseNodeWidget>
-        );
-    }
+    const modal = <CSVModal loadCSV={loadCSV} node={props.node}/>;
+    return (
+        <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
+            <p>{props.node.getFileName() || "File:"}</p>
+            <p>Rows: {props.node.getRows()}</p>
+            <p>Columns: {props.node.getCols()}</p>
+        </BaseNodeWidget>
+    );
 
 }
 
