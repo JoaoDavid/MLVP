@@ -182,6 +182,8 @@ class TypeChecker:
                 print("Found source of UNSAT at index " + str(index))
                 specific_assertions = self.__find_unsat_node_assertion(assertions)
                 self.unsat_node_assertions[node.node_id] = assertions_to_str(node.ports, specific_assertions)
+                # info = {'title': node.title, 'assertions': assertions_to_str(node.ports, specific_assertions)}
+                # self.unsat_node_assertions[node.node_id] = info
                 self.solver.push()
                 self.solver.add(assertions[1])
                 return index

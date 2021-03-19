@@ -23,13 +23,13 @@ export interface CoreNodeProps {
 export class BaseNodeWidget extends React.Component<CoreNodeProps> {
 
     state = {
-        isSelected: false,
         show: false,
+        title: this.props.node.getTitle(),
     }
 
     updateTitle = (title: string) => {
         this.props.node.setTitle(title);
-        this.setState({});
+        this.setState({title: title});
     }
 
     generatePort = (port: BasePortModel) => {
@@ -44,8 +44,14 @@ export class BaseNodeWidget extends React.Component<CoreNodeProps> {
         this.setState({show: true});
     }
 
+    shouldComponentUpdate(nextProps: Readonly<CoreNodeProps>, nextState: Readonly<{}>, nextContext: any): boolean {
+        console.log(nextState)
+        return true;
+    }
+
     componentDidUpdate (prevProps, prevState, snapshot) {
-        console.log("componentDidUpdate");
+        console.log("componentDidUpdate-BaseNodeWidget");
+        console.log(prevState)
     }
 
     render() {

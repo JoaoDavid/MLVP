@@ -71,9 +71,10 @@ class App extends React.Component<AppProps, AppState> {
                 console.log('linkCreated');
                 console.log(event);
             },
-            nodePropsUpdated: (event) => {
-                console.log("nodePropsUpdated");
+            nodeParameterUpdated: (event) => {
+                console.log("nodeParameterUpdated");
                 console.log(event);
+                this.typeChecker.requestTypeCheck();
             },
             nodesUpdated: (event) => {
                 console.log("nodesUpdated");

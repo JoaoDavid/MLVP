@@ -23,11 +23,23 @@ class AbstractDsWidget extends React.Component<CSVNodeProps, CSVNodeState> {
     numColsChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.state.node.setCols(+event.target.value);
         this.setState({});
+        this.props.engine.getModel().fireEvent(
+            {
+                node: this.props.node
+            },
+            'nodeParameterUpdated'
+        );
     }
 
     numRowsChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.state.node.setRows(+event.target.value);
         this.setState({});
+        this.props.engine.getModel().fireEvent(
+            {
+                node: this.props.node
+            },
+            'nodeParameterUpdated'
+        );
     }
 
     render() {
