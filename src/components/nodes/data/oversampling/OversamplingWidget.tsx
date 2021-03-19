@@ -10,29 +10,18 @@ interface OversamplingProps {
     engine: DiagramEngine;
 }
 
-type OversamplingState = {
-    node: OversamplingModel;
-};
+const OversamplingWidget = (props: OversamplingProps) => {
 
-class OversamplingWidget extends React.Component<OversamplingProps, OversamplingState> {
-
-    state = {
-        node: this.props.node,
+    const randomStateChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        props.node.setRandomState(+event.target.value);
     }
 
-    randomStateChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.state.node.setRandomState(+event.target.value);
-        this.setState({});
-    }
-
-    render() {
-        const modal = <OversamplingModal node={this.props.node} randomStateChanged={this.randomStateChanged}/>;
-        return (
-            <BaseNodeWidget node={this.props.node} engine={this.props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
-                <p>Random State: {this.state.node.getRandomState()}</p>
-            </BaseNodeWidget>
-        );
-    }
+    const modal = <OversamplingModal node={props.node} randomStateChanged={randomStateChanged}/>;
+    return (
+        <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
+            <p>Random State: {props.node.getRandomState()}</p>
+        </BaseNodeWidget>
+    );
 
 }
 
