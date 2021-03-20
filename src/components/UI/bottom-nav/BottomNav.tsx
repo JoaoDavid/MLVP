@@ -7,6 +7,7 @@ interface BottomNavProps {
     unsatNodeAssertions: Map<BaseNodeModel, string[]>,
     allNodeAssertions: Map<BaseNodeModel, string[]>,
     allLinkAssertions: Map<DefaultLinkModel, string[]>,
+    log: string[],
 }
 
 const BottomNav = (props: BottomNavProps) => {
@@ -71,6 +72,13 @@ const BottomNav = (props: BottomNavProps) => {
     });
 
 
+    const logLi: JSX.Element[] = [];
+    props.log.forEach((message) => {
+        logLi.push(<li>{message}</li>);
+    });
+    const logJSX = (<ul className={classes.list}>{logLi}</ul>);
+
+
 
     let current_content = null;
     if(activeTab === tabs[0]) {
@@ -78,7 +86,7 @@ const BottomNav = (props: BottomNavProps) => {
     } else if (activeTab === tabs[1]) {
         current_content = assertions;
     } else {
-        current_content = (<div></div>)
+        current_content = logJSX;
     }
 
     return (

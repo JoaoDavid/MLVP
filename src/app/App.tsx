@@ -28,6 +28,7 @@ type AppState = {
     unsatNodeAssertions: Map<BaseNodeModel, string[]>,
     allNodeAssertions: Map<BaseNodeModel, string[]>,
     allLinkAssertions: Map<DefaultLinkModel, string[]>,
+    log: string[],
 };
 
 class App extends React.Component<AppProps, AppState> {
@@ -38,14 +39,14 @@ class App extends React.Component<AppProps, AppState> {
     private readonly typeChecker: TypeChecker;
     private generated_nodes_counter = 0;
 
-    state = {
-        unsatNodeAssertions: new Map(),
-        allNodeAssertions: new Map(),
-        allLinkAssertions: new Map(),
-    }
-
     constructor(props: AppProps) {
         super(props);
+        this.state = {
+            unsatNodeAssertions: new Map(),
+            allNodeAssertions: new Map(),
+            allLinkAssertions: new Map(),
+            log: [],
+        }
         this.engine = createEngine({registerDefaultZoomCanvasAction: false});
         this.typeChecker = new TypeChecker(this.engine);
         this.factoriesManager = new FactoriesManager(this.engine);
@@ -186,10 +187,20 @@ class App extends React.Component<AppProps, AppState> {
                 console.log(response);
                 console.log(response.data);
                 download(response.data, "mlvp-generated-code.py")
+                this.updateLog("Compiled successfully!");
             })
             .catch(error => {
                 console.log(error);
+                this.updateLog("Error occurred while compiling");
             });
+    }
+
+    updateLog = (message: string) => {
+        let currentDate = new Date();
+        let time = currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds();
+        const auxLog = this.state.log;
+        auxLog.push(time + " " + message);
+        this.setState({log: auxLog});
     }
 
     render() {
@@ -199,11 +210,12 @@ class App extends React.Component<AppProps, AppState> {
                         requestCompilation={this.requestCompilation} loadDemos={this.loadDemos()}/>
                 <div className={classes.Container}>
                     <SideBar catAndNames={this.loadMapCategoryNodes()} format={this.dragDropFormat}/>
-                    <Canvas engine={this.engine}  onDropCanvas={this.onDropCanvas}/>
+                    <Canvas engine={this.engine} onDropCanvas={this.onDropCanvas}/>
                 </div>
                 <BottomNav unsatNodeAssertions={this.state.unsatNodeAssertions}
                            allNodeAssertions={this.state.allNodeAssertions}
                            allLinkAssertions={this.state.allLinkAssertions}
+                           log={this.state.log}
                 />
             </div>
         );

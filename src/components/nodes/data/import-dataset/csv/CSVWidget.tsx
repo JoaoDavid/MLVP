@@ -4,7 +4,6 @@ import {CSVModel} from './CSVModel';
 import BaseNodeWidget, {eventNodeUpdated} from '../../../../core/BaseNode/BaseNodeWidget';
 import CSVModal from "./CSVModal";
 import {DATA_CONFIG} from '../../DataConfig';
-import {useState} from "react";
 
 interface CSVNodeProps {
     node: CSVModel;
@@ -12,8 +11,8 @@ interface CSVNodeProps {
 }
 
 const CSVWidget = (props: CSVNodeProps) => {
-    const [, setCount] = useState(0);
-    const forceUpdate = () => setCount(prevCount => prevCount + 1);
+    // const [, setCount] = useState(0);
+    // const forceUpdate = () => setCount(prevCount => prevCount + 1);
 
     const loadCSV = (selectorFiles: FileList) => {
         props.node.loadCSV(selectorFiles).then((r: any) => {
