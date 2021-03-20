@@ -10,48 +10,36 @@ interface CSVNodeProps {
     engine: DiagramEngine;
 }
 
-type CSVNodeState = {
-    node: AbstractDsModel;
-};
+const AbstractDsWidget = (props: CSVNodeProps) => {
 
-class AbstractDsWidget extends React.Component<CSVNodeProps, CSVNodeState> {
-
-    state = {
-        node: this.props.node,
-    }
-
-    numColsChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.state.node.setCols(+event.target.value);
-        this.setState({});
-        this.props.engine.getModel().fireEvent(
+    const numColsChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        props.node.setCols(+event.target.value);
+        props.engine.getModel().fireEvent(
             {
-                node: this.props.node
+                node: props.node
             },
             'nodeParameterUpdated'
         );
     }
 
-    numRowsChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.state.node.setRows(+event.target.value);
-        this.setState({});
-        this.props.engine.getModel().fireEvent(
+    const numRowsChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        props.node.setRows(+event.target.value);
+        props.engine.getModel().fireEvent(
             {
-                node: this.props.node
+                node: props.node
             },
             'nodeParameterUpdated'
         );
     }
 
-    render() {
-        const modal = <AbstractDsModal node={this.props.node} numColsChanged={this.numColsChanged} numRowsChanged={this.numRowsChanged}/>;
+    const modal = <AbstractDsModal node={props.node} numColsChanged={numColsChanged} numRowsChanged={numRowsChanged}/>;
 
-        return (
-            <BaseNodeWidget node={this.props.node} engine={this.props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
-                <p>Rows: {this.state.node.getRows()}</p>
-                <p>Columns: {this.state.node.getCols()}</p>
+    return (
+            <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
+                <p>Rows: {props.node.getRows()}</p>
+                <p>Columns: {props.node.getCols()}</p>
             </BaseNodeWidget>
-        );
-    }
+    );
 
 }
 

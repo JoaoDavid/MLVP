@@ -10,36 +10,18 @@ interface CrossValidationProps {
     engine: DiagramEngine;
 }
 
-type CrossValidationState = {
-    node: CrossValidationClassifierModel;
-};
+const CrossValidationClassifierWidget = (props: CrossValidationProps) => {
 
-class CrossValidationClassifierWidget extends React.Component<CrossValidationProps, CrossValidationState> {
-
-    state = {
-        node: this.props.node,
+    const numberFoldsChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        props.node.setNumberFolds(+event.target.value);
     }
 
-    numberFoldsChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.state.node.setNumberFolds(+event.target.value);
-        this.updateState();
-    }
-
-    private updateState = () => {
-        const newState = {...this.state};
-        this.setState(newState);
-        console.log(this.state.node);
-    }
-
-
-    render() {
-        const modal = <CrossValidationClassifierModal node={this.props.node} numberFoldsChanged={this.numberFoldsChanged}/>;
-        return (
-            <BaseNodeWidget node={this.props.node} engine={this.props.engine} color={EVALUATE_CONFIG.color} modalChildren={modal}>
-                <p>Number of folds: {this.state.node.getNumberFolds()}</p>
-            </BaseNodeWidget>
-        );
-    }
+    const modal = <CrossValidationClassifierModal node={props.node} numberFoldsChanged={numberFoldsChanged}/>;
+    return (
+        <BaseNodeWidget node={props.node} engine={props.engine} color={EVALUATE_CONFIG.color} modalChildren={modal}>
+            <p>Number of folds: {props.node.getNumberFolds()}</p>
+        </BaseNodeWidget>
+    );
 
 }
 

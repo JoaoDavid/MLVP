@@ -10,35 +10,23 @@ interface PCAProps {
     engine: DiagramEngine;
 }
 
-type PCAState = {
-    node: PCAModel;
-};
+const PCAWidget = (props: PCAProps) => {
 
-class PCAWidget extends React.Component<PCAProps, PCAState> {
-
-    state = {
-        node: this.props.node,
+    const randomStateChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        props.node.setRandomState(+event.target.value);
     }
 
-    randomStateChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.state.node.setRandomState(+event.target.value);
-        this.setState({});
+    const numComponentsChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        props.node.setNumComponents(+event.target.value);
     }
 
-    numComponentsChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.state.node.setNumComponents(+event.target.value);
-        this.setState({});
-    }
-
-    render() {
-        const modal = <PCAModal node={this.props.node} randomStateChanged={this.randomStateChanged} numComponentsChanged={this.numComponentsChanged}/>;
-        return (
-            <BaseNodeWidget node={this.props.node} engine={this.props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
-                <p>Random State: {this.state.node.getRandomState()}</p>
-                <p>Num Components: {this.state.node.getNumComponents()}</p>
-            </BaseNodeWidget>
-        );
-    }
+    const modal = <PCAModal node={props.node} randomStateChanged={randomStateChanged} numComponentsChanged={numComponentsChanged}/>;
+    return (
+        <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
+            <p>Random State: {props.node.getRandomState()}</p>
+            <p>Num Components: {props.node.getNumComponents()}</p>
+        </BaseNodeWidget>
+    );
 
 }
 
