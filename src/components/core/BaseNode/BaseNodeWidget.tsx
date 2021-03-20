@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams-core';
-import {BasePortWidget} from "../BasePort/BasePortWidget";
+import BasePortWidget from "../BasePort/BasePortWidget";
 import {BasePortModel} from "../BasePort/BasePortModel";
 import classes from './BaseNode.module.css';
 import Title from './Title/Title';
