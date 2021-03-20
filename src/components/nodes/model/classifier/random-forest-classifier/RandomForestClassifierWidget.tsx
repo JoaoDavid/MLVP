@@ -3,52 +3,38 @@ import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {RandomForestClassifierModel} from './RandomForestClassifierModel';
 import BaseNodeWidget from '../../../../core/BaseNode/BaseNodeWidget';
 import RandomForestClassifierModal from './RandomForestClassifierModal';
-import { MODEL_CONFIG } from '../../ModelConfig';
+import {MODEL_CONFIG} from '../../ModelConfig';
 
-interface NodeProps {
+interface RandomForestClassifierProps {
     node: RandomForestClassifierModel;
     engine: DiagramEngine;
 }
 
-type NodeState = {
-    node: RandomForestClassifierModel;
-};
+const RandomForestClassifierWidget = (props: RandomForestClassifierProps) => {
 
-class RandomForestClassifierWidget extends React.Component<NodeProps, NodeState> {
-
-    state = {
-        node: this.props.node,
+    const numTreesChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        props.node.setNumTrees(+event.target.value);
     }
 
-    numTreesChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.state.node.setNumTrees(+event.target.value);
-        this.setState({});
+    const setMaxTrees = (value: number) => {
+        props.node.setMaxDepth(value);
     }
 
-    setMaxTrees = (value: number) => {
-        this.state.node.setMaxDepth(value);
-        this.setState({});
+    const criterionChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        props.node.setCriterion(event.target.value);
     }
 
-    criterionChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.state.node.setCriterion(event.target.value);
-        this.setState({});
-    }
-
-    render() {
-        const modal = <RandomForestClassifierModal node={this.state.node} numTreesChanged={this.numTreesChanged}
-                                                   setMaxTrees={this.setMaxTrees}
-                                                   criterionChanged={this.criterionChanged}/>;
-
-        return (
-            <BaseNodeWidget node={this.state.node} engine={this.props.engine} color={MODEL_CONFIG.color}
-                            modalChildren={modal}>
-                <p>Trees: {this.state.node.getNumTrees()}</p>
-                <p>Max Depth: {this.state.node.getMaxDepth()>0?this.state.node.getMaxDepth():"None"}</p>
-                <p>Criterion: {this.state.node.getCriterion().toString()}</p>
-            </BaseNodeWidget>
-        )
-    }
+    const modal = <RandomForestClassifierModal node={props.node} numTreesChanged={numTreesChanged}
+                                               setMaxTrees={setMaxTrees}
+                                               criterionChanged={criterionChanged}/>;
+    return (
+        <BaseNodeWidget node={props.node} engine={props.engine} color={MODEL_CONFIG.color}
+                        modalChildren={modal}>
+            <p>Trees: {props.node.getNumTrees()}</p>
+            <p>Max Depth: {props.node.getMaxDepth() > 0 ? props.node.getMaxDepth() : "None"}</p>
+            <p>Criterion: {props.node.getCriterion().toString()}</p>
+        </BaseNodeWidget>
+    )
 
 }
 
