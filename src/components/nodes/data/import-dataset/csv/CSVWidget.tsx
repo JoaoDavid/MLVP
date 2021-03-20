@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {CSVModel} from './CSVModel';
-import BaseNodeWidget from '../../../../core/BaseNode/BaseNodeWidget';
+import BaseNodeWidget, {eventNodeUpdated} from '../../../../core/BaseNode/BaseNodeWidget';
 import CSVModal from "./CSVModal";
 import {DATA_CONFIG} from '../../DataConfig';
 import {useState} from "react";
@@ -17,7 +17,8 @@ const CSVWidget = (props: CSVNodeProps) => {
 
     const loadCSV = (selectorFiles: FileList) => {
         props.node.loadCSV(selectorFiles).then((r: any) => {
-            forceUpdate();
+            eventNodeUpdated(props.engine, props.node);
+            // forceUpdate();
         });
     }
 

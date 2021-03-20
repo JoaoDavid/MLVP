@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {CrossValidationClassifierModel} from './CrossValidationClassifierModel';
-import BaseNodeWidget from '../../../../core/BaseNode/BaseNodeWidget';
+import BaseNodeWidget, {eventNodeUpdated} from '../../../../core/BaseNode/BaseNodeWidget';
 import CrossValidationClassifierModal from "./CrossValidationClassifierModal";
 import {EVALUATE_CONFIG} from '../../EvaluateConfig';
 
@@ -14,6 +14,7 @@ const CrossValidationClassifierWidget = (props: CrossValidationProps) => {
 
     const numberFoldsChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
         props.node.setNumberFolds(+event.target.value);
+        eventNodeUpdated(props.engine, props.node);
     }
 
     const modal = <CrossValidationClassifierModal node={props.node} numberFoldsChanged={numberFoldsChanged}/>;

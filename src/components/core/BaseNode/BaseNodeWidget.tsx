@@ -18,6 +18,15 @@ export interface BaseNodeProps {
     color: string;
 }
 
+export const eventNodeUpdated = (engine: DiagramEngine, node: BaseNodeModel) => {
+    engine.getModel().fireEvent(
+        {
+            node: node
+        },
+        'nodeUpdated'
+    );
+}
+
 /**
  * Base Node Widget, used to shape every node within the project
  */

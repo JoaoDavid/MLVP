@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {SplitDatasetModel} from './SplitDatasetModel';
-import BaseNodeWidget from '../../../core/BaseNode/BaseNodeWidget';
+import BaseNodeWidget, {eventNodeUpdated} from '../../../core/BaseNode/BaseNodeWidget';
 import SplitDatasetModal from "./SplitDatasetModal";
 import {DATA_CONFIG} from '../DataConfig';
 
@@ -14,14 +14,17 @@ const SplitDatasetWidget = (props: SplitDatasetProps) => {
 
     const testSizeChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
         props.node.setTestSize(+event.target.value);
+        eventNodeUpdated(props.engine, props.node);
     }
 
     const trainSizeChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
         props.node.setTrainSize(+event.target.value);
+        eventNodeUpdated(props.engine, props.node);
     }
 
     const shuffleChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
         props.node.setShuffle(event.target.value);
+        eventNodeUpdated(props.engine, props.node);
     }
 
 
