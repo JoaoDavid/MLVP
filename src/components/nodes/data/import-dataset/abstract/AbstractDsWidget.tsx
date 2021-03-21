@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {AbstractDsModel} from './AbstractDsModel';
-import BaseNodeWidget from '../../../../core/BaseNode/BaseNodeWidget';
+import BaseNodeWidget, {eventNodeUpdated} from '../../../../core/BaseNode/BaseNodeWidget';
 import AbstractDsModal from "./AbstractDsModal";
 import {DATA_CONFIG} from '../../DataConfig';
 
@@ -10,36 +10,26 @@ interface CSVNodeProps {
     engine: DiagramEngine;
 }
 
-type CSVNodeState = {
-    node: AbstractDsModel;
-};
+const AbstractDsWidget = (props: CSVNodeProps) => {
 
-class AbstractDsWidget extends React.Component<CSVNodeProps, CSVNodeState> {
-
-    state = {
-        node: this.props.node,
+    const numColsChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        props.node.setCols(+event.target.value);
+        eventNodeUpdated(props.engine, props.node);
     }
 
-    numColsChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.state.node.setCols(+event.target.value);
-        this.setState({});
+    const numRowsChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        props.node.setRows(+event.target.value);
+        eventNodeUpdated(props.engine, props.node);
     }
 
-    numRowsChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.state.node.setRows(+event.target.value);
-        this.setState({});
-    }
+    const modal = <AbstractDsModal node={props.node} numColsChanged={numColsChanged} numRowsChanged={numRowsChanged}/>;
 
-    render() {
-        const modal = <AbstractDsModal node={this.props.node} numColsChanged={this.numColsChanged} numRowsChanged={this.numRowsChanged}/>;
-
-        return (
-            <BaseNodeWidget node={this.props.node} engine={this.props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
-                <p>Rows: {this.state.node.getRows()}</p>
-                <p>Columns: {this.state.node.getCols()}</p>
+    return (
+            <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
+                <p>Rows: {props.node.getRows()}</p>
+                <p>Columns: {props.node.getCols()}</p>
             </BaseNodeWidget>
-        );
-    }
+    );
 
 }
 

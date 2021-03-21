@@ -10,7 +10,7 @@ export class MyZoomCanvasAction extends Action {
     private readonly maxZoomLevel: number = 150;
     private readonly minZoomLevel: number = 50;
 
-    constructor(options: ZoomCanvasActionOptions = {}) {
+    constructor(options: ZoomCanvasActionOptions = {inverseZoom: true}) {
         super({
             type: InputType.MOUSE_WHEEL,
             fire: (actionEvent: ActionEvent<WheelEvent>) => {

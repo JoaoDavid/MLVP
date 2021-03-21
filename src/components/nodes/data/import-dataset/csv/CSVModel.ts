@@ -24,7 +24,7 @@ export class CSVModel extends BaseNodeModel {
         this.numCols = 0;
         this.numRows = 0;
         this.columnNames = [];
-        this.labels = new Map();
+        this.labels.clear();
     }
 
     getFileName(): string {
@@ -53,6 +53,9 @@ export class CSVModel extends BaseNodeModel {
     }
 
     loadCSV = async (selectorFiles: FileList) => {
+        if (selectorFiles.length === 0) {
+            return;
+        }
         this.resetFile();
         this.fileName = selectorFiles[0].name;
         if (selectorFiles[0] != null) {

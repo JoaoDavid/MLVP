@@ -5,7 +5,7 @@ import {
 } from '@projectstorm/react-canvas-core';
 import {DiagramEngine} from "@projectstorm/react-diagrams";
 import {MouseEvent} from "react";
-import {BasePortModel} from "../../../core/BasePort/BasePortModel";
+import {BasePortModel} from "../../components/core/BasePort/BasePortModel";
 
 export class SelectLinkState extends AbstractDisplacementState<DiagramEngine> {
     constructor() {

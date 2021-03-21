@@ -1,4 +1,4 @@
-from mlvp.prover.Assertions import *
+from mlvp.typecheck.Assertions import *
 from z3 import *
 import json
 from mlvp.nodes import *
@@ -48,7 +48,7 @@ def __convert_ids(ports, expr: ExprRef):
             return __convert_ids(ports, children[0])
 
 
-class Verification:
+class TypeChecker:
 
     def __init__(self, roots):
         self.solver = Solver()
@@ -80,10 +80,9 @@ class Verification:
 
             self.solver.pop(first_problem_index + 1)
             self.solver.add(self.all_node_assertions[first_problem_index][1])
-            second_problem_index = self.__find_source_unsat(self.all_node_assertions[:first_problem_index])
+            reversed_assertions = reversed(self.all_node_assertions[:first_problem_index])
+            self.__find_source_unsat(reversed_assertions)
 
-            print(self.all_node_assertions[first_problem_index])
-            print(self.all_node_assertions[second_problem_index])
 
         result["nodeAssertions"] = self.node_assertions
         result["linkAssertions"] = self.link_assertions
@@ -183,6 +182,8 @@ class Verification:
                 print("Found source of UNSAT at index " + str(index))
                 specific_assertions = self.__find_unsat_node_assertion(assertions)
                 self.unsat_node_assertions[node.node_id] = assertions_to_str(node.ports, specific_assertions)
+                # info = {'title': node.title, 'assertions': assertions_to_str(node.ports, specific_assertions)}
+                # self.unsat_node_assertions[node.node_id] = info
                 self.solver.push()
                 self.solver.add(assertions[1])
                 return index

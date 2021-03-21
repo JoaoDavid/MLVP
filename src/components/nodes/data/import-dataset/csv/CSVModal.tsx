@@ -9,7 +9,7 @@ import {FormGroup} from "react-bootstrap";
 
 
 interface CSVModalProps {
-    changed: (files: FileList) => void;
+    loadCSV: (files: FileList) => void;
     node: CSVModel;
 }
 
@@ -22,12 +22,12 @@ const CSVModal = (props: CSVModalProps) => {
         labelNames.push(
             <th key={key + counter}>{key}</th>);
         labelCounts.push(
-            <td key={value + counter}>{value}</td>);
+            <td key={value + "" + counter}>{value}</td>);
     });
     return (
         <Form>
             <Form.Group>
-                <Form.File custom onChange={(e: ChangeEvent<HTMLInputElement>) => props.changed(e.target.files!)}
+                <Form.File custom onChange={(e: ChangeEvent<HTMLInputElement>) => props.loadCSV(e.target.files)}
                            label={props.node.getFileName() || ""}
                            type="file" accept=".csv"/>
             </Form.Group>

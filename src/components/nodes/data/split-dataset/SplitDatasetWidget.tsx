@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {SplitDatasetModel} from './SplitDatasetModel';
-import BaseNodeWidget from '../../../core/BaseNode/BaseNodeWidget';
+import BaseNodeWidget, {eventNodeUpdated} from '../../../core/BaseNode/BaseNodeWidget';
 import SplitDatasetModal from "./SplitDatasetModal";
 import {DATA_CONFIG} from '../DataConfig';
 
@@ -10,52 +10,33 @@ interface SplitDatasetProps {
     engine: DiagramEngine;
 }
 
-type SplitDatasetState = {
-    node: SplitDatasetModel;
-};
+const SplitDatasetWidget = (props: SplitDatasetProps) => {
 
-class SplitDatasetWidget extends React.Component<SplitDatasetProps, SplitDatasetState> {
-
-    state = {
-        node: this.props.node,
+    const testSizeChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        props.node.setTestSize(+event.target.value);
+        eventNodeUpdated(props.engine, props.node);
     }
 
-    testSizeChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.state.node.setTestSize(+event.target.value);
-        this.setState({});
+    const trainSizeChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        props.node.setTrainSize(+event.target.value);
+        eventNodeUpdated(props.engine, props.node);
     }
 
-    trainSizeChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.state.node.setTrainSize(+event.target.value);
-        this.setState({});
-    }
-
-    shuffleChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.state.node.setShuffle(event.target.value);
-        this.setState({});
-    }
-
-    private updateState = () => {
-        this.setState({});
-        this.props.engine.getModel().fireEvent(
-            {
-                node: this,
-            },
-            'nodePropsUpdated'
-        );
+    const shuffleChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        props.node.setShuffle(event.target.value);
+        eventNodeUpdated(props.engine, props.node);
     }
 
 
-    render() {
-        const modal = <SplitDatasetModal node={this.props.node} testSizeChanged={this.testSizeChanged} shuffleChanged={this.shuffleChanged} trainSizeChanged={this.trainSizeChanged}/>;
-        return (
-            <BaseNodeWidget node={this.props.node} engine={this.props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
-                <p>Test Size: {this.state.node.getTestSize()}</p>
-                <p>Train Size: {this.state.node.getTrainSize()}</p>
-                <p>Shuffle: {this.state.node.getShuffle()}</p>
-            </BaseNodeWidget>
-        );
-    }
+    const modal = <SplitDatasetModal node={props.node} testSizeChanged={testSizeChanged} shuffleChanged={shuffleChanged}
+                                     trainSizeChanged={trainSizeChanged}/>;
+    return (
+        <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
+            <p>Test Size: {props.node.getTestSize()}</p>
+            <p>Train Size: {props.node.getTrainSize()}</p>
+            <p>Shuffle: {props.node.getShuffle()}</p>
+        </BaseNodeWidget>
+    );
 
 }
 

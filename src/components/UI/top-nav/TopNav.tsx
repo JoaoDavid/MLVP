@@ -9,7 +9,7 @@ interface TopNavProps {
     newCanvas: () => void,
     open: (event: React.ChangeEvent<HTMLInputElement>) => void,
     save: () => void,
-    generateCodeReq: () => void,
+    requestCompilation: () => void,
     loadDemos: Map<String, ()=>void>,
 }
 
@@ -46,7 +46,7 @@ const topNav = (props: TopNavProps) => {
                         <NavDropdown.Item>Settings</NavDropdown.Item>
                     </NavDropdown>
                     <NavDropdown  title="Run" id="collasible-nav-dropdown">
-                        <NavDropdown.Item className={classes.NavDropdownItem} onClick={props.generateCodeReq}>Compile</NavDropdown.Item>
+                        <NavDropdown.Item className={classes.NavDropdownItem} onClick={props.requestCompilation}>Compile</NavDropdown.Item>
                     </NavDropdown>
                     <NavDropdown  title="Demos" id="collasible-nav-dropdown">
                         {demos}

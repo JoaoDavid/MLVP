@@ -1,15 +1,16 @@
 import * as React from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams-core';
-import {BasePortWidget} from "../BasePort/BasePortWidget";
+import BasePortWidget from "../BasePort/BasePortWidget";
 import {BasePortModel} from "../BasePort/BasePortModel";
 import classes from './BaseNode.module.css';
 import Title from './Title/Title';
 import {BaseNodeModel} from './BaseNodeModel';
 import PortContainer from "../BasePort/PortContainer/PortContainer";
 import BaseModal from "../../UI/modal/BaseModal";
+import {useState} from "react";
 
 
-export interface CoreNodeProps {
+export interface BaseNodeProps {
     node: BaseNodeModel;
     engine: DiagramEngine;
     children?: React.ReactNode;
@@ -17,69 +18,73 @@ export interface CoreNodeProps {
     color: string;
 }
 
+export const eventNodeUpdated = (engine: DiagramEngine, node: BaseNodeModel) => {
+    engine.getModel().fireEvent(
+        {
+            node: node
+        },
+        'nodeUpdated'
+    );
+}
+
 /**
  * Base Node Widget, used to shape every node within the project
  */
-export class BaseNodeWidget extends React.Component<CoreNodeProps> {
+const BaseNodeWidget = (props: BaseNodeProps) => {
 
-    state = {
-        isSelected: false,
-        show: false,
+    const [, setTitle] = useState(props.node.getTitle);
+    const [modalOpen, setModal] = useState(false);
+
+
+    const updateTitle = (title: string) => {
+        props.node.setTitle(title);
+        setTitle(title);
     }
 
-    updateTitle = (title: string) => {
-        this.props.node.setTitle(title);
-        this.setState({});
-    }
-
-    generatePort = (port: BasePortModel) => {
-        return <BasePortWidget engine={this.props.engine} port={port} key={port.getID()}/>;
+    const generatePort = (port: BasePortModel) => {
+        return <BasePortWidget engine={props.engine} port={port} key={port.getID()}/>;
     };
 
-    handleCloseModal = () => {
-        this.setState({show: false});
+    const openModal = () => {
+        setModal(true);
     }
 
-    handleShowModal = () => {
-        this.setState({show: true});
+    const closeModal = () => {
+        setModal(false);
     }
 
-    componentDidUpdate (prevProps, prevState, snapshot) {
-        console.log("componentDidUpdate");
+    const nodeClasses = [classes.Node];
+    if (props.node.isSelected()) {
+        nodeClasses.push(classes.NodeSelected);
     }
 
-    render() {
-        const nodeClasses = [classes.Node];
-        if (this.props.node.isSelected()) {
-            nodeClasses.push(classes.NodeSelected);
-        }
-        return (
-            <div className={nodeClasses.join(' ')}
-                 data-default-node-name={this.props.node.getTitle()}
-                 style={{background: this.props.color}}
-                 onDoubleClick={this.handleShowModal}
-            >
-                <Title name={this.props.node.getTitle()}/>
-                <div className={classes.Content}>
-                    <PortContainer generatePort={this.generatePort} ports={this.props.node.getInPorts()}/>
-                    <div className={classes.ChildrenDiv}>
-                        {this.props.children}
-                    </div>
-                    <PortContainer generatePort={this.generatePort} ports={this.props.node.getOutPorts()}/>
+    return (
+        <div className={nodeClasses.join(' ')}
+             data-default-node-name={props.node.getTitle()}
+             style={{background: props.color}}
+             onDoubleClick={openModal}
+        >
+            <Title name={props.node.getTitle()}/>
+            <div className={classes.Content}>
+                <PortContainer generatePort={generatePort} ports={props.node.getInPorts()}/>
+                <div className={classes.ChildrenDiv}>
+                    {props.children}
                 </div>
-                <BaseModal handleClose={this.handleCloseModal}
-                           handleShow={this.handleShowModal}
-                           show={this.state.show}
-                           title={this.props.node.getTitle()}
-                           footer={this.props.node.getOptions().name}
-                           // footer={this.props.node.getOptions().id}
-                           saveTitle={this.updateTitle}
-                >
-                    {this.props.modalChildren}
-                </BaseModal>
+                <PortContainer generatePort={generatePort} ports={props.node.getOutPorts()}/>
             </div>
-        );
-    }
+            <BaseModal handleClose={closeModal}
+                       handleShow={openModal}
+                       show={modalOpen}
+                       title={props.node.getTitle()}
+                       footer={props.node.getOptions().name}
+                        // footer={props.node.getOptions().id}
+                       saveTitle={updateTitle}
+            >
+                {props.modalChildren}
+            </BaseModal>
+        </div>
+    );
+
 }
 
 export default BaseNodeWidget;

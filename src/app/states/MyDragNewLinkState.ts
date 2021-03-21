@@ -8,22 +8,22 @@ import {
 import {LinkModel} from '@projectstorm/react-diagrams-core';
 import {MouseEvent} from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams';
-import {BasePortModel} from "../../../core/BasePort/BasePortModel";
-import {ValidateLinks} from "../../../../z3/ValidateLinks";
+import {BasePortModel} from "../../components/core/BasePort/BasePortModel";
+import {TypeChecker} from "../typecheck/TypeChecker";
 
 
 export class MyDragNewLinkState extends AbstractDisplacementState<DiagramEngine> {
 
     private readonly allowLooseLinks = false;
     private readonly allowLinksFromLockedPorts = false;
-    private validateLinks;
+    private typeChecker: TypeChecker;
 
     port: BasePortModel;
     link: LinkModel;
 
-    constructor(validateLinks: ValidateLinks) {
+    constructor(typeChecker: TypeChecker) {
         super({ name: 'drag-new-link' });
-        this.validateLinks = validateLinks;
+        this.typeChecker = typeChecker;
         this.registerNewLinkDragging();
     }
 
@@ -63,18 +63,11 @@ export class MyDragNewLinkState extends AbstractDisplacementState<DiagramEngine>
                         if (this.port.canLinkToPort(model)) {
                             this.adjustPorts(this.port, model);
 
-                            this.validateLinks.validLink().then((res) => {
+                            this.typeChecker.requestTypeCheck().then((res) => {
                                 if(res) {
-                                    //link created between nodes
-                                    this.validateLinks.eventLinkCreated(this.link);
+                                    //valid link created between nodes
+                                    this.typeChecker.eventLinkCreated(this.link);
                                 } else {
-                                    this.engine.getModel().fireEvent(
-                                        {
-                                            sourceNode: this.link.getSourcePort().getNode(),
-                                            targetNode: this.link.getTargetPort().getNode(),
-                                        },
-                                        'problems'
-                                    );
                                     this.link.remove();
                                     this.engine.repaintCanvas();
                                 }

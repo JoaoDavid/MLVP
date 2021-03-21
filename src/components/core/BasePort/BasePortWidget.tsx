@@ -5,29 +5,32 @@ import classes from './BasePort.module.css';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 
-export interface BasePortWidgetProps {
+export interface BasePortProps {
     port: BasePortModel;
     engine: DiagramEngine;
 }
 
-export class BasePortWidget extends React.Component<BasePortWidgetProps> {
-    render() {
-        const renderTooltip = (
-            <Tooltip id={"batata"}>
-                {this.props.port.getName()}
-            </Tooltip>
-        );
-        return (
-            <div className={classes.PortLabel}>
-                <PortWidget engine={this.props.engine} port={this.props.port}>
-                        <OverlayTrigger placement="right"
-                                        delay={{ show: 100, hide: 100 }}
-                                        overlay={renderTooltip}>
-                            <div className={classes.Port}/>
-                        </OverlayTrigger>
+const BasePortWidget = (props: BasePortProps) => {
 
-                </PortWidget>
-            </div>
-        );
-    }
+    const renderTooltip = (
+        <Tooltip id={props.port.getID()}>
+            {props.port.getName()}
+        </Tooltip>
+    );
+
+    return (
+        <div className={classes.PortLabel}>
+            <PortWidget engine={props.engine} port={props.port}>
+                <OverlayTrigger placement={props.port.getIsIn()?"left":"right"}
+                                delay={{show: 100, hide: 100}}
+                                overlay={renderTooltip}>
+                    <div className={classes.Port}/>
+                </OverlayTrigger>
+
+            </PortWidget>
+        </div>
+    );
+
 }
+
+export default BasePortWidget;

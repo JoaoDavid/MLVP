@@ -1,7 +1,7 @@
 from typing import Dict
 from z3 import *
-from mlvp.prover.VarNames import *
-from mlvp.prover.PortProperties import Dataset
+from mlvp.typecheck.VarNames import *
+from mlvp.typecheck.PortProperties import Dataset
 
 
 def link(id_source_port: str, id_target_port: str):
@@ -45,12 +45,14 @@ def import_from_csv(id_output: str, n_cols: int, n_rows: int, labels: Dict[str, 
         ]
 
     print(And(list_balanced).num_args())
+    is_balanced = all(list_balanced)
     return [
         output.cols == n_cols,
         output.rows == n_rows,
         output.rows == sum(label_counts),
         # And(labels_values),
-        output.balanced == And(list_balanced),
+        output.balanced == is_balanced,
+        # output.balanced == And(list_balanced),
         output.n_labels == len(label_counts),
     ] + label_counts_assertions + labels_values
 

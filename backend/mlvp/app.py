@@ -1,7 +1,6 @@
 from mlvp.codegen.ParseJSON import ParseJSON
 from mlvp.codegen.CodeGen import CodeGen
-from mlvp.prover.ValidateLinks import ValidateLinks
-from mlvp.prover.Verification import Verification
+from mlvp.typecheck.TypeChecker import TypeChecker
 
 
 def generate_code(diagram, file_name="mlvp-code-output"):
@@ -11,17 +10,10 @@ def generate_code(diagram, file_name="mlvp-code-output"):
     return codegen.generate_code()
 
 
-def validate_links(data):
-    validator = ValidateLinks(links_data=data)
-    response = validator.validate()
-    # print(response)
-    return response
-
-
 def pipeline_verification(diagram):
     parser = ParseJSON(json_diagram=diagram)
     _, roots = parser.parse()
-    verification = Verification(roots)
-    response = verification.verify()
+    type_checker = TypeChecker(roots)
+    response = type_checker.verify()
     print(response)
     return str(response)

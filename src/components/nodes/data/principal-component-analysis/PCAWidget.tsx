@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {PCAModel} from './PCAModel';
-import BaseNodeWidget from '../../../core/BaseNode/BaseNodeWidget';
+import BaseNodeWidget, {eventNodeUpdated} from '../../../core/BaseNode/BaseNodeWidget';
 import PCAModal from "./PCAModal";
 import {DATA_CONFIG} from '../DataConfig';
 
@@ -10,35 +10,25 @@ interface PCAProps {
     engine: DiagramEngine;
 }
 
-type PCAState = {
-    node: PCAModel;
-};
+const PCAWidget = (props: PCAProps) => {
 
-class PCAWidget extends React.Component<PCAProps, PCAState> {
-
-    state = {
-        node: this.props.node,
+    const randomStateChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        props.node.setRandomState(+event.target.value);
+        eventNodeUpdated(props.engine, props.node);
     }
 
-    randomStateChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.state.node.setRandomState(+event.target.value);
-        this.setState({});
+    const numComponentsChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        props.node.setNumComponents(+event.target.value);
+        eventNodeUpdated(props.engine, props.node);
     }
 
-    numComponentsChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.state.node.setNumComponents(+event.target.value);
-        this.setState({});
-    }
-
-    render() {
-        const modal = <PCAModal node={this.props.node} randomStateChanged={this.randomStateChanged} numComponentsChanged={this.numComponentsChanged}/>;
-        return (
-            <BaseNodeWidget node={this.props.node} engine={this.props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
-                <p>Random State: {this.state.node.getRandomState()}</p>
-                <p>Num Components: {this.state.node.getNumComponents()}</p>
-            </BaseNodeWidget>
-        );
-    }
+    const modal = <PCAModal node={props.node} randomStateChanged={randomStateChanged} numComponentsChanged={numComponentsChanged}/>;
+    return (
+        <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
+            <p>Random State: {props.node.getRandomState()}</p>
+            <p>Num Components: {props.node.getNumComponents()}</p>
+        </BaseNodeWidget>
+    );
 
 }
 

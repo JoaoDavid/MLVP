@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {UndersamplingModel} from './UndersamplingModel';
-import BaseNodeWidget from '../../../core/BaseNode/BaseNodeWidget';
+import BaseNodeWidget, {eventNodeUpdated} from '../../../core/BaseNode/BaseNodeWidget';
 import UndersamplingModal from "./UndersamplingModal";
 import {DATA_CONFIG} from '../DataConfig';
 
@@ -10,29 +10,19 @@ interface UndersamplingProps {
     engine: DiagramEngine;
 }
 
-type UndersamplingState = {
-    node: UndersamplingModel;
-};
+const UndersamplingWidget = (props: UndersamplingProps) => {
 
-class UndersamplingWidget extends React.Component<UndersamplingProps, UndersamplingState> {
-
-    state = {
-        node: this.props.node,
+    const randomStateChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        props.node.setRandomState(+event.target.value);
+        eventNodeUpdated(props.engine, props.node);
     }
 
-    randomStateChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.state.node.setRandomState(+event.target.value);
-        this.setState({});
-    }
-
-    render() {
-        const modal = <UndersamplingModal node={this.props.node} randomStateChanged={this.randomStateChanged}/>;
-        return (
-            <BaseNodeWidget node={this.props.node} engine={this.props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
-                <p>Random State: {this.state.node.getRandomState()}</p>
-            </BaseNodeWidget>
-        );
-    }
+    const modal = <UndersamplingModal node={props.node} randomStateChanged={randomStateChanged}/>;
+    return (
+        <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
+            <p>Random State: {props.node.getRandomState()}</p>
+        </BaseNodeWidget>
+    );
 
 }
 
