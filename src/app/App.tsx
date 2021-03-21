@@ -122,6 +122,7 @@ class App extends React.Component<AppProps, AppState> {
         const map = new Map<String, () => void>();
         map.set("Simple Pipeline", () => {
             this.canvasLoadDiagram(splitEvaluate);
+            this.updateLog("Loaded demo Simple Pipeline");
         });
         return map;
     }
@@ -145,6 +146,7 @@ class App extends React.Component<AppProps, AppState> {
         this.engine.setModel(model);
         this.registerListeners(model);
         this.generated_nodes_counter = 0;
+        this.updateLog("New canvas");
     }
 
     onDropCanvas = (event: DragEvent<HTMLDivElement>) => {
@@ -171,6 +173,7 @@ class App extends React.Component<AppProps, AppState> {
             event.target.files[0].text().then((text: string) => {
                 this.canvasLoadDiagram(JSON.parse(text));
             });
+            this.updateLog("Loaded save file " + event.target.files[0].name);
         }
         event.target.value = "";
     }
