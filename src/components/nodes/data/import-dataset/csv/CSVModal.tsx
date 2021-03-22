@@ -24,6 +24,16 @@ const CSVModal = (props: CSVModalProps) => {
         labelCounts.push(
             <td key={value + "" + counter}>{value}</td>);
     });
+
+    const columnNames: JSX.Element[] = [];
+    const columnTypes: JSX.Element[] = [];
+    props.node.getColumnTypes().forEach((type, column) => {
+        columnNames.push(
+            <th key={column}>{column}</th>);
+        columnTypes.push(
+            <td key={column}>{type}</td>);
+    });
+
     return (
         <Form>
             <Form.Group>
@@ -44,21 +54,16 @@ const CSVModal = (props: CSVModalProps) => {
                 </Row>
             </Form.Group>
             <FormGroup>
-                {props.node.getColumnNames().length > 0?<Form.Label>Column Names</Form.Label>:null}
+                {columnNames.length > 0?<Form.Label>Column Types</Form.Label>:null}
                 <Table striped bordered hover responsive>
                     <thead>
                     <tr>
-                        {props.node.getColumnNames().map((col, counter) => {
-                            return <th key={col + counter}>{col}</th>
-                        })}
+                        {columnNames}
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        {/*<td>Empty</td>*/}
-                        {/*<td>on</td>*/}
-                        {/*<td>purpose</td>*/}
-                        {/*<td>WIP</td>*/}
+                        {columnTypes}
                     </tr>
                     </tbody>
                 </Table>
