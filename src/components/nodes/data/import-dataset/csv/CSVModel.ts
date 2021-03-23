@@ -104,11 +104,11 @@ export class CSVModel extends BaseNodeModel {
                 let currField = data[j][i];
                 const currColumn = this.columnTypes.get(currCol);
                 if (currField === null) {
-                    console.log("found a missing field")
+                    // found a missing field
                     currColumn.incNullCounter();
                 } else {
                     currColumn.updateType(currField);
-                    console.log(typeof currField + " " + currColumn.getType())
+                    // console.log(typeof currField + " " + currColumn.getType())
                 }
             }
         }
