@@ -15,16 +15,14 @@ export class Column {
         this.type = ColumnType.UNKNOWN;
     }
 
-    updateType = (type: string) => {
-        const newType = this.convertStringType(type);
+    updateType = (value: string) => {
+        const newType = this.convertStringType(value);
         if (this.type === ColumnType.UNKNOWN) {
             this.type = newType;
-            return;
-        }
-        if (newType === ColumnType.FLOAT) {
-            this.type = this.type === (ColumnType.INT || ColumnType.FLOAT) ? ColumnType.FLOAT : ColumnType.MIXED;
+        } else if (newType === ColumnType.FLOAT) {
+            this.type = this.type === ColumnType.INT ? ColumnType.FLOAT : this.type === ColumnType.FLOAT ? ColumnType.FLOAT : ColumnType.MIXED;
         } else if (newType === ColumnType.INT) {
-            this.type = this.type === ColumnType.FLOAT ? ColumnType.FLOAT : this.type === ColumnType.INT ? ColumnType.INT : ColumnType.MIXED;
+            this.type = this.type === ColumnType.INT ? ColumnType.INT : this.type === ColumnType.FLOAT ? ColumnType.FLOAT : ColumnType.MIXED;
         } else if (newType === ColumnType.STRING){
             this.type = this.type === ColumnType.STRING ? ColumnType.STRING : ColumnType.MIXED;
         } else {
@@ -32,18 +30,30 @@ export class Column {
         }
     }
 
-    convertStringType(type: string) {
-        if (type === ColumnType.INT) {
-            return ColumnType.INT;
-        } else if (type === ColumnType.FLOAT) {
-            return ColumnType.FLOAT;
-        } else if (type === ColumnType.STRING) {
+    convertStringType(value: any) {
+        const type = typeof value;
+        if (type === "number") {
+            if (Number.isInteger(value)) {
+                return ColumnType.INT;
+            } else {
+                return ColumnType.FLOAT;
+            }
+        }
+        if (type === ColumnType.STRING) {
             return ColumnType.STRING;
         }
     }
 
     incNullCounter = () => {
         this.nullCounter++;
+    }
+
+    getType = () => {
+        return this.type;
+    }
+
+    getNullCounter = () => {
+        return this.nullCounter;
     }
 
 

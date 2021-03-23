@@ -27,11 +27,15 @@ const CSVModal = (props: CSVModalProps) => {
 
     const columnNames: JSX.Element[] = [];
     const columnTypes: JSX.Element[] = [];
-    props.node.getColumnTypes().forEach((type, column) => {
+    const columnNulls: JSX.Element[] = [];
+    props.node.getColumnTypes().forEach((column, colName) => {
+        counter += 1;
         columnNames.push(
-            <th key={column}>{column}</th>);
+            <th key={colName + "" + counter}>{colName}</th>);
         columnTypes.push(
-            <td key={column}>{type}</td>);
+            <td key={column.getType() + "" + counter}>{column.getType()}</td>);
+        columnNulls.push(
+            <td key={column.getType() + "" + column.getNullCounter() + "" + counter}>{column.getNullCounter()}</td>);
     });
 
     return (
@@ -64,6 +68,9 @@ const CSVModal = (props: CSVModalProps) => {
                     <tbody>
                     <tr>
                         {columnTypes}
+                    </tr>
+                    <tr>
+                        {columnNulls}
                     </tr>
                     </tbody>
                 </Table>

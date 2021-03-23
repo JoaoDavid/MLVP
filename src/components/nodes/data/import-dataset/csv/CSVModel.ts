@@ -3,6 +3,7 @@ import {BaseNodeModel} from "../../../../core/BaseNode/BaseNodeModel";
 import {DatasetPortModel} from "../../../../ports/dataset/DatasetPortModel";
 import {NODE_CSV} from "../../DataConfig";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
+import {Column} from "../Column";
 
 
 export class CSVModel extends BaseNodeModel {
@@ -11,7 +12,7 @@ export class CSVModel extends BaseNodeModel {
     private numCols: number = 0;
     private numRows: number = 0;
     private columnNames: string[] = [];
-    private columnTypes: Map<string, string> = new Map();
+    private columnTypes: Map<string, Column> = new Map();
     private labels: Map<string, number> = new Map();
 
     constructor() {
@@ -93,44 +94,24 @@ export class CSVModel extends BaseNodeModel {
 
     processColumnTypes = (data: string[][]) => {
         for(let i = 0; i < data[i].length; i++) {
+            for(let j = 0; j < 1; j++) {
+                // Initialize columns
+                let currCol = data[0][i];
+                this.columnTypes.set(currCol, new Column());
+            }
             for(let j = 1; j < data.length; j++) {
                 let currCol = data[0][i];
                 let currField = data[j][i];
+                const currColumn = this.columnTypes.get(currCol);
                 if (currField === null) {
                     console.log("found a missing field")
-                    break;
-                }
-                let savedType = this.columnTypes.get(currCol);
-                console.log(currField)
-                if(savedType === undefined) {
-                    if (Number.isInteger(currField)) {
-                        console.log("true")
-                        this.columnTypes.set(currCol, "int");
-                    } else {
-                        this.columnTypes.set(currCol, this.myTypeOf(currField));
-                    }
+                    currColumn.incNullCounter();
                 } else {
-                    const currFieldType = this.myTypeOf(data[j][i]);
-                    if (savedType !== currFieldType) {
-                        if (savedType === "int" && currFieldType === "float") {
-                            this.columnTypes.set(currCol, "float");
-                        }
-                    }
+                    currColumn.updateType(currField);
+                    console.log(typeof currField + " " + currColumn.getType())
                 }
             }
         }
-    }
-
-    myTypeOf = (value: any) => {
-        const type = typeof value;
-        if (type === "number") {
-            if (Number.isInteger(value)) {
-                return "int";
-            } else {
-                return "float";
-            }
-        }
-        return type;
     }
 
     processDataset = (data: string[][]) => {
@@ -140,10 +121,8 @@ export class CSVModel extends BaseNodeModel {
             let currLabel = labels.get(data[i][lastColIndex]);
             if(currLabel === undefined) {
                 labels.set(data[i][lastColIndex], 1);
-                console.log(typeof data[i][lastColIndex])
             } else {
                 labels.set(data[i][lastColIndex], currLabel+1);
-                console.log(typeof data[i][lastColIndex])
             }
         }
         return labels;
