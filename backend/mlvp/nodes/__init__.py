@@ -9,6 +9,6 @@ from .data.PCA import PCA
 from .model.RandomForestClassifier import RandomForestClassifier
 
 
-from .evaluate.ModelAccuracy import ModelAccuracy
+from .evaluate.EvaluateClassifier import EvaluateClassifier
 from .evaluate.CrossValidation import CrossValidation
 

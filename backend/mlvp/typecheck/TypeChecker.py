@@ -133,9 +133,8 @@ class TypeChecker:
                 self.all_node_assertions.append((node, node_assertions))
                 self.node_assertions[node.node_id] = assertions_to_str(node.ports, node_assertions)
 
-            elif isinstance(node, ModelAccuracy):
-                id_input_ds = node.get_port(True, "Dataset").port_id
-                node_assertions = evaluate_classifier(id_input_ds)
+            elif isinstance(node, EvaluateClassifier):
+                node_assertions = node.type_check()
                 self.all_node_assertions.append((node, node_assertions))
                 self.node_assertions[node.node_id] = assertions_to_str(node.ports, node_assertions)
 

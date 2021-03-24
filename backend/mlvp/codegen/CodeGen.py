@@ -4,7 +4,7 @@ from mlvp.codegen.Emitter import Emitter
 from mlvp.ports import DatasetPort, ModelPort
 from mlvp.nodes import Node
 from mlvp.nodes import ImportFromCSV
-from mlvp.nodes import ModelAccuracy
+from mlvp.nodes import EvaluateClassifier
 from mlvp.nodes import RandomForestClassifier
 from mlvp.nodes import SplitDataset
 from mlvp.nodes import Oversampling, UnderSampling
@@ -111,7 +111,7 @@ class CodeGen:
                     RANDOM_FOREST_INIT.format(var=clf_var, num_trees=node.num_trees, criterion=node.criterion,
                                               max_depth=node.max_depth))
                 self.out_file.write(MODEL_FIT.format(var=clf_var, x=x, y=y))
-            elif isinstance(node, ModelAccuracy):
+            elif isinstance(node, EvaluateClassifier):
                 y_predicted = "y_predicted" + str(curr_count)
                 clf_var, x, y = "", "", ""
                 for curr in parent_links:

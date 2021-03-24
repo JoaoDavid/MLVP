@@ -29,16 +29,6 @@ def link(id_source_port: str, id_target_port: str):
 # z3_n_trees > 0,
 
 
-def evaluate_classifier(id_input_ds):
-    input_ds = Dataset(id_input_ds)
-
-    return [
-        # requires
-        input_ds.balanced,
-        input_ds.cols >= 2
-    ]
-
-
 
 # s = Solver()
 # s.add(import_from_csv("a", 5, 8, {"batata": 5, "alface": 3}))

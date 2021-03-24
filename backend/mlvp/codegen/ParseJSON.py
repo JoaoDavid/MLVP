@@ -78,7 +78,7 @@ class ParseJSON:
                 self.libraries.add(
                     FROM_IMPORT.format(package=SKLEARN + "." + ENSEMBLE, class_to_import=RANDOM_FOREST_CLF))
             elif data['type'] == 'NODE_ACCURACY_CLASSIFIER':
-                node = ModelAccuracy(node_id=node_id, title=title)
+                node = EvaluateClassifier(node_id=node_id, title=title)
                 node.ports = self.__parse_ports(data['ports'])
                 self.nodes[node_id] = node
                 self.libraries.add(FROM_IMPORT.format(package=SKLEARN + "." + METRICS, class_to_import=ACCURACY_SCORE))
