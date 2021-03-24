@@ -18,28 +18,6 @@ def link(id_source_port: str, id_target_port: str):
     ]
 
 
-def oversampling(id_input, id_output, random_state):
-    input_ds = Dataset(id_input)
-    output_ds = Dataset(id_output)
-
-    return [
-        input_ds.cols == output_ds.cols,
-        Implies(input_ds.balanced, And(
-            input_ds.rows == output_ds.rows,
-            input_ds.n_labels == output_ds.n_labels,
-            input_ds.max_label_count == output_ds.max_label_count,
-            input_ds.min_label_count == output_ds.min_label_count
-        )),
-        Implies(Not(input_ds.balanced), And(
-            output_ds.rows == input_ds.max_label_count * input_ds.n_labels,
-            input_ds.n_labels == output_ds.n_labels,
-            input_ds.max_label_count == output_ds.max_label_count,
-            output_ds.min_label_count == output_ds.max_label_count,
-        )),
-        output_ds.balanced
-    ]
-
-
 def undersampling(id_input, id_output, random_state):
     input_ds = Dataset(id_input)
     output_ds = Dataset(id_output)
