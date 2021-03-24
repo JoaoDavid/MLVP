@@ -140,8 +140,7 @@ class TypeChecker:
                 self.node_assertions[node.node_id] = assertions_to_str(node.ports, node_assertions)
 
             elif isinstance(node, CrossValidation):
-                id_input_ds = node.get_port(True, "Dataset").port_id
-                node_assertions = cross_validation(id_input_ds, node.number_folds)
+                node_assertions = node.type_check()
                 self.all_node_assertions.append((node, node_assertions))
                 self.node_assertions[node.node_id] = assertions_to_str(node.ports, node_assertions)
 

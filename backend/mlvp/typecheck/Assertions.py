@@ -39,18 +39,6 @@ def evaluate_classifier(id_input_ds):
     ]
 
 
-def cross_validation(id_input_ds, n_folds):
-    input_ds = Dataset(id_input_ds)
-
-    z3_n_folds = Int("node" + SEP + "n-folds")
-
-    return [
-        # requires
-        z3_n_folds == n_folds,
-        z3_n_folds > 1,
-        input_ds.balanced,
-        input_ds.cols > 1
-    ]
 
 # s = Solver()
 # s.add(import_from_csv("a", 5, 8, {"batata": 5, "alface": 3}))
