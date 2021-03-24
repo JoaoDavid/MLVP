@@ -124,9 +124,7 @@ class TypeChecker:
                 self.node_assertions[node.node_id] = assertions_to_str(node.ports, node_assertions)
 
             elif isinstance(node, PCA):
-                id_input = node.get_port(True, "Dataset").port_id
-                id_output = node.get_port(False, "Reduced Dataset").port_id
-                node_assertions = pca(id_input, id_output, node.random_state, node.num_components)
+                node_assertions = node.type_check()
                 self.all_node_assertions.append((node, node_assertions))
                 self.node_assertions[node.node_id] = assertions_to_str(node.ports, node_assertions)
 

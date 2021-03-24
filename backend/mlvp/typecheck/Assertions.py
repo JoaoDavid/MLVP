@@ -18,26 +18,6 @@ def link(id_source_port: str, id_target_port: str):
     ]
 
 
-def pca(id_input, id_output, random_state, n_components):
-    input_ds = Dataset(id_input)
-    output_ds = Dataset(id_output)
-    z3_n_components = Int("node" + SEP + "n-components")
-
-    return [
-        # requires
-        z3_n_components == n_components,
-        z3_n_components < input_ds.cols,
-        z3_n_components > 0,
-        # ensures
-        output_ds.cols == z3_n_components + 1,
-        output_ds.rows == input_ds.rows,
-        output_ds.n_labels == input_ds.n_labels,
-        output_ds.max_label_count == input_ds.max_label_count,
-        output_ds.min_label_count == input_ds.min_label_count,
-        input_ds.balanced == output_ds.balanced,
-    ]
-
-
 # When creating node property assertions,
 # first assert that the z3 variable is equal to the received as parameter
 # then use the received as parameter to assert whatever you want about it
