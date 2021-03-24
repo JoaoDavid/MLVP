@@ -47,15 +47,7 @@ class CodeGen:
             parent_links = node.parent_links
             print(node.__class__.__name__)
             if isinstance(node, ImportFromCSV):
-                df_var = "df" + str(curr_count)
-                x = "x" + str(curr_count)
-                y = "y" + str(curr_count)
-                out_ds = node.get_port(False, "Dataset")
-                self.emitter.set(out_ds, (x, y))
-                self.out_file.write(
-                    LOAD_CSV.format(var=df_var, pandas_var=PANDAS_VAR, file_name=node.file_name))
-                self.out_file.write(FEATURES.format(x=x, var=df_var, target=node.target))
-                self.out_file.write(TARGET.format(y=y, var=df_var, target=node.target))
+                node.codegen(self.emitter, self.out_file)
             elif isinstance(node, SplitDataset):
                 parent_port = parent_links[0].source_port
                 x, y = self.emitter.get(parent_port)

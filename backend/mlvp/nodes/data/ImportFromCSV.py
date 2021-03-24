@@ -1,5 +1,9 @@
 from typing import Dict
 from z3 import *
+
+from mlvp.codegen.Emitter import Emitter
+from mlvp.codegen.templates.CodeTemplate import LOAD_CSV, FEATURES, TARGET
+from mlvp.codegen.templates.LibNames import PANDAS_VAR
 from mlvp.nodes.Node import Node
 from mlvp.typecheck import Dataset, SEP
 
@@ -13,6 +17,17 @@ class ImportFromCSV(Node):
         self.num_rows = num_rows
         self.target = target
         self.labels = labels
+
+    def codegen(self, emitter: Emitter, out_file):
+        curr_count = emitter.get_count()
+        df_var = "df" + str(curr_count)
+        x = "x" + str(curr_count)
+        y = "y" + str(curr_count)
+        out_ds = self.get_port(False, "Dataset")
+        emitter.set(out_ds, (x, y))
+        out_file.write(LOAD_CSV.format(var=df_var, pandas_var=PANDAS_VAR, file_name=self.file_name))
+        out_file.write(FEATURES.format(x=x, var=df_var, target=self.target))
+        out_file.write(TARGET.format(y=y, var=df_var, target=self.target))
 
     def type_check(self):
         out_ds = self.get_port(False, "Dataset").port_id
@@ -39,12 +54,13 @@ class ImportFromCSV(Node):
 
         print(And(list_balanced).num_args())
         is_balanced = all(list_balanced)
+
         return [
-                   output.cols == self.num_cols,
-                   output.rows == self.num_rows,
-                   output.rows == sum(label_counts),
-                   # And(labels_values),
-                   output.balanced == is_balanced,
-                   # output.balanced == And(list_balanced),
-                   output.n_labels == len(label_counts),
-               ] + label_counts_assertions + labels_values
+            output.cols == self.num_cols,
+            output.rows == self.num_rows,
+            output.rows == sum(label_counts),
+            # And(labels_values),
+            output.balanced == is_balanced,
+            # output.balanced == And(list_balanced),
+            output.n_labels == len(label_counts),
+        ] + label_counts_assertions + labels_values
