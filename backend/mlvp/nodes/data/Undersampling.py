@@ -24,13 +24,9 @@ class UnderSampling(Node):
         out_ds = self.get_port(False, "Balanced Dataset")
         emitter.set(out_ds, (x_rus_res, y_rus_res))
 
-    def type_check(self):
+    def assertions(self):
         id_input = self.get_port(True, "Dataset").port_id
         id_output = self.get_port(False, "Balanced Dataset").port_id
-        node_assertions = self.assertions(id_input, id_output)
-        return node_assertions
-
-    def assertions(self, id_input, id_output):
         input_ds = Dataset(id_input)
         output_ds = Dataset(id_output)
 

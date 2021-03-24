@@ -29,14 +29,10 @@ class SplitDataset(Node):
         emitter.set(out_train_ds, (x_train, y_train))
         emitter.set(out_test_ds, (x_test, y_test))
 
-    def type_check(self):
+    def assertions(self):
         id_input = self.get_port(True, "Dataset").port_id
         id_output_train = self.get_port(False, "Train Dataset").port_id
         id_output_test = self.get_port(False, "Test Dataset").port_id
-        node_assertions = self.assertions(id_input, id_output_train, id_output_test)
-        return node_assertions
-
-    def assertions(self, id_input, id_output_train, id_output_test):
         input_ds = Dataset(id_input)
         train_ds = Dataset(id_output_train)
         test_ds = Dataset(id_output_test)

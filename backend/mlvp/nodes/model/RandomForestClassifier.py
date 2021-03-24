@@ -24,12 +24,8 @@ class RandomForestClassifier(Node):
                                                  max_depth=self.max_depth))
         out_file.write(MODEL_FIT.format(var=clf_var, x=x, y=y))
 
-    def type_check(self):
+    def assertions(self):
         id_input = self.get_port(True, "Dataset").port_id
-        node_assertions = self.assertions(id_input)
-        return node_assertions
-
-    def assertions(self, id_input):
         input_ds = Dataset(id_input)
         z3_n_trees = Int("node" + SEP + "n-trees")
         z3_max_depth = Int("node" + SEP + "max-depth")

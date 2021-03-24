@@ -29,16 +29,11 @@ class ImportFromCSV(Node):
         out_file.write(FEATURES.format(x=x, var=df_var, target=self.target))
         out_file.write(TARGET.format(y=y, var=df_var, target=self.target))
 
-    def type_check(self):
+    def assertions(self):
         out_ds = self.get_port(False, "Dataset").port_id
-        node_assertions = self.assertions(out_ds)
+        output = Dataset(out_ds)
 
-        return node_assertions
-
-    def assertions(self, id_output: str):
-        output = Dataset(id_output)
-
-        label_names = [Int(id_output + SEP + "label-" + key) for key in self.labels.keys()]
+        label_names = [Int(out_ds + SEP + "label-" + key) for key in self.labels.keys()]
         label_counts = list(self.labels.values())
         labels_values = [label_names[i] == (label_counts[i]) for i in range(len(self.labels))]
 
@@ -56,11 +51,11 @@ class ImportFromCSV(Node):
         is_balanced = all(list_balanced)
 
         return [
-            output.cols == self.num_cols,
-            output.rows == self.num_rows,
-            output.rows == sum(label_counts),
-            # And(labels_values),
-            output.balanced == is_balanced,
-            # output.balanced == And(list_balanced),
-            output.n_labels == len(label_counts),
-        ] + label_counts_assertions + labels_values
+                   output.cols == self.num_cols,
+                   output.rows == self.num_rows,
+                   output.rows == sum(label_counts),
+                   # And(labels_values),
+                   output.balanced == is_balanced,
+                   # output.balanced == And(list_balanced),
+                   output.n_labels == len(label_counts),
+               ] + label_counts_assertions + labels_values

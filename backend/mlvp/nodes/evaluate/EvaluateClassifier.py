@@ -27,12 +27,8 @@ class EvaluateClassifier(Node):
         out_file.write(score + " = " + ACCURACY_SCORE_CALL.format(y_true=y, y_pred=y_predicted))
         out_file.write("print(" + score + ")\n")
 
-    def type_check(self):
+    def assertions(self):
         id_input_ds = self.get_port(True, "Dataset").port_id
-        node_assertions = self.assertions(id_input_ds)
-        return node_assertions
-
-    def assertions(self, id_input_ds: str):
         input_ds = Dataset(id_input_ds)
 
         return [

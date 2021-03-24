@@ -24,13 +24,9 @@ class PCA(Node):
         out_ds = self.get_port(False, "Reduced Dataset")
         emitter.set(out_ds, (x_pca, y))
 
-    def type_check(self):
+    def assertions(self):
         id_input = self.get_port(True, "Dataset").port_id
         id_output = self.get_port(False, "Reduced Dataset").port_id
-        node_assertions = self.assertions(id_input, id_output)
-        return node_assertions
-
-    def assertions(self, id_input, id_output):
         input_ds = Dataset(id_input)
         output_ds = Dataset(id_output)
         z3_n_components = Int("node" + SEP + "n-components")

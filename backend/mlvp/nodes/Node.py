@@ -18,13 +18,10 @@ class Node(ABC):
             if name == port.name and port.in_port == in_port:
                 return port
 
-    def type_check(self):
-        pass
-
     def assertions(self):
         pass
 
-    def codegen(self):
+    def codegen(self, emitter, out_file):
         pass
 
     def __str__(self):

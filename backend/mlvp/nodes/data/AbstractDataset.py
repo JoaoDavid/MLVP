@@ -9,13 +9,9 @@ class AbstractDataset(Node):
         self.num_cols = num_cols
         self.num_rows = num_rows
 
-    def type_check(self):
+    def assertions(self):
         out_ds = self.get_port(False, "Dataset").port_id
-        node_assertions = self.assertions(out_ds)
-        return node_assertions
-
-    def assertions(self, id_output: str):
-        output = Dataset(id_output)
+        output = Dataset(out_ds)
 
         return [
             output.cols == self.num_cols,
