@@ -21,34 +21,7 @@ def link(id_source_port: str, id_target_port: str):
 
 
 
-def import_from_csv(id_output: str, n_cols: int, n_rows: int, labels: Dict[str, int]):
-    output = Dataset(id_output)
 
-    label_names = [Int(id_output + SEP + "label-" + key) for key in labels.keys()]
-    label_counts = list(labels.values())
-    labels_values = [label_names[i] == (label_counts[i]) for i in range(len(labels))]
-
-    list_balanced = [IntVal(label_counts[i]) == IntVal(label_counts[i + 1]) for i in range(len(labels) - 1)]
-    # list_balanced = [abs(label_counts[i] - label_counts[i + 1]) <= 1 for i in range(len(labels) - 1)]
-
-    label_counts_assertions = []
-    if len(labels) > 0:
-        label_counts_assertions = [
-            output.max_label_count == max(label_counts),
-            output.min_label_count == min(label_counts)
-        ]
-
-    print(And(list_balanced).num_args())
-    is_balanced = all(list_balanced)
-    return [
-        output.cols == n_cols,
-        output.rows == n_rows,
-        output.rows == sum(label_counts),
-        # And(labels_values),
-        output.balanced == is_balanced,
-        # output.balanced == And(list_balanced),
-        output.n_labels == len(label_counts),
-    ] + label_counts_assertions + labels_values
 
 
 def split_dataset(id_input, id_output_train, id_output_test, test_size, train_size, shuffle, stratify):
