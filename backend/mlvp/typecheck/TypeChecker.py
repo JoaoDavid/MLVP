@@ -109,11 +109,7 @@ class TypeChecker:
                 self.node_assertions[node.node_id] = assertions_to_str(node.ports, node_assertions)
 
             elif isinstance(node, SplitDataset):
-                id_input = node.get_port(True, "Dataset").port_id
-                id_output_train = node.get_port(False, "Train Dataset").port_id
-                id_output_test = node.get_port(False, "Test Dataset").port_id
-                node_assertions = split_dataset(id_input, id_output_train, id_output_test, node.test_size,
-                                                node.train_size, node.shuffle, True)
+                node_assertions = node.type_check()
                 self.all_node_assertions.append((node, node_assertions))
                 self.node_assertions[node.node_id] = assertions_to_str(node.ports, node_assertions)
 

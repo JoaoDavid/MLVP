@@ -18,43 +18,6 @@ def link(id_source_port: str, id_target_port: str):
     ]
 
 
-
-
-
-
-
-
-def split_dataset(id_input, id_output_train, id_output_test, test_size, train_size, shuffle, stratify):
-    input_ds = Dataset(id_input)
-    train_ds = Dataset(id_output_train)
-    test_ds = Dataset(id_output_test)
-
-    shuffle_input = Bool(id_input + SEP + SHUFFLED)
-    shuffle_train = Bool(id_output_train + SEP + SHUFFLED)
-    shuffle_test = Bool(id_output_test + SEP + SHUFFLED)
-    z3_shuffle = Bool("node" + SEP + "shuffle")
-    output_shuffles = Or(shuffle_input, z3_shuffle)
-    z3_stratify = Bool("node" + SEP + "stratify")
-
-    return [
-        # requires
-        input_ds.rows >= 2,
-        # falta relacionar os min e max label count
-        # ensures
-        train_ds.rows == ToInt(ToReal(input_ds.rows) * train_size),
-        test_ds.rows == ToInt(ToReal(input_ds.rows) * test_size),
-        input_ds.cols == train_ds.cols,
-        train_ds.cols == test_ds.cols,
-        train_ds.n_labels == ToInt(ToReal(input_ds.n_labels) * train_size),
-        test_ds.n_labels == ToInt(ToReal(input_ds.n_labels) * test_size),
-        z3_stratify == stratify,
-        Implies(z3_stratify, And(train_ds.balanced, test_ds.balanced)),
-        z3_shuffle == shuffle,
-        shuffle_train == output_shuffles,
-        shuffle_test == output_shuffles
-    ]
-
-
 def oversampling(id_input, id_output, random_state):
     input_ds = Dataset(id_input)
     output_ds = Dataset(id_output)
@@ -103,7 +66,6 @@ def pca(id_input, id_output, random_state, n_components):
     input_ds = Dataset(id_input)
     output_ds = Dataset(id_output)
     z3_n_components = Int("node" + SEP + "n-components")
-
 
     return [
         # requires
@@ -169,7 +131,6 @@ def cross_validation(id_input_ds, n_folds):
         input_ds.balanced,
         input_ds.cols > 1
     ]
-
 
 # s = Solver()
 # s.add(import_from_csv("a", 5, 8, {"batata": 5, "alface": 3}))
