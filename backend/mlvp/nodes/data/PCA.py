@@ -13,17 +13,17 @@ class PCA(Node):
     def type_check(self):
         id_input = self.get_port(True, "Dataset").port_id
         id_output = self.get_port(False, "Reduced Dataset").port_id
-        node_assertions = self.assertions(id_input, id_output, self.random_state, self.num_components)
+        node_assertions = self.assertions(id_input, id_output)
         return node_assertions
 
-    def assertions(self, id_input, id_output, random_state, n_components):
+    def assertions(self, id_input, id_output):
         input_ds = Dataset(id_input)
         output_ds = Dataset(id_output)
         z3_n_components = Int("node" + SEP + "n-components")
 
         return [
             # requires
-            z3_n_components == n_components,
+            z3_n_components == self.num_components,
             z3_n_components < input_ds.cols,
             z3_n_components > 0,
             # ensures

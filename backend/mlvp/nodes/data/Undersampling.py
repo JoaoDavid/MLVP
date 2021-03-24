@@ -12,10 +12,10 @@ class UnderSampling(Node):
     def type_check(self):
         id_input = self.get_port(True, "Dataset").port_id
         id_output = self.get_port(False, "Balanced Dataset").port_id
-        node_assertions = self.assertions(id_input, id_output, self.random_state)
+        node_assertions = self.assertions(id_input, id_output)
         return node_assertions
 
-    def assertions(self, id_input, id_output, random_state):
+    def assertions(self, id_input, id_output):
         input_ds = Dataset(id_input)
         output_ds = Dataset(id_output)
 
@@ -35,4 +35,3 @@ class UnderSampling(Node):
             )),
             output_ds.balanced
         ]
-

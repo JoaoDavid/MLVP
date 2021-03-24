@@ -15,11 +15,10 @@ class SplitDataset(Node):
         id_input = self.get_port(True, "Dataset").port_id
         id_output_train = self.get_port(False, "Train Dataset").port_id
         id_output_test = self.get_port(False, "Test Dataset").port_id
-        node_assertions = self.assertions(id_input, id_output_train, id_output_test, self.test_size,
-                                          self.train_size, self.shuffle, True)
+        node_assertions = self.assertions(id_input, id_output_train, id_output_test)
         return node_assertions
 
-    def assertions(self, id_input, id_output_train, id_output_test, test_size, train_size, shuffle, stratify):
+    def assertions(self, id_input, id_output_train, id_output_test):
         input_ds = Dataset(id_input)
         train_ds = Dataset(id_output_train)
         test_ds = Dataset(id_output_test)
@@ -36,15 +35,15 @@ class SplitDataset(Node):
             input_ds.rows >= 2,
             # falta relacionar os min e max label count
             # ensures
-            train_ds.rows == ToInt(ToReal(input_ds.rows) * train_size),
-            test_ds.rows == ToInt(ToReal(input_ds.rows) * test_size),
+            train_ds.rows == ToInt(ToReal(input_ds.rows) * self.train_size),
+            test_ds.rows == ToInt(ToReal(input_ds.rows) * self.test_size),
             input_ds.cols == train_ds.cols,
             train_ds.cols == test_ds.cols,
-            train_ds.n_labels == ToInt(ToReal(input_ds.n_labels) * train_size),
-            test_ds.n_labels == ToInt(ToReal(input_ds.n_labels) * test_size),
-            z3_stratify == stratify,
+            train_ds.n_labels == ToInt(ToReal(input_ds.n_labels) * self.train_size),
+            test_ds.n_labels == ToInt(ToReal(input_ds.n_labels) * self.test_size),
+            z3_stratify == True, #TODO
             Implies(z3_stratify, And(train_ds.balanced, test_ds.balanced)),
-            z3_shuffle == shuffle,
+            z3_shuffle == self.shuffle,
             shuffle_train == output_shuffles,
             shuffle_test == output_shuffles
         ]
