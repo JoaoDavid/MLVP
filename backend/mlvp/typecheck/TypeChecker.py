@@ -129,9 +129,7 @@ class TypeChecker:
                 self.node_assertions[node.node_id] = assertions_to_str(node.ports, node_assertions)
 
             elif isinstance(node, RandomForestClassifier):
-                id_input = node.get_port(True, "Dataset").port_id
-                max_depth = -1 if node.max_depth == "None" else node.max_depth
-                node_assertions = random_forest_classifier(id_input, node.num_trees, max_depth)
+                node_assertions = node.type_check()
                 self.all_node_assertions.append((node, node_assertions))
                 self.node_assertions[node.node_id] = assertions_to_str(node.ports, node_assertions)
 

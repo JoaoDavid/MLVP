@@ -6,7 +6,6 @@ from .data.Oversampling import Oversampling
 from .data.Undersampling import UnderSampling
 from .data.PCA import PCA
 
-from .model.ModelTrain import ModelTrain
 from .model.RandomForestClassifier import RandomForestClassifier
 
 

@@ -28,22 +28,6 @@ def link(id_source_port: str, id_target_port: str):
 # z3_n_trees == n_trees,
 # z3_n_trees > 0,
 
-def random_forest_classifier(id_input, n_trees, max_depth):
-    input_ds = Dataset(id_input)
-    z3_n_trees = Int("node" + SEP + "n-trees")
-    z3_max_depth = Int("node" + SEP + "max-depth")
-
-    return [
-        # requires
-        z3_n_trees == n_trees,
-        z3_n_trees > 0,
-        z3_max_depth == max_depth,
-        Or(z3_max_depth > 0, z3_max_depth == -1),
-        input_ds.balanced,
-        input_ds.rows > 0,
-        input_ds.cols > IntVal(1)
-    ]
-
 
 def evaluate_classifier(id_input_ds):
     input_ds = Dataset(id_input_ds)
