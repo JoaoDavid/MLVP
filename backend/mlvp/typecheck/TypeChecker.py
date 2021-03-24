@@ -119,9 +119,7 @@ class TypeChecker:
                 self.node_assertions[node.node_id] = assertions_to_str(node.ports, node_assertions)
 
             elif isinstance(node, UnderSampling):
-                id_input = node.get_port(True, "Dataset").port_id
-                id_output = node.get_port(False, "Balanced Dataset").port_id
-                node_assertions = undersampling(id_input, id_output, node.random_state)
+                node_assertions = node.type_check()
                 self.all_node_assertions.append((node, node_assertions))
                 self.node_assertions[node.node_id] = assertions_to_str(node.ports, node_assertions)
 
