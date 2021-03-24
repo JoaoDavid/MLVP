@@ -1,3 +1,5 @@
+from mlvp.codegen.Emitter import Emitter
+from mlvp.codegen.templates.CodeTemplate import PCA_INIT, FIT_TRANSFORM_CALL
 from mlvp.nodes.Node import Node
 from mlvp.typecheck import Dataset, SEP
 from z3 import *
@@ -9,6 +11,18 @@ class PCA(Node):
         super().__init__(node_id, title)
         self.random_state = random_state
         self.num_components = num_components
+
+    def codegen(self, emitter: Emitter, out_file):
+        curr_count = emitter.get_count()
+        parent_port = self.parent_links[0].source_port
+        x, y = emitter.get(parent_port)
+        pca_var = "pca" + str(curr_count)
+        x_pca = "x_pca" + str(curr_count)
+        # y_pca = "y_pca" + str(curr_count)
+        out_file.write(PCA_INIT.format(pca_var=pca_var, random_state=self.random_state, n_components=self.num_components))
+        out_file.write(FIT_TRANSFORM_CALL.format(x_pca=x_pca, pca_var=pca_var, x=x))
+        out_ds = self.get_port(False, "Reduced Dataset")
+        emitter.set(out_ds, (x_pca, y))
 
     def type_check(self):
         id_input = self.get_port(True, "Dataset").port_id
