@@ -18,13 +18,7 @@ def link(id_source_port: str, id_target_port: str):
     ]
 
 
-def abstract_ds(id_output: str, n_cols: int, n_rows: int):
-    output = Dataset(id_output)
 
-    return [
-        output.cols == n_cols,
-        output.rows == n_rows,
-    ]
 
 
 def import_from_csv(id_output: str, n_cols: int, n_rows: int, labels: Dict[str, int]):

@@ -99,11 +99,9 @@ class TypeChecker:
             # parents are all visited
             self.__add_dataset_links(node.parent_links)
             if isinstance(node, AbstractDataset):
-                out_ds = node.get_port(False, "Dataset").port_id
-                node_assertions = abstract_ds(out_ds, node.num_cols, node.num_rows)
+                node_assertions = node.type_check()
                 self.all_node_assertions.append((node, node_assertions))
                 self.node_assertions[node.node_id] = assertions_to_str(node.ports, node_assertions)
-
             elif isinstance(node, ImportFromCSV):
                 out_ds = node.get_port(False, "Dataset").port_id
                 node_assertions = import_from_csv(out_ds, node.num_cols, node.num_rows, node.labels)
