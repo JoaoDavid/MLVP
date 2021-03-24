@@ -98,51 +98,11 @@ class TypeChecker:
                 self.__traverse_pipeline(parent_link.parent_node)
             # parents are all visited
             self.__add_dataset_links(node.parent_links)
-            if isinstance(node, AbstractDataset):
-                node_assertions = node.type_check()
-                self.all_node_assertions.append((node, node_assertions))
-                self.node_assertions[node.node_id] = assertions_to_str(node.ports, node_assertions)
-
-            elif isinstance(node, ImportFromCSV):
-                node_assertions = node.type_check()
-                self.all_node_assertions.append((node, node_assertions))
-                self.node_assertions[node.node_id] = assertions_to_str(node.ports, node_assertions)
-
-            elif isinstance(node, SplitDataset):
-                node_assertions = node.type_check()
-                self.all_node_assertions.append((node, node_assertions))
-                self.node_assertions[node.node_id] = assertions_to_str(node.ports, node_assertions)
-
-            elif isinstance(node, Oversampling):
-                node_assertions = node.type_check()
-                self.all_node_assertions.append((node, node_assertions))
-                self.node_assertions[node.node_id] = assertions_to_str(node.ports, node_assertions)
-
-            elif isinstance(node, UnderSampling):
-                node_assertions = node.type_check()
-                self.all_node_assertions.append((node, node_assertions))
-                self.node_assertions[node.node_id] = assertions_to_str(node.ports, node_assertions)
-
-            elif isinstance(node, PCA):
-                node_assertions = node.type_check()
-                self.all_node_assertions.append((node, node_assertions))
-                self.node_assertions[node.node_id] = assertions_to_str(node.ports, node_assertions)
-
-            elif isinstance(node, RandomForestClassifier):
-                node_assertions = node.type_check()
-                self.all_node_assertions.append((node, node_assertions))
-                self.node_assertions[node.node_id] = assertions_to_str(node.ports, node_assertions)
-
-            elif isinstance(node, EvaluateClassifier):
-                node_assertions = node.type_check()
-                self.all_node_assertions.append((node, node_assertions))
-                self.node_assertions[node.node_id] = assertions_to_str(node.ports, node_assertions)
-
-            elif isinstance(node, CrossValidation):
-                node_assertions = node.type_check()
-                self.all_node_assertions.append((node, node_assertions))
-                self.node_assertions[node.node_id] = assertions_to_str(node.ports, node_assertions)
-
+            # add current node assertions to the array
+            node_assertions = node.type_check()
+            self.all_node_assertions.append((node, node_assertions))
+            self.node_assertions[node.node_id] = assertions_to_str(node.ports, node_assertions)
+            # visit every child node
             for child in node.children:
                 self.__traverse_pipeline(child)
 
