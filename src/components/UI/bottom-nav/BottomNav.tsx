@@ -85,9 +85,10 @@ const BottomNav = (props: BottomNavProps) => {
         current_content = unsat;
     } else if (activeTab === tabs[1]) {
         current_content = assertions;
-    } else {
+    } else if (activeTab === tabs[2]) {
         current_content = logJSX;
     }
+
 
     return (
         <div className={classes.Unselectable}>
