@@ -80,6 +80,7 @@ export abstract class BaseNodeModel extends NodeModel<BaseNodeModelGenerics> {
                 return port.getID();
             }),
             title: this.title,
+            isRoot: this.isRoot,
         };
     }
 

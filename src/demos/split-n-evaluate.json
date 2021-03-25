@@ -158,6 +158,7 @@
                         "a27e52d0-7aa3-4745-9ee0-59ae482eb865"
                     ],
                     "title": "Import from CSV 1",
+                    "isRoot": true,
                     "fileName": "creditcard.csv",
                     "numCols": 31,
                     "numRows": 284807,
@@ -194,6 +195,7 @@
                         "Amount",
                         "Class"
                     ],
+                    "columnTypes": {},
                     "labels": {
                         "0": 284315,
                         "1": 492
@@ -257,6 +259,7 @@
                         "9043ba86-3903-4e01-9bf1-5bbf4fbf4404"
                     ],
                     "title": "Split Dataset 2",
+                    "isRoot": false,
                     "testSize": 0.25,
                     "trainSize": 0.75,
                     "shuffle": "True"
@@ -304,6 +307,7 @@
                         "173f6c24-180c-4583-82d6-34110dc42481"
                     ],
                     "title": "Random Forest Classifier 3",
+                    "isRoot": false,
                     "numTrees": 100,
                     "criterion": "gini",
                     "maxDepth": "None"
@@ -348,7 +352,8 @@
                         "235a7b54-d152-48e6-8f8e-24535129bc9d"
                     ],
                     "portsOutOrder": [],
-                    "title": "Evaluate Classifier 4"
+                    "title": "Evaluate Classifier 4",
+                    "isRoot": false
                 }
             }
         }
