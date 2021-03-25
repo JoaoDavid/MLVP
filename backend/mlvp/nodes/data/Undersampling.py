@@ -8,9 +8,9 @@ from z3 import *
 
 class UnderSampling(Node):
 
-    def __init__(self, node_id: str, title: str, random_state):
-        super().__init__(node_id, title)
-        self.random_state = random_state
+    def __init__(self, data):
+        super().__init__(data)
+        self.random_state = data['randomState']
 
     def import_dependency(self):
         return FROM_IMPORT.format(package=IMBLEARN + "." + UNDER_SAMPLING, class_to_import=RANDOM_UNDERSAMPLER)

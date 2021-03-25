@@ -8,11 +8,11 @@ from z3 import *
 
 class SplitDataset(Node):
 
-    def __init__(self, node_id: str, title: str, test_size, train_size, shuffle):
-        super().__init__(node_id, title)
-        self.test_size = test_size
-        self.train_size = train_size
-        self.shuffle = shuffle
+    def __init__(self, data):
+        super().__init__(data)
+        self.test_size = data['testSize']
+        self.train_size = data['trainSize']
+        self.shuffle = bool(data['shuffle'])
 
     def import_dependency(self):
         return FROM_IMPORT.format(package=SKLEARN + "." + MODEL_SELECTION, class_to_import=TRAIN_TEST_SPLIT)

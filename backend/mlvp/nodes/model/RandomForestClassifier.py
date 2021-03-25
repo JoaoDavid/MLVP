@@ -8,11 +8,11 @@ from z3 import *
 
 class RandomForestClassifier(Node):
 
-    def __init__(self, node_id: str, title: str, num_trees, criterion, max_depth):
-        super().__init__(node_id, title)
-        self.num_trees = num_trees
-        self.criterion = criterion
-        self.max_depth = max_depth
+    def __init__(self, data):
+        super().__init__(data)
+        self.num_trees = data['numTrees']
+        self.criterion = data['criterion']
+        self.max_depth = data['maxDepth']
 
     def import_dependency(self):
         return FROM_IMPORT.format(package=SKLEARN + "." + ENSEMBLE, class_to_import=RANDOM_FOREST_CLF)

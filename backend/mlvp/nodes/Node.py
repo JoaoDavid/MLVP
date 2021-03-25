@@ -4,9 +4,9 @@ from abc import ABC, abstractmethod
 class Node(ABC):
 
     @abstractmethod
-    def __init__(self, node_id: str, title: str):
-        self.node_id = node_id
-        self.title = title
+    def __init__(self, data):
+        self.node_id = data['id']
+        self.title = data['title']
         self.parent_links = []
         self.ports = {}
         self.children = []

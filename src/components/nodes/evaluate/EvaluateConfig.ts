@@ -8,12 +8,12 @@ export const EVALUATE_CONFIG:CategoryConfig = {
 
 // NODES
 export const NODE_ACCURACY_CLASSIFIER:NodeConfig = {
-    codeName: "NODE_ACCURACY_CLASSIFIER",
+    codeName: "EvaluateClassifier",
     name: "Evaluate Classifier",
 }
 
 export const NODE_CROSS_VALIDATION_CLASSIFIER:NodeConfig = {
-    codeName: "NODE_CROSS_VALIDATION_CLASSIFIER",
+    codeName: "CrossValidation",
     name: "Cross Validation Classifier",
 }
 

@@ -1,3 +1,5 @@
+import importlib
+
 from mlvp.ports import ParentLink
 from mlvp.ports import DatasetPort, ModelPort
 from mlvp.nodes import *
@@ -25,60 +27,15 @@ class ParseJSON:
 
     def __parse_nodes(self):
         for node_id, data in self.json_nodes.items():
-            title = data['title']
-            if data['type'] == 'NODE_ABSTRACT_DS':
-                node = AbstractDataset(node_id=node_id, title=title, num_cols=data['numCols'], num_rows=data['numRows'])
-                node.ports = self.__parse_ports(data['ports'])
-                self.nodes[node_id] = node
+            # TODO, security, check if class exists
+            node_class = getattr(importlib.import_module("mlvp.nodes"), data['type'])
+            # Instantiate the class
+            node = node_class(data)
+            node.ports = self.__parse_ports(data['ports'])
+            self.nodes[node_id] = node
+
+            if data['type'] in ['AbstractDataset', 'ImportFromCSV']:
                 self.roots.append(node)
-
-            elif data['type'] == 'NODE_IMPORT_CSV':
-                target = None if len(data['columnNames']) == 0 else data['columnNames'][-1]
-                node = ImportFromCSV(node_id=node_id, title=title, file_name=data['fileName'],
-                                     num_cols=data['numCols'], num_rows=data['numRows'],
-                                     target=target,
-                                     labels=data['labels'])
-                node.ports = self.__parse_ports(data['ports'])
-                self.nodes[node_id] = node
-                self.roots.append(node)
-
-            elif data['type'] == 'NODE_SPLIT_DATASET':
-                node = SplitDataset(node_id=node_id, title=title, test_size=data['testSize'],
-                                    train_size=data['trainSize'], shuffle=bool(data['shuffle']))
-                node.ports = self.__parse_ports(data['ports'])
-                self.nodes[node_id] = node
-
-            elif data['type'] == 'NODE_OVERSAMPLING':
-                node = Oversampling(node_id=node_id, title=title, random_state=data['randomState'])
-                node.ports = self.__parse_ports(data['ports'])
-                self.nodes[node_id] = node
-
-            elif data['type'] == 'NODE_UNDERSAMPLING':
-                node = UnderSampling(node_id=node_id, title=title, random_state=data['randomState'])
-                node.ports = self.__parse_ports(data['ports'])
-                self.nodes[node_id] = node
-
-            elif data['type'] == 'NODE_PCA':
-                node = PCA(node_id=node_id, title=title, random_state=data['randomState'],
-                           num_components=data['numComponents'])
-                node.ports = self.__parse_ports(data['ports'])
-                self.nodes[node_id] = node
-
-            elif data['type'] == 'NODE_RANDOM_FOREST_CLASSIFIER':
-                node = RandomForestClassifier(node_id=node_id, title=title, num_trees=data['numTrees'],
-                                              criterion=data['criterion'], max_depth=data['maxDepth'])
-                node.ports = self.__parse_ports(data['ports'])
-                self.nodes[node_id] = node
-
-            elif data['type'] == 'NODE_ACCURACY_CLASSIFIER':
-                node = EvaluateClassifier(node_id=node_id, title=title)
-                node.ports = self.__parse_ports(data['ports'])
-                self.nodes[node_id] = node
-
-            elif data['type'] == 'NODE_CROSS_VALIDATION_CLASSIFIER':
-                node = CrossValidation(node_id=node_id, title=title, num_folds=data['numberFolds'])
-                node.ports = self.__parse_ports(data['ports'])
-                self.nodes[node_id] = node
 
     def __parse_links(self):
         for link_id, data in self.json_links.items():

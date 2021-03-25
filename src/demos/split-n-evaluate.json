@@ -133,7 +133,7 @@
             "models": {
                 "2345d92f-69e2-4dd8-8265-e93264bbdd50": {
                     "id": "2345d92f-69e2-4dd8-8265-e93264bbdd50",
-                    "type": "NODE_IMPORT_CSV",
+                    "type": "ImportFromCSV",
                     "selected": false,
                     "x": 157,
                     "y": 116,
@@ -201,7 +201,7 @@
                 },
                 "858296ea-f85a-4726-b167-27f1c8b50ff6": {
                     "id": "858296ea-f85a-4726-b167-27f1c8b50ff6",
-                    "type": "NODE_SPLIT_DATASET",
+                    "type": "SplitDataset",
                     "selected": false,
                     "x": 513,
                     "y": 127,
@@ -263,7 +263,7 @@
                 },
                 "43b4ee8c-6d99-4491-b053-c129bada3b21": {
                     "id": "43b4ee8c-6d99-4491-b053-c129bada3b21",
-                    "type": "NODE_RANDOM_FOREST_CLASSIFIER",
+                    "type": "RandomForestClassifier",
                     "selected": false,
                     "x": 908,
                     "y": 140,
@@ -310,7 +310,7 @@
                 },
                 "11b9bf32-5ce9-44c2-8054-45480b919ea5": {
                     "id": "11b9bf32-5ce9-44c2-8054-45480b919ea5",
-                    "type": "NODE_ACCURACY_CLASSIFIER",
+                    "type": "EvaluateClassifier",
                     "x": 1257,
                     "y": 293,
                     "ports": [

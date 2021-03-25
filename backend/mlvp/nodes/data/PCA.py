@@ -8,10 +8,10 @@ from z3 import *
 
 class PCA(Node):
 
-    def __init__(self, node_id: str, title: str, random_state, num_components):
-        super().__init__(node_id, title)
-        self.random_state = random_state
-        self.num_components = num_components
+    def __init__(self, data):
+        super().__init__(data)
+        self.random_state = data['randomState']
+        self.num_components = data['numComponents']
 
     def import_dependency(self):
         return FROM_IMPORT.format(package=SKLEARN + "." + DECOMPOSITION, class_to_import=PCA)

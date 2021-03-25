@@ -8,32 +8,32 @@ export const DATA_CONFIG:CategoryConfig = {
 
 // NODES
 export const NODE_ABSTRACT_DS:NodeConfig = {
-    codeName: "NODE_ABSTRACT_DS",
+    codeName: "AbstractDataset",
     name: "Abstract Dataset",
 }
 
 export const NODE_CSV:NodeConfig = {
-    codeName: "NODE_IMPORT_CSV",
+    codeName: "ImportFromCSV",
     name: "Import from CSV",
 }
 
 export const NODE_SPLIT_DATASET:NodeConfig = {
-    codeName: "NODE_SPLIT_DATASET",
+    codeName: "SplitDataset",
     name: "Split Dataset",
 }
 
 export const NODE_OVERSAMPLING:NodeConfig = {
-    codeName: "NODE_OVERSAMPLING",
+    codeName: "Oversampling",
     name: "Oversampling",
 }
 
 export const NODE_UNDERSAMPLING:NodeConfig = {
-    codeName: "NODE_UNDERSAMPLING",
+    codeName: "UnderSampling",
     name: "Undersampling",
 }
 
 export const NODE_PCA:NodeConfig = {
-    codeName: "NODE_PCA",
+    codeName: "PCA",
     name: "PCA",
 }
 

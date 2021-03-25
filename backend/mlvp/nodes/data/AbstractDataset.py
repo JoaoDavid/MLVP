@@ -4,10 +4,10 @@ from mlvp.typecheck import Dataset
 
 class AbstractDataset(Node):
 
-    def __init__(self, node_id: str, title: str, num_cols: int, num_rows: int):
-        super().__init__(node_id, title)
-        self.num_cols = num_cols
-        self.num_rows = num_rows
+    def __init__(self, data):
+        super().__init__(data)
+        self.num_cols = data['numCols']
+        self.num_rows = data['numRows']
 
     def assertions(self):
         out_ds = self.get_port(False, "Dataset").port_id

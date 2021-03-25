@@ -10,9 +10,9 @@ from z3 import *
 
 class CrossValidation(Node):
 
-    def __init__(self, node_id: str, title: str, num_folds: int):
-        super().__init__(node_id, title)
-        self.num_folds = num_folds
+    def __init__(self, data):
+        super().__init__(data)
+        self.num_folds = data['numberFolds']
 
     def import_dependency(self):
         return FROM_IMPORT.format(package=SKLEARN + "." + MODEL_SELECTION, class_to_import=CROSS_VAL_SCORE)

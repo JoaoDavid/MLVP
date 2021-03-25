@@ -10,13 +10,13 @@ from mlvp.typecheck import Dataset, SEP
 
 class ImportFromCSV(Node):
 
-    def __init__(self, node_id: str, title: str, file_name: str, num_cols: int, num_rows: int, target: str, labels):
-        super().__init__(node_id, title)
-        self.file_name = file_name
-        self.num_cols = num_cols
-        self.num_rows = num_rows
-        self.target = target
-        self.labels = labels
+    def __init__(self, data):
+        super().__init__(data)
+        self.file_name = data['fileName']
+        self.num_cols = data['numCols']
+        self.num_rows = data['numRows']
+        self.target = None if len(data['columnNames']) == 0 else data['columnNames'][-1]
+        self.labels = data['labels']
 
     def import_dependency(self):
         return IMPORT_AS.format(lib_name=PANDAS, lib_var=PANDAS_VAR)
