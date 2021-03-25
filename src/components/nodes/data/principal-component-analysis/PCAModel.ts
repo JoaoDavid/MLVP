@@ -10,7 +10,7 @@ export class PCAModel extends BaseNodeModel {
     private numComponents: number = 1;
 
     constructor() {
-        super(NODE_PCA.codeName, NODE_PCA.name);
+        super(NODE_PCA);
         this.addInPort();
         this.addOutPort();
     }

@@ -10,31 +10,37 @@ export const DATA_CONFIG:CategoryConfig = {
 export const NODE_ABSTRACT_DS:NodeConfig = {
     codeName: "AbstractDataset",
     name: "Abstract Dataset",
+    isRoot: true,
 }
 
 export const NODE_CSV:NodeConfig = {
     codeName: "ImportFromCSV",
     name: "Import from CSV",
+    isRoot: true,
 }
 
 export const NODE_SPLIT_DATASET:NodeConfig = {
     codeName: "SplitDataset",
     name: "Split Dataset",
+    isRoot: false,
 }
 
 export const NODE_OVERSAMPLING:NodeConfig = {
     codeName: "Oversampling",
     name: "Oversampling",
+    isRoot: false,
 }
 
 export const NODE_UNDERSAMPLING:NodeConfig = {
     codeName: "UnderSampling",
     name: "Undersampling",
+    isRoot: false,
 }
 
 export const NODE_PCA:NodeConfig = {
     codeName: "PCA",
     name: "PCA",
+    isRoot: false,
 }
 
 

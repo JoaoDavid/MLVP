@@ -1,5 +1,5 @@
 import {BaseNodeModel} from "../../../../core/BaseNode/BaseNodeModel";
-import {NODE_ACCURACY_CLASSIFIER} from "../../EvaluateConfig";
+import {NODE_EVALUATE_CLASSIFIER} from "../../EvaluateConfig";
 import {DatasetPortModel} from "../../../../ports/dataset/DatasetPortModel";
 import {ClassifierPortModel} from "../../../../ports/model/ClassifierPortModel";
 
@@ -7,7 +7,7 @@ import {ClassifierPortModel} from "../../../../ports/model/ClassifierPortModel";
 export class AccuracyClassifierModel extends BaseNodeModel {
 
     constructor() {
-        super(NODE_ACCURACY_CLASSIFIER.codeName, NODE_ACCURACY_CLASSIFIER.name);
+        super(NODE_EVALUATE_CLASSIFIER);
         this.addInModelPort('evaluate');
     }
 

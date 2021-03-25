@@ -1,6 +1,7 @@
 import { NodeModel, NodeModelGenerics } from '@projectstorm/react-diagrams-core';
 import {BasePortModel} from "../BasePort/BasePortModel";
 import { BasePositionModelOptions, DeserializeEvent } from '@projectstorm/react-canvas-core';
+import {NodeConfig} from "../../nodes/Config";
 
 export interface BaseNodeModelOptions extends BasePositionModelOptions {
     name: string;
@@ -14,16 +15,19 @@ export abstract class BaseNodeModel extends NodeModel<BaseNodeModelGenerics> {
 
     protected portsIn: BasePortModel[];
     protected portsOut: BasePortModel[];
+    private readonly isRoot: boolean;
     private title: string;
 
-    protected constructor(type: string, name: string) {
+
+    protected constructor(nodeConfig: NodeConfig) {
         super({
-            type: type,
-            name: name,
+            type: nodeConfig.codeName,
+            name: nodeConfig.name,
         });
         this.portsOut = [];
         this.portsIn = [];
-        this.title = name;
+        this.title = nodeConfig.name;
+        this.isRoot = nodeConfig.isRoot;
     }
 
     doClone(lookupTable: {}, clone: any): void {
@@ -93,6 +97,10 @@ export abstract class BaseNodeModel extends NodeModel<BaseNodeModelGenerics> {
 
     getTitle = () => {
         return this.title;
+    }
+
+    getIsRoot = () => {
+        return this.isRoot;
     }
 
 }

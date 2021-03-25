@@ -16,7 +16,7 @@ export class CSVModel extends BaseNodeModel {
     private labels: Map<string, number> = new Map();
 
     constructor() {
-        super(NODE_CSV.codeName, NODE_CSV.name);
+        super(NODE_CSV);
         this.resetFile();
         this.addOutPort();
     }

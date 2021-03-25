@@ -11,7 +11,7 @@ export class SplitDatasetModel extends BaseNodeModel {
     private shuffle: string = "True";
 
     constructor() {
-        super(NODE_SPLIT_DATASET.codeName, NODE_SPLIT_DATASET.name);
+        super(NODE_SPLIT_DATASET);
         this.addInPort();
         this.addOutPort();
     }

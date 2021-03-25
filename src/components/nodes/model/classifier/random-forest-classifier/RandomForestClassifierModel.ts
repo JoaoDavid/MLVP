@@ -16,7 +16,7 @@ export class RandomForestClassifierModel extends BaseNodeModel {
     private maxDepth: number = -1; //int
 
     constructor() {
-        super(NODE_RANDOM_FOREST_CLASSIFIER.codeName, NODE_RANDOM_FOREST_CLASSIFIER.name);
+        super(NODE_RANDOM_FOREST_CLASSIFIER);
         this.addInPort();
         this.addOutPort();
     }

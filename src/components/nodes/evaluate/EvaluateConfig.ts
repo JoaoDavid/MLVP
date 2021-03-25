@@ -7,14 +7,16 @@ export const EVALUATE_CONFIG:CategoryConfig = {
 }
 
 // NODES
-export const NODE_ACCURACY_CLASSIFIER:NodeConfig = {
+export const NODE_EVALUATE_CLASSIFIER:NodeConfig = {
     codeName: "EvaluateClassifier",
     name: "Evaluate Classifier",
+    isRoot: false,
 }
 
 export const NODE_CROSS_VALIDATION_CLASSIFIER:NodeConfig = {
     codeName: "CrossValidation",
     name: "Cross Validation Classifier",
+    isRoot: false,
 }
 
 
@@ -22,4 +24,4 @@ export const NODE_CROSS_VALIDATION_CLASSIFIER:NodeConfig = {
     Every node declared must be added to the following array
     to be passed into the side menu props for the drag and drop feature
 */
-export const EVALUATE_NODES:NodeConfig[] = [NODE_ACCURACY_CLASSIFIER, NODE_CROSS_VALIDATION_CLASSIFIER];
+export const EVALUATE_NODES:NodeConfig[] = [NODE_EVALUATE_CLASSIFIER, NODE_CROSS_VALIDATION_CLASSIFIER];

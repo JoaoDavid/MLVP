@@ -7,6 +7,7 @@ class Node(ABC):
     def __init__(self, data):
         self.node_id = data['id']
         self.title = data['title']
+        self.is_root = bool(data['isRoot'])
         self.parent_links = []
         self.ports = {}
         self.children = []
