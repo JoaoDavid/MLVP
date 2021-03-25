@@ -1,6 +1,6 @@
 from mlvp.codegen.Emitter import Emitter
-from mlvp.codegen.templates.CodeTemplate import SAMPLER_INIT, FIT_RESAMPLE
-from mlvp.codegen.templates.LibNames import RANDOM_OVERSAMPLER
+from mlvp.codegen.templates.CodeTemplate import SAMPLER_INIT, FIT_RESAMPLE, FROM_IMPORT
+from mlvp.codegen.templates.LibNames import RANDOM_OVERSAMPLER, IMBLEARN, OVER_SAMPLING
 from mlvp.nodes.Node import Node
 from mlvp.typecheck import Dataset
 from z3 import *
@@ -11,6 +11,9 @@ class Oversampling(Node):
     def __init__(self, node_id: str, title: str, random_state):
         super().__init__(node_id, title)
         self.random_state = random_state
+
+    def import_dependency(self):
+        return FROM_IMPORT.format(package=IMBLEARN + "." + OVER_SAMPLING, class_to_import=RANDOM_OVERSAMPLER)
 
     def codegen(self, emitter: Emitter, out_file):
         curr_count = emitter.get_count()

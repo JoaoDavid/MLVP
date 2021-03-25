@@ -1,5 +1,6 @@
 from mlvp.codegen.Emitter import Emitter
-from mlvp.codegen.templates.CodeTemplate import CROSS_VAL_SCORE_CALL
+from mlvp.codegen.templates.CodeTemplate import CROSS_VAL_SCORE_CALL, FROM_IMPORT
+from mlvp.codegen.templates.LibNames import SKLEARN, MODEL_SELECTION, CROSS_VAL_SCORE
 from mlvp.nodes.Node import Node
 from mlvp.ports.dataset.DatasetPort import DatasetPort
 from mlvp.ports.model.ModelPort import ModelPort
@@ -12,6 +13,9 @@ class CrossValidation(Node):
     def __init__(self, node_id: str, title: str, num_folds: int):
         super().__init__(node_id, title)
         self.num_folds = num_folds
+
+    def import_dependency(self):
+        return FROM_IMPORT.format(package=SKLEARN + "." + MODEL_SELECTION, class_to_import=CROSS_VAL_SCORE)
 
     def codegen(self, emitter: Emitter, out_file):
         curr_count = emitter.get_count()

@@ -1,5 +1,6 @@
 from mlvp.codegen.Emitter import Emitter
-from mlvp.codegen.templates.CodeTemplate import MODEL_PREDICT, ACCURACY_SCORE_CALL
+from mlvp.codegen.templates.CodeTemplate import MODEL_PREDICT, ACCURACY_SCORE_CALL, FROM_IMPORT
+from mlvp.codegen.templates.LibNames import SKLEARN, METRICS, ACCURACY_SCORE
 from mlvp.nodes.Node import Node
 from mlvp.ports.dataset.DatasetPort import DatasetPort
 from mlvp.ports.model.ModelPort import ModelPort
@@ -11,6 +12,9 @@ class EvaluateClassifier(Node):
 
     def __init__(self, node_id: str, title: str):
         super().__init__(node_id, title)
+
+    def import_dependency(self):
+        return FROM_IMPORT.format(package=SKLEARN + "." + METRICS, class_to_import=ACCURACY_SCORE)
 
     def codegen(self, emitter: Emitter, out_file):
         curr_count = emitter.get_count()

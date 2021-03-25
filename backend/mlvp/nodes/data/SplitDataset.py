@@ -1,5 +1,6 @@
 from mlvp.codegen.Emitter import Emitter
-from mlvp.codegen.templates.CodeTemplate import TRAIN_TEST_SPLIT_CALL
+from mlvp.codegen.templates.CodeTemplate import TRAIN_TEST_SPLIT_CALL, FROM_IMPORT
+from mlvp.codegen.templates.LibNames import SKLEARN, MODEL_SELECTION, TRAIN_TEST_SPLIT
 from mlvp.nodes.Node import Node
 from mlvp.typecheck import Dataset, SEP, SHUFFLED
 from z3 import *
@@ -12,6 +13,9 @@ class SplitDataset(Node):
         self.test_size = test_size
         self.train_size = train_size
         self.shuffle = shuffle
+
+    def import_dependency(self):
+        return FROM_IMPORT.format(package=SKLEARN + "." + MODEL_SELECTION, class_to_import=TRAIN_TEST_SPLIT)
 
     def codegen(self, emitter: Emitter, out_file):
         curr_count = emitter.get_count()

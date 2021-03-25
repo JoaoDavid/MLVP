@@ -2,8 +2,8 @@ from typing import Dict
 from z3 import *
 
 from mlvp.codegen.Emitter import Emitter
-from mlvp.codegen.templates.CodeTemplate import LOAD_CSV, FEATURES, TARGET
-from mlvp.codegen.templates.LibNames import PANDAS_VAR
+from mlvp.codegen.templates.CodeTemplate import LOAD_CSV, FEATURES, TARGET, IMPORT_AS
+from mlvp.codegen.templates.LibNames import PANDAS_VAR, PANDAS
 from mlvp.nodes.Node import Node
 from mlvp.typecheck import Dataset, SEP
 
@@ -17,6 +17,9 @@ class ImportFromCSV(Node):
         self.num_rows = num_rows
         self.target = target
         self.labels = labels
+
+    def import_dependency(self):
+        return IMPORT_AS.format(lib_name=PANDAS, lib_var=PANDAS_VAR)
 
     def codegen(self, emitter: Emitter, out_file):
         curr_count = emitter.get_count()

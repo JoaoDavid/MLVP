@@ -4,14 +4,22 @@ from mlvp.nodes import Node
 
 class CodeGen:
 
-    def __init__(self, name, libraries, roots):
+    def __init__(self, name, roots):
         self.name = name + ".py"
-        self.libraries = libraries
+        self.libraries = set()
         self.roots = roots
         self.out_file = open(self.name, "w+")
         self.emitter = Emitter()
 
+    def __gather_libraries(self, node: Node):
+        self.libraries.add(node.import_dependency())
+        # visit every child node
+        for child in node.children:
+            self.__gather_libraries(child)
+
     def __write_imports(self):
+        for root in self.roots:
+            self.__gather_libraries(root)
         for lib in self.libraries:
             self.out_file.write(lib)
         self.out_file.write("\n\n")

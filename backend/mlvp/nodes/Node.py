@@ -18,6 +18,9 @@ class Node(ABC):
             if name == port.name and port.in_port == in_port:
                 return port
 
+    def import_dependency(self):
+        pass
+
     def assertions(self):
         pass
 

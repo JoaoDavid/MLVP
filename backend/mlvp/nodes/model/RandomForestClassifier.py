@@ -1,5 +1,6 @@
 from mlvp.codegen.Emitter import Emitter
-from mlvp.codegen.templates.CodeTemplate import RANDOM_FOREST_INIT, MODEL_FIT
+from mlvp.codegen.templates.CodeTemplate import RANDOM_FOREST_INIT, MODEL_FIT, FROM_IMPORT
+from mlvp.codegen.templates.LibNames import SKLEARN, ENSEMBLE, RANDOM_FOREST_CLF
 from mlvp.nodes.Node import Node
 from mlvp.typecheck import Dataset, SEP
 from z3 import *
@@ -12,6 +13,9 @@ class RandomForestClassifier(Node):
         self.num_trees = num_trees
         self.criterion = criterion
         self.max_depth = max_depth
+
+    def import_dependency(self):
+        return FROM_IMPORT.format(package=SKLEARN + "." + ENSEMBLE, class_to_import=RANDOM_FOREST_CLF)
 
     def codegen(self, emitter: Emitter, out_file):
         curr_count = emitter.get_count()
