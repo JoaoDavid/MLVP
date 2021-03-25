@@ -1,8 +1,12 @@
-from mlvp.codegen.Emitter import Emitter
-from mlvp.codegen.templates.CodeTemplate import LOAD_CSV, FEATURES, TARGET, IMPORT_AS
-from mlvp.codegen.templates.LibNames import PANDAS_VAR, PANDAS
+from mlvp.codegen import *
 from mlvp.ast.nodes.Node import Node
 from mlvp.typecheck import *
+
+LOAD_CSV = "{var} = {pandas_var}.read_csv(\'./{file_name}\')\n"
+FEATURES = "{x} = {var}.drop(\'{target}\', axis=1)\n"
+TARGET = "{y} = {var}[\'{target}\']\n"
+
+PANDAS_VAR = "pd"
 
 
 class ImportFromCSV(Node):
@@ -16,7 +20,7 @@ class ImportFromCSV(Node):
         self.labels = data['labels']
 
     def import_dependency(self):
-        return IMPORT_AS.format(lib_name=PANDAS, lib_var=PANDAS_VAR)
+        return IMPORT_AS.format(lib_name="pandas", lib_var=PANDAS_VAR)
 
     def codegen(self, emitter: Emitter, out_file):
         curr_count = emitter.get_count()

@@ -1,8 +1,9 @@
-from mlvp.codegen.Emitter import Emitter
-from mlvp.codegen.templates.CodeTemplate import PCA_INIT, FIT_TRANSFORM_CALL, FROM_IMPORT
-from mlvp.codegen.templates.LibNames import SKLEARN, DECOMPOSITION
+from mlvp.codegen import *
 from mlvp.ast.nodes.Node import Node
 from mlvp.typecheck import *
+
+PCA_INIT = "{pca_var} = PCA(random_state={random_state}, n_components={n_components})\n"
+FIT_TRANSFORM_CALL = "{x_pca} = {pca_var}.fit_transform({x})\n"
 
 
 class PCA(Node):
@@ -13,7 +14,7 @@ class PCA(Node):
         self.num_components = data['numComponents']
 
     def import_dependency(self):
-        return FROM_IMPORT.format(package=SKLEARN + "." + DECOMPOSITION, class_to_import=PCA)
+        return FROM_IMPORT.format(package="sklearn.decomposition", class_to_import="PCA")
 
     def codegen(self, emitter: Emitter, out_file):
         curr_count = emitter.get_count()
