@@ -5,7 +5,7 @@ import {RegressorPortModel} from "./RegressorPortModel";
 export class ClassifierPortModel extends ModelPortModel {
 
     constructor(isIn: boolean, name?: string, label?: string, maxLinks?: number){
-        super('PORT_CLASSIFIER', isIn, name?name:"Classifier", label?label:"", maxLinks);
+        super('ModelPort', isIn, name?name:"Classifier", label?label:"", maxLinks);
     }
 
     canLinkToPort(port: PortModel): boolean {

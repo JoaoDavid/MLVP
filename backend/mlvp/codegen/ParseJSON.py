@@ -1,8 +1,6 @@
 import importlib
 
 from mlvp.ports import ParentLink
-from mlvp.ports import DatasetPort, ModelPort
-from mlvp.nodes import *
 
 
 class ParseJSON:
@@ -49,10 +47,9 @@ class ParseJSON:
 
     def __parse_ports(self, json_ports):
         ports = {}
-        for p in json_ports:
-            port_type = p['type']
-            if "PORT_DATASET" in port_type:
-                ports[p['id']] = DatasetPort(p['id'], p['name'], bool(p['in']))
-            elif "PORT_CLASSIFIER" in port_type:
-                ports[p['id']] = ModelPort(p['id'], p['name'], bool(p['in']))
+        for data in json_ports:
+            # TODO, security, check if class exists
+            port_class = getattr(importlib.import_module("mlvp.ports"), data['type'])
+            # Instantiate the class
+            ports[data['id']] = port_class(data)
         return ports

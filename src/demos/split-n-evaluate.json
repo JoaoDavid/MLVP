@@ -140,7 +140,7 @@
                     "ports": [
                         {
                             "id": "a27e52d0-7aa3-4745-9ee0-59ae482eb865",
-                            "type": "PORT_DATASET",
+                            "type": "DatasetPort",
                             "x": 340,
                             "y": 152,
                             "name": "Dataset",
@@ -208,7 +208,7 @@
                     "ports": [
                         {
                             "id": "74eb443f-fd29-4c86-9d6a-5e6689cb1027",
-                            "type": "PORT_DATASET",
+                            "type": "DatasetPort",
                             "x": 515,
                             "y": 163,
                             "name": "Dataset",
@@ -222,7 +222,7 @@
                         },
                         {
                             "id": "97710293-42b6-48a5-b7ba-079ad7a5ef40",
-                            "type": "PORT_DATASET",
+                            "type": "DatasetPort",
                             "x": 696,
                             "y": 163,
                             "name": "Train Dataset",
@@ -236,7 +236,7 @@
                         },
                         {
                             "id": "9043ba86-3903-4e01-9bf1-5bbf4fbf4404",
-                            "type": "PORT_DATASET",
+                            "type": "DatasetPort",
                             "x": 696,
                             "y": 226,
                             "name": "Test Dataset",
@@ -270,7 +270,7 @@
                     "ports": [
                         {
                             "id": "b0b61fcb-f343-401f-ae9b-f966f313310c",
-                            "type": "PORT_DATASET",
+                            "type": "DatasetPort",
                             "x": 910,
                             "y": 176,
                             "name": "Dataset",
@@ -284,7 +284,7 @@
                         },
                         {
                             "id": "173f6c24-180c-4583-82d6-34110dc42481",
-                            "type": "PORT_CLASSIFIER",
+                            "type": "ModelPort",
                             "x": 1091,
                             "y": 176,
                             "name": "Classifier",
@@ -316,7 +316,7 @@
                     "ports": [
                         {
                             "id": "d6abaf0e-01dd-4906-8fd9-1daaaa42e8f6",
-                            "type": "PORT_DATASET",
+                            "type": "DatasetPort",
                             "x": 1259,
                             "y": 329,
                             "name": "Dataset",
@@ -330,7 +330,7 @@
                         },
                         {
                             "id": "235a7b54-d152-48e6-8f8e-24535129bc9d",
-                            "type": "PORT_CLASSIFIER",
+                            "type": "ModelPort",
                             "x": 1259,
                             "y": 392,
                             "name": "Classifier",
