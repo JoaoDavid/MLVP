@@ -22,7 +22,6 @@ def __convert_ids(ports, expr: ExprRef):
         res = "None" if arr[0] == "-1" else arr[0]
         if len(arr) > 1:
             if arr[0] != "node":
-                print(ports[arr[0]])
                 res = ports[arr[0]].name + " Port " + arr[1]
             else:
                 res = "Property " + arr[1]
@@ -91,7 +90,6 @@ class TypeChecker:
 
     # traverse the pipeline, appending the corresponding assertions to the all_node_assertions list
     def __traverse_pipeline(self, node: Node):
-        print(node)
         if not node.visited:
             node.visited = True
             for parent_link in node.parent_links:
@@ -133,8 +131,6 @@ class TypeChecker:
                 return index
 
     def __find_unsat_node_assertion(self, node_assertions):
-        print("node_assertions")
-        print(node_assertions)
         unsat_assertions = []
         pop_counter = 0
         for curr_asser in node_assertions[1]:

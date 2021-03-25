@@ -43,8 +43,7 @@ class CodeGen:
             node.visited = True
             for parent_link in node.parent_links:
                 self.__write_nodes(parent_link.parent_node)
-            # parents are all visited
-            print(node.__class__.__name__)
+            # node's parents are all visited and written
             # write current node code to the out file
             node.codegen(self.emitter, self.out_file)
             self.out_file.write("\n")
