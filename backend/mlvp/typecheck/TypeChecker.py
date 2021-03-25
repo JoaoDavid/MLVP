@@ -1,4 +1,4 @@
-from mlvp.typecheck.Assertions import *
+from mlvp.typecheck import link
 from z3 import *
 import json
 from mlvp.nodes import *
