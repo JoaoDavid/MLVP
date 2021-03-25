@@ -1,9 +1,8 @@
 from mlvp.codegen.Emitter import Emitter
 from mlvp.codegen.templates.CodeTemplate import TRAIN_TEST_SPLIT_CALL, FROM_IMPORT
 from mlvp.codegen.templates.LibNames import SKLEARN, MODEL_SELECTION, TRAIN_TEST_SPLIT
-from mlvp.nodes.Node import Node
-from mlvp.typecheck import Dataset, SEP, SHUFFLED
-from z3 import *
+from mlvp.ast.nodes.Node import Node
+from mlvp.typecheck import *
 
 
 class SplitDataset(Node):

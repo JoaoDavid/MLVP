@@ -1,6 +1,6 @@
 import importlib
 
-from mlvp.ports import ParentLink
+from mlvp.ast.ports import ParentLink
 
 
 class ParseJSON:
@@ -26,7 +26,7 @@ class ParseJSON:
     def __parse_nodes(self):
         for node_id, data in self.json_nodes.items():
             # TODO, security, check if class exists
-            node_class = getattr(importlib.import_module("mlvp.nodes"), data['type'])
+            node_class = getattr(importlib.import_module("mlvp.ast.nodes"), data['type'])
             # Instantiate the class
             node = node_class(data)
             node.ports = self.__parse_ports(data['ports'])
@@ -49,7 +49,7 @@ class ParseJSON:
         ports = {}
         for data in json_ports:
             # TODO, security, check if class exists
-            port_class = getattr(importlib.import_module("mlvp.ports"), data['type'])
+            port_class = getattr(importlib.import_module("mlvp.ast.ports"), data['type'])
             # Instantiate the class
             ports[data['id']] = port_class(data)
         return ports

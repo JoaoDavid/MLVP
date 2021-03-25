@@ -1,31 +1,30 @@
 from mlvp.codegen.Emitter import Emitter
 from mlvp.codegen.templates.CodeTemplate import SAMPLER_INIT, FIT_RESAMPLE, FROM_IMPORT
-from mlvp.codegen.templates.LibNames import RANDOM_UNDERSAMPLER, IMBLEARN, UNDER_SAMPLING
-from mlvp.nodes.Node import Node
-from mlvp.typecheck import Dataset
-from z3 import *
+from mlvp.codegen.templates.LibNames import RANDOM_OVERSAMPLER, IMBLEARN, OVER_SAMPLING
+from mlvp.ast.nodes.Node import Node
+from mlvp.typecheck import *
 
 
-class UnderSampling(Node):
+class Oversampling(Node):
 
     def __init__(self, data):
         super().__init__(data)
         self.random_state = data['randomState']
 
     def import_dependency(self):
-        return FROM_IMPORT.format(package=IMBLEARN + "." + UNDER_SAMPLING, class_to_import=RANDOM_UNDERSAMPLER)
+        return FROM_IMPORT.format(package=IMBLEARN + "." + OVER_SAMPLING, class_to_import=RANDOM_OVERSAMPLER)
 
     def codegen(self, emitter: Emitter, out_file):
         curr_count = emitter.get_count()
         parent_port = self.parent_links[0].source_port
         x, y = emitter.get(parent_port)
-        rus_var = "rus" + str(curr_count)
-        x_rus_res = "x_rus_res" + str(curr_count)
-        y_rus_res = "y_rus_res" + str(curr_count)
-        out_file.write(SAMPLER_INIT.format(var=rus_var, sampler=RANDOM_UNDERSAMPLER, random_state=self.random_state))
-        out_file.write(FIT_RESAMPLE.format(x_res=x_rus_res, y_res=y_rus_res, var=rus_var, x=x, y=y))
+        ros_var = "ros" + str(curr_count)
+        x_ros_res = "x_ros_res" + str(curr_count)
+        y_ros_res = "y_ros_res" + str(curr_count)
+        out_file.write(SAMPLER_INIT.format(var=ros_var, sampler=RANDOM_OVERSAMPLER, random_state=self.random_state))
+        out_file.write(FIT_RESAMPLE.format(x_res=x_ros_res, y_res=y_ros_res, var=ros_var, x=x, y=y))
         out_ds = self.get_port(False, "Balanced Dataset")
-        emitter.set(out_ds, (x_rus_res, y_rus_res))
+        emitter.set(out_ds, (x_ros_res, y_ros_res))
 
     def assertions(self):
         id_input = self.get_port(True, "Dataset").port_id
@@ -42,10 +41,10 @@ class UnderSampling(Node):
                 input_ds.min_label_count == output_ds.min_label_count
             )),
             Implies(Not(input_ds.balanced), And(
-                output_ds.rows == input_ds.min_label_count * input_ds.n_labels,
+                output_ds.rows == input_ds.max_label_count * input_ds.n_labels,
                 input_ds.n_labels == output_ds.n_labels,
-                output_ds.max_label_count == input_ds.min_label_count,
-                input_ds.min_label_count == output_ds.min_label_count,
+                input_ds.max_label_count == output_ds.max_label_count,
+                output_ds.min_label_count == output_ds.max_label_count,
             )),
             output_ds.balanced
         ]

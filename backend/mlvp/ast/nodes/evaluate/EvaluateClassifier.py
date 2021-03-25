@@ -1,11 +1,9 @@
 from mlvp.codegen.Emitter import Emitter
 from mlvp.codegen.templates.CodeTemplate import MODEL_PREDICT, ACCURACY_SCORE_CALL, FROM_IMPORT
 from mlvp.codegen.templates.LibNames import SKLEARN, METRICS, ACCURACY_SCORE
-from mlvp.nodes.Node import Node
-from mlvp.ports.dataset.DatasetPort import DatasetPort
-from mlvp.ports.model.ModelPort import ModelPort
-from mlvp.typecheck import Dataset
-from z3 import *
+from mlvp.ast.nodes.Node import Node
+from mlvp.ast.ports import DatasetPort, ModelPort
+from mlvp.typecheck import *
 
 
 class EvaluateClassifier(Node):

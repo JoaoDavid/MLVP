@@ -1,9 +1,8 @@
 from mlvp.codegen.Emitter import Emitter
 from mlvp.codegen.templates.CodeTemplate import RANDOM_FOREST_INIT, MODEL_FIT, FROM_IMPORT
 from mlvp.codegen.templates.LibNames import SKLEARN, ENSEMBLE, RANDOM_FOREST_CLF
-from mlvp.nodes.Node import Node
-from mlvp.typecheck import Dataset, SEP
-from z3 import *
+from mlvp.ast.nodes.Node import Node
+from mlvp.typecheck import *
 
 
 class RandomForestClassifier(Node):

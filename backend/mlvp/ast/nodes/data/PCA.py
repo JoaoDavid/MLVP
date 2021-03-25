@@ -1,9 +1,8 @@
 from mlvp.codegen.Emitter import Emitter
 from mlvp.codegen.templates.CodeTemplate import PCA_INIT, FIT_TRANSFORM_CALL, FROM_IMPORT
 from mlvp.codegen.templates.LibNames import SKLEARN, DECOMPOSITION
-from mlvp.nodes.Node import Node
-from mlvp.typecheck import Dataset, SEP
-from z3 import *
+from mlvp.ast.nodes.Node import Node
+from mlvp.typecheck import *
 
 
 class PCA(Node):

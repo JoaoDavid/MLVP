@@ -1,4 +1,4 @@
-from mlvp.ports.PortType import PortType
+from mlvp.ast.ports import PortType
 
 
 class DatasetPort(PortType):

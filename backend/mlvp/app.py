@@ -1,4 +1,4 @@
-from mlvp.codegen.ParseJSON import ParseJSON
+from mlvp.ast.ParseJSON import ParseJSON
 from mlvp.codegen.CodeGen import CodeGen
 from mlvp.typecheck.TypeChecker import TypeChecker
 

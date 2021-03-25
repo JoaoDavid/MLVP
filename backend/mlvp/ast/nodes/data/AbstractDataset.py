@@ -1,5 +1,5 @@
-from mlvp.nodes.Node import Node
-from mlvp.typecheck import Dataset
+from mlvp.ast.nodes.Node import Node
+from mlvp.typecheck import *
 
 
 class AbstractDataset(Node):

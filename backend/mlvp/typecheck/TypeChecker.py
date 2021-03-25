@@ -1,8 +1,8 @@
 from mlvp.typecheck import link
-from z3 import *
 import json
-from mlvp.nodes import *
-from mlvp.ports import *
+from mlvp.ast.nodes import *
+from mlvp.ast.ports import *
+from z3 import *
 
 
 def assertions_to_str(ports, assertions):
