@@ -162,6 +162,7 @@ class App extends React.Component<AppProps, AppState> {
             node.setTitle(node.getTitle() + " " + ++this.generated_nodes_counter);
             this.engine.getModel().addNode(node);
             this.engine.repaintCanvas();
+            this.typeChecker.requestTypeCheck();
         } catch (e) {
             console.log(e);
         }
