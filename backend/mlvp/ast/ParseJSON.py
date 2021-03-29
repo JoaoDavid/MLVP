@@ -32,7 +32,7 @@ class ParseJSON:
             node.ports = self.__parse_ports(data['ports'])
             self.nodes[node_id] = node
             # In case of being a root node, add it to the root array
-            if node.is_root:
+            if node.is_root or len(node.parent_links) == 0:
                 self.roots.append(node)
 
     def __parse_links(self):
