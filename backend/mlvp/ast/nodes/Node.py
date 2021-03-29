@@ -19,13 +19,16 @@ class Node(ABC):
             if name == port.name and port.in_port == in_port:
                 return port
 
+    @abstractmethod
     def import_dependency(self):
         pass
 
-    def assertions(self):
+    @abstractmethod
+    def codegen(self, emitter, out_file):
         pass
 
-    def codegen(self, emitter, out_file):
+    @abstractmethod
+    def assertions(self):
         pass
 
     def __str__(self):
