@@ -22,9 +22,7 @@ class CodeGen:
 
     def __write_imports(self):
         for root in self.roots:
-            if root.is_root:
-                self.__gather_libraries(root)
-        print(self.libraries)
+            self.__gather_libraries(root)
         for lib in self.libraries:
             self.out_file.write(lib)
         self.out_file.write("\n\n")
