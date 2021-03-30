@@ -7,7 +7,6 @@ export enum Category {
 export type NodeConfig = {
     codeName: string,
     name: string,
-    isRoot: boolean,
 }
 
 export type CategoryConfig = {

@@ -10,13 +10,11 @@ export const EVALUATE_CONFIG:CategoryConfig = {
 export const NODE_EVALUATE_CLASSIFIER:NodeConfig = {
     codeName: "EvaluateClassifier",
     name: "Evaluate Classifier",
-    isRoot: false,
 }
 
 export const NODE_CROSS_VALIDATION_CLASSIFIER:NodeConfig = {
     codeName: "CrossValidation",
     name: "Cross Validation Classifier",
-    isRoot: false,
 }
 
 

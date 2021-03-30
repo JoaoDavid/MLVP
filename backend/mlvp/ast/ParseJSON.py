@@ -32,7 +32,7 @@ class ParseJSON:
             node_class = getattr(importlib.import_module("mlvp.ast.nodes"), data['type'])
             # Instantiate the class
             node = node_class(data)
-            node.ports = self.__parse_ports(data['ports'])
+            node.ports, node.is_root = self.__parse_ports(data['ports'])
             self.nodes[node_id] = node
             # In case of being a root node, add it to the root array
             if node.is_root:
@@ -52,9 +52,12 @@ class ParseJSON:
 
     def __parse_ports(self, json_ports):
         ports = {}
+        has_input_port = False
         for data in json_ports:
             # TODO, security, check if class exists
             port_class = getattr(importlib.import_module("mlvp.ast.ports"), data['type'])
             # Instantiate the class
-            ports[data['id']] = port_class(data)
-        return ports
+            port = port_class(data)
+            ports[data['id']] = port
+            has_input_port = port.in_port or has_input_port
+        return ports, has_input_port

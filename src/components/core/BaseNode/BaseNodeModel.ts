@@ -15,7 +15,6 @@ export abstract class BaseNodeModel extends NodeModel<BaseNodeModelGenerics> {
 
     protected portsIn: BasePortModel[];
     protected portsOut: BasePortModel[];
-    private readonly isRoot: boolean;
     private title: string;
 
 
@@ -27,7 +26,6 @@ export abstract class BaseNodeModel extends NodeModel<BaseNodeModelGenerics> {
         this.portsOut = [];
         this.portsIn = [];
         this.title = nodeConfig.name;
-        this.isRoot = nodeConfig.isRoot;
     }
 
     doClone(lookupTable: {}, clone: any): void {
@@ -80,7 +78,6 @@ export abstract class BaseNodeModel extends NodeModel<BaseNodeModelGenerics> {
                 return port.getID();
             }),
             title: this.title,
-            isRoot: this.isRoot,
         };
     }
 
@@ -98,10 +95,6 @@ export abstract class BaseNodeModel extends NodeModel<BaseNodeModelGenerics> {
 
     getTitle = () => {
         return this.title;
-    }
-
-    getIsRoot = () => {
-        return this.isRoot;
     }
 
 }
