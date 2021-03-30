@@ -1,6 +1,13 @@
 from mlvp.ast.nodes.Node import Node
-from mlvp.codegen import Emitter
+from mlvp.codegen import *
 from mlvp.typecheck import *
+
+PROMPT_FILE_PATH = "{fp} = input(\'Path to the csv with cols={num_cols} rows={num_rows}: \\n\')\n"
+LOAD_CSV = "{df} = {pandas_var}.read_csv({fp})\n"
+X = "{x} = {df}.drop({df}.columns[-1], axis=1)\n"
+Y = "{y} = {df}[{df}.columns[-1]]\n"
+ASSERT = "assert({arg1} == len({arg2}))\n"
+PANDAS_VAR = "pd"
 
 
 class AbstractDataset(Node):
@@ -11,15 +18,22 @@ class AbstractDataset(Node):
         self.num_rows = data['numRows']
 
     def import_dependency(self):
-        return ""
+        return IMPORT_AS.format(lib_name="pandas", lib_var=PANDAS_VAR)
 
     def codegen(self, emitter: Emitter, out_file):
         curr_count = emitter.get_count()
+        df = "df" + str(curr_count)
         x = "x" + str(curr_count)
         y = "y" + str(curr_count)
+        fp = "fp" + str(curr_count)
         out_ds = self.get_port(False, "Dataset")
         emitter.set(out_ds, (x, y))
-        out_file.write("AbstractDataset does not have a codegen implementation\n")
+        out_file.write(PROMPT_FILE_PATH.format(fp=fp, num_cols=self.num_cols, num_rows=self.num_rows))
+        out_file.write(LOAD_CSV.format(df=df, pandas_var=PANDAS_VAR, fp=fp))
+        out_file.write(ASSERT.format(arg1=self.num_rows, arg2=df))
+        out_file.write(ASSERT.format(arg1=self.num_cols, arg2=df+".columns"))
+        out_file.write(X.format(x=x, df=df))
+        out_file.write(Y.format(y=y, df=df))
 
     def assertions(self):
         out_ds = self.get_port(False, "Dataset").port_id
