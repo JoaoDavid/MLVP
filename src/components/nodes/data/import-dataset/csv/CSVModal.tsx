@@ -24,6 +24,20 @@ const CSVModal = (props: CSVModalProps) => {
         labelCounts.push(
             <td key={value + "" + counter}>{value}</td>);
     });
+
+    const columnNames: JSX.Element[] = [];
+    const columnTypes: JSX.Element[] = [];
+    const columnNulls: JSX.Element[] = [];
+    props.node.getColumnTypes().forEach((column, colName) => {
+        counter += 1;
+        columnNames.push(
+            <th key={colName + "" + counter}>{colName}</th>);
+        columnTypes.push(
+            <td key={column.getType() + "" + counter}>{column.getType()}</td>);
+        columnNulls.push(
+            <td key={column.getType() + "" + column.getNullCounter() + "" + counter}>{column.getNullCounter()}</td>);
+    });
+
     return (
         <Form>
             <Form.Group>
@@ -44,21 +58,19 @@ const CSVModal = (props: CSVModalProps) => {
                 </Row>
             </Form.Group>
             <FormGroup>
-                {props.node.getColumnNames().length > 0?<Form.Label>Column Names</Form.Label>:null}
+                {columnNames.length > 0?<Form.Label>Column Types</Form.Label>:null}
                 <Table striped bordered hover responsive>
                     <thead>
                     <tr>
-                        {props.node.getColumnNames().map((col, counter) => {
-                            return <th key={col + counter}>{col}</th>
-                        })}
+                        {columnNames}
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        {/*<td>Empty</td>*/}
-                        {/*<td>on</td>*/}
-                        {/*<td>purpose</td>*/}
-                        {/*<td>WIP</td>*/}
+                        {columnTypes}
+                    </tr>
+                    <tr>
+                        {columnNulls}
                     </tr>
                     </tbody>
                 </Table>

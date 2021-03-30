@@ -10,7 +10,7 @@ export class AbstractDsModel extends BaseNodeModel {
     private numRows: number = 0;
 
     constructor() {
-        super(NODE_ABSTRACT_DS.codeName, NODE_ABSTRACT_DS.name);
+        super(NODE_ABSTRACT_DS);
         this.resetFile();
         this.addOutPort();
     }

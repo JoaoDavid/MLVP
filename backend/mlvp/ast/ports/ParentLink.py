@@ -1,5 +1,5 @@
-from mlvp.nodes import Node
-from mlvp.ports.PortType import PortType
+from mlvp.ast.nodes import Node
+from mlvp.ast.ports import PortType
 
 
 class ParentLink:

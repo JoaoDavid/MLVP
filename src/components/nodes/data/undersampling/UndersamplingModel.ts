@@ -9,7 +9,7 @@ export class UndersamplingModel extends BaseNodeModel {
     private randomState: number = 0;
 
     constructor() {
-        super(NODE_UNDERSAMPLING.codeName, NODE_UNDERSAMPLING.name);
+        super(NODE_UNDERSAMPLING);
         this.addInPort();
         this.addOutPort();
     }

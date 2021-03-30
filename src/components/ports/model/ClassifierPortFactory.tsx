@@ -8,7 +8,7 @@ export class ClassifierPortFactory extends AbstractModelFactory<ClassifierPortMo
     private static INSTANCE: ClassifierPortFactory;
 
     constructor() {
-        super('PORT_CLASSIFIER');
+        super('ModelPort');
     }
 
     static getInstance = () => {

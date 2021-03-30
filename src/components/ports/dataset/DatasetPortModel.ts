@@ -4,7 +4,7 @@ import {BasePortModel} from "../../core/BasePort/BasePortModel";
 export class DatasetPortModel extends BasePortModel {
 
     constructor(isIn: boolean, name?: string, label?: string, maxLinks?: number){
-        super('PORT_DATASET', isIn, name?name:"Dataset", label?label:"", maxLinks);
+        super('DatasetPort', isIn, name?name:"Dataset", label?label:"", maxLinks);
     }
 
     canLinkToPort(port: PortModel): boolean {
