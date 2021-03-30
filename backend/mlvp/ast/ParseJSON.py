@@ -52,12 +52,12 @@ class ParseJSON:
 
     def __parse_ports(self, json_ports):
         ports = {}
-        has_input_port = False
+        is_root = False
         for data in json_ports:
             # TODO, security, check if class exists
             port_class = getattr(importlib.import_module("mlvp.ast.ports"), data['type'])
             # Instantiate the class
             port = port_class(data)
             ports[data['id']] = port
-            has_input_port = port.in_port or has_input_port
-        return ports, has_input_port
+            is_root = not port.in_port or is_root
+        return ports, is_root
