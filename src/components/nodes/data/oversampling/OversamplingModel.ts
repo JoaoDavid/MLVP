@@ -9,7 +9,7 @@ export class OversamplingModel extends BaseNodeModel {
     private randomState: number = 0;
 
     constructor() {
-        super(NODE_OVERSAMPLING.codeName, NODE_OVERSAMPLING.name);
+        super(NODE_OVERSAMPLING);
         this.addInPort();
         this.addOutPort();
     }

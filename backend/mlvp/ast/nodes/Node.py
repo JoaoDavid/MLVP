@@ -4,9 +4,10 @@ from abc import ABC, abstractmethod
 class Node(ABC):
 
     @abstractmethod
-    def __init__(self, node_id: str, title: str):
-        self.node_id = node_id
-        self.title = title
+    def __init__(self, data):
+        self.node_id = data['id']
+        self.title = data['title']
+        self.is_root = bool(data['isRoot'])
         self.parent_links = []
         self.ports = {}
         self.children = []
@@ -17,6 +18,21 @@ class Node(ABC):
         for _, port in self.ports.items():
             if name == port.name and port.in_port == in_port:
                 return port
+
+    def is_loose(self):
+        return len(self.parent_links) == 0 and not self.is_root
+
+    @abstractmethod
+    def import_dependency(self):
+        pass
+
+    @abstractmethod
+    def codegen(self, emitter, out_file):
+        pass
+
+    @abstractmethod
+    def assertions(self):
+        pass
 
     def __str__(self):
         return 'Class: {self.__class__.__name__} \n' \

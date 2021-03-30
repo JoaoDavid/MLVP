@@ -16,6 +16,7 @@ const CSVWidget = (props: CSVNodeProps) => {
 
     const loadCSV = (selectorFiles: FileList) => {
         props.node.loadCSV(selectorFiles).then((r: any) => {
+            // eslint-disable-next-line
             eventNodeUpdated(props.engine, props.node);
             // forceUpdate();
         });

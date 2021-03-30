@@ -133,14 +133,14 @@
             "models": {
                 "2345d92f-69e2-4dd8-8265-e93264bbdd50": {
                     "id": "2345d92f-69e2-4dd8-8265-e93264bbdd50",
-                    "type": "NODE_IMPORT_CSV",
+                    "type": "ImportFromCSV",
                     "selected": false,
                     "x": 157,
                     "y": 116,
                     "ports": [
                         {
                             "id": "a27e52d0-7aa3-4745-9ee0-59ae482eb865",
-                            "type": "PORT_DATASET",
+                            "type": "DatasetPort",
                             "x": 340,
                             "y": 152,
                             "name": "Dataset",
@@ -158,6 +158,7 @@
                         "a27e52d0-7aa3-4745-9ee0-59ae482eb865"
                     ],
                     "title": "Import from CSV 1",
+                    "isRoot": true,
                     "fileName": "creditcard.csv",
                     "numCols": 31,
                     "numRows": 284807,
@@ -194,6 +195,7 @@
                         "Amount",
                         "Class"
                     ],
+                    "columnTypes": {},
                     "labels": {
                         "0": 284315,
                         "1": 492
@@ -201,14 +203,14 @@
                 },
                 "858296ea-f85a-4726-b167-27f1c8b50ff6": {
                     "id": "858296ea-f85a-4726-b167-27f1c8b50ff6",
-                    "type": "NODE_SPLIT_DATASET",
+                    "type": "SplitDataset",
                     "selected": false,
                     "x": 513,
                     "y": 127,
                     "ports": [
                         {
                             "id": "74eb443f-fd29-4c86-9d6a-5e6689cb1027",
-                            "type": "PORT_DATASET",
+                            "type": "DatasetPort",
                             "x": 515,
                             "y": 163,
                             "name": "Dataset",
@@ -222,7 +224,7 @@
                         },
                         {
                             "id": "97710293-42b6-48a5-b7ba-079ad7a5ef40",
-                            "type": "PORT_DATASET",
+                            "type": "DatasetPort",
                             "x": 696,
                             "y": 163,
                             "name": "Train Dataset",
@@ -236,7 +238,7 @@
                         },
                         {
                             "id": "9043ba86-3903-4e01-9bf1-5bbf4fbf4404",
-                            "type": "PORT_DATASET",
+                            "type": "DatasetPort",
                             "x": 696,
                             "y": 226,
                             "name": "Test Dataset",
@@ -257,20 +259,21 @@
                         "9043ba86-3903-4e01-9bf1-5bbf4fbf4404"
                     ],
                     "title": "Split Dataset 2",
+                    "isRoot": false,
                     "testSize": 0.25,
                     "trainSize": 0.75,
                     "shuffle": "True"
                 },
                 "43b4ee8c-6d99-4491-b053-c129bada3b21": {
                     "id": "43b4ee8c-6d99-4491-b053-c129bada3b21",
-                    "type": "NODE_RANDOM_FOREST_CLASSIFIER",
+                    "type": "RandomForestClassifier",
                     "selected": false,
                     "x": 908,
                     "y": 140,
                     "ports": [
                         {
                             "id": "b0b61fcb-f343-401f-ae9b-f966f313310c",
-                            "type": "PORT_DATASET",
+                            "type": "DatasetPort",
                             "x": 910,
                             "y": 176,
                             "name": "Dataset",
@@ -284,7 +287,7 @@
                         },
                         {
                             "id": "173f6c24-180c-4583-82d6-34110dc42481",
-                            "type": "PORT_CLASSIFIER",
+                            "type": "ModelPort",
                             "x": 1091,
                             "y": 176,
                             "name": "Classifier",
@@ -304,19 +307,20 @@
                         "173f6c24-180c-4583-82d6-34110dc42481"
                     ],
                     "title": "Random Forest Classifier 3",
+                    "isRoot": false,
                     "numTrees": 100,
                     "criterion": "gini",
                     "maxDepth": "None"
                 },
                 "11b9bf32-5ce9-44c2-8054-45480b919ea5": {
                     "id": "11b9bf32-5ce9-44c2-8054-45480b919ea5",
-                    "type": "NODE_ACCURACY_CLASSIFIER",
+                    "type": "EvaluateClassifier",
                     "x": 1257,
                     "y": 293,
                     "ports": [
                         {
                             "id": "d6abaf0e-01dd-4906-8fd9-1daaaa42e8f6",
-                            "type": "PORT_DATASET",
+                            "type": "DatasetPort",
                             "x": 1259,
                             "y": 329,
                             "name": "Dataset",
@@ -330,7 +334,7 @@
                         },
                         {
                             "id": "235a7b54-d152-48e6-8f8e-24535129bc9d",
-                            "type": "PORT_CLASSIFIER",
+                            "type": "ModelPort",
                             "x": 1259,
                             "y": 392,
                             "name": "Classifier",
@@ -348,7 +352,8 @@
                         "235a7b54-d152-48e6-8f8e-24535129bc9d"
                     ],
                     "portsOutOrder": [],
-                    "title": "Evaluate Classifier 4"
+                    "title": "Evaluate Classifier 4",
+                    "isRoot": false
                 }
             }
         }

@@ -6,10 +6,9 @@ from .data.Oversampling import Oversampling
 from .data.Undersampling import UnderSampling
 from .data.PCA import PCA
 
-from .model.ModelTrain import ModelTrain
 from .model.RandomForestClassifier import RandomForestClassifier
 
 
-from .evaluate.ModelAccuracy import ModelAccuracy
+from .evaluate.EvaluateClassifier import EvaluateClassifier
 from .evaluate.CrossValidation import CrossValidation
 

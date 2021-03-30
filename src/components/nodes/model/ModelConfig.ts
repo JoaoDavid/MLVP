@@ -8,8 +8,9 @@ export const MODEL_CONFIG:CategoryConfig = {
 
 // NODES
 export const NODE_RANDOM_FOREST_CLASSIFIER:NodeConfig = {
-    codeName: "NODE_RANDOM_FOREST_CLASSIFIER",
+    codeName: "RandomForestClassifier",
     name: "Random Forest Classifier",
+    isRoot: false,
 }
 
 

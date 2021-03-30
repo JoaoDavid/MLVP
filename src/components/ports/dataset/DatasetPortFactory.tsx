@@ -8,7 +8,7 @@ export class DatasetPortFactory extends AbstractModelFactory<DatasetPortModel, D
     private static INSTANCE: DatasetPortFactory;
 
     constructor() {
-        super('PORT_DATASET');
+        super('DatasetPort');
     }
 
     static getInstance = () => {
