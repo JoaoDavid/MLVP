@@ -49,9 +49,10 @@ def __convert_ids(ports, expr: ExprRef):
 
 class TypeChecker:
 
-    def __init__(self, roots):
+    def __init__(self, roots, loose):
         self.solver = Solver()
         self.roots = roots
+        self.loose = loose
         self.node_assertions = {}
         self.link_assertions = {}
         self.unsat_node_assertions = {}
@@ -61,6 +62,9 @@ class TypeChecker:
     def verify(self):
         for root in self.roots:
             self.__traverse_pipeline(root)
+
+        for loose in self.loose:
+            self.__traverse_pipeline(loose)
 
         for assertion in self.all_link_assertions:
             self.solver.add(assertion[1])

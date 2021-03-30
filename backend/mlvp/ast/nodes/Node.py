@@ -19,6 +19,9 @@ class Node(ABC):
             if name == port.name and port.in_port == in_port:
                 return port
 
+    def is_loose(self):
+        return len(self.parent_links) == 0 and not self.is_root
+
     @abstractmethod
     def import_dependency(self):
         pass

@@ -32,8 +32,7 @@ class CodeGen:
     def generate_code(self):
         self.__write_imports()
         for root in self.roots:
-            if root.is_root:
-                self.__write_nodes(root)
+            self.__write_nodes(root)
 
         self.out_file.close()
         final_file = open(self.name, "r")

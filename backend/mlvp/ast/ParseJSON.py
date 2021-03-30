@@ -11,7 +11,10 @@ class ParseJSON:
         self.json_nodes = {}
         # parsed information
         self.nodes = {}
+        # array of orphan nodes
+        # nodes that have no parents linked to them
         self.roots = []
+        self.loose = []
 
     def parse(self):
         for layer in self.json_diagram['layers']:
@@ -21,7 +24,7 @@ class ParseJSON:
                 self.json_nodes = layer['models']
         self.__parse_nodes()
         self.__parse_links()
-        return self.roots
+        return self.roots, self.loose
 
     def __parse_nodes(self):
         for node_id, data in self.json_nodes.items():
@@ -32,8 +35,10 @@ class ParseJSON:
             node.ports = self.__parse_ports(data['ports'])
             self.nodes[node_id] = node
             # In case of being a root node, add it to the root array
-            if node.is_root or len(node.parent_links) == 0:
+            if node.is_root:
                 self.roots.append(node)
+            elif node.is_loose():
+                self.loose.append(node)
 
     def __parse_links(self):
         for link_id, data in self.json_links.items():

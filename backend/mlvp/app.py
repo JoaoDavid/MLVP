@@ -5,15 +5,15 @@ from mlvp.typecheck.TypeChecker import TypeChecker
 
 def generate_code(diagram, file_name="mlvp-code-output"):
     parser = ParseJSON(json_diagram=diagram)
-    roots = parser.parse()
+    roots, _ = parser.parse()
     codegen = CodeGen(file_name, roots)
     return codegen.generate_code()
 
 
 def pipeline_verification(diagram):
     parser = ParseJSON(json_diagram=diagram)
-    roots = parser.parse()
-    type_checker = TypeChecker(roots)
+    roots, loose = parser.parse()
+    type_checker = TypeChecker(roots, loose)
     response = type_checker.verify()
     print(response)
     return str(response)
