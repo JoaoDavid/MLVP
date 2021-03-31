@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {AbstractDsModel} from './AbstractDsModel';
-import BaseNodeWidget, {eventNodeUpdated} from '../../../../core/BaseNode/BaseNodeWidget';
+import BaseBlockWidget, {eventNodeUpdated} from '../../../../base/base-block/BaseBlockWidget';
 import AbstractDsModal from "./AbstractDsModal";
 import {DATA_CONFIG} from '../../DataConfig';
 
@@ -25,10 +25,10 @@ const AbstractDsWidget = (props: CSVNodeProps) => {
     const modal = <AbstractDsModal node={props.node} numColsChanged={numColsChanged} numRowsChanged={numRowsChanged}/>;
 
     return (
-            <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
+            <BaseBlockWidget node={props.node} engine={props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
                 <p>Rows: {props.node.getRows()}</p>
                 <p>Columns: {props.node.getCols()}</p>
-            </BaseNodeWidget>
+            </BaseBlockWidget>
     );
 
 }

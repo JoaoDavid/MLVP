@@ -1,10 +1,10 @@
-import {BaseNodeModel} from "../../../core/BaseNode/BaseNodeModel";
+import {BaseBlockModel} from "../../../base/base-block/BaseBlockModel";
 import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
 import {NODE_OVERSAMPLING} from "../DataConfig";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
 
 
-export class OversamplingModel extends BaseNodeModel {
+export class OversamplingModel extends BaseBlockModel {
 
     private randomState: number = 0;
 

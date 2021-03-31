@@ -1,24 +1,24 @@
 import * as React from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams-core';
-import BasePortWidget from "../BasePort/BasePortWidget";
-import {BasePortModel} from "../BasePort/BasePortModel";
-import classes from './BaseNode.module.css';
-import Title from './Title/Title';
-import {BaseNodeModel} from './BaseNodeModel';
-import PortContainer from "../BasePort/PortContainer/PortContainer";
+import BasePortWidget from "../base-port/BasePortWidget";
+import {BasePortModel} from "../base-port/BasePortModel";
+import classes from './BaseBlock.module.css';
+import Title from './title/Title';
+import {BaseBlockModel} from './BaseBlockModel';
+import PortContainer from "../base-port/port-container/PortContainer";
 import BaseModal from "../../UI/modal/BaseModal";
 import {useState} from "react";
 
 
 export interface BaseNodeProps {
-    node: BaseNodeModel;
+    node: BaseBlockModel;
     engine: DiagramEngine;
     children?: React.ReactNode;
     modalChildren?: React.ReactNode;
     color: string;
 }
 
-export const eventNodeUpdated = (engine: DiagramEngine, node: BaseNodeModel) => {
+export const eventNodeUpdated = (engine: DiagramEngine, node: BaseBlockModel) => {
     engine.getModel().fireEvent(
         {
             node: node
@@ -30,7 +30,7 @@ export const eventNodeUpdated = (engine: DiagramEngine, node: BaseNodeModel) => 
 /**
  * Base Node Widget, used to shape every node within the project
  */
-const BaseNodeWidget = (props: BaseNodeProps) => {
+const BaseBlockWidget = (props: BaseNodeProps) => {
 
     const [, setTitle] = useState(props.node.getTitle);
     const [modalOpen, setModal] = useState(false);
@@ -87,4 +87,4 @@ const BaseNodeWidget = (props: BaseNodeProps) => {
 
 }
 
-export default BaseNodeWidget;
+export default BaseBlockWidget;

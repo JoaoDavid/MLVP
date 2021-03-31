@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {AccuracyClassifierModel} from './AccuracyClassifierModel';
-import BaseNodeWidget from '../../../../core/BaseNode/BaseNodeWidget';
+import BaseBlockWidget from '../../../../base/base-block/BaseBlockWidget';
 import {EVALUATE_CONFIG} from '../../EvaluateConfig';
 
 interface AccuracyNodeProps {
@@ -12,8 +12,8 @@ interface AccuracyNodeProps {
 
 const AccuracyClassifierWidget = (props:AccuracyNodeProps) => {
     return (
-        <BaseNodeWidget node={props.node} engine={props.engine} color={EVALUATE_CONFIG.color}>
-        </BaseNodeWidget>
+        <BaseBlockWidget node={props.node} engine={props.engine} color={EVALUATE_CONFIG.color}>
+        </BaseBlockWidget>
     )
 }
 

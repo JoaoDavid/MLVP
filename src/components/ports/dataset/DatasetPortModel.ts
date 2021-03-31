@@ -1,5 +1,5 @@
 import {PortModel} from '@projectstorm/react-diagrams-core';
-import {BasePortModel} from "../../core/BasePort/BasePortModel";
+import {BasePortModel} from "../../base/base-port/BasePortModel";
 
 export class DatasetPortModel extends BasePortModel {
 

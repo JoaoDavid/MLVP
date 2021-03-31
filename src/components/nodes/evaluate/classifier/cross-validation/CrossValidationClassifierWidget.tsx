@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {CrossValidationClassifierModel} from './CrossValidationClassifierModel';
-import BaseNodeWidget, {eventNodeUpdated} from '../../../../core/BaseNode/BaseNodeWidget';
+import BaseBlockWidget, {eventNodeUpdated} from '../../../../base/base-block/BaseBlockWidget';
 import CrossValidationClassifierModal from "./CrossValidationClassifierModal";
 import {EVALUATE_CONFIG} from '../../EvaluateConfig';
 
@@ -19,9 +19,9 @@ const CrossValidationClassifierWidget = (props: CrossValidationProps) => {
 
     const modal = <CrossValidationClassifierModal node={props.node} numberFoldsChanged={numberFoldsChanged}/>;
     return (
-        <BaseNodeWidget node={props.node} engine={props.engine} color={EVALUATE_CONFIG.color} modalChildren={modal}>
+        <BaseBlockWidget node={props.node} engine={props.engine} color={EVALUATE_CONFIG.color} modalChildren={modal}>
             <p>Number of folds: {props.node.getNumberFolds()}</p>
-        </BaseNodeWidget>
+        </BaseBlockWidget>
     );
 
 }

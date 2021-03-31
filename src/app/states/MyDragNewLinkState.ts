@@ -8,7 +8,7 @@ import {
 import {LinkModel} from '@projectstorm/react-diagrams-core';
 import {MouseEvent} from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams';
-import {BasePortModel} from "../../components/core/BasePort/BasePortModel";
+import {BasePortModel} from "../../components/base/base-port/BasePortModel";
 import {TypeChecker} from "../typecheck/TypeChecker";
 
 

@@ -16,7 +16,7 @@ import splitEvaluate from '../demos/split-n-evaluate.json';
 import {MyZoomCanvasAction} from "./actions/MyZoomCanvasAction";
 import {DiagramStateManager} from "./states/DiagramStateManager";
 import {TypeCheckResponse, TypeChecker} from "./typecheck/TypeChecker";
-import {BaseNodeModel} from "../components/core/BaseNode/BaseNodeModel";
+import {BaseBlockModel} from "../components/base/base-block/BaseBlockModel";
 import {DefaultLinkModel} from "@projectstorm/react-diagrams-defaults";
 import {FactoriesManager} from "./FactoriesManager";
 
@@ -25,8 +25,8 @@ interface AppProps {
 }
 
 type AppState = {
-    unsatNodeAssertions: Map<BaseNodeModel, string[]>,
-    allNodeAssertions: Map<BaseNodeModel, string[]>,
+    unsatNodeAssertions: Map<BaseBlockModel, string[]>,
+    allNodeAssertions: Map<BaseBlockModel, string[]>,
     allLinkAssertions: Map<DefaultLinkModel, string[]>,
     log: string[],
 };
@@ -97,10 +97,10 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     processNodeAssertions = (mapNodeAssertions) => {
-        const map = new Map<BaseNodeModel, string[]>();
+        const map = new Map<BaseBlockModel, string[]>();
 
         for (let k of Object.keys(mapNodeAssertions)) {
-            const node = this.engine.getModel().getNode(k) as BaseNodeModel;
+            const node = this.engine.getModel().getNode(k) as BaseBlockModel;
             map.set(node, mapNodeAssertions[k]);
         }
         return map;
@@ -156,7 +156,7 @@ class App extends React.Component<AppProps, AppState> {
             const inJSON = JSON.parse(data);
             console.log(data);
             const factory = this.engine.getNodeFactories().getFactory(inJSON.codeName);
-            const node = factory.generateModel({}) as BaseNodeModel;
+            const node = factory.generateModel({}) as BaseBlockModel;
             let point = this.engine.getRelativeMousePoint(event);
             node.setPosition(point);
             node.setTitle(node.getTitle() + " " + ++this.generated_nodes_counter);

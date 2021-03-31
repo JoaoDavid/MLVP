@@ -1,10 +1,10 @@
-import {BaseNodeModel} from "../../../../core/BaseNode/BaseNodeModel";
+import {BaseBlockModel} from "../../../../base/base-block/BaseBlockModel";
 import {DatasetPortModel} from "../../../../ports/dataset/DatasetPortModel";
 import {NODE_ABSTRACT_DS} from "../../DataConfig";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
 
 
-export class AbstractDsModel extends BaseNodeModel {
+export class AbstractDsModel extends BaseBlockModel {
 
     private numCols: number = 0;
     private numRows: number = 0;

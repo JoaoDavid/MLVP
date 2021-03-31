@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {PCAModel} from './PCAModel';
-import BaseNodeWidget, {eventNodeUpdated} from '../../../core/BaseNode/BaseNodeWidget';
+import BaseBlockWidget, {eventNodeUpdated} from '../../../base/base-block/BaseBlockWidget';
 import PCAModal from "./PCAModal";
 import {DATA_CONFIG} from '../DataConfig';
 
@@ -24,10 +24,10 @@ const PCAWidget = (props: PCAProps) => {
 
     const modal = <PCAModal node={props.node} randomStateChanged={randomStateChanged} numComponentsChanged={numComponentsChanged}/>;
     return (
-        <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
+        <BaseBlockWidget node={props.node} engine={props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
             <p>Random State: {props.node.getRandomState()}</p>
             <p>Num Components: {props.node.getNumComponents()}</p>
-        </BaseNodeWidget>
+        </BaseBlockWidget>
     );
 
 }

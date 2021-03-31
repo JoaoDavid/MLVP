@@ -4,10 +4,10 @@ import UndersamplingWidget from './UndersamplingWidget';
 import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-canvas-core';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
 import { NODE_UNDERSAMPLING } from "../DataConfig";
-import {BaseNodeFactory} from "../../../core/BaseNode/BaseNodeFactory";
+import {BaseBlockFactory} from "../../../base/base-block/BaseBlockFactory";
 import {Category} from "../../Config";
 
-export class UndersamplingFactory extends BaseNodeFactory<UndersamplingModel, DiagramEngine> {
+export class UndersamplingFactory extends BaseBlockFactory<UndersamplingModel, DiagramEngine> {
 
     private static INSTANCE: UndersamplingFactory;
 

@@ -1,10 +1,10 @@
-import {BaseNodeModel} from "../../../core/BaseNode/BaseNodeModel";
+import {BaseBlockModel} from "../../../base/base-block/BaseBlockModel";
 import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
 import {NODE_SPLIT_DATASET} from "../DataConfig";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
 
 
-export class SplitDatasetModel extends BaseNodeModel {
+export class SplitDatasetModel extends BaseBlockModel {
 
     private testSize: number = 0.25;
     private trainSize: number = 1 - this.testSize;

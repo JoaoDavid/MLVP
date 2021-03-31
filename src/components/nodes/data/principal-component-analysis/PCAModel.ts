@@ -1,10 +1,10 @@
-import {BaseNodeModel} from "../../../core/BaseNode/BaseNodeModel";
+import {BaseBlockModel} from "../../../base/base-block/BaseBlockModel";
 import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
 import {NODE_PCA} from "../DataConfig";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
 
 
-export class PCAModel extends BaseNodeModel {
+export class PCAModel extends BaseBlockModel {
 
     private randomState: number = 0;
     private numComponents: number = 1;

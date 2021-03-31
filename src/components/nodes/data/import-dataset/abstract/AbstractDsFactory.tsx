@@ -4,10 +4,10 @@ import AbstractDsWidget from './AbstractDsWidget';
 import {GenerateModelEvent, GenerateWidgetEvent} from '@projectstorm/react-canvas-core';
 import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {NODE_ABSTRACT_DS} from "../../DataConfig";
-import {BaseNodeFactory} from "../../../../core/BaseNode/BaseNodeFactory";
+import {BaseBlockFactory} from "../../../../base/base-block/BaseBlockFactory";
 import {Category} from "../../../Config";
 
-export class AbstractDsFactory extends BaseNodeFactory<AbstractDsModel, DiagramEngine> {
+export class AbstractDsFactory extends BaseBlockFactory<AbstractDsModel, DiagramEngine> {
 
     private static INSTANCE: AbstractDsFactory;
 

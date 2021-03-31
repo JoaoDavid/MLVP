@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import classes from './BottomNav.module.css';
-import {BaseNodeModel} from "../../core/BaseNode/BaseNodeModel";
+import {BaseBlockModel} from "../../base/base-block/BaseBlockModel";
 import {DefaultLinkModel} from "@projectstorm/react-diagrams-defaults";
 
 interface BottomNavProps {
-    unsatNodeAssertions: Map<BaseNodeModel, string[]>,
-    allNodeAssertions: Map<BaseNodeModel, string[]>,
+    unsatNodeAssertions: Map<BaseBlockModel, string[]>,
+    allNodeAssertions: Map<BaseBlockModel, string[]>,
     allLinkAssertions: Map<DefaultLinkModel, string[]>,
     log: string[],
 }
@@ -60,8 +60,8 @@ const BottomNav = (props: BottomNavProps) => {
         linkAssertions.forEach((assertion) => {
             linkProblems.push((<li>{assertion}</li>));
         });
-        const sourceNode = link.getSourcePort().getNode() as BaseNodeModel;
-        const targetNode = link.getTargetPort().getNode() as BaseNodeModel;
+        const sourceNode = link.getSourcePort().getNode() as BaseBlockModel;
+        const targetNode = link.getTargetPort().getNode() as BaseBlockModel;
         assertions.push(
             <ul className={classes.list}>
                 <li>{"Link from " + sourceNode.getTitle() + " to " + targetNode.getTitle()}</li>

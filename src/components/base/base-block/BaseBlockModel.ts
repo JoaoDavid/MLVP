@@ -1,17 +1,17 @@
 import { NodeModel, NodeModelGenerics } from '@projectstorm/react-diagrams-core';
-import {BasePortModel} from "../BasePort/BasePortModel";
+import {BasePortModel} from "../base-port/BasePortModel";
 import { BasePositionModelOptions, DeserializeEvent } from '@projectstorm/react-canvas-core';
 import {NodeConfig} from "../../nodes/Config";
 
-export interface BaseNodeModelOptions extends BasePositionModelOptions {
+export interface BaseBlockModelOptions extends BasePositionModelOptions {
     name: string;
 }
 
-export interface BaseNodeModelGenerics extends NodeModelGenerics {
-    OPTIONS: BaseNodeModelOptions;
+export interface BaseBlockModelGenerics extends NodeModelGenerics {
+    OPTIONS: BaseBlockModelOptions;
 }
 
-export abstract class BaseNodeModel extends NodeModel<BaseNodeModelGenerics> {
+export abstract class BaseBlockModel extends NodeModel<BaseBlockModelGenerics> {
 
     protected portsIn: BasePortModel[];
     protected portsOut: BasePortModel[];

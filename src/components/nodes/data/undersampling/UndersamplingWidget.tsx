@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {UndersamplingModel} from './UndersamplingModel';
-import BaseNodeWidget, {eventNodeUpdated} from '../../../core/BaseNode/BaseNodeWidget';
+import BaseBlockWidget, {eventNodeUpdated} from '../../../base/base-block/BaseBlockWidget';
 import UndersamplingModal from "./UndersamplingModal";
 import {DATA_CONFIG} from '../DataConfig';
 
@@ -19,9 +19,9 @@ const UndersamplingWidget = (props: UndersamplingProps) => {
 
     const modal = <UndersamplingModal node={props.node} randomStateChanged={randomStateChanged}/>;
     return (
-        <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
+        <BaseBlockWidget node={props.node} engine={props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
             <p>Random State: {props.node.getRandomState()}</p>
-        </BaseNodeWidget>
+        </BaseBlockWidget>
     );
 
 }

@@ -4,10 +4,10 @@ import PCAWidget from './PCAWidget';
 import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-canvas-core';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
 import { NODE_PCA } from "../DataConfig";
-import {BaseNodeFactory} from "../../../core/BaseNode/BaseNodeFactory";
+import {BaseBlockFactory} from "../../../base/base-block/BaseBlockFactory";
 import {Category} from "../../Config";
 
-export class PCAFactory extends BaseNodeFactory<PCAModel, DiagramEngine> {
+export class PCAFactory extends BaseBlockFactory<PCAModel, DiagramEngine> {
 
     private static INSTANCE: PCAFactory;
 
