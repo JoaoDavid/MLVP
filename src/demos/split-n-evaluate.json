@@ -11,34 +11,6 @@
             "isSvg": true,
             "transformed": true,
             "models": {
-                "3d73e98c-7049-4354-bebd-eff4acd6537e": {
-                    "id": "3d73e98c-7049-4354-bebd-eff4acd6537e",
-                    "type": "default",
-                    "selected": false,
-                    "source": "2345d92f-69e2-4dd8-8265-e93264bbdd50",
-                    "sourcePort": "a27e52d0-7aa3-4745-9ee0-59ae482eb865",
-                    "target": "858296ea-f85a-4726-b167-27f1c8b50ff6",
-                    "targetPort": "74eb443f-fd29-4c86-9d6a-5e6689cb1027",
-                    "points": [
-                        {
-                            "id": "5e2deb9c-3648-4432-908b-f7a19ce54270",
-                            "type": "point",
-                            "x": 347.5,
-                            "y": 183.5
-                        },
-                        {
-                            "id": "d2f17710-aa34-4f09-a4d6-9bf87c08ed50",
-                            "type": "point",
-                            "x": 522.5,
-                            "y": 194.5
-                        }
-                    ],
-                    "labels": [],
-                    "width": 3,
-                    "color": "gray",
-                    "curvyness": 50,
-                    "selectedColor": "rgb(0,192,255)"
-                },
                 "a39dc01b-2c61-47f1-a7ac-32a4e3831441": {
                     "id": "a39dc01b-2c61-47f1-a7ac-32a4e3831441",
                     "type": "default",
@@ -51,8 +23,8 @@
                         {
                             "id": "b1ab6c44-3d13-4248-8e9e-22303c6db3e6",
                             "type": "point",
-                            "x": 703.5,
-                            "y": 194.5
+                            "x": 720.5,
+                            "y": 193.5
                         },
                         {
                             "id": "8bfcfb47-b3b8-4090-a536-c9e2f7bb2edb",
@@ -107,14 +79,70 @@
                         {
                             "id": "345d4fb3-b325-4592-aa14-d22456a6f0d6",
                             "type": "point",
-                            "x": 703.5,
-                            "y": 257.5
+                            "x": 720.5,
+                            "y": 256.5
                         },
                         {
                             "id": "8303d5f4-27a4-4be7-bc35-ed58fa05a096",
                             "type": "point",
                             "x": 1266.5,
                             "y": 360.5
+                        }
+                    ],
+                    "labels": [],
+                    "width": 3,
+                    "color": "gray",
+                    "curvyness": 50,
+                    "selectedColor": "rgb(0,192,255)"
+                },
+                "eb510b3f-2560-4e7f-b5ee-55d82ca23614": {
+                    "id": "eb510b3f-2560-4e7f-b5ee-55d82ca23614",
+                    "type": "default",
+                    "selected": false,
+                    "source": "2345d92f-69e2-4dd8-8265-e93264bbdd50",
+                    "sourcePort": "a27e52d0-7aa3-4745-9ee0-59ae482eb865",
+                    "target": "fcd4481d-ecb8-45e3-91b1-48613e594fbd",
+                    "targetPort": "94384399-1ef2-4e57-8c55-4fa75ab7b2ba",
+                    "points": [
+                        {
+                            "id": "d513907c-1451-474f-b6a1-d1a11b131888",
+                            "type": "point",
+                            "x": 230.5,
+                            "y": 113.5
+                        },
+                        {
+                            "id": "80369530-fa9e-452a-ba48-133d0876c1b8",
+                            "type": "point",
+                            "x": 258.3125,
+                            "y": 243.5
+                        }
+                    ],
+                    "labels": [],
+                    "width": 3,
+                    "color": "gray",
+                    "curvyness": 50,
+                    "selectedColor": "rgb(0,192,255)"
+                },
+                "13f4d09d-57f6-4253-843f-d6a4aeb0f2d5": {
+                    "id": "13f4d09d-57f6-4253-843f-d6a4aeb0f2d5",
+                    "type": "default",
+                    "selected": false,
+                    "source": "fcd4481d-ecb8-45e3-91b1-48613e594fbd",
+                    "sourcePort": "94debd60-ed28-4891-906c-9f601ef68cf1",
+                    "target": "858296ea-f85a-4726-b167-27f1c8b50ff6",
+                    "targetPort": "74eb443f-fd29-4c86-9d6a-5e6689cb1027",
+                    "points": [
+                        {
+                            "id": "e2450040-ace1-4d8b-9751-6ef12c0cae45",
+                            "type": "point",
+                            "x": 439.3125,
+                            "y": 243.5
+                        },
+                        {
+                            "id": "aa6f78c1-5a52-4121-af8d-a38be2c57350",
+                            "type": "point",
+                            "x": 539.5,
+                            "y": 193.5
                         }
                     ],
                     "labels": [],
@@ -135,19 +163,19 @@
                     "id": "2345d92f-69e2-4dd8-8265-e93264bbdd50",
                     "type": "ImportFromCSV",
                     "selected": false,
-                    "x": 157,
-                    "y": 116,
+                    "x": 40,
+                    "y": 46,
                     "ports": [
                         {
                             "id": "a27e52d0-7aa3-4745-9ee0-59ae482eb865",
                             "type": "DatasetPort",
-                            "x": 340,
-                            "y": 152,
+                            "x": 223,
+                            "y": 82,
                             "name": "Dataset",
                             "alignment": "right",
                             "parentNode": "2345d92f-69e2-4dd8-8265-e93264bbdd50",
                             "links": [
-                                "3d73e98c-7049-4354-bebd-eff4acd6537e"
+                                "eb510b3f-2560-4e7f-b5ee-55d82ca23614"
                             ],
                             "in": false,
                             "label": ""
@@ -158,7 +186,6 @@
                         "a27e52d0-7aa3-4745-9ee0-59ae482eb865"
                     ],
                     "title": "Import from CSV 1",
-                    "isRoot": true,
                     "fileName": "creditcard.csv",
                     "numCols": 31,
                     "numRows": 284807,
@@ -205,19 +232,19 @@
                     "id": "858296ea-f85a-4726-b167-27f1c8b50ff6",
                     "type": "SplitDataset",
                     "selected": false,
-                    "x": 513,
-                    "y": 127,
+                    "x": 530,
+                    "y": 126,
                     "ports": [
                         {
                             "id": "74eb443f-fd29-4c86-9d6a-5e6689cb1027",
                             "type": "DatasetPort",
-                            "x": 515,
-                            "y": 163,
+                            "x": 532,
+                            "y": 162,
                             "name": "Dataset",
                             "alignment": "left",
                             "parentNode": "858296ea-f85a-4726-b167-27f1c8b50ff6",
                             "links": [
-                                "3d73e98c-7049-4354-bebd-eff4acd6537e"
+                                "13f4d09d-57f6-4253-843f-d6a4aeb0f2d5"
                             ],
                             "in": true,
                             "label": ""
@@ -225,8 +252,8 @@
                         {
                             "id": "97710293-42b6-48a5-b7ba-079ad7a5ef40",
                             "type": "DatasetPort",
-                            "x": 696,
-                            "y": 163,
+                            "x": 713,
+                            "y": 162,
                             "name": "Train Dataset",
                             "alignment": "right",
                             "parentNode": "858296ea-f85a-4726-b167-27f1c8b50ff6",
@@ -239,8 +266,8 @@
                         {
                             "id": "9043ba86-3903-4e01-9bf1-5bbf4fbf4404",
                             "type": "DatasetPort",
-                            "x": 696,
-                            "y": 226,
+                            "x": 713,
+                            "y": 225,
                             "name": "Test Dataset",
                             "alignment": "right",
                             "parentNode": "858296ea-f85a-4726-b167-27f1c8b50ff6",
@@ -259,7 +286,6 @@
                         "9043ba86-3903-4e01-9bf1-5bbf4fbf4404"
                     ],
                     "title": "Split Dataset 2",
-                    "isRoot": false,
                     "testSize": 0.25,
                     "trainSize": 0.75,
                     "shuffle": "True"
@@ -307,7 +333,6 @@
                         "173f6c24-180c-4583-82d6-34110dc42481"
                     ],
                     "title": "Random Forest Classifier 3",
-                    "isRoot": false,
                     "numTrees": 100,
                     "criterion": "gini",
                     "maxDepth": "None"
@@ -352,8 +377,52 @@
                         "235a7b54-d152-48e6-8f8e-24535129bc9d"
                     ],
                     "portsOutOrder": [],
-                    "title": "Evaluate Classifier 4",
-                    "isRoot": false
+                    "title": "Evaluate Classifier 4"
+                },
+                "fcd4481d-ecb8-45e3-91b1-48613e594fbd": {
+                    "id": "fcd4481d-ecb8-45e3-91b1-48613e594fbd",
+                    "type": "UnderSampling",
+                    "selected": false,
+                    "x": 248.8125,
+                    "y": 176,
+                    "ports": [
+                        {
+                            "id": "94384399-1ef2-4e57-8c55-4fa75ab7b2ba",
+                            "type": "DatasetPort",
+                            "x": 250.8125,
+                            "y": 212,
+                            "name": "Dataset",
+                            "alignment": "left",
+                            "parentNode": "fcd4481d-ecb8-45e3-91b1-48613e594fbd",
+                            "links": [
+                                "eb510b3f-2560-4e7f-b5ee-55d82ca23614"
+                            ],
+                            "in": true,
+                            "label": ""
+                        },
+                        {
+                            "id": "94debd60-ed28-4891-906c-9f601ef68cf1",
+                            "type": "DatasetPort",
+                            "x": 431.8125,
+                            "y": 212,
+                            "name": "Balanced Dataset",
+                            "alignment": "right",
+                            "parentNode": "fcd4481d-ecb8-45e3-91b1-48613e594fbd",
+                            "links": [
+                                "13f4d09d-57f6-4253-843f-d6a4aeb0f2d5"
+                            ],
+                            "in": false,
+                            "label": ""
+                        }
+                    ],
+                    "portsInOrder": [
+                        "94384399-1ef2-4e57-8c55-4fa75ab7b2ba"
+                    ],
+                    "portsOutOrder": [
+                        "94debd60-ed28-4891-906c-9f601ef68cf1"
+                    ],
+                    "title": "Undersampling 1",
+                    "randomState": 0
                 }
             }
         }
