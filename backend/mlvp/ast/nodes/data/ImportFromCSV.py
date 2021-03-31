@@ -2,10 +2,10 @@ from mlvp.codegen import *
 from mlvp.ast.nodes.Node import Node
 from mlvp.typecheck import *
 
-LOAD_CSV = "{var} = {pandas_var}.read_csv(\'./{file_name}\')\n"
-FEATURES = "{x} = {var}.drop(\'{target}\', axis=1)\n"
-TARGET = "{y} = {var}[\'{target}\']\n"
-
+LOAD_CSV = "{df} = {pandas_var}.read_csv(\'./{file_name}\')\n"
+X = "{x} = {df}.drop(\'{target}\', axis=1)\n"
+Y = "{y} = {df}[\'{target}\']\n"
+ASSERT = "assert({arg1} == len({arg2}))\n"
 PANDAS_VAR = "pd"
 
 
@@ -24,14 +24,16 @@ class ImportFromCSV(Node):
 
     def codegen(self, emitter: Emitter, out_file):
         curr_count = emitter.get_count()
-        df_var = "df" + str(curr_count)
+        df = "df" + str(curr_count)
         x = "x" + str(curr_count)
         y = "y" + str(curr_count)
         out_ds = self.get_port(False, "Dataset")
         emitter.set(out_ds, (x, y))
-        out_file.write(LOAD_CSV.format(var=df_var, pandas_var=PANDAS_VAR, file_name=self.file_name))
-        out_file.write(FEATURES.format(x=x, var=df_var, target=self.target))
-        out_file.write(TARGET.format(y=y, var=df_var, target=self.target))
+        out_file.write(LOAD_CSV.format(df=df, pandas_var=PANDAS_VAR, file_name=self.file_name))
+        out_file.write(ASSERT.format(arg1=self.num_rows, arg2=df))
+        out_file.write(ASSERT.format(arg1=self.num_cols, arg2=df+".columns"))
+        out_file.write(X.format(x=x, df=df, target=self.target))
+        out_file.write(Y.format(y=y, df=df, target=self.target))
 
     def assertions(self):
         out_ds = self.get_port(False, "Dataset").port_id
