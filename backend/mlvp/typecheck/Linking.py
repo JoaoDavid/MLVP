@@ -10,6 +10,7 @@ def link(id_source_port: str, id_target_port: str):
         id_source_port.cols == port_to.cols,
         id_source_port.rows == port_to.rows,
         id_source_port.balanced == port_to.balanced,
+        id_source_port.time_series == port_to.time_series,
         id_source_port.n_labels == port_to.n_labels,
         id_source_port.max_label_count == port_to.max_label_count,
         id_source_port.min_label_count == port_to.min_label_count,
@@ -26,3 +27,4 @@ class Dataset:
         self.max_label_count = Int(prefix + MAX_LABEL_COUNT)
         self.min_label_count = Int(prefix + MIN_LABEL_COUNT)
         self.balanced = Bool(prefix + BALANCED)
+        self.time_series = Bool(prefix + TIME_SERIES)

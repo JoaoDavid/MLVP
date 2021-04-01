@@ -18,6 +18,7 @@ class ImportFromCSV(Node):
         self.num_rows = data['numRows']
         self.target = None if len(data['columnNames']) == 0 else data['columnNames'][-1]
         self.labels = data['labels']
+        self.time_series = data['timeSeries']
 
     def import_dependency(self):
         return IMPORT_AS.format(lib_name="pandas", lib_var=PANDAS_VAR)
@@ -60,6 +61,7 @@ class ImportFromCSV(Node):
                    output.cols == self.num_cols,
                    output.rows == self.num_rows,
                    output.rows == sum(label_counts),
+                   output.time_series == self.time_series,
                    # And(labels_values),
                    output.balanced == is_balanced,
                    # output.balanced == And(list_balanced),
