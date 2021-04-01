@@ -2,10 +2,12 @@ import {PortModel} from '@projectstorm/react-diagrams-core';
 import {ModelPortModel} from "./ModelPortModel";
 import {RegressorPortModel} from "./RegressorPortModel";
 
+export const CLASSIFIER_PORT = "ModelPort";
+
 export class ClassifierPortModel extends ModelPortModel {
 
     constructor(isIn: boolean, name?: string, label?: string, maxLinks?: number){
-        super('ModelPort', isIn, name?name:"Classifier", label?label:"", maxLinks);
+        super(CLASSIFIER_PORT, isIn, name?name:"Classifier", label?label:"", maxLinks);
     }
 
     canLinkToPort(port: PortModel): boolean {
