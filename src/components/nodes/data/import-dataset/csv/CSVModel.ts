@@ -1,16 +1,14 @@
 import Papa from "papaparse";
-import {BaseNodeModel} from "../../../../core/BaseNode/BaseNodeModel";
 import {DatasetPortModel} from "../../../../ports/dataset/DatasetPortModel";
 import {IMPORT_FROM_CSV} from "../../DataConfig";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
 import {Column} from "../Column";
+import {ImportDataset} from "../ImportDataset";
 
 
-export class CSVModel extends BaseNodeModel {
+export class CSVModel extends ImportDataset {
 
     private fileName: string = "";
-    private numCols: number = 0;
-    private numRows: number = 0;
     private columnNames: string[] = [];
     private columnTypes: Map<string, Column> = new Map();
     private labels: Map<string, number> = new Map();
@@ -21,10 +19,9 @@ export class CSVModel extends BaseNodeModel {
         this.addOutPort();
     }
 
-    private resetFile(): void {
+    protected resetFile(): void {
+        super.resetFile();
         this.fileName = "";
-        this.numCols = 0;
-        this.numRows = 0;
         this.columnNames = [];
         this.columnTypes.clear();
         this.labels.clear();
@@ -32,14 +29,6 @@ export class CSVModel extends BaseNodeModel {
 
     getFileName(): string {
         return this.fileName;
-    }
-
-    getCols(): number {
-        return this.numCols;
-    }
-
-    getRows(): number {
-        return this.numRows;
     }
 
     getColumnNames(): string[] {
@@ -77,12 +66,11 @@ export class CSVModel extends BaseNodeModel {
                     complete: (results: any) => {
                         if (results.data.length > 0) {
                             console.log(results.data);
-                            this.numCols = results.data[0].length;//num features
-                            this.numRows = results.data.length - 1;//num entries, -1 because of column name's row
+                            this.setCols(results.data[0].length);//num features
+                            this.setRows(results.data.length - 1);//num entries, -1 because of column name's row
                             this.columnNames = results.data[0];
                             this.labels = this.processDataset(results.data);
                             this.processColumnTypes(results.data)
-                            console.log("numCols:" + this.numCols + " numRows:" + this.numRows);
                             console.log(this.labels);
                         }
                         complete(results.data);
@@ -93,13 +81,13 @@ export class CSVModel extends BaseNodeModel {
     }
 
     processColumnTypes = (data: string[][]) => {
-        for(let i = 0; i < data[i].length; i++) {
-            for(let j = 0; j < 1; j++) {
+        for (let i = 0; i < data[i].length; i++) {
+            for (let j = 0; j < 1; j++) {
                 // Initialize columns
                 let currCol = data[0][i];
                 this.columnTypes.set(currCol, new Column());
             }
-            for(let j = 1; j < data.length; j++) {
+            for (let j = 1; j < data.length; j++) {
                 let currCol = data[0][i];
                 let currField = data[j][i];
                 const currColumn = this.columnTypes.get(currCol);
@@ -117,12 +105,12 @@ export class CSVModel extends BaseNodeModel {
     processDataset = (data: string[][]) => {
         const labels = new Map();
         const lastColIndex = data[0].length - 1;
-        for(let i = 1; i < data.length; i++) {
+        for (let i = 1; i < data.length; i++) {
             let currLabel = labels.get(data[i][lastColIndex]);
-            if(currLabel === undefined) {
+            if (currLabel === undefined) {
                 labels.set(data[i][lastColIndex], 1);
             } else {
-                labels.set(data[i][lastColIndex], currLabel+1);
+                labels.set(data[i][lastColIndex], currLabel + 1);
             }
         }
         return labels;
@@ -131,16 +119,14 @@ export class CSVModel extends BaseNodeModel {
     deserialize(event: DeserializeEvent<this>) {
         super.deserialize(event);
         this.fileName = event.data.fileName;
-        this.numCols = event.data.numCols;
-        this.numRows = event.data.numRows;
         this.columnNames = event.data.columnNames;
         const jsonTypes = event.data.columnTypes;
         for (let value in jsonTypes) {
-            this.columnTypes.set(value,jsonTypes[value])
+            this.columnTypes.set(value, jsonTypes[value])
         }
         const jsonLabels = event.data.labels;
         for (let value in jsonLabels) {
-            this.labels.set(value,jsonLabels[value])
+            this.labels.set(value, jsonLabels[value])
         }
     }
 
@@ -156,8 +142,6 @@ export class CSVModel extends BaseNodeModel {
         return {
             ...super.serialize(),
             fileName: this.fileName,
-            numCols: this.numCols,
-            numRows: this.numRows,
             columnNames: this.columnNames,
             columnTypes: jsonTypes,
             labels: jsonLabels,
