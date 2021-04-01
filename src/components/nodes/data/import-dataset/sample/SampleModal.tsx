@@ -48,10 +48,6 @@ const SampleModal = (props: CSVModalProps) => {
             <Form.Group>
                 <Row>
                     <Col>
-                        <Form.Label>Rows</Form.Label>
-                        <Form.Control readOnly placeholder={props.node.getRows().toString()}/>
-                    </Col>
-                    <Col>
                         <Form.Label>Columns</Form.Label>
                         <Form.Control readOnly placeholder={props.node.getCols().toString()}/>
                     </Col>
