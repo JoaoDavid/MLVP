@@ -1,6 +1,6 @@
 import {BaseNodeModel} from "../../../core/BaseNode/BaseNodeModel";
 import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
-import {NODE_SPLIT_DATASET} from "../DataConfig";
+import {SPLIT_DATASET} from "../DataConfig";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
 
 
@@ -11,7 +11,7 @@ export class SplitDatasetModel extends BaseNodeModel {
     private shuffle: string = "True";
 
     constructor() {
-        super(NODE_SPLIT_DATASET);
+        super(SPLIT_DATASET);
         this.addInPort();
         this.addOutPort();
     }

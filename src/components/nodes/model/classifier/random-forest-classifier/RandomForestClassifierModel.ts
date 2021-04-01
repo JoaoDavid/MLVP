@@ -1,6 +1,6 @@
 import {BaseNodeModel} from "../../../../core/BaseNode/BaseNodeModel";
 import {DatasetPortModel} from "../../../../ports/dataset/DatasetPortModel";
-import {NODE_RANDOM_FOREST_CLASSIFIER} from "../../ModelConfig";
+import {RANDOM_FOREST_CLASSIFIER} from "../../ModelConfig";
 import {ClassifierPortModel} from "../../../../ports/model/ClassifierPortModel";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
 
@@ -16,7 +16,7 @@ export class RandomForestClassifierModel extends BaseNodeModel {
     private maxDepth: number = -1; //int
 
     constructor() {
-        super(NODE_RANDOM_FOREST_CLASSIFIER);
+        super(RANDOM_FOREST_CLASSIFIER);
         this.addInPort();
         this.addOutPort();
     }

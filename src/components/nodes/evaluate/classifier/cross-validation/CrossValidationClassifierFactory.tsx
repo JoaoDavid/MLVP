@@ -3,7 +3,7 @@ import { CrossValidationClassifierModel } from './CrossValidationClassifierModel
 import CrossValidationClassifierWidget from './CrossValidationClassifierWidget';
 import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-canvas-core';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
-import { NODE_CROSS_VALIDATION_CLASSIFIER } from "../../EvaluateConfig";
+import { CROSS_VALIDATION_CLASSIFIER } from "../../EvaluateConfig";
 import {BaseNodeFactory} from "../../../../core/BaseNode/BaseNodeFactory";
 import {Category} from "../../../Config";
 
@@ -12,7 +12,7 @@ export class CrossValidationClassifierFactory extends BaseNodeFactory<CrossValid
     private static INSTANCE: CrossValidationClassifierFactory;
 
     private constructor() {
-        super(Category.DATA, NODE_CROSS_VALIDATION_CLASSIFIER.codeName);
+        super(Category.DATA, CROSS_VALIDATION_CLASSIFIER.codeName);
     }
 
     static getInstance = () => {

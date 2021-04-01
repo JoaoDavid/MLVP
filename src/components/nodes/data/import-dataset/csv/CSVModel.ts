@@ -1,7 +1,7 @@
 import Papa from "papaparse";
 import {BaseNodeModel} from "../../../../core/BaseNode/BaseNodeModel";
 import {DatasetPortModel} from "../../../../ports/dataset/DatasetPortModel";
-import {NODE_CSV} from "../../DataConfig";
+import {IMPORT_FROM_CSV} from "../../DataConfig";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
 import {Column} from "../Column";
 
@@ -16,7 +16,7 @@ export class CSVModel extends BaseNodeModel {
     private labels: Map<string, number> = new Map();
 
     constructor() {
-        super(NODE_CSV);
+        super(IMPORT_FROM_CSV);
         this.resetFile();
         this.addOutPort();
     }

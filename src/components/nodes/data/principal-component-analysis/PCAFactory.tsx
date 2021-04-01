@@ -3,7 +3,7 @@ import { PCAModel } from './PCAModel';
 import PCAWidget from './PCAWidget';
 import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-canvas-core';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
-import { NODE_PCA } from "../DataConfig";
+import { PCA } from "../DataConfig";
 import {BaseNodeFactory} from "../../../core/BaseNode/BaseNodeFactory";
 import {Category} from "../../Config";
 
@@ -12,7 +12,7 @@ export class PCAFactory extends BaseNodeFactory<PCAModel, DiagramEngine> {
     private static INSTANCE: PCAFactory;
 
     private constructor() {
-        super(Category.DATA, NODE_PCA.codeName);
+        super(Category.DATA, PCA.codeName);
     }
 
     static getInstance = () => {

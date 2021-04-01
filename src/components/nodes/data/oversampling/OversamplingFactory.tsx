@@ -3,7 +3,7 @@ import { OversamplingModel } from './OversamplingModel';
 import OversamplingWidget from './OversamplingWidget';
 import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-canvas-core';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
-import { NODE_OVERSAMPLING } from "../DataConfig";
+import { OVERSAMPLING } from "../DataConfig";
 import {BaseNodeFactory} from "../../../core/BaseNode/BaseNodeFactory";
 import {Category} from "../../Config";
 
@@ -12,7 +12,7 @@ export class OversamplingFactory extends BaseNodeFactory<OversamplingModel, Diag
     private static INSTANCE: OversamplingFactory;
 
     private constructor() {
-        super(Category.DATA, NODE_OVERSAMPLING.codeName);
+        super(Category.DATA, OVERSAMPLING.codeName);
     }
 
     static getInstance = () => {

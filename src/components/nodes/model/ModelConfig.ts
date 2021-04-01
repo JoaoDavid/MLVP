@@ -1,20 +1,18 @@
-import { Category, NodeConfig, CategoryConfig } from "../Config";
+import {Category, NodeConfig, CategoryConfig} from "../Config";
 
-// CategoryMaterialUI configuration
-export const MODEL_CONFIG:CategoryConfig = {
-    category: Category.MODEL,
-    color: 'rgb(0,192,255)',
-}
 
 // NODES
-export const NODE_RANDOM_FOREST_CLASSIFIER:NodeConfig = {
+export const RANDOM_FOREST_CLASSIFIER: NodeConfig = {
     codeName: "RandomForestClassifier",
     name: "Random Forest Classifier",
 }
 
-
 /*
-    Every node declared must be added to the following array
-    to be passed into the side menu props for the drag and drop feature
+Every node type must be added to the nodes array
+so it can appear on the side bar for the drag and drop feature
 */
-export const MODEL_NODES:NodeConfig[] = [NODE_RANDOM_FOREST_CLASSIFIER];
+export const MODEL_CONFIG: CategoryConfig = {
+    category: Category.MODEL,
+    color: 'rgb(0,192,255)',
+    nodes: [RANDOM_FOREST_CLASSIFIER],
+}

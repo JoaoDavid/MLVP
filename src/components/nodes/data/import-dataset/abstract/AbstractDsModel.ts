@@ -1,6 +1,6 @@
 import {BaseNodeModel} from "../../../../core/BaseNode/BaseNodeModel";
 import {DatasetPortModel} from "../../../../ports/dataset/DatasetPortModel";
-import {NODE_ABSTRACT_DS} from "../../DataConfig";
+import {ABSTRACT_DS} from "../../DataConfig";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
 
 
@@ -10,7 +10,7 @@ export class AbstractDsModel extends BaseNodeModel {
     private numRows: number = 0;
 
     constructor() {
-        super(NODE_ABSTRACT_DS);
+        super(ABSTRACT_DS);
         this.resetFile();
         this.addOutPort();
     }
