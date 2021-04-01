@@ -28,14 +28,14 @@ const CSVModal = (props: CSVModalProps) => {
     const columnNames: JSX.Element[] = [];
     const columnTypes: JSX.Element[] = [];
     const columnNulls: JSX.Element[] = [];
-    props.node.getColumnTypes().forEach((column, colName) => {
+    props.node.getColumns().forEach((col) => {
         counter += 1;
         columnNames.push(
-            <th key={colName + "" + counter}>{colName}</th>);
+            <th key={col.getName() + "" + counter}>{col.getName()}</th>);
         columnTypes.push(
-            <td key={column.getType() + "" + counter}>{column.getType()}</td>);
+            <td key={col.getType() + "" + counter}>{col.getType()}</td>);
         columnNulls.push(
-            <td key={column.getType() + "" + column.getNullCounter() + "" + counter}>{column.getNullCounter()}</td>);
+            <td key={col.getType() + "" + col.getNullCounter() + "" + counter}>{col.getNullCounter()}</td>);
     });
 
     return (

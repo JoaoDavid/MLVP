@@ -8,13 +8,19 @@ export enum ColumnType {
 
 export class Column {
 
-    private name: string;
-    private type: ColumnType;
+    private readonly name: string;
+    private type: ColumnType = ColumnType.UNKNOWN;
     private nullCounter: number = 0;
 
-    constructor(name?: string) {
+    constructor(name: string) {
         this.name = name;
-        this.type = ColumnType.UNKNOWN;
+    }
+
+    static createColumn = (name: string, type: string, nullCounter: number): Column => {
+        const col = new Column(name);
+        col.setType(type);
+        col.nullCounter = nullCounter;
+        return col;
     }
 
     updateType = (value: string) => {
@@ -43,6 +49,30 @@ export class Column {
         }
         if (type === ColumnType.STRING) {
             return ColumnType.STRING;
+        }
+    }
+
+    private setType = (type: string) => {
+        switch (type) {
+            case 'int':
+                this.type = ColumnType.INT
+                break;
+            case 'float':
+                this.type = ColumnType.FLOAT
+                break;
+            case 'string':
+                this.type = ColumnType.STRING
+                break;
+            case 'mixed':
+                this.type = ColumnType.MIXED
+                break;
+            case 'unknown':
+                this.type = ColumnType.UNKNOWN
+                break;
+            default:
+                console.error("Column Type not found");
+                this.type = ColumnType.UNKNOWN
+                break;
         }
     }
 
