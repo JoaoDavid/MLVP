@@ -10,6 +10,7 @@ import {SplitDatasetFactory} from "../components/nodes/data/split-dataset/SplitD
 import {CrossValidationClassifierFactory} from "../components/nodes/evaluate/classifier/cross-validation/CrossValidationClassifierFactory";
 import {DatasetPortFactory} from "../components/ports/dataset/DatasetPortFactory";
 import {ClassifierPortFactory} from "../components/ports/model/ClassifierPortFactory";
+import {SampleFactory} from "../components/nodes/data/import-dataset/sample/SampleFactory";
 
 
 export class FactoriesManager {
@@ -23,6 +24,7 @@ export class FactoriesManager {
     registerNodeFactories = () => {
         this.engine.getNodeFactories().registerFactory(AbstractDsFactory.getInstance());
         this.engine.getNodeFactories().registerFactory(CSVFactory.getInstance());
+        this.engine.getNodeFactories().registerFactory(SampleFactory.getInstance());
         this.engine.getNodeFactories().registerFactory(RandomForestClassifierFactory.getInstance());
         this.engine.getNodeFactories().registerFactory(OversamplingFactory.getInstance());
         this.engine.getNodeFactories().registerFactory(UndersamplingFactory.getInstance());

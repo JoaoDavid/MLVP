@@ -12,6 +12,11 @@ export const IMPORT_FROM_CSV: NodeConfig = {
     name: "Import from CSV",
 }
 
+export const SAMPLE_CSV: NodeConfig = {
+    codeName: "SampleCSV",
+    name: "Sample CSV",
+}
+
 export const SPLIT_DATASET: NodeConfig = {
     codeName: "SplitDataset",
     name: "Split Dataset",
@@ -40,5 +45,5 @@ so it can appear on the side bar for the drag and drop feature
 export const DATA_CONFIG: CategoryConfig = {
     category: Category.DATA,
     color: 'green',
-    nodes: [ABSTRACT_DS, IMPORT_FROM_CSV, SPLIT_DATASET, OVERSAMPLING, UNDERSAMPLING, PCA],
+    nodes: [ABSTRACT_DS, IMPORT_FROM_CSV, SAMPLE_CSV, SPLIT_DATASET, OVERSAMPLING, UNDERSAMPLING, PCA],
 }
