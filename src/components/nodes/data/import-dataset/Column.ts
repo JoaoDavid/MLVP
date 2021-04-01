@@ -8,10 +8,12 @@ export enum ColumnType {
 
 export class Column {
 
+    private name: string;
     private type: ColumnType;
     private nullCounter: number = 0;
 
-    constructor() {
+    constructor(name?: string) {
+        this.name = name;
         this.type = ColumnType.UNKNOWN;
     }
 
@@ -46,6 +48,10 @@ export class Column {
 
     incNullCounter = () => {
         this.nullCounter++;
+    }
+
+    getName = () => {
+        return this.name;
     }
 
     getType = () => {
