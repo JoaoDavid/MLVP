@@ -16,7 +16,8 @@ class ImportFromCSV(Node):
         self.file_name = data['fileName']
         self.num_cols = data['numCols']
         self.num_rows = data['numRows']
-        self.target = None if len(data['columnNames']) == 0 else data['columnNames'][-1]
+        self.columns = data['columns']
+        self.target = None if data['targetIndex'] == -1 else self.columns[data['targetIndex']]['name']
         self.labels = data['labels']
         self.time_series = data['timeSeries']
 

@@ -12,6 +12,7 @@ export class CSVModel extends ImportDataset {
     private fileName: string = "";
     private labels: Map<string, number> = new Map();
     private columns: Column[] = [];
+    private targetIndex: number = -1;
 
     constructor(nodeConfig?: NodeConfig) {
         super(nodeConfig || IMPORT_FROM_CSV);
@@ -23,6 +24,7 @@ export class CSVModel extends ImportDataset {
         this.fileName = "";
         this.labels.clear();
         this.columns = [];
+        this.targetIndex = -1;
     }
 
     getFileName(): string {
@@ -63,7 +65,8 @@ export class CSVModel extends ImportDataset {
                             this.setCols(results.data[0].length);//num features
                             this.setRows(results.data.length - 1);//num entries, -1 because of column name's row
                             this.labels = this.processLabels(results.data);
-                            this.processColumns(results.data)
+                            this.processColumns(results.data);
+                            this.targetIndex = this.getCols() - 1;
                             console.log(this.labels);
                             console.log(this.columns);
                         }
@@ -120,7 +123,7 @@ export class CSVModel extends ImportDataset {
             console.log(object)
             return Column.createColumn(object.name, object.type, object.nullCounter);
         });
-        console.log(this.columns);
+        this.targetIndex = event.data.targetIndex;
     }
 
     serialize(): any {
@@ -133,6 +136,7 @@ export class CSVModel extends ImportDataset {
             fileName: this.fileName,
             labels: jsonLabels,
             columns: this.columns,
+            targetIndex: this.targetIndex,
         };
     }
 
