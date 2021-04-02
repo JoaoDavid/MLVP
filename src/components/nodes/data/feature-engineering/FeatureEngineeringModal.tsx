@@ -17,7 +17,7 @@ const FeatureEngineeringModal = (props: FeatureEngineeringModalProps) => {
                 <Row>
                     <Col>
                         <Form.Label>Coding area</Form.Label>
-                        <Form.Control onChange={props.linesChanged} as="textarea" rows={3} />
+                        <Form.Control value={props.node.getLines()} onChange={props.linesChanged} as="textarea" rows={3} />
                     </Col>
                 </Row>
             </Form.Group>

@@ -6,7 +6,7 @@ import {DeserializeEvent} from "@projectstorm/react-canvas-core";
 
 export class FeatureEngineeringModel extends BaseNodeModel {
 
-    private lines: string[] = [];
+    private lines: string = "";
 
     constructor() {
         super(FEATURE_ENGINEERING);
@@ -14,11 +14,11 @@ export class FeatureEngineeringModel extends BaseNodeModel {
         this.addOutPort();
     }
 
-    getLines(): string[] {
+    getLines(): string{
         return this.lines;
     }
 
-    setLines(value: string[]) {
+    setLines(value: string) {
         this.lines = value;
         console.log(this.lines);
     }

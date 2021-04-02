@@ -27,8 +27,9 @@ class FeatureEngineering(Node):
         y = "y" + str(curr_count)
 
         out_file.write(CONCATENATE.format(df=df, old_x=old_x, old_y=old_y))
-        for line in self.lines:
-            out_file.write(line)
+        # for line in self.lines:
+        #     out_file.write(line)
+        out_file.write(self.lines)
         out_file.write("\n")
         out_file.write(X.format(x=x, df=df, old_y=old_y))
         out_file.write(Y.format(y=y, df=df, old_y=old_y))
