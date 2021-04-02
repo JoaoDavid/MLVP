@@ -22,8 +22,8 @@ const SplitDatasetWidget = (props: SplitDatasetProps) => {
         eventNodeUpdated(props.engine, props.node);
     }
 
-    const shuffleChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        props.node.setShuffle(event.target.value);
+    const shuffleChanged = () => {
+        props.node.setShuffle(!props.node.getShuffle());
         eventNodeUpdated(props.engine, props.node);
     }
 

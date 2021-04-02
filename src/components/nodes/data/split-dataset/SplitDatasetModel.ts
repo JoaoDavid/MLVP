@@ -8,7 +8,7 @@ export class SplitDatasetModel extends BaseNodeModel {
 
     private testSize: number = 0.25;
     private trainSize: number = 1 - this.testSize;
-    private shuffle: string = "True";
+    private shuffle: boolean = false;
 
     constructor() {
         super(SPLIT_DATASET);
@@ -32,11 +32,11 @@ export class SplitDatasetModel extends BaseNodeModel {
         this.trainSize = value;
     }
 
-    getShuffle(): string {
+    getShuffle(): boolean {
         return this.shuffle;
     }
 
-    setShuffle(value: string) {
+    setShuffle(value: boolean) {
         this.shuffle = value;
     }
 
