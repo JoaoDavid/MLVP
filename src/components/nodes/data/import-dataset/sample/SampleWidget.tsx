@@ -22,7 +22,12 @@ const SampleWidget = (props: SampleNodeProps) => {
         });
     }
 
-    const modal = <SampleModal loadCSV={loadCSV} node={props.node}/>;
+    const timeSeriesChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        props.node.setTimeSeries(!props.node.getTimeSeries());
+        eventNodeUpdated(props.engine, props.node);
+    }
+
+    const modal = <SampleModal node={props.node} loadCSV={loadCSV} timeSeriesChanged={timeSeriesChanged}/>;
     return (
         <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
             <p>{props.node.getFileName() || "File:"}</p>

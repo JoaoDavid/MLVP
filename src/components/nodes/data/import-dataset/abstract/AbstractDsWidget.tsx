@@ -22,7 +22,12 @@ const AbstractDsWidget = (props: CSVNodeProps) => {
         eventNodeUpdated(props.engine, props.node);
     }
 
-    const modal = <AbstractDsModal node={props.node} numColsChanged={numColsChanged} numRowsChanged={numRowsChanged}/>;
+    const timeSeriesChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        props.node.setTimeSeries(!props.node.getTimeSeries());
+        eventNodeUpdated(props.engine, props.node);
+    }
+
+    const modal = <AbstractDsModal node={props.node} numColsChanged={numColsChanged} numRowsChanged={numRowsChanged} timeSeriesChanged={timeSeriesChanged}/>;
 
     return (
             <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_CONFIG.color} modalChildren={modal}>

@@ -6,11 +6,14 @@ import Table from "react-bootstrap/Table";
 import {ChangeEvent} from "react";
 import {CSVModel} from "./CSVModel";
 import {FormGroup} from "react-bootstrap";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Switch from "@material-ui/core/Switch";
 
 
 interface CSVModalProps {
-    loadCSV: (files: FileList) => void;
     node: CSVModel;
+    loadCSV: (files: FileList) => void;
+    timeSeriesChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const CSVModal = (props: CSVModalProps) => {
@@ -57,6 +60,23 @@ const CSVModal = (props: CSVModalProps) => {
                     </Col>
                 </Row>
             </Form.Group>
+            <FormGroup>
+                <Form.Label>Dataset Properties</Form.Label>
+                <Col>
+                    <FormGroup>
+                        <FormControlLabel
+                            control={
+                                <Switch
+                                    checked={props.node.getTimeSeries()}
+                                    onChange={props.timeSeriesChanged}
+                                    color="primary"
+                                />
+                            }
+                            label={"Time Series"}
+                        />
+                    </FormGroup>
+                </Col>
+            </FormGroup>
             <FormGroup>
                 {columnNames.length > 0?<Form.Label>Column Types</Form.Label>:null}
                 <Table striped bordered hover responsive>

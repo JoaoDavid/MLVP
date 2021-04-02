@@ -6,14 +6,18 @@ import Table from "react-bootstrap/Table";
 import {ChangeEvent} from "react";
 import {SampleModel} from "./SampleModel";
 import {FormGroup} from "react-bootstrap";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Switch from "@material-ui/core/Switch";
+import styles from "../../../../UI/modal/BaseModal.module.css";
 
 
-interface CSVModalProps {
-    loadCSV: (files: FileList) => void;
+interface SampleModalProps {
     node: SampleModel;
+    loadCSV: (files: FileList) => void;
+    timeSeriesChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const SampleModal = (props: CSVModalProps) => {
+const SampleModal = (props: SampleModalProps) => {
     const labelNames: JSX.Element[] = [];
     const labelCounts: JSX.Element[] = [];
     let counter = 0;
@@ -54,7 +58,24 @@ const SampleModal = (props: CSVModalProps) => {
                 </Row>
             </Form.Group>
             <FormGroup>
-                {columnNames.length > 0?<Form.Label>Column Types</Form.Label>:null}
+                <Col>
+                    <FormGroup>
+                        <FormControlLabel
+                            control={
+                                <Switch className={styles.Switch}
+                                    checked={props.node.getTimeSeries()}
+                                    onChange={props.timeSeriesChanged}
+                                    color="primary"
+                                />
+                            }
+                            label={"Time Series"}
+                            labelPlacement="top"
+                        />
+                    </FormGroup>
+                </Col>
+            </FormGroup>
+            <FormGroup>
+                {columnNames.length > 0 ? <Form.Label>Column Types</Form.Label> : null}
                 <Table striped bordered hover responsive>
                     <thead>
                     <tr>
@@ -72,7 +93,7 @@ const SampleModal = (props: CSVModalProps) => {
                 </Table>
             </FormGroup>
             <FormGroup>
-                {labelNames.length > 0?<Form.Label>Labels</Form.Label>:null}
+                {labelNames.length > 0 ? <Form.Label>Labels</Form.Label> : null}
                 <Table striped bordered hover responsive>
                     <thead>
                     <tr>

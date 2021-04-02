@@ -15,7 +15,9 @@ export class CSVModel extends ImportDataset {
     private targetIndex: number = -1;
 
     constructor(nodeConfig?: NodeConfig) {
+
         super(nodeConfig || IMPORT_FROM_CSV);
+        console.log(nodeConfig)
         this.resetFile();
     }
 
