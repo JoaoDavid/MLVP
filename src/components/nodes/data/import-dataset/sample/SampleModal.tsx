@@ -1,20 +1,18 @@
 import * as React from 'react';
+import {ChangeEvent} from 'react';
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Table from "react-bootstrap/Table";
-import {ChangeEvent} from "react";
 import {SampleModel} from "./SampleModel";
 import {FormGroup} from "react-bootstrap";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
-import styles from "../../../../UI/modal/BaseModal.module.css";
+import ToggleSwitch from "../../../../UI/modal/toggle-switch/ToggleSwitch";
 
 
 interface SampleModalProps {
     node: SampleModel;
     loadCSV: (files: FileList) => void;
-    timeSeriesChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    timeSeriesChanged: () => void;
 }
 
 const SampleModal = (props: SampleModalProps) => {
@@ -59,19 +57,8 @@ const SampleModal = (props: SampleModalProps) => {
             </Form.Group>
             <FormGroup>
                 <Col>
-                    <FormGroup>
-                        <FormControlLabel
-                            control={
-                                <Switch className={styles.Switch}
-                                    checked={props.node.getTimeSeries()}
-                                    onChange={props.timeSeriesChanged}
-                                    color="primary"
-                                />
-                            }
-                            label={"Time Series"}
-                            labelPlacement="top"
-                        />
-                    </FormGroup>
+                    <ToggleSwitch name={"Time Series"} getBool={props.node.getTimeSeries}
+                                  changed={props.timeSeriesChanged}/>
                 </Col>
             </FormGroup>
             <FormGroup>

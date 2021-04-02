@@ -1,19 +1,18 @@
 import * as React from 'react';
+import {ChangeEvent} from 'react';
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Table from "react-bootstrap/Table";
-import {ChangeEvent} from "react";
 import {CSVModel} from "./CSVModel";
 import {FormGroup} from "react-bootstrap";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
+import ToggleSwitch from "../../../../UI/modal/toggle-switch/ToggleSwitch";
 
 
 interface CSVModalProps {
     node: CSVModel;
     loadCSV: (files: FileList) => void;
-    timeSeriesChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    timeSeriesChanged: () => void;
 }
 
 const CSVModal = (props: CSVModalProps) => {
@@ -63,22 +62,12 @@ const CSVModal = (props: CSVModalProps) => {
             <FormGroup>
                 <Form.Label>Dataset Properties</Form.Label>
                 <Col>
-                    <FormGroup>
-                        <FormControlLabel
-                            control={
-                                <Switch
-                                    checked={props.node.getTimeSeries()}
-                                    onChange={props.timeSeriesChanged}
-                                    color="primary"
-                                />
-                            }
-                            label={"Time Series"}
-                        />
-                    </FormGroup>
+                    <ToggleSwitch name={"Time Series"} getBool={props.node.getTimeSeries}
+                                  changed={props.timeSeriesChanged}/>
                 </Col>
             </FormGroup>
             <FormGroup>
-                {columnNames.length > 0?<Form.Label>Column Types</Form.Label>:null}
+                {columnNames.length > 0 ? <Form.Label>Column Types</Form.Label> : null}
                 <Table striped bordered hover responsive>
                     <thead>
                     <tr>
@@ -96,7 +85,7 @@ const CSVModal = (props: CSVModalProps) => {
                 </Table>
             </FormGroup>
             <FormGroup>
-                {labelNames.length > 0?<Form.Label>Labels</Form.Label>:null}
+                {labelNames.length > 0 ? <Form.Label>Labels</Form.Label> : null}
                 <Table striped bordered hover responsive>
                     <thead>
                     <tr>

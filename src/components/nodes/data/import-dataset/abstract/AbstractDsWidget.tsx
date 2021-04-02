@@ -22,7 +22,7 @@ const AbstractDsWidget = (props: CSVNodeProps) => {
         eventNodeUpdated(props.engine, props.node);
     }
 
-    const timeSeriesChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const timeSeriesChanged = () => {
         props.node.setTimeSeries(!props.node.getTimeSeries());
         eventNodeUpdated(props.engine, props.node);
     }

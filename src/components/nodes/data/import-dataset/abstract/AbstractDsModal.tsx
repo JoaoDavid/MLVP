@@ -4,14 +4,13 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {AbstractDsModel} from "./AbstractDsModel";
 import {FormGroup} from "react-bootstrap";
-import Switch from '@material-ui/core/Switch';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import ToggleSwitch from "../../../../UI/modal/toggle-switch/ToggleSwitch";
 
 interface AbstractDsModalProps {
     node: AbstractDsModel;
     numColsChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
     numRowsChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    timeSeriesChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    timeSeriesChanged: () => void;
 }
 
 const AbstractDsModal = (props: AbstractDsModalProps) => {
@@ -34,18 +33,8 @@ const AbstractDsModal = (props: AbstractDsModalProps) => {
             <FormGroup>
                 <Form.Label>Dataset Properties</Form.Label>
                 <Col>
-                    <FormGroup>
-                        <FormControlLabel
-                            control={
-                                <Switch
-                                    checked={props.node.getTimeSeries()}
-                                    onChange={props.timeSeriesChanged}
-                                    color="primary"
-                                />
-                            }
-                            label={"Time Series"}
-                        />
-                    </FormGroup>
+                    <ToggleSwitch name={"Time Series"} getBool={props.node.getTimeSeries}
+                                  changed={props.timeSeriesChanged}/>
                 </Col>
             </FormGroup>
         </Form>
