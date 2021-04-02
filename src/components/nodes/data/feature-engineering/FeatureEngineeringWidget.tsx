@@ -14,7 +14,7 @@ const FeatureEngineeringWidget = (props: FeatureEngineeringProps) => {
 
     const linesChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
         props.node.setLines(event.target.value.split("\n"));
-        eventNodeUpdated(props.engine, props.node);
+        // eventNodeUpdated(props.engine, props.node); TODO
     }
 
     const modal = <FeatureEngineeringModal node={props.node} linesChanged={linesChanged}/>;

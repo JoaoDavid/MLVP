@@ -29,7 +29,7 @@ export class FeatureEngineeringModel extends BaseNodeModel {
     }
 
     protected addOutPort(): void {
-        const p = new DatasetPortModel(false, "Balanced Dataset");
+        const p = new DatasetPortModel(false, "Engineered Dataset");
         super.addPort(p);
     }
 
