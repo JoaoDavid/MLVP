@@ -11,7 +11,8 @@ class SplitDataset(Node):
         super().__init__(data)
         self.test_size = data['testSize']
         self.train_size = data['trainSize']
-        self.shuffle = bool(data['shuffle'])
+        self.shuffle = data['shuffle']
+        self.stratify = data['stratify']
 
     def import_dependency(self):
         return FROM_IMPORT.format(package="sklearn.model_selection", class_to_import="train_test_split")
@@ -58,7 +59,7 @@ class SplitDataset(Node):
             train_ds.cols == test_ds.cols,
             train_ds.n_labels == ToInt(ToReal(input_ds.n_labels) * self.train_size),
             test_ds.n_labels == ToInt(ToReal(input_ds.n_labels) * self.test_size),
-            z3_stratify == False,  # TODO
+            z3_stratify == self.stratify,  # TODO rever
             Implies(z3_stratify, And(train_ds.balanced, test_ds.balanced)),
             z3_shuffle == self.shuffle,
             shuffle_train == output_shuffles,

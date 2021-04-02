@@ -11,6 +11,7 @@ interface SplitDatasetModalProps {
     testSizeChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
     trainSizeChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
     shuffleChanged: () => void;
+    stratifyChanged: () => void;
 }
 
 const SplitDatasetModal = (props: SplitDatasetModalProps) => {
@@ -31,7 +32,10 @@ const SplitDatasetModal = (props: SplitDatasetModalProps) => {
                 </Row>
             </Form.Group>
             <Form.Group>
-                <ToggleSwitch name={"Shuffle"} getBool={props.node.getShuffle} changed={props.shuffleChanged}/>
+                <Col>
+                    <ToggleSwitch name={"Shuffle"} getBool={props.node.getShuffle} changed={props.shuffleChanged}/>
+                    <ToggleSwitch name={"Stratify"} getBool={props.node.getStratify} changed={props.stratifyChanged}/>
+                </Col>
             </Form.Group>
         </Form>
     )

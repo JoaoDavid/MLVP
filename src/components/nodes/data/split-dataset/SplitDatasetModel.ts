@@ -9,6 +9,7 @@ export class SplitDatasetModel extends BaseNodeModel {
     private testSize: number = 0.25;
     private trainSize: number = 1 - this.testSize;
     private shuffle: boolean = false;
+    private stratify: boolean = false;
 
     constructor() {
         super(SPLIT_DATASET);
@@ -36,8 +37,16 @@ export class SplitDatasetModel extends BaseNodeModel {
         return this.shuffle;
     }
 
+    getStratify(): boolean {
+        return this.stratify;
+    }
+
     setShuffle(value: boolean) {
         this.shuffle = value;
+    }
+
+    setStratify(value: boolean) {
+        this.stratify = value;
     }
 
     protected addInPort(): void {
@@ -57,6 +66,7 @@ export class SplitDatasetModel extends BaseNodeModel {
         this.testSize = event.data.testSize;
         this.trainSize = event.data.trainSize;
         this.shuffle = event.data.shuffle;
+        this.stratify = event.data.stratify;
     }
 
     serialize(): any {
@@ -65,6 +75,7 @@ export class SplitDatasetModel extends BaseNodeModel {
             testSize: this.testSize,
             trainSize: this.trainSize,
             shuffle: this.shuffle,
+            stratify: this.stratify,
         };
     }
 
