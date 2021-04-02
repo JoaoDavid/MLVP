@@ -458,7 +458,8 @@
                     "title": "Split Dataset 3",
                     "testSize": 0.25,
                     "trainSize": 0.75,
-                    "shuffle": "True"
+                    "shuffle": false,
+                    "stratify": false
                 },
                 "e7edf3b3-f5f1-4a31-84ac-788d4e87a677": {
                     "id": "e7edf3b3-f5f1-4a31-84ac-788d4e87a677",
