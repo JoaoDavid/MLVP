@@ -39,5 +39,6 @@ class CrossValidation(Node):
             z3_n_folds == self.num_folds,
             z3_n_folds > 1,
             input_ds.balanced,
-            input_ds.cols > 1
+            input_ds.cols > 1,
+            Not(input_ds.time_series)
         ]

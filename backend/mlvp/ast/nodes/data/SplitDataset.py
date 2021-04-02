@@ -58,9 +58,10 @@ class SplitDataset(Node):
             train_ds.cols == test_ds.cols,
             train_ds.n_labels == ToInt(ToReal(input_ds.n_labels) * self.train_size),
             test_ds.n_labels == ToInt(ToReal(input_ds.n_labels) * self.test_size),
-            z3_stratify == True,  # TODO
+            z3_stratify == False,  # TODO
             Implies(z3_stratify, And(train_ds.balanced, test_ds.balanced)),
             z3_shuffle == self.shuffle,
             shuffle_train == output_shuffles,
-            shuffle_test == output_shuffles
+            shuffle_test == output_shuffles,
+            Implies(input_ds.time_series, Not(And(z3_shuffle, z3_stratify))),
         ]

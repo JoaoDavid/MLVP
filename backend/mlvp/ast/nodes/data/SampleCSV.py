@@ -60,8 +60,9 @@ class SampleCSV(Node):
 
         return [
                    output.cols == self.num_cols,
-                   output.rows == self.num_rows,
-                   output.rows == sum(label_counts),
+                   # TODO
+                   # output.rows == self.num_rows,
+                   # output.rows == sum(label_counts),
                    output.time_series == self.time_series,
                    # And(labels_values),
                    output.balanced == is_balanced,
