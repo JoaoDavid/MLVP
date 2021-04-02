@@ -7,6 +7,7 @@ from .data.SplitDataset import SplitDataset
 from .data.Oversampling import Oversampling
 from .data.Undersampling import UnderSampling
 from .data.PCA import PCA
+from .data.FeatureEngineering import FeatureEngineering
 
 from .model.RandomForestClassifier import RandomForestClassifier
 

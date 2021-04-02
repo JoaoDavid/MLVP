@@ -11,6 +11,7 @@ import {CrossValidationClassifierFactory} from "../components/nodes/evaluate/cla
 import {DatasetPortFactory} from "../components/ports/dataset/DatasetPortFactory";
 import {ClassifierPortFactory} from "../components/ports/model/ClassifierPortFactory";
 import {SampleFactory} from "../components/nodes/data/import-dataset/sample/SampleFactory";
+import {FeatureEngineeringFactory} from "../components/nodes/data/feature-engineering/FeatureEngineeringFactory";
 
 
 export class FactoriesManager {
@@ -29,6 +30,7 @@ export class FactoriesManager {
         this.engine.getNodeFactories().registerFactory(OversamplingFactory.getInstance());
         this.engine.getNodeFactories().registerFactory(UndersamplingFactory.getInstance());
         this.engine.getNodeFactories().registerFactory(PCAFactory.getInstance());
+        this.engine.getNodeFactories().registerFactory(FeatureEngineeringFactory.getInstance());
         this.engine.getNodeFactories().registerFactory(AccuracyClassifierFactory.getInstance());
         this.engine.getNodeFactories().registerFactory(SplitDatasetFactory.getInstance());
         this.engine.getNodeFactories().registerFactory(CrossValidationClassifierFactory.getInstance());
