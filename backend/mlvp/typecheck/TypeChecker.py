@@ -35,11 +35,15 @@ def __convert_ids(ports, expr: ExprRef):
         elif decl == "Not":
             return UNARY_OPERATOR.format(u_op="~", expr=__convert_ids(ports, children[0]))
         elif decl == "And":
-            return BINARY_OPERATOR.format(left=__convert_ids(ports, children[0]), b_op="&&",
-                                          right=__convert_ids(ports, children[1]))
+            arr_str = []
+            for child in children:
+                arr_str.append(__convert_ids(ports, child))
+            return " && ".join(arr_str)
         elif decl == "Or":
-            return BINARY_OPERATOR.format(left=__convert_ids(ports, children[0]), b_op="||",
-                                          right=__convert_ids(ports, children[1]))
+            arr_str = []
+            for child in children:
+                arr_str.append(__convert_ids(ports, child))
+            return " || ".join(arr_str)
         elif decl == "Implies":
             return BINARY_OPERATOR.format(left=__convert_ids(ports, children[0]), b_op="-->",
                                           right=__convert_ids(ports, children[1]))
@@ -102,6 +106,8 @@ class TypeChecker:
             self.__add_dataset_links(node.parent_links)
             # add current node assertions to the array
             node_assertions = node.assertions()
+            if node.in_pipeline:
+                node_assertions = node.input_ports_linked() + node_assertions
             self.all_node_assertions.append((node, node_assertions))
             self.node_assertions[node.node_id] = assertions_to_str(node.ports, node_assertions)
             # visit every child node
