@@ -1,4 +1,7 @@
 from abc import ABC, abstractmethod
+from z3 import *
+
+SEP = "_"
 
 
 class Node(ABC):
@@ -7,11 +10,14 @@ class Node(ABC):
     def __init__(self, data):
         self.node_id = data['id']
         self.title = data['title']
-        self.is_root = False
+        self.is_root = True
+        self.in_pipeline = True
         self.parent_links = []
         self.ports = {}
         self.children = []
         self.visited = False
+        self.num_in_ports = 0
+        self.num_out_ports = 0
         pass
 
     def get_port(self, in_port: bool, name: str):
@@ -40,6 +46,18 @@ class Node(ABC):
     @abstractmethod
     def assertions(self):
         pass
+
+    def input_ports_linked(self):
+        z3_in_pipeline = Bool("node" + SEP + "in-pipeline")
+        z3_n_in_ports = Int("node" + SEP + "n-in-ports")
+        z3_n_in_links = Int("node" + SEP + "n-in-links")
+        return [
+            # Implies(Not(len(self.children) == 0), self.num_in_ports == len(self.parent_links))
+            z3_in_pipeline == self.in_pipeline,
+            z3_n_in_ports == self.num_in_ports,
+            z3_n_in_links == len(self.parent_links),
+            Implies(z3_in_pipeline, And(z3_n_in_ports == z3_n_in_links))
+        ]
 
     def __str__(self):
         return 'Class: {self.__class__.__name__} \n' \
