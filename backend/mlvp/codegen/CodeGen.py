@@ -1,9 +1,6 @@
 from mlvp.codegen.Emitter import Emitter
 from mlvp.ast.nodes import Node
 
-IMPORT_AS = "import {lib_name} as {lib_var}\n"
-FROM_IMPORT = "from {package} import {class_to_import}\n"
-
 
 class CodeGen:
 

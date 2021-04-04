@@ -1,5 +1,6 @@
 from z3 import *
-from mlvp.typecheck.VarNames import *
+
+PORT_PROP = "{id_port}:{name}"
 
 
 def link(id_source_port: str, id_target_port: str):
@@ -20,11 +21,10 @@ def link(id_source_port: str, id_target_port: str):
 class Dataset:
 
     def __init__(self, id_port: str):
-        prefix = id_port + SEP
-        self.cols = Int(prefix + N_COLS)
-        self.rows = Int(prefix + N_ROWS)
-        self.n_labels = Int(prefix + N_LABELS)
-        self.max_label_count = Int(prefix + MAX_LABEL_COUNT)
-        self.min_label_count = Int(prefix + MIN_LABEL_COUNT)
-        self.balanced = Bool(prefix + BALANCED)
-        self.time_series = Bool(prefix + TIME_SERIES)
+        self.cols = Int(PORT_PROP.format(id_port=id_port, name="n_cols"))
+        self.rows = Int(PORT_PROP.format(id_port=id_port, name="n_rows"))
+        self.n_labels = Int(PORT_PROP.format(id_port=id_port, name="n_labels"))
+        self.max_label_count = Int(PORT_PROP.format(id_port=id_port, name="max_label_count"))
+        self.min_label_count = Int(PORT_PROP.format(id_port=id_port, name="min_label_count"))
+        self.balanced = Bool(PORT_PROP.format(id_port=id_port, name="balanced"))
+        self.time_series = Bool(PORT_PROP.format(id_port=id_port, name="time_series"))

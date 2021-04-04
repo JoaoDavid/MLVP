@@ -1,5 +1,5 @@
 from mlvp.codegen import *
-from mlvp.ast.nodes.Node import Node
+from mlvp.ast.nodes.Node import *
 from mlvp.typecheck import *
 
 TRAIN_TEST_SPLIT_CALL = "{x_train}, {x_test}, {y_train}, {y_test} = train_test_split({x}, {y}, test_size={test_size}, train_size={train_size}, shuffle={shuffle})\n"
@@ -41,12 +41,12 @@ class SplitDataset(Node):
         train_ds = Dataset(id_output_train)
         test_ds = Dataset(id_output_test)
 
-        shuffle_input = Bool(id_input + SEP + SHUFFLED)
-        shuffle_train = Bool(id_output_train + SEP + SHUFFLED)
-        shuffle_test = Bool(id_output_test + SEP + SHUFFLED)
-        z3_shuffle = Bool("node" + SEP + "shuffle")
+        shuffle_input = Bool(PORT_PROP.format(id_port=id_input, name="shuffled"))
+        shuffle_train = Bool(PORT_PROP.format(id_port=id_output_train, name="shuffled"))
+        shuffle_test = Bool(PORT_PROP.format(id_port=id_output_test, name="shuffled"))
+        z3_shuffle = Bool(NODE_PROP.format(name="shuffle", node_id=self.node_id))
         output_shuffles = Or(shuffle_input, z3_shuffle)
-        z3_stratify = Bool("node" + SEP + "stratify")
+        z3_stratify = Bool(NODE_PROP.format(name="stratify", node_id=self.node_id))
 
         return [
             # requires

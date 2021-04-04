@@ -1,5 +1,5 @@
 from mlvp.codegen import *
-from mlvp.ast.nodes.Node import Node
+from mlvp.ast.nodes.Node import *
 from mlvp.typecheck import *
 
 CONCATENATE = "{df} = pd.concat([{old_x},{old_y}], join = 'outer', axis = 1)\n"

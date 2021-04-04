@@ -18,7 +18,7 @@ def __convert_ids(ports, expr: ExprRef):
     UNARY_OPERATOR = "({u_op} {expr})"
     res = str(expr)
     if expr.num_args() == 0:
-        arr = str(expr).split("_")
+        arr = str(expr).split(":")
         res = "None" if arr[0] == "-1" else arr[0]
         if len(arr) > 1:
             if arr[0] != "node":
