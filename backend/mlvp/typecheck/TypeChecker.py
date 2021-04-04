@@ -89,8 +89,8 @@ class TypeChecker:
             first_problem_index = self.__find_source_unsat(self.all_node_assertions)
 
             self.solver.pop(first_problem_index + 1)
-            self.solver.add(self.all_node_assertions[first_problem_index][1])
-            reversed_assertions = reversed(self.all_node_assertions[:first_problem_index])
+            # self.solver.add(self.all_node_assertions[first_problem_index][1])
+            reversed_assertions = reversed(self.all_node_assertions[:first_problem_index+1])
             self.__find_source_unsat(reversed_assertions)
 
         result["nodeAssertions"] = self.node_assertions
@@ -107,9 +107,10 @@ class TypeChecker:
             # parents are all visited
             self.__add_dataset_links(node.parent_links)
             # add current node assertions to the array
-            node_assertions = node.assertions()
             if self.compiling_next:
-                node_assertions = node.input_ports_linked() + node_assertions
+                node_assertions = node.input_ports_linked()
+            else:
+                node_assertions = node.assertions()
             self.all_node_assertions.append((node, node_assertions))
             self.node_assertions[node.node_id] = assertions_to_str(node.ports, node_assertions)
             # visit every child node
