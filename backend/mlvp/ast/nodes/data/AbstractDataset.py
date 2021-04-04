@@ -1,4 +1,4 @@
-from mlvp.ast.nodes.Node import Node
+from mlvp.ast.nodes.Node import *
 from mlvp.codegen import *
 from mlvp.typecheck import *
 

@@ -1,5 +1,5 @@
 from mlvp.codegen import *
-from mlvp.ast.nodes.Node import Node
+from mlvp.ast.nodes.Node import *
 from mlvp.typecheck import *
 
 RANDOM_FOREST_INIT = "{var} = RandomForestClassifier(n_estimators={num_trees}, criterion=\"{criterion}\", max_depth={max_depth})\n"
@@ -31,8 +31,8 @@ class RandomForestClassifier(Node):
     def assertions(self):
         id_input = self.get_port(True, "Dataset").port_id
         input_ds = Dataset(id_input)
-        z3_n_trees = Int("node" + SEP + "n-trees")
-        z3_max_depth = Int("node" + SEP + "max-depth")
+        z3_n_trees = Int(NODE_PROP.format(name="n_trees", node_id=self.node_id))
+        z3_max_depth = Int(NODE_PROP.format(name="max_depth", node_id=self.node_id))
         max_depth = -1 if self.max_depth == "None" else self.max_depth
 
         return [

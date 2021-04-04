@@ -1,5 +1,5 @@
 from mlvp.codegen import *
-from mlvp.ast.nodes.Node import Node
+from mlvp.ast.nodes.Node import *
 from mlvp.typecheck import *
 
 LOAD_CSV = "{df} = {pandas_var}.read_csv(\'./{file_name}\')\n"
@@ -41,7 +41,7 @@ class SampleCSV(Node):
         out_ds = self.get_port(False, "Dataset").port_id
         output = Dataset(out_ds)
 
-        label_names = [Int(out_ds + SEP + "label-" + key) for key in self.labels.keys()]
+        label_names = [Int(out_ds + SEP + "label_" + key) for key in self.labels.keys()]
         label_counts = list(self.labels.values())
         labels_values = [label_names[i] == (label_counts[i]) for i in range(len(self.labels))]
 
