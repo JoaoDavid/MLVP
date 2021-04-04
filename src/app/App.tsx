@@ -190,7 +190,7 @@ class App extends React.Component<AppProps, AppState> {
             .then(response => {
                 console.log(response);
                 console.log(response.data);
-                download(response.data, "mlvp-generated-code.py")
+                download(response.data.code, "mlvp-generated-code.py")
                 this.updateLog("Compiled successfully!");
             })
             .catch(error => {

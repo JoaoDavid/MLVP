@@ -1,5 +1,4 @@
 from mlvp.typecheck import link
-import json
 from mlvp.ast.nodes import *
 from mlvp.ast.ports import *
 from z3 import *
@@ -54,6 +53,7 @@ def __convert_ids(ports, expr: ExprRef):
 class TypeChecker:
 
     def __init__(self, roots, loose):
+        self.compiling_next = False
         self.solver = Solver()
         self.roots = roots
         self.loose = loose
@@ -63,12 +63,15 @@ class TypeChecker:
         self.all_link_assertions = []  # list of tuples of type: (link, link_assertions)
         self.all_node_assertions = []  # list of tuples of type: (node, node_assertions)
 
-    def verify(self):
+    def verify(self, compiling_next=False):
+        self.compiling_next = compiling_next
+
         for root in self.roots:
             self.__traverse_pipeline(root)
 
-        for loose in self.loose:
-            self.__traverse_pipeline(loose)
+        if not self.compiling_next:
+            for loose in self.loose:
+                self.__traverse_pipeline(loose)
 
         for assertion in self.all_link_assertions:
             self.solver.add(assertion[1])
@@ -90,11 +93,10 @@ class TypeChecker:
             reversed_assertions = reversed(self.all_node_assertions[:first_problem_index])
             self.__find_source_unsat(reversed_assertions)
 
-
         result["nodeAssertions"] = self.node_assertions
         result["linkAssertions"] = self.link_assertions
         result["unsatNodeAssertions"] = self.unsat_node_assertions
-        return json.dumps(result, indent=4)
+        return result
 
     # traverse the pipeline, appending the corresponding assertions to the all_node_assertions list
     def __traverse_pipeline(self, node: Node):
@@ -106,7 +108,7 @@ class TypeChecker:
             self.__add_dataset_links(node.parent_links)
             # add current node assertions to the array
             node_assertions = node.assertions()
-            if node.in_pipeline:
+            if self.compiling_next:
                 node_assertions = node.input_ports_linked() + node_assertions
             self.all_node_assertions.append((node, node_assertions))
             self.node_assertions[node.node_id] = assertions_to_str(node.ports, node_assertions)

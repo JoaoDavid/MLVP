@@ -43,6 +43,7 @@ class CodeGen:
             # node's parents are all visited and written
             # write current node code to the out file
             node.codegen(self.emitter, self.out_file)
+            print(node)
             self.out_file.write("\n")
             # visit every child node
             for child in node.children:
