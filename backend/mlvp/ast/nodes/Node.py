@@ -35,6 +35,11 @@ class Node(ABC):
                 return True
         return False
 
+    def reset_visited(self):
+        self.visited = False
+        for child in self.children:
+            child.reset_visited()
+
     def is_loose(self):
         return len(self.parent_links) == 0 and not self.is_root
 
