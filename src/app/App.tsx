@@ -188,10 +188,16 @@ class App extends React.Component<AppProps, AppState> {
         const data = this.engine.getModel().serialize();
         axios.post('/compile', data)
             .then(response => {
-                console.log(response);
-                console.log(response.data);
-                download(response.data, "mlvp-generated-code.py")
-                this.updateLog("Compiled successfully!");
+                if (response.data.successful) {
+                    console.log(response);
+                    console.log(response.data);
+                    download(response.data.code, "mlvp-generated-code.py")
+                    this.updateLog("Compiled successfully!");
+                } else {
+                    this.updateLog("Compiled with errors!");
+                    this.updateLog("Make sure that all input ports within the pipeline are connected to another node!");
+                    this.typeChecker.eventTypeChecked(response.data);
+                }
             })
             .catch(error => {
                 console.log(error);

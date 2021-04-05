@@ -46,9 +46,6 @@ class ParseJSON:
             source_port = source_node.ports[data['sourcePort']]
             target_node = self.nodes[data['target']]
             target_port = target_node.ports[data['targetPort']]
-            in_pipeline = target_node.in_pipeline or source_node.in_pipeline
-            source_node.in_pipeline = in_pipeline
-            target_node.in_pipeline = in_pipeline
             # add children and parents to the respective arrays
             source_node.children.append(target_node)
             target_node.parent_links.append(ParentLink(link_id, source_node, source_port, target_port))
@@ -63,6 +60,5 @@ class ParseJSON:
             if port.in_port:
                 node.num_in_ports += 1
                 node.is_root = False
-                node.in_pipeline = False
             else:
                 node.num_out_ports += 1

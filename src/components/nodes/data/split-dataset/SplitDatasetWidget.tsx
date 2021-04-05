@@ -39,7 +39,8 @@ const SplitDatasetWidget = (props: SplitDatasetProps) => {
         <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
             <p>Test Size: {props.node.getTestSize()}</p>
             <p>Train Size: {props.node.getTrainSize()}</p>
-            <p>Shuffle: {props.node.getShuffle()}</p>
+            <p>Shuffle: {""+props.node.getShuffle()}</p>
+            <p>Stratify: {""+props.node.getStratify()}</p>
         </BaseNodeWidget>
     );
 

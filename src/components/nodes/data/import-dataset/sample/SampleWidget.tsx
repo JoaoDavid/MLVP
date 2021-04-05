@@ -32,6 +32,7 @@ const SampleWidget = (props: SampleNodeProps) => {
         <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
             <p>{props.node.getFileName() || "File:"}</p>
             <p>Columns: {props.node.getCols()}</p>
+            <p>Time Series: {""+props.node.getTimeSeries()}</p>
         </BaseNodeWidget>
     );
 
