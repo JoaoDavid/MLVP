@@ -40,7 +40,11 @@ class ImportFromCSV(Node):
     def assertions(self):
         out_ds = self.get_port(False, "Dataset").port_id
         output = Dataset(out_ds)
-
+        print(self.columns)
+        column_names = [String(out_ds + SEP + "col_" + col['name']) for col in self.columns]
+        column_types = [StringVal(col['type']) for col in self.columns]
+        column_eq = [column_names[i] == (column_types[i]) for i in range(len(self.labels))]
+        print(column_eq)
         label_names = [Int(out_ds + SEP + "label_" + key) for key in self.labels.keys()]
         label_counts = list(self.labels.values())
         labels_values = [label_names[i] == (label_counts[i]) for i in range(len(self.labels))]
@@ -67,4 +71,4 @@ class ImportFromCSV(Node):
                    output.balanced == is_balanced,
                    # output.balanced == And(list_balanced),
                    output.n_labels == len(label_counts),
-               ] + label_counts_assertions + labels_values
+               ] + label_counts_assertions + labels_values + column_eq
