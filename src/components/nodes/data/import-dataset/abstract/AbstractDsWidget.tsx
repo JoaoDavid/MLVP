@@ -33,6 +33,7 @@ const AbstractDsWidget = (props: CSVNodeProps) => {
             <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
                 <p>Rows: {props.node.getRows()}</p>
                 <p>Columns: {props.node.getCols()}</p>
+                <p>Time Series: {""+props.node.getTimeSeries()}</p>
             </BaseNodeWidget>
     );
 

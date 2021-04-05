@@ -33,6 +33,7 @@ const CSVWidget = (props: CSVNodeProps) => {
             <p>{props.node.getFileName() || "File:"}</p>
             <p>Rows: {props.node.getRows()}</p>
             <p>Columns: {props.node.getCols()}</p>
+            <p>Time Series: {""+props.node.getTimeSeries()}</p>
         </BaseNodeWidget>
     );
 
