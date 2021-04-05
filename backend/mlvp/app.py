@@ -16,15 +16,14 @@ def generate_code(diagram, file_name="mlvp-code-output"):
         root.reset_visited()
     response = {}
     if tc_res['canLink']:
-        print(roots)
         codegen = CodeGen(file_name, roots)
         code = codegen.generate_code()
         response["successful"] = True
         response["code"] = code
-        print(code)
+        # print(code)
     else:
         response["successful"] = False
-    print(response)
+    # print(response)
     # return json.dumps(response, indent=4)
     return {**response, **tc_res}
 
