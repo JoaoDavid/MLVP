@@ -14,7 +14,6 @@ class Node(ABC):
         self.node_id = data['id']
         self.title = data['title']
         self.is_root = True
-        self.in_pipeline = True
         self.parent_links = []
         self.ports = {}
         self.children = []
@@ -66,16 +65,12 @@ class Node(ABC):
         pass
 
     def input_ports_linked(self):
-        z3_in_pipeline = Bool(NODE_PROP.format(name="in_pipeline", node_id=self.node_id))
         z3_n_in_ports = Int(NODE_PROP.format(name="n_in_ports", node_id=self.node_id))
         z3_n_in_links = Int(NODE_PROP.format(name="n_in_links", node_id=self.node_id))
         return [
-            # Implies(Not(len(self.children) == 0), self.num_in_ports == len(self.parent_links))
-            z3_in_pipeline == self.in_pipeline,
             z3_n_in_ports == self.num_in_ports,
             z3_n_in_links == len(self.parent_links),
             z3_n_in_ports == z3_n_in_links,
-            # Implies(z3_in_pipeline, And(z3_n_in_ports == z3_n_in_links))
         ]
 
     def __str__(self):
@@ -84,4 +79,5 @@ class Node(ABC):
                'Parent Links: {self.parent_links} \n' \
                'Ports: {self.ports} \n' \
                'Children: {self.children} \n' \
+               'Root: {self.is_root} \n' \
                'Visited: {self.visited} \n'.format(self=self)
