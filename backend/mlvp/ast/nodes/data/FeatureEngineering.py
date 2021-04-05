@@ -34,7 +34,6 @@ class FeatureEngineering(Node):
         out_file.write(X.format(x=x, df=df, old_y=old_y))
         out_file.write(Y.format(y=y, df=df, old_y=old_y))
 
-
         out_ds = self.get_port(False, "Engineered Dataset")
         emitter.set(out_ds, (x, y))
 
@@ -46,18 +45,11 @@ class FeatureEngineering(Node):
         output_ds = Dataset(id_output)
 
         return [
-            # input_ds.cols == output_ds.cols,
-            # Implies(input_ds.balanced, And(
-            #     input_ds.rows == output_ds.rows,
-            #     input_ds.n_labels == output_ds.n_labels,
-            #     input_ds.max_label_count == output_ds.max_label_count,
-            #     input_ds.min_label_count == output_ds.min_label_count
-            # )),
-            # Implies(Not(input_ds.balanced), And(
-            #     output_ds.rows == input_ds.max_label_count * input_ds.n_labels,
-            #     input_ds.n_labels == output_ds.n_labels,
-            #     input_ds.max_label_count == output_ds.max_label_count,
-            #     output_ds.min_label_count == output_ds.max_label_count,
-            # )),
-            # output_ds.balanced
+            input_ds.cols == output_ds.cols,  # TODO, depends on the number of columns added
+            input_ds.rows == output_ds.rows,
+            input_ds.n_labels == output_ds.n_labels,
+            input_ds.max_label_count == output_ds.max_label_count,
+            input_ds.min_label_count == output_ds.min_label_count,
+            input_ds.balanced == output_ds.balanced,
+            input_ds.time_series == output_ds.time_series,
         ]
