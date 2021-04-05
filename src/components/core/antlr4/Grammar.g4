@@ -4,14 +4,14 @@ grammar Grammar;
 
 // ------------------------- PROGRAM -------------------------
 
-program: (statement)+ EOF ;
+program: (statement)+ ;
 
 
 // ------------------------- STATEMENTS -------------------------
 
 statement: create_col_stat ;
 
-create_col_stat: expr SEMICOLON ;
+create_col_stat: ID ASSIGN expr SEMICOLON ;
 
 
 // ------------------------- EXPRESSIONS -------------------------
