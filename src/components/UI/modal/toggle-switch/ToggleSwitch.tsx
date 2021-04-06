@@ -8,7 +8,7 @@ interface InputTitleProps {
     changed: () => void;
 }
 
-const ToogleSwitch = (props: InputTitleProps) => {
+const ToggleSwitch = (props: InputTitleProps) => {
 
     return (
         <FormControlLabel
@@ -24,4 +24,4 @@ const ToogleSwitch = (props: InputTitleProps) => {
     )
 }
 
-export default ToogleSwitch;
+export default ToggleSwitch;
