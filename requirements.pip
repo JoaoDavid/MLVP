@@ -1,3 +1,4 @@
-flask
-flask_cors
+Flask
+Flask-Cors
 waitress
+z3-solver
