@@ -28,7 +28,7 @@ const SplitDatasetWidget = (props: SplitDatasetProps) => {
     }
 
     const stratifyChanged = () => {
-        props.node.setStratify(!props.node.getStratify());
+        props.node.setStratifyByClass(!props.node.getStratifyByClass());
         eventNodeUpdated(props.engine, props.node);
     }
 
@@ -40,7 +40,7 @@ const SplitDatasetWidget = (props: SplitDatasetProps) => {
             <p>Test Size: {props.node.getTestSize()}</p>
             <p>Train Size: {props.node.getTrainSize()}</p>
             <p>Shuffle: {""+props.node.getShuffle()}</p>
-            <p>Stratify: {""+props.node.getStratify()}</p>
+            <p>Stratify by Class: {""+props.node.getStratifyByClass()}</p>
         </BaseNodeWidget>
     );
 
