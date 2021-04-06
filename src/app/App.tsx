@@ -4,9 +4,9 @@ import createEngine, {DiagramEngine} from '@projectstorm/react-diagrams';
 import TopNav from '../components/UI/top-nav/TopNav';
 import SideBar from "../components/UI/side-bar/SideBar";
 import {CategoryConfig, NodeConfig} from "../components/nodes/Config";
-import {DATA_CONFIG, DATA_NODES} from "../components/nodes/data/DataConfig";
-import {MODEL_CONFIG, MODEL_NODES} from "../components/nodes/model/ModelConfig";
-import {EVALUATE_CONFIG, EVALUATE_NODES} from "../components/nodes/evaluate/EvaluateConfig";
+import {DATA_CONFIG} from "../components/nodes/data/DataConfig";
+import {MODEL_CONFIG} from "../components/nodes/model/ModelConfig";
+import {EVALUATE_CONFIG} from "../components/nodes/evaluate/EvaluateConfig";
 import axios from "axios";
 import download from 'js-file-download';
 import BottomNav from "../components/UI/bottom-nav/BottomNav";
@@ -15,7 +15,7 @@ import {MyDiagramModel} from "./diagram/MyDiagramModel";
 import splitEvaluate from '../demos/split-n-evaluate.json';
 import {MyZoomCanvasAction} from "./actions/MyZoomCanvasAction";
 import {DiagramStateManager} from "./states/DiagramStateManager";
-import {TypeCheckResponse, TypeChecker} from "./typecheck/TypeChecker";
+import {TypeChecker, TypeCheckResponse} from "./typecheck/TypeChecker";
 import {BaseNodeModel} from "../components/core/BaseNode/BaseNodeModel";
 import {DefaultLinkModel} from "@projectstorm/react-diagrams-defaults";
 import {FactoriesManager} from "./FactoriesManager";
@@ -135,9 +135,9 @@ class App extends React.Component<AppProps, AppState> {
 
     loadMapCategoryNodes = () => {
         const map = new Map<CategoryConfig, NodeConfig[]>();
-        map.set(DATA_CONFIG, DATA_NODES);
-        map.set(MODEL_CONFIG, MODEL_NODES);
-        map.set(EVALUATE_CONFIG, EVALUATE_NODES);
+        map.set(DATA_CONFIG, DATA_CONFIG.nodes);
+        map.set(MODEL_CONFIG, MODEL_CONFIG.nodes);
+        map.set(EVALUATE_CONFIG, EVALUATE_CONFIG.nodes);
         return map;
     }
 
@@ -188,10 +188,16 @@ class App extends React.Component<AppProps, AppState> {
         const data = this.engine.getModel().serialize();
         axios.post('/compile', data)
             .then(response => {
-                console.log(response);
-                console.log(response.data);
-                download(response.data, "mlvp-generated-code.py")
-                this.updateLog("Compiled successfully!");
+                if (response.data.successful) {
+                    console.log(response);
+                    console.log(response.data);
+                    download(response.data.code, "mlvp-generated-code.py")
+                    this.updateLog("Compiled successfully!");
+                } else {
+                    this.updateLog("Compiled with errors!");
+                    this.updateLog("Make sure that all input ports within the pipeline are connected to another node!");
+                    this.typeChecker.eventTypeChecked(response.data);
+                }
             })
             .catch(error => {
                 console.log(error);

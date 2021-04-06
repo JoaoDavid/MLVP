@@ -32,7 +32,7 @@ class ParseJSON:
             node_class = getattr(importlib.import_module("mlvp.ast.nodes"), data['type'])
             # Instantiate the class
             node = node_class(data)
-            node.ports, node.is_root = self.__parse_ports(data['ports'])
+            self.__parse_ports(node, data['ports'])
             self.nodes[node_id] = node
             # In case of being a root node, add it to the root array
             if node.is_root:
@@ -50,14 +50,15 @@ class ParseJSON:
             source_node.children.append(target_node)
             target_node.parent_links.append(ParentLink(link_id, source_node, source_port, target_port))
 
-    def __parse_ports(self, json_ports):
-        ports = {}
-        is_root = False
+    def __parse_ports(self, node, json_ports):
         for data in json_ports:
             # TODO, security, check if class exists
             port_class = getattr(importlib.import_module("mlvp.ast.ports"), data['type'])
             # Instantiate the class
             port = port_class(data)
-            ports[data['id']] = port
-            is_root = not port.in_port or is_root
-        return ports, is_root
+            node.ports[data['id']] = port
+            if port.in_port:
+                node.num_in_ports += 1
+                node.is_root = False
+            else:
+                node.num_out_ports += 1

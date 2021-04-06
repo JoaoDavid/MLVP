@@ -1,5 +1,5 @@
 from mlvp.codegen import *
-from mlvp.ast.nodes.Node import Node
+from mlvp.ast.nodes.Node import *
 from mlvp.ast.ports import DatasetPort, ModelPort
 from mlvp.typecheck import *
 

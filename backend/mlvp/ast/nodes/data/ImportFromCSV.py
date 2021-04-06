@@ -1,11 +1,11 @@
 from mlvp.codegen import *
-from mlvp.ast.nodes.Node import Node
+from mlvp.ast.nodes.Node import *
 from mlvp.typecheck import *
 
-LOAD_CSV = "{var} = {pandas_var}.read_csv(\'./{file_name}\')\n"
-FEATURES = "{x} = {var}.drop(\'{target}\', axis=1)\n"
-TARGET = "{y} = {var}[\'{target}\']\n"
-
+LOAD_CSV = "{df} = {pandas_var}.read_csv(\'./{file_name}\')\n"
+X = "{x} = {df}.drop(\'{target}\', axis=1)\n"
+Y = "{y} = {df}[\'{target}\']\n"
+ASSERT = "assert({arg1} == len({arg2}))\n"
 PANDAS_VAR = "pd"
 
 
@@ -16,28 +16,38 @@ class ImportFromCSV(Node):
         self.file_name = data['fileName']
         self.num_cols = data['numCols']
         self.num_rows = data['numRows']
-        self.target = None if len(data['columnNames']) == 0 else data['columnNames'][-1]
+        self.columns = data['columns']
+        self.target = None if data['targetIndex'] == -1 else self.columns[data['targetIndex']]['name']
         self.labels = data['labels']
+        self.time_series = data['timeSeries']
 
     def import_dependency(self):
         return IMPORT_AS.format(lib_name="pandas", lib_var=PANDAS_VAR)
 
     def codegen(self, emitter: Emitter, out_file):
         curr_count = emitter.get_count()
-        df_var = "df" + str(curr_count)
+        df = "df" + str(curr_count)
         x = "x" + str(curr_count)
         y = "y" + str(curr_count)
         out_ds = self.get_port(False, "Dataset")
         emitter.set(out_ds, (x, y))
-        out_file.write(LOAD_CSV.format(var=df_var, pandas_var=PANDAS_VAR, file_name=self.file_name))
-        out_file.write(FEATURES.format(x=x, var=df_var, target=self.target))
-        out_file.write(TARGET.format(y=y, var=df_var, target=self.target))
+        out_file.write(LOAD_CSV.format(df=df, pandas_var=PANDAS_VAR, file_name=self.file_name))
+        out_file.write(ASSERT.format(arg1=self.num_rows, arg2=df))
+        out_file.write(ASSERT.format(arg1=self.num_cols, arg2=df+".columns"))
+        out_file.write(X.format(x=x, df=df, target=self.target))
+        out_file.write(Y.format(y=y, df=df, target=self.target))
 
+    # TODO passar dicionario como parametro, com as funçoes auxiliares
     def assertions(self):
         out_ds = self.get_port(False, "Dataset").port_id
         output = Dataset(out_ds)
-
-        label_names = [Int(out_ds + SEP + "label-" + key) for key in self.labels.keys()]
+        print(self.columns)
+        #TODO usar aqui as funçoes nao interpretadas
+        column_names = [String(out_ds + SEP + "col_" + col['name']) for col in self.columns]
+        column_types = [StringVal(col['type']) for col in self.columns]
+        column_eq = [column_names[i] == (column_types[i]) for i in range(len(self.labels))]
+        print(column_eq)
+        label_names = [Int(out_ds + SEP + "label_" + key) for key in self.labels.keys()]
         label_counts = list(self.labels.values())
         labels_values = [label_names[i] == (label_counts[i]) for i in range(len(self.labels))]
 
@@ -58,8 +68,9 @@ class ImportFromCSV(Node):
                    output.cols == self.num_cols,
                    output.rows == self.num_rows,
                    output.rows == sum(label_counts),
+                   output.time_series == self.time_series,
                    # And(labels_values),
                    output.balanced == is_balanced,
                    # output.balanced == And(list_balanced),
                    output.n_labels == len(label_counts),
-               ] + label_counts_assertions + labels_values
+               ] + label_counts_assertions + labels_values + column_eq

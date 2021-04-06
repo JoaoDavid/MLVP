@@ -1,6 +1,6 @@
 import {BaseNodeModel} from "../../../core/BaseNode/BaseNodeModel";
 import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
-import {NODE_SPLIT_DATASET} from "../DataConfig";
+import {SPLIT_DATASET} from "../DataConfig";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
 
 
@@ -8,10 +8,11 @@ export class SplitDatasetModel extends BaseNodeModel {
 
     private testSize: number = 0.25;
     private trainSize: number = 1 - this.testSize;
-    private shuffle: string = "True";
+    private shuffle: boolean = false;
+    private stratifyByClass: boolean = false;
 
     constructor() {
-        super(NODE_SPLIT_DATASET);
+        super(SPLIT_DATASET);
         this.addInPort();
         this.addOutPort();
     }
@@ -32,12 +33,20 @@ export class SplitDatasetModel extends BaseNodeModel {
         this.trainSize = value;
     }
 
-    getShuffle(): string {
+    getShuffle(): boolean {
         return this.shuffle;
     }
 
-    setShuffle(value: string) {
+    getStratifyByClass(): boolean {
+        return this.stratifyByClass;
+    }
+
+    setShuffle(value: boolean) {
         this.shuffle = value;
+    }
+
+    setStratifyByClass(value: boolean) {
+        this.stratifyByClass = value;
     }
 
     protected addInPort(): void {
@@ -57,6 +66,7 @@ export class SplitDatasetModel extends BaseNodeModel {
         this.testSize = event.data.testSize;
         this.trainSize = event.data.trainSize;
         this.shuffle = event.data.shuffle;
+        this.stratifyByClass = event.data.stratifyByClass;
     }
 
     serialize(): any {
@@ -65,6 +75,7 @@ export class SplitDatasetModel extends BaseNodeModel {
             testSize: this.testSize,
             trainSize: this.trainSize,
             shuffle: this.shuffle,
+            stratifyByClass: this.stratifyByClass,
         };
     }
 

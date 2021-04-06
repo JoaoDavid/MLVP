@@ -1,4 +1,4 @@
-from mlvp.ast.nodes.Node import Node
+from mlvp.ast.nodes.Node import *
 from mlvp.codegen import *
 from mlvp.typecheck import *
 
@@ -16,6 +16,7 @@ class AbstractDataset(Node):
         super().__init__(data)
         self.num_cols = data['numCols']
         self.num_rows = data['numRows']
+        self.time_series = data['timeSeries']
 
     def import_dependency(self):
         return IMPORT_AS.format(lib_name="pandas", lib_var=PANDAS_VAR)
@@ -42,4 +43,5 @@ class AbstractDataset(Node):
         return [
             output.cols == self.num_cols,
             output.rows == self.num_rows,
+            output.time_series == self.time_series,
         ]

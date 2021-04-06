@@ -1,16 +1,18 @@
 import * as React from 'react';
+import {ChangeEvent} from 'react';
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Table from "react-bootstrap/Table";
-import {ChangeEvent} from "react";
 import {CSVModel} from "./CSVModel";
 import {FormGroup} from "react-bootstrap";
+import ToggleSwitch from "../../../../UI/modal/toggle-switch/ToggleSwitch";
 
 
 interface CSVModalProps {
-    loadCSV: (files: FileList) => void;
     node: CSVModel;
+    loadCSV: (files: FileList) => void;
+    timeSeriesChanged: () => void;
 }
 
 const CSVModal = (props: CSVModalProps) => {
@@ -28,14 +30,14 @@ const CSVModal = (props: CSVModalProps) => {
     const columnNames: JSX.Element[] = [];
     const columnTypes: JSX.Element[] = [];
     const columnNulls: JSX.Element[] = [];
-    props.node.getColumnTypes().forEach((column, colName) => {
+    props.node.getColumns().forEach((col) => {
         counter += 1;
         columnNames.push(
-            <th key={colName + "" + counter}>{colName}</th>);
+            <th key={col.getName() + "" + counter}>{col.getName()}</th>);
         columnTypes.push(
-            <td key={column.getType() + "" + counter}>{column.getType()}</td>);
+            <td key={col.getType() + "" + counter}>{col.getType()}</td>);
         columnNulls.push(
-            <td key={column.getType() + "" + column.getNullCounter() + "" + counter}>{column.getNullCounter()}</td>);
+            <td key={col.getType() + "" + col.getNullCounter() + "" + counter}>{col.getNullCounter()}</td>);
     });
 
     return (
@@ -58,7 +60,14 @@ const CSVModal = (props: CSVModalProps) => {
                 </Row>
             </Form.Group>
             <FormGroup>
-                {columnNames.length > 0?<Form.Label>Column Types</Form.Label>:null}
+                <Form.Label>Dataset Properties</Form.Label>
+                <Col>
+                    <ToggleSwitch name={"Time Series"} bool={props.node.getTimeSeries()}
+                                  changed={props.timeSeriesChanged}/>
+                </Col>
+            </FormGroup>
+            <FormGroup>
+                {columnNames.length > 0 ? <Form.Label>Column Types</Form.Label> : null}
                 <Table striped bordered hover responsive>
                     <thead>
                     <tr>
@@ -76,7 +85,7 @@ const CSVModal = (props: CSVModalProps) => {
                 </Table>
             </FormGroup>
             <FormGroup>
-                {labelNames.length > 0?<Form.Label>Labels</Form.Label>:null}
+                {labelNames.length > 0 ? <Form.Label>Labels</Form.Label> : null}
                 <Table striped bordered hover responsive>
                     <thead>
                     <tr>

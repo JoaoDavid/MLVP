@@ -1,6 +1,6 @@
 import {BaseNodeModel} from "../../../core/BaseNode/BaseNodeModel";
 import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
-import {NODE_PCA} from "../DataConfig";
+import {PCA} from "../DataConfig";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
 
 
@@ -10,7 +10,7 @@ export class PCAModel extends BaseNodeModel {
     private numComponents: number = 1;
 
     constructor() {
-        super(NODE_PCA);
+        super(PCA);
         this.addInPort();
         this.addOutPort();
     }

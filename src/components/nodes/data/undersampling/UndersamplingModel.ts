@@ -1,6 +1,6 @@
 import {BaseNodeModel} from "../../../core/BaseNode/BaseNodeModel";
 import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
-import {NODE_UNDERSAMPLING} from "../DataConfig";
+import {UNDERSAMPLING} from "../DataConfig";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
 
 
@@ -9,7 +9,7 @@ export class UndersamplingModel extends BaseNodeModel {
     private randomState: number = 0;
 
     constructor() {
-        super(NODE_UNDERSAMPLING);
+        super(UNDERSAMPLING);
         this.addInPort();
         this.addOutPort();
     }

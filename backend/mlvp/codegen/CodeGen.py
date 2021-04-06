@@ -1,9 +1,6 @@
 from mlvp.codegen.Emitter import Emitter
 from mlvp.ast.nodes import Node
 
-IMPORT_AS = "import {lib_name} as {lib_var}\n"
-FROM_IMPORT = "from {package} import {class_to_import}\n"
-
 
 class CodeGen:
 
@@ -46,6 +43,7 @@ class CodeGen:
             # node's parents are all visited and written
             # write current node code to the out file
             node.codegen(self.emitter, self.out_file)
+            print(node)
             self.out_file.write("\n")
             # visit every child node
             for child in node.children:

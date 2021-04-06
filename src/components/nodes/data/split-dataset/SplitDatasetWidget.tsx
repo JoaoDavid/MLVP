@@ -22,19 +22,25 @@ const SplitDatasetWidget = (props: SplitDatasetProps) => {
         eventNodeUpdated(props.engine, props.node);
     }
 
-    const shuffleChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        props.node.setShuffle(event.target.value);
+    const shuffleChanged = () => {
+        props.node.setShuffle(!props.node.getShuffle());
+        eventNodeUpdated(props.engine, props.node);
+    }
+
+    const stratifyChanged = () => {
+        props.node.setStratifyByClass(!props.node.getStratifyByClass());
         eventNodeUpdated(props.engine, props.node);
     }
 
 
     const modal = <SplitDatasetModal node={props.node} testSizeChanged={testSizeChanged} shuffleChanged={shuffleChanged}
-                                     trainSizeChanged={trainSizeChanged}/>;
+                                     trainSizeChanged={trainSizeChanged} stratifyChanged={stratifyChanged}/>;
     return (
         <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
             <p>Test Size: {props.node.getTestSize()}</p>
             <p>Train Size: {props.node.getTrainSize()}</p>
-            <p>Shuffle: {props.node.getShuffle()}</p>
+            <p>Shuffle: {""+props.node.getShuffle()}</p>
+            <p>Stratify by Class: {""+props.node.getStratifyByClass()}</p>
         </BaseNodeWidget>
     );
 

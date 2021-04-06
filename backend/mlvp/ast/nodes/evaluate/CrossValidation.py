@@ -1,5 +1,5 @@
 from mlvp.codegen import *
-from mlvp.ast.nodes.Node import Node
+from mlvp.ast.nodes.Node import *
 from mlvp.ast.ports import DatasetPort, ModelPort
 from mlvp.typecheck import *
 
@@ -32,12 +32,13 @@ class CrossValidation(Node):
         id_input_ds = self.get_port(True, "Dataset").port_id
         input_ds = Dataset(id_input_ds)
 
-        z3_n_folds = Int("node" + SEP + "n-folds")
+        z3_n_folds = Int(NODE_PROP.format(name="n_folds", node_id=self.node_id))
 
         return [
             # requires
             z3_n_folds == self.num_folds,
             z3_n_folds > 1,
             input_ds.balanced,
-            input_ds.cols > 1
+            input_ds.cols > 1,
+            Not(input_ds.time_series)
         ]

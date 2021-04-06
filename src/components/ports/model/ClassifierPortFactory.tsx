@@ -1,4 +1,4 @@
-import { ClassifierPortModel } from './ClassifierPortModel';
+import { ClassifierPortModel, CLASSIFIER_PORT } from './ClassifierPortModel';
 import { AbstractModelFactory } from '@projectstorm/react-canvas-core';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
 
@@ -8,7 +8,7 @@ export class ClassifierPortFactory extends AbstractModelFactory<ClassifierPortMo
     private static INSTANCE: ClassifierPortFactory;
 
     constructor() {
-        super('ModelPort');
+        super(CLASSIFIER_PORT);
     }
 
     static getInstance = () => {

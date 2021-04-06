@@ -1,5 +1,5 @@
 from mlvp.codegen import *
-from mlvp.ast.nodes.Node import Node
+from mlvp.ast.nodes.Node import *
 from mlvp.typecheck import *
 
 PCA_INIT = "{pca_var} = PCA(random_state={random_state}, n_components={n_components})\n"
@@ -33,7 +33,7 @@ class PCA(Node):
         id_output = self.get_port(False, "Reduced Dataset").port_id
         input_ds = Dataset(id_input)
         output_ds = Dataset(id_output)
-        z3_n_components = Int("node" + SEP + "n-components")
+        z3_n_components = Int(NODE_PROP.format(name="n_components", node_id=self.node_id))
 
         return [
             # requires
