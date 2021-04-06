@@ -4,17 +4,16 @@ import * as React from "react";
 
 interface InputTitleProps {
     name: string;
-    getBool: () => boolean;
+    bool: boolean;
     changed: () => void;
 }
 
 const ToggleSwitch = (props: InputTitleProps) => {
-
     return (
         <FormControlLabel
             control={
                 <Switch
-                    checked={props.getBool()}
+                    checked={props.bool}
                     onChange={props.changed}
                     color="primary"
                 />

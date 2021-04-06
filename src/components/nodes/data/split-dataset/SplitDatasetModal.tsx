@@ -33,8 +33,8 @@ const SplitDatasetModal = (props: SplitDatasetModalProps) => {
             </Form.Group>
             <Form.Group>
                 <Col>
-                    <ToggleSwitch name={"Shuffle"} getBool={props.node.getShuffle} changed={props.shuffleChanged}/>
-                    <ToggleSwitch name={"Stratify by Class"} getBool={props.node.getStratifyByClass} changed={props.stratifyChanged}/>
+                    <ToggleSwitch name={"Shuffle"} bool={props.node.getShuffle()} changed={props.shuffleChanged}/>
+                    <ToggleSwitch name={"Stratify by Class"} bool={props.node.getStratifyByClass()} changed={props.stratifyChanged}/>
                 </Col>
             </Form.Group>
         </Form>
