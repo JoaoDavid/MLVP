@@ -37,12 +37,12 @@ def __convert_ids(ports, expr: ExprRef):
             arr_str = []
             for child in children:
                 arr_str.append(__convert_ids(ports, child))
-            return " && ".join(arr_str)
+            return "(" + " && ".join(arr_str) + ")"
         elif decl == "Or":
             arr_str = []
             for child in children:
                 arr_str.append(__convert_ids(ports, child))
-            return " || ".join(arr_str)
+            return "(" + " || ".join(arr_str) + ")"
         elif decl == "Implies":
             return BINARY_OPERATOR.format(left=__convert_ids(ports, children[0]), b_op="-->",
                                           right=__convert_ids(ports, children[1]))
