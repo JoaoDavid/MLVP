@@ -9,7 +9,7 @@ def generate_code(diagram, file_name="mlvp-code-output"):
     parser = ParseJSON(json_diagram=diagram)
     roots, loose = parser.parse()
     type_checker = TypeChecker(roots.copy(), loose)
-    tc_res = type_checker.verify(compiling_next=True)
+    tc_res = type_checker.verify(strong_type_check=True)
     # the type checker will set the nodes visited flag to True
     # we need to reset them before generating the code
     for root in roots:
