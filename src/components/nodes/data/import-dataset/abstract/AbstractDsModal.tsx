@@ -33,7 +33,7 @@ const AbstractDsModal = (props: AbstractDsModalProps) => {
             <FormGroup>
                 <Form.Label>Dataset Properties</Form.Label>
                 <Col>
-                    <ToggleSwitch name={"Time Series"} getBool={props.node.getTimeSeries}
+                    <ToggleSwitch name={"Time Series"} bool={props.node.getTimeSeries()}
                                   changed={props.timeSeriesChanged}/>
                 </Col>
             </FormGroup>

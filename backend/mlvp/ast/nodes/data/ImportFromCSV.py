@@ -37,10 +37,12 @@ class ImportFromCSV(Node):
         out_file.write(X.format(x=x, df=df, target=self.target))
         out_file.write(Y.format(y=y, df=df, target=self.target))
 
+    # TODO passar dicionario como parametro, com as funçoes auxiliares
     def assertions(self):
         out_ds = self.get_port(False, "Dataset").port_id
         output = Dataset(out_ds)
         print(self.columns)
+        #TODO usar aqui as funçoes nao interpretadas
         column_names = [String(out_ds + SEP + "col_" + col['name']) for col in self.columns]
         column_types = [StringVal(col['type']) for col in self.columns]
         column_eq = [column_names[i] == (column_types[i]) for i in range(len(self.labels))]

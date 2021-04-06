@@ -37,12 +37,12 @@ def __convert_ids(ports, expr: ExprRef):
             arr_str = []
             for child in children:
                 arr_str.append(__convert_ids(ports, child))
-            return " && ".join(arr_str)
+            return "(" + " && ".join(arr_str) + ")"
         elif decl == "Or":
             arr_str = []
             for child in children:
                 arr_str.append(__convert_ids(ports, child))
-            return " || ".join(arr_str)
+            return "(" + " || ".join(arr_str) + ")"
         elif decl == "Implies":
             return BINARY_OPERATOR.format(left=__convert_ids(ports, children[0]), b_op="-->",
                                           right=__convert_ids(ports, children[1]))
@@ -53,7 +53,7 @@ def __convert_ids(ports, expr: ExprRef):
 class TypeChecker:
 
     def __init__(self, roots, loose):
-        self.compiling_next = False
+        self.strong_type_check = False
         self.solver = Solver()
         self.roots = roots
         self.loose = loose
@@ -63,13 +63,13 @@ class TypeChecker:
         self.all_link_assertions = []  # list of tuples of type: (link, link_assertions)
         self.all_node_assertions = []  # list of tuples of type: (node, node_assertions)
 
-    def verify(self, compiling_next=False):
-        self.compiling_next = compiling_next
+    def verify(self, strong_type_check=False):
+        self.strong_type_check = strong_type_check
 
         for root in self.roots:
             self.__traverse_pipeline(root)
 
-        if not self.compiling_next:
+        if not self.strong_type_check:
             for loose in self.loose:
                 self.__traverse_pipeline(loose)
 
@@ -107,7 +107,7 @@ class TypeChecker:
             # parents are all visited
             self.__add_dataset_links(node.parent_links)
             # add current node assertions to the array
-            if self.compiling_next:
+            if self.strong_type_check:
                 node_assertions = node.input_ports_linked()
             else:
                 node_assertions = node.assertions()

@@ -57,7 +57,7 @@ const SampleModal = (props: SampleModalProps) => {
             </Form.Group>
             <FormGroup>
                 <Col>
-                    <ToggleSwitch name={"Time Series"} getBool={props.node.getTimeSeries}
+                    <ToggleSwitch name={"Time Series"} bool={props.node.getTimeSeries()}
                                   changed={props.timeSeriesChanged}/>
                 </Col>
             </FormGroup>

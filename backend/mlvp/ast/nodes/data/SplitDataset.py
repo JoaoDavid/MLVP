@@ -12,7 +12,7 @@ class SplitDataset(Node):
         self.test_size = data['testSize']
         self.train_size = data['trainSize']
         self.shuffle = data['shuffle']
-        self.stratify = data['stratify']
+        self.stratify_by_class = data['stratifyByClass']
 
     def import_dependency(self):
         return FROM_IMPORT.format(package="sklearn.model_selection", class_to_import="train_test_split")
@@ -46,7 +46,7 @@ class SplitDataset(Node):
         shuffle_test = Bool(PORT_PROP.format(id_port=id_output_test, name="shuffled"))
         z3_shuffle = Bool(NODE_PROP.format(name="shuffle", node_id=self.node_id))
         output_shuffles = Or(shuffle_input, z3_shuffle)
-        z3_stratify = Bool(NODE_PROP.format(name="stratify", node_id=self.node_id))
+        z3_stratify_by_class = Bool(NODE_PROP.format(name="stratify_by_class", node_id=self.node_id))
 
         return [
             # requires
@@ -59,10 +59,10 @@ class SplitDataset(Node):
             train_ds.cols == test_ds.cols,
             train_ds.n_labels == ToInt(ToReal(input_ds.n_labels) * self.train_size),
             test_ds.n_labels == ToInt(ToReal(input_ds.n_labels) * self.test_size),
-            z3_stratify == self.stratify,  # TODO rever
-            Implies(z3_stratify, And(train_ds.balanced, test_ds.balanced)),
+            z3_stratify_by_class == self.stratify_by_class,  # TODO rever
+            Implies(z3_stratify_by_class, And(train_ds.balanced, test_ds.balanced)),
             z3_shuffle == self.shuffle,
             shuffle_train == output_shuffles,
             shuffle_test == output_shuffles,
-            Implies(input_ds.time_series, Not(And(z3_shuffle, z3_stratify))),
+            Implies(input_ds.time_series, Not(And(z3_shuffle, z3_stratify_by_class))),
         ]
