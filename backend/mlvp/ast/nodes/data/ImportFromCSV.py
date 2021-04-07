@@ -43,10 +43,20 @@ class ImportFromCSV(Node):
         output = Dataset(out_ds)
         print(self.columns)
         #TODO usar aqui as funçoes nao interpretadas
-        column_names = [String(out_ds + SEP + "col_" + col['name']) for col in self.columns]
-        column_types = [StringVal(col['type']) for col in self.columns]
-        column_eq = [column_names[i] == (column_types[i]) for i in range(len(self.labels))]
-        print(column_eq)
+        # column_names = [String(out_ds + SEP + "col_" + col['name']) for col in self.columns]
+        # column_types = [StringVal(col['type']) for col in self.columns]
+        # column_eq = [column_names[i] == (column_types[i]) for i in range(len(self.labels))]
+
+        col_assertions = []
+        column_names = [String(col['name']) for col in self.columns]
+        column_types = [get_col_type(col['type']) for col in self.columns]
+
+        for i in range(len(self.columns)):
+            col_assertions.append(column(output.dataset, column_names[i]) == column_index(output.dataset, i))
+            col_assertions.append(get_col_name(output.dataset, i) == column_names[i])
+            col_assertions.append(column(output.dataset, column_names[i]) == column_types[i])
+
+        # print(col_assertions)
         label_names = [Int(out_ds + SEP + "label_" + key) for key in self.labels.keys()]
         label_counts = list(self.labels.values())
         labels_values = [label_names[i] == (label_counts[i]) for i in range(len(self.labels))]
@@ -73,4 +83,4 @@ class ImportFromCSV(Node):
                    output.balanced == is_balanced,
                    # output.balanced == And(list_balanced),
                    output.n_labels == len(label_counts),
-               ] + label_counts_assertions + labels_values + column_eq
+               ] + label_counts_assertions + labels_values + col_assertions

@@ -12,10 +12,13 @@ def assertions_to_str(ports, assertions):
     return res
 
 
-def __convert_ids(ports, expr: ExprRef):
+def __convert_ids(ports, expr):
     BINARY_OPERATOR = "({left} {b_op} {right})"
     UNARY_OPERATOR = "({u_op} {expr})"
     res = str(expr)
+    # print(res)
+    if type(expr) == bool:
+        return str(expr)
     if expr.num_args() == 0:
         arr = str(expr).split(":")
         res = "None" if arr[0] == "-1" else arr[0]
@@ -48,6 +51,14 @@ def __convert_ids(ports, expr: ExprRef):
                                           right=__convert_ids(ports, children[1]))
         elif decl in ["ToInt", "ToReal"]:
             return __convert_ids(ports, children[0])
+        elif type(expr.decl()) == FuncDeclRef:
+            arr_str = []
+            for child in children:
+                arr_str.append(__convert_ids(ports, child))
+            return expr.decl().name() + "(" + " , ".join(arr_str) + ")"
+        else:
+            # print(type(expr))
+            return res
 
 
 class TypeChecker:
