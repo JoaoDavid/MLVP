@@ -1,6 +1,7 @@
 from mlvp.codegen import *
 from mlvp.ast.nodes.Node import *
 from mlvp.typecheck import *
+from mlvp.antlr.AntlrHandler import parse_text
 
 CONCATENATE = "{df} = pd.concat([{old_x},{old_y}], join = 'outer', axis = 1)\n"
 X = "{x} = {df}.drop({old_y}.name, axis=1)\n"
@@ -43,6 +44,8 @@ class FeatureEngineering(Node):
         id_output = self.get_port(False, "Engineered Dataset").port_id
         input_ds = Dataset(id_input)
         output_ds = Dataset(id_output)
+
+        parse_text(self.lines)
 
         return [
             input_ds.cols == output_ds.cols,  # TODO, depends on the number of columns added
