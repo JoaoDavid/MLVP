@@ -1,11 +1,13 @@
+from abc import abstractmethod
+
 from mlvp.antlr.ast.expressions.Expression import Expression
 
 
 class BinaryExpression(Expression):
 
-    def __init__(self, left, right, pos, symbol):
+    @abstractmethod
+    def __init__(self, left, right, pos):
         self.left = left
         self.right = right
         self.pos = pos
-        self.symbol = symbol
         pass
