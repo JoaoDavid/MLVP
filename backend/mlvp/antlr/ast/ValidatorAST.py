@@ -28,11 +28,13 @@ class ValidatorAST:
             expr_type = self.__expression_type(root.expr)
             print("gaegea")
 
-    def __right_left_col_type(self, type_a, type_b, combinations):
-        if isinstance(type_a, ColumnType):
-            for item in combinations:
-                if isinstance(type_b, item):
-                    self.col_types[type_a.name].add(item)
+    def __infer_col_type(self, type_a, type_b, combinations):
+        res_type = None
+        for item in combinations:
+            if isinstance(type_b, item):
+                self.col_types[type_a.name].add(item)
+                res_type = type_b
+        return res_type
 
     def __expression_type(self, expr):
         res_type = None
@@ -42,13 +44,17 @@ class ValidatorAST:
             if isinstance(expr, AndExpression) or isinstance(expr, OrExpression):
                 if isinstance(left, BoolType) and isinstance(right, BoolType):
                     res_type = BoolType()
+                elif isinstance(left, ColumnType):
+                    res_type = self.__infer_col_type(left, right, [BoolType])
+                elif isinstance(right, ColumnType):
+                    res_type = self.__infer_col_type(right, left, [BoolType])
 
-                self.__right_left_col_type(left, right, [BoolType])
-                self.__right_left_col_type(right, left, [BoolType])
                 if isinstance(left, ColumnType) and isinstance(right, ColumnType):
+                    res_type = BoolType()
                     # TODO adicionar combinaçaoes ao array de assertions
                     # tem ambos de ser do tipo bool
                     self.assertions.append("agsg")
+
             elif isinstance(expr, EqualExpression) or isinstance(expr, NotEqualExpression):
                 res_type = BoolType()
 
@@ -57,23 +63,28 @@ class ValidatorAST:
                 if isinstance(left, NumberType) and isinstance(right, NumberType) or \
                         isinstance(left, StringType) and isinstance(right, StringType):
                     res_type = BoolType()
+                elif isinstance(left, ColumnType):
+                    res_type = self.__infer_col_type(left, right, [IntType, FloatType, StringType, BoolType])
+                elif isinstance(right, ColumnType):
+                    res_type = self.__infer_col_type(right, left, [IntType, FloatType, StringType, BoolType])
 
-                self.__right_left_col_type(left, right, [IntType, FloatType, StringType, BoolType])
-                self.__right_left_col_type(right, left, [IntType, FloatType, StringType, BoolType])
                 if isinstance(left, ColumnType) and isinstance(right, ColumnType):
+                    res_type = BoolType()
                     # TODO adicionar combinaçaoes ao array de assertions
                     self.assertions.append("agsg")
-
 
             elif isinstance(expr, SumExpression):
                 if isinstance(left, NumberType) and isinstance(right, NumberType):
                     res_type = infer_number_type(left, right)
                 elif isinstance(left, StringType) and isinstance(right, StringType):
                     res_type = StringType()
+                elif isinstance(left, ColumnType):
+                    res_type = self.__infer_col_type(left, right, [IntType, FloatType, StringType, BoolType])
+                elif isinstance(right, ColumnType):
+                    res_type = self.__infer_col_type(right, left, [IntType, FloatType, StringType, BoolType])
 
-                self.__right_left_col_type(left, right, [IntType, FloatType, StringType, BoolType])
-                self.__right_left_col_type(right, left, [IntType, FloatType, StringType, BoolType])
                 if isinstance(left, ColumnType) and isinstance(right, ColumnType):
+                    res_type = ColumnType()
                     # TODO adicionar combinaçaoes ao array de assertions
                     self.assertions.append("agsg")
 
@@ -81,9 +92,10 @@ class ValidatorAST:
                                                                                                                ModuloExpression):
                 if isinstance(left, NumberType) and isinstance(right, NumberType):
                     res_type = infer_number_type(left, right)
-
-                self.__right_left_col_type(left, right, [IntType, FloatType, BoolType])
-                self.__right_left_col_type(right, left, [IntType, FloatType, BoolType])
+                elif isinstance(left, ColumnType):
+                    res_type = self.__infer_col_type(left, right, [IntType, FloatType, BoolType])
+                elif isinstance(right, ColumnType):
+                    res_type = self.__infer_col_type(right, left, [IntType, FloatType, BoolType])
 
                 if isinstance(left, ColumnType) and isinstance(right, ColumnType):
                     # TODO adicionar combinaçaoes ao array de assertions
@@ -95,16 +107,20 @@ class ValidatorAST:
                     res_type = StringType
                 elif isinstance(left, NumberType) and isinstance(right, NumberType):
                     res_type = infer_number_type(left, right)
-
-                self.__right_left_col_type(left, right, [IntType, FloatType, BoolType])
-                self.__right_left_col_type(right, left, [IntType, FloatType, BoolType])
+                elif isinstance(left, ColumnType):
+                    res_type = self.__infer_col_type(left, right, [IntType, FloatType, BoolType])
+                elif isinstance(right, ColumnType):
+                    res_type = self.__infer_col_type(right, left, [IntType, FloatType, BoolType])
 
                 if isinstance(left, ColumnType) and isinstance(right, StringType):
+                    res_type = StringType()
                     self.col_types[left.name].add(IntType)
                 if isinstance(left, StringType) and isinstance(right, ColumnType):
+                    res_type = StringType()
                     self.col_types[right.name].add(IntType)
 
                 if isinstance(left, ColumnType) and isinstance(right, ColumnType):
+                    res_type = ColumnType()
                     # TODO adicionar combinaçaoes ao array de assertions
                     self.assertions.append("agsg")
 
