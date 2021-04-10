@@ -6,7 +6,7 @@ from mlvp.antlr.ast.statements.CreateColumnStatement import CreateColumnStatemen
 from mlvp.antlr.ast.types import *
 
 
-def __infer_number_type(left, right):
+def infer_number_type(left, right):
     if isinstance(left, IntType) and isinstance(right, FloatType):
         return right
     elif isinstance(left, FloatType) and isinstance(right, IntType):
@@ -20,6 +20,7 @@ class ValidatorAST:
     def __init__(self, root):
         self.root = root
         self.assertions = []
+        self.col_types = {}
 
     def validate_ast(self, root):
         if isinstance(root, CreateColumnStatement):
@@ -27,50 +28,99 @@ class ValidatorAST:
             expr_type = self.__expression_type(root.expr)
             print("gaegea")
 
+    def __right_left_col_type(self, type_a, type_b, combinations):
+        if isinstance(type_a, ColumnType):
+            for item in combinations:
+                if isinstance(type_b, item):
+                    self.col_types[type_a.name].add(item)
+
     def __expression_type(self, expr):
         res_type = None
         if isinstance(expr, BinaryExpression):
             left = self.__expression_type(expr.left)
             right = self.__expression_type(expr.right)
             if isinstance(expr, AndExpression) or isinstance(expr, OrExpression):
-                res_type = BoolType()
+                if isinstance(left, BoolType) and isinstance(right, BoolType):
+                    res_type = BoolType()
 
+                self.__right_left_col_type(left, right, [BoolType])
+                self.__right_left_col_type(right, left, [BoolType])
+                if isinstance(left, ColumnType) and isinstance(right, ColumnType):
+                    # TODO adicionar combinaçaoes ao array de assertions
+                    # tem ambos de ser do tipo bool
+                    self.assertions.append("agsg")
             elif isinstance(expr, EqualExpression) or isinstance(expr, NotEqualExpression):
                 res_type = BoolType()
 
-            elif isinstance(expr, GreaterOrEqualExpression) or isinstance(expr, GreaterExpression) or\
+            elif isinstance(expr, GreaterOrEqualExpression) or isinstance(expr, GreaterExpression) or \
                     isinstance(expr, LessOrEqualExpression) or isinstance(expr, LessExpression):
-                if isinstance(left, NumberType) and isinstance(right, NumberType) or\
+                if isinstance(left, NumberType) and isinstance(right, NumberType) or \
                         isinstance(left, StringType) and isinstance(right, StringType):
                     res_type = BoolType()
-                else:
-                    raise Exception("2")
+
+                self.__right_left_col_type(left, right, [IntType, FloatType, StringType, BoolType])
+                self.__right_left_col_type(right, left, [IntType, FloatType, StringType, BoolType])
+                if isinstance(left, ColumnType) and isinstance(right, ColumnType):
+                    # TODO adicionar combinaçaoes ao array de assertions
+                    self.assertions.append("agsg")
+
 
             elif isinstance(expr, SumExpression):
                 if isinstance(left, NumberType) and isinstance(right, NumberType):
-                    res_type = self.__infer_number_type(left, right)
+                    res_type = infer_number_type(left, right)
                 elif isinstance(left, StringType) and isinstance(right, StringType):
                     res_type = StringType()
-                else:
-                    raise Exception("3")
-            elif isinstance(expr, SubtractionExpression) or isinstance(expr, DivisionExpression) or isinstance(expr, ModuloExpression):
+
+                self.__right_left_col_type(left, right, [IntType, FloatType, StringType, BoolType])
+                self.__right_left_col_type(right, left, [IntType, FloatType, StringType, BoolType])
+                if isinstance(left, ColumnType) and isinstance(right, ColumnType):
+                    # TODO adicionar combinaçaoes ao array de assertions
+                    self.assertions.append("agsg")
+
+            elif isinstance(expr, SubtractionExpression) or isinstance(expr, DivisionExpression) or isinstance(expr,
+                                                                                                               ModuloExpression):
                 if isinstance(left, NumberType) and isinstance(right, NumberType):
-                    res_type = self.__infer_number_type(left, right)
-                else:
-                    raise Exception("3")
+                    res_type = infer_number_type(left, right)
+
+                self.__right_left_col_type(left, right, [IntType, FloatType, BoolType])
+                self.__right_left_col_type(right, left, [IntType, FloatType, BoolType])
+
+                if isinstance(left, ColumnType) and isinstance(right, ColumnType):
+                    # TODO adicionar combinaçaoes ao array de assertions
+                    self.assertions.append("agsg")
 
             elif isinstance(expr, MultiplicationExpression):
                 if isinstance(left, IntType) and isinstance(right, StringType) or \
                         isinstance(right, IntType) and isinstance(left, StringType):
                     res_type = StringType
                 elif isinstance(left, NumberType) and isinstance(right, NumberType):
-                    res_type = self.__infer_number_type(left, right)
+                    res_type = infer_number_type(left, right)
+
+                self.__right_left_col_type(left, right, [IntType, FloatType, BoolType])
+                self.__right_left_col_type(right, left, [IntType, FloatType, BoolType])
+
+                if isinstance(left, ColumnType) and isinstance(right, StringType):
+                    self.col_types[left.name].add(IntType)
+                if isinstance(left, StringType) and isinstance(right, ColumnType):
+                    self.col_types[right.name].add(IntType)
+
+                if isinstance(left, ColumnType) and isinstance(right, ColumnType):
+                    # TODO adicionar combinaçaoes ao array de assertions
+                    self.assertions.append("agsg")
 
         elif isinstance(expr, NotExpression):
-            res_type = BoolType()
+            if isinstance(expr.value, BoolType):
+                res_type = BoolType()
+            elif isinstance(expr.value, ColumnType):
+                res_type = BoolType()
+                self.col_types[expr.value.name].add(BoolType)
+
         elif isinstance(expr, NegativeExpression):
             if isinstance(expr.value, IntType) or isinstance(expr.value, FloatType):
                 res_type = expr.value
+            elif isinstance(expr.value, ColumnType):
+                res_type = NumberType()
+                self.col_types[expr.value.name].add(NumberType)
         elif isinstance(expr, LiteralExpression):
             if expr.value == bool:
                 res_type = BoolType()
@@ -82,5 +132,9 @@ class ValidatorAST:
                 res_type = StringType()
         elif isinstance(expr, ColumnReferenceExpression):
             # adicionar assertion ao array
-            res_type = None
+            self.col_types[expr.name] = set()
+            res_type = ColumnType()
+
+        if res_type is None:
+            raise Exception("its None")
         return res_type
