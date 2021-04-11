@@ -33,13 +33,15 @@ class ValidatorAST:
                 print(self.col_types)
                 print("-----------------------------------------")
 
-    def __infer_col_type(self, type_a, type_b, combinations):
+    # type_combinations is a dict, type_b:{([possible types for type_a], res_type)}
+    def __infer_col_type(self, type_a, type_b, type_combinations):
         res_type = None
-        for item in combinations:
-            if isinstance(type_b, item):
-                self.col_types[type_a.name].add(item)
-                res_type = type_b
+        for curr_type, combinations in type_combinations.items():
+            if isinstance(type_b, curr_type):
+                self.col_types[type_a.name].append(combinations[0])
+                res_type = combinations[1]
         return res_type
+
 
     def __expression_type(self, expr):
         res_type = None
@@ -47,12 +49,15 @@ class ValidatorAST:
             left = self.__expression_type(expr.left)
             right = self.__expression_type(expr.right)
             if isinstance(expr, AndExpression) or isinstance(expr, OrExpression):
+                type_combinations = {
+                    BoolType: ([BoolType], BoolType),
+                }
                 if isinstance(left, BoolType) and isinstance(right, BoolType):
                     res_type = BoolType()
                 elif isinstance(left, ColumnType):
-                    res_type = self.__infer_col_type(left, right, [BoolType])
+                    res_type = self.__infer_col_type(left, right, type_combinations)
                 elif isinstance(right, ColumnType):
-                    res_type = self.__infer_col_type(right, left, [BoolType])
+                    res_type = self.__infer_col_type(right, left, type_combinations)
 
                 if isinstance(left, ColumnType) and isinstance(right, ColumnType):
                     res_type = BoolType()
@@ -65,13 +70,18 @@ class ValidatorAST:
 
             elif isinstance(expr, GreaterOrEqualExpression) or isinstance(expr, GreaterExpression) or \
                     isinstance(expr, LessOrEqualExpression) or isinstance(expr, LessExpression):
+                type_combinations = {
+                    IntType: ([IntType, FloatType], BoolType),
+                    FloatType: ([IntType, FloatType], BoolType),
+                    StringType: ([StringType], BoolType),
+                }
                 if isinstance(left, NumberType) and isinstance(right, NumberType) or \
                         isinstance(left, StringType) and isinstance(right, StringType):
                     res_type = BoolType()
                 elif isinstance(left, ColumnType):
-                    res_type = self.__infer_col_type(left, right, [NumberType, StringType, BoolType])
+                    res_type = self.__infer_col_type(left, right, type_combinations)
                 elif isinstance(right, ColumnType):
-                    res_type = self.__infer_col_type(right, left, [NumberType, StringType, BoolType])
+                    res_type = self.__infer_col_type(right, left, type_combinations)
 
                 if isinstance(left, ColumnType) and isinstance(right, ColumnType):
                     res_type = BoolType()
@@ -79,50 +89,59 @@ class ValidatorAST:
                     self.assertions.append("agsg")
 
             elif isinstance(expr, SumExpression):
+                type_combinations = {
+                    IntType: ([IntType, FloatType, BoolType], NumberType),
+                    FloatType: ([IntType, FloatType, BoolType], FloatType),
+                    StringType: ([StringType], StringType),
+                    BoolType: ([IntType, FloatType, BoolType], NumberType),
+                }
                 if isinstance(left, NumberType) and isinstance(right, NumberType):
                     res_type = infer_number_type(left, right)
                 elif isinstance(left, StringType) and isinstance(right, StringType):
                     res_type = StringType()
                 elif isinstance(left, ColumnType):
-                    res_type = self.__infer_col_type(left, right, [NumberType, StringType, BoolType])
+                    res_type = self.__infer_col_type(left, right, type_combinations)
                 elif isinstance(right, ColumnType):
-                    res_type = self.__infer_col_type(right, left, [NumberType, StringType, BoolType])
+                    res_type = self.__infer_col_type(right, left, type_combinations)
 
                 if isinstance(left, ColumnType) and isinstance(right, ColumnType):
                     res_type = left
                     # TODO adicionar combinaçaoes ao array de assertions
                     self.assertions.append("agsg")
 
-            elif isinstance(expr, SubtractionExpression) or isinstance(expr, DivisionExpression) or isinstance(expr,
-                                                                                                               ModuloExpression):
+            elif isinstance(expr, SubtractionExpression) or isinstance(expr, DivisionExpression) or isinstance(expr, ModuloExpression):
+                type_combinations = {
+                    IntType: ([IntType, FloatType], NumberType),
+                    FloatType: ([IntType, FloatType], FloatType),
+                    BoolType: ([IntType, FloatType], NumberType),
+                }
                 if isinstance(left, NumberType) and isinstance(right, NumberType):
                     res_type = infer_number_type(left, right)
                 elif isinstance(left, ColumnType):
-                    res_type = self.__infer_col_type(left, right, [NumberType, BoolType])
+                    res_type = self.__infer_col_type(left, right, type_combinations)
                 elif isinstance(right, ColumnType):
-                    res_type = self.__infer_col_type(right, left, [NumberType, BoolType])
+                    res_type = self.__infer_col_type(right, left, type_combinations)
 
                 if isinstance(left, ColumnType) and isinstance(right, ColumnType):
                     # TODO adicionar combinaçaoes ao array de assertions
                     self.assertions.append("agsg")
 
             elif isinstance(expr, MultiplicationExpression):
+                type_combinations = {
+                    IntType: ([IntType, FloatType, StringType], ColumnType),
+                    FloatType: ([IntType, FloatType], FloatType),
+                    BoolType: ([IntType, FloatType, BoolType], NumberType),
+                    StringType: ([IntType], StringType),
+                }
                 if isinstance(left, IntType) and isinstance(right, StringType) or \
                         isinstance(right, IntType) and isinstance(left, StringType):
                     res_type = StringType
                 elif isinstance(left, NumberType) and isinstance(right, NumberType):
                     res_type = infer_number_type(left, right)
                 elif isinstance(left, ColumnType):
-                    res_type = self.__infer_col_type(left, right, [NumberType, BoolType])
+                    res_type = self.__infer_col_type(left, right, type_combinations)
                 elif isinstance(right, ColumnType):
-                    res_type = self.__infer_col_type(right, left, [NumberType, BoolType])
-
-                if isinstance(left, ColumnType) and isinstance(right, StringType):
-                    res_type = StringType()
-                    self.col_types[left.name].add(IntType)
-                if isinstance(left, StringType) and isinstance(right, ColumnType):
-                    res_type = StringType()
-                    self.col_types[right.name].add(IntType)
+                    res_type = self.__infer_col_type(right, left, type_combinations)
 
                 if isinstance(left, ColumnType) and isinstance(right, ColumnType):
                     res_type = left
@@ -154,7 +173,7 @@ class ValidatorAST:
         elif isinstance(expr, ColumnReferenceExpression):
             # adicionar assertion ao array
             if expr.name not in self.col_types:
-                self.col_types[expr.name] = set()
+                self.col_types[expr.name] = []
             res_type = ColumnType(expr.name)
 
         # if res_type is None:
