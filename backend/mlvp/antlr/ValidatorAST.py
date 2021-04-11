@@ -4,6 +4,7 @@ from mlvp.antlr.ast.expressions.literal.LiteralExpression import LiteralExpressi
 from mlvp.antlr.ast.expressions.unary import *
 from mlvp.antlr.ast.statements.CreateColumnStatement import CreateColumnStatement
 from mlvp.antlr.ast.types import *
+from mlvp.antlr.ast.types.Type import Type
 
 
 def infer_number_type(left, right):
@@ -22,11 +23,15 @@ class ValidatorAST:
         self.assertions = []
         self.col_types = {}
 
-    def validate_ast(self, root):
-        if isinstance(root, CreateColumnStatement):
-            # adicionar ao array de assertions o tipo resultante da expressao ao nome da coluna
-            expr_type = self.__expression_type(root.expr)
-            print("gaegea")
+    def validate_ast(self):
+        for statement in self.root.statements:
+            if isinstance(statement, CreateColumnStatement):
+                # adicionar ao array de assertions o tipo resultante da expressao ao nome da coluna
+                expr_type = self.__expression_type(statement.expr)
+                print("-----------------------------------------")
+                print(expr_type)
+                print(self.col_types)
+                print("-----------------------------------------")
 
     def __infer_col_type(self, type_a, type_b, combinations):
         res_type = None
@@ -38,7 +43,9 @@ class ValidatorAST:
 
     def __expression_type(self, expr):
         res_type = None
+        print(type(expr))
         if isinstance(expr, BinaryExpression):
+            print(type(expr))
             left = self.__expression_type(expr.left)
             right = self.__expression_type(expr.right)
             if isinstance(expr, AndExpression) or isinstance(expr, OrExpression):
@@ -138,19 +145,19 @@ class ValidatorAST:
                 res_type = NumberType()
                 self.col_types[expr.value.name].add(NumberType)
         elif isinstance(expr, LiteralExpression):
-            if expr.value == bool:
+            if expr.lit_type == bool:
                 res_type = BoolType()
-            elif expr.value == int:
+            elif expr.lit_type == int:
                 res_type = IntType()
-            elif expr.value == float:
+            elif expr.lit_type == float:
                 res_type = FloatType()
-            elif expr.value == str:
+            elif expr.lit_type == str:
                 res_type = StringType()
         elif isinstance(expr, ColumnReferenceExpression):
             # adicionar assertion ao array
             self.col_types[expr.name] = set()
-            res_type = ColumnType()
+            res_type = ColumnType(expr.name)
 
-        if res_type is None:
-            raise Exception("its None")
+        # if res_type is None:
+        #     raise Exception("its None")
         return res_type

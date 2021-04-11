@@ -1,4 +1,6 @@
 from antlr4 import *
+
+from mlvp.antlr.ValidatorAST import ValidatorAST
 from .gen.GrammarLexer import GrammarLexer
 from .gen.GrammarParser import GrammarParser
 from .TreeVisitor import TreeVisitor
@@ -13,5 +15,8 @@ def parse_text(text):
 
     tree_visitor = TreeVisitor()
     print(type(tree))
-    tree_visitor.visit_tree(tree)
+    ast = tree_visitor.visit_tree(tree)
     print("tree " + str(tree))
+
+    ast_validator = ValidatorAST(ast)
+    ast_validator.validate_ast()

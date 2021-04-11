@@ -8,5 +8,8 @@ class Point:
 class Position:
 
     def __init__(self, ctx):
-        self.start = Point(ctx.getStart().getLine(), ctx.getStart().getCharPositionInLine())
-        self.column = Point(ctx.getStop().getLine(), ctx.getStop().getCharPositionInLine())
+        # TODO
+        # self.start = Point(ctx.getSymbol().start.getLine(), ctx.getStart().getCharPositionInLine())
+        # self.column = Point(ctx.getStop().getLine(), ctx.getStop().getCharPositionInLine())
+        self.start = 0
+        self.end = 0

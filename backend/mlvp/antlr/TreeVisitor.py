@@ -1,3 +1,4 @@
+from mlvp.antlr.ast.FeatureEngProg import FeatureEngProg
 from mlvp.antlr.ast.statements.CreateColumnStatement import CreateColumnStatement
 from mlvp.antlr.ast.expressions.literal.LiteralExpression import LiteralExpression
 from mlvp.antlr.ast.expressions.ColumnReferenceExpression import ColumnReferenceExpression
@@ -9,8 +10,10 @@ from mlvp.antlr.ast.Position import Position
 class TreeVisitor:
 
     def visit_tree(self, ctx):
+        statements = []
         for child in ctx.children:
-            self.__visit_statement(child)
+            statements.append(self.__visit_statement(child))
+        return FeatureEngProg(statements)
 
     def __visit_statement(self, ctx):
         if ctx.create_col_stat() is not None:
@@ -23,7 +26,7 @@ class TreeVisitor:
 
     def __visit_expression(self, ctx):
         if ctx.unary_ope() is not None:
-            return self.__visit_unary_expression()
+            return self.__visit_unary_expression(ctx)
         elif ctx.BOOL() is not None:
             return LiteralExpression(ctx.BOOL().getText(), bool, Position(ctx))
         elif ctx.INT() is not None:
