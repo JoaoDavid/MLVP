@@ -43,9 +43,7 @@ class ValidatorAST:
 
     def __expression_type(self, expr):
         res_type = None
-        print(type(expr))
         if isinstance(expr, BinaryExpression):
-            print(type(expr))
             left = self.__expression_type(expr.left)
             right = self.__expression_type(expr.right)
             if isinstance(expr, AndExpression) or isinstance(expr, OrExpression):
@@ -71,9 +69,9 @@ class ValidatorAST:
                         isinstance(left, StringType) and isinstance(right, StringType):
                     res_type = BoolType()
                 elif isinstance(left, ColumnType):
-                    res_type = self.__infer_col_type(left, right, [IntType, FloatType, StringType, BoolType])
+                    res_type = self.__infer_col_type(left, right, [NumberType, StringType, BoolType])
                 elif isinstance(right, ColumnType):
-                    res_type = self.__infer_col_type(right, left, [IntType, FloatType, StringType, BoolType])
+                    res_type = self.__infer_col_type(right, left, [NumberType, StringType, BoolType])
 
                 if isinstance(left, ColumnType) and isinstance(right, ColumnType):
                     res_type = BoolType()
@@ -86,12 +84,12 @@ class ValidatorAST:
                 elif isinstance(left, StringType) and isinstance(right, StringType):
                     res_type = StringType()
                 elif isinstance(left, ColumnType):
-                    res_type = self.__infer_col_type(left, right, [IntType, FloatType, StringType, BoolType])
+                    res_type = self.__infer_col_type(left, right, [NumberType, StringType, BoolType])
                 elif isinstance(right, ColumnType):
-                    res_type = self.__infer_col_type(right, left, [IntType, FloatType, StringType, BoolType])
+                    res_type = self.__infer_col_type(right, left, [NumberType, StringType, BoolType])
 
                 if isinstance(left, ColumnType) and isinstance(right, ColumnType):
-                    res_type = ColumnType()
+                    res_type = left
                     # TODO adicionar combinaçaoes ao array de assertions
                     self.assertions.append("agsg")
 
@@ -100,9 +98,9 @@ class ValidatorAST:
                 if isinstance(left, NumberType) and isinstance(right, NumberType):
                     res_type = infer_number_type(left, right)
                 elif isinstance(left, ColumnType):
-                    res_type = self.__infer_col_type(left, right, [IntType, FloatType, BoolType])
+                    res_type = self.__infer_col_type(left, right, [NumberType, BoolType])
                 elif isinstance(right, ColumnType):
-                    res_type = self.__infer_col_type(right, left, [IntType, FloatType, BoolType])
+                    res_type = self.__infer_col_type(right, left, [NumberType, BoolType])
 
                 if isinstance(left, ColumnType) and isinstance(right, ColumnType):
                     # TODO adicionar combinaçaoes ao array de assertions
@@ -115,9 +113,9 @@ class ValidatorAST:
                 elif isinstance(left, NumberType) and isinstance(right, NumberType):
                     res_type = infer_number_type(left, right)
                 elif isinstance(left, ColumnType):
-                    res_type = self.__infer_col_type(left, right, [IntType, FloatType, BoolType])
+                    res_type = self.__infer_col_type(left, right, [NumberType, BoolType])
                 elif isinstance(right, ColumnType):
-                    res_type = self.__infer_col_type(right, left, [IntType, FloatType, BoolType])
+                    res_type = self.__infer_col_type(right, left, [NumberType, BoolType])
 
                 if isinstance(left, ColumnType) and isinstance(right, StringType):
                     res_type = StringType()
@@ -127,7 +125,7 @@ class ValidatorAST:
                     self.col_types[right.name].add(IntType)
 
                 if isinstance(left, ColumnType) and isinstance(right, ColumnType):
-                    res_type = ColumnType()
+                    res_type = left
                     # TODO adicionar combinaçaoes ao array de assertions
                     self.assertions.append("agsg")
 
@@ -155,7 +153,8 @@ class ValidatorAST:
                 res_type = StringType()
         elif isinstance(expr, ColumnReferenceExpression):
             # adicionar assertion ao array
-            self.col_types[expr.name] = set()
+            if expr.name not in self.col_types:
+                self.col_types[expr.name] = set()
             res_type = ColumnType(expr.name)
 
         # if res_type is None:
