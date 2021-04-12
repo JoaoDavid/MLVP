@@ -51,7 +51,7 @@ class GrammarParser ( Parser ):
     literalNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
                      "<INVALID>", "'('", "')'", "'['", "']'", "'{'", "'}'", 
                      "';'", "':'", "','", "'='", "'+'", "'-'", "'*'", "'/'", 
-                     "'%'", "'&&'", "'||'", "'!'", "'=='", "'!='", "'>='", 
+                     "'%'", "'and'", "'or'", "'not'", "'=='", "'!='", "'>='", 
                      "'>'", "'<='", "'<'" ]
 
     symbolicNames = [ "<INVALID>", "BOOL", "INT", "FLOAT", "STRING", "L_RND_BR", 

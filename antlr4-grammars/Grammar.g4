@@ -72,9 +72,9 @@ DIV        :  '/';
 MOD        :  '%';
 
 //Logical
-AND        :  '&&';
-OR         :  '||';
-NOT        :  '!';
+AND        :  'and';
+OR         :  'or';
+NOT        :  'not';
 
 //Comparison
 EQUAL      :  '==';
