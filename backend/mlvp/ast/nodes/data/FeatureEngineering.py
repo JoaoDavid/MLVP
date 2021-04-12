@@ -39,14 +39,13 @@ class FeatureEngineering(Node):
         emitter.set(out_ds, (x, y))
 
     def assertions(self):
-        print(self.ports)
         id_input = self.get_port(True, "Dataset").port_id
         id_output = self.get_port(False, "Engineered Dataset").port_id
         input_ds = Dataset(id_input)
         output_ds = Dataset(id_output)
 
         col_assertions = parse_text(self.lines, input_ds.dataset)
-        print(col_assertions)
+
         return [
             input_ds.cols == output_ds.cols,  # TODO, depends on the number of columns added
             input_ds.rows == output_ds.rows,

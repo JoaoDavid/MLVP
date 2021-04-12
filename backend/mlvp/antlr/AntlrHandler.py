@@ -14,9 +14,7 @@ def parse_text(text, dataset):
     tree = parser.program()
 
     tree_visitor = TreeVisitor()
-    print(type(tree))
     ast = tree_visitor.visit_tree(tree)
-    print("tree " + str(tree))
 
     ast_validator = ValidatorAST(ast, dataset)
     return ast_validator.validate_ast()
