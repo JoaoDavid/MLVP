@@ -22,6 +22,7 @@ ColumnType = Datatype('ColumnType')
 ColumnType.declare('int')
 ColumnType.declare('float')
 ColumnType.declare('string')
+ColumnType.declare('bool')
 ColumnType.declare('mixed')
 ColumnType = ColumnType.create()
 
@@ -42,6 +43,8 @@ def get_col_type(col_str):
         return ColumnType.float
     elif col_str == "string":
         return ColumnType.string
+    elif col_str == "bool":
+        return ColumnType.bool
     elif col_str == "mixed":
         return ColumnType.mixed
 

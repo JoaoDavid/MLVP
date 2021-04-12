@@ -45,8 +45,8 @@ class FeatureEngineering(Node):
         input_ds = Dataset(id_input)
         output_ds = Dataset(id_output)
 
-        parse_text(self.lines)
-
+        col_assertions = parse_text(self.lines, input_ds.dataset)
+        print(col_assertions)
         return [
             input_ds.cols == output_ds.cols,  # TODO, depends on the number of columns added
             input_ds.rows == output_ds.rows,
@@ -55,4 +55,4 @@ class FeatureEngineering(Node):
             input_ds.min_label_count == output_ds.min_label_count,
             input_ds.balanced == output_ds.balanced,
             input_ds.time_series == output_ds.time_series,
-        ]
+        ] + col_assertions

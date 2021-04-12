@@ -4,7 +4,7 @@ from mlvp.antlr.ast.expressions.literal.LiteralExpression import LiteralExpressi
 from mlvp.antlr.ast.expressions.unary import *
 from mlvp.antlr.ast.statements.CreateColumnStatement import CreateColumnStatement
 from mlvp.antlr.ast.types import *
-from mlvp.antlr.ast.types.Type import Type
+from mlvp.typecheck import *
 
 
 def infer_number_type(left, right):
@@ -16,23 +16,48 @@ def infer_number_type(left, right):
         return left
 
 
+def get_col_type_2(col):
+    if isinstance(col, IntType) or col == IntType:
+        return ColumnType.int
+    elif isinstance(col, FloatType) or col == FloatType:
+        return ColumnType.float
+    elif isinstance(col, StringType) or col == StringType:
+        return ColumnType.string
+
+
 class ValidatorAST:
 
-    def __init__(self, root):
+    def __init__(self, root, dataset):
         self.root = root
+        self.dataset = dataset
         self.assertions = []
         self.col_types = {}
 
     def validate_ast(self):
+        print(IntType)
         for statement in self.root.statements:
             if isinstance(statement, CreateColumnStatement):
                 # adicionar ao array de assertions o tipo resultante da expressao ao nome da coluna
                 expr_type = self.__expression_type(statement.expr)
                 print("-----------------------------------------")
-                print(expr_type)
-                print(self.col_types)
+                print(str(expr_type))
+                print(str(self.col_types))
                 print("-----------------------------------------")
         # TODO, adicionar ao array de assertions que as keys de col-types estao no dataset
+        for col_name, combinations in self.col_types.items():
+            for combination in combinations:
+                curr_combination = []
+                for col_type in combination:
+                    print(str(col_type))
+                    str_col_type = get_col_type(str(col_type))
+                    print(str_col_type)
+                    print(type(str_col_type))
+                    print(self.dataset)
+                    print(type(self.dataset))
+                    curr_combination.append(column(self.dataset, String(col_name)) == str_col_type)
+                self.assertions.append(Or(curr_combination))
+                print(combination)
+        return self.assertions
 
     # type_combinations is a dict, type_b:{([possible types for type_a], res_type)}
     def __infer_col_type(self, type_a, type_b, type_combinations):
@@ -90,9 +115,9 @@ class ValidatorAST:
 
             elif isinstance(expr, SumExpression):
                 type_combinations = {
-                    IntType: ([IntType, FloatType, BoolType], NumberType),
-                    FloatType: ([IntType, FloatType, BoolType], FloatType),
-                    StringType: ([StringType], StringType),
+                    IntType: ([IntType(), FloatType(), BoolType()], NumberType),
+                    FloatType: ([IntType, FloatType, BoolType], FloatType()),
+                    StringType: ([StringType], StringType()),
                     BoolType: ([IntType, FloatType, BoolType], NumberType),
                 }
                 if isinstance(left, NumberType) and isinstance(right, NumberType):
@@ -136,7 +161,7 @@ class ValidatorAST:
                 }
                 if isinstance(left, IntType) and isinstance(right, StringType) or \
                         isinstance(right, IntType) and isinstance(left, StringType):
-                    res_type = StringType
+                    res_type = StringType()
                 elif isinstance(left, NumberType) and isinstance(right, NumberType):
                     res_type = infer_number_type(left, right)
                 elif isinstance(left, InferenceType):
