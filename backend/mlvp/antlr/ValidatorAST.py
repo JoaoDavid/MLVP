@@ -38,14 +38,7 @@ class ValidatorAST:
             if isinstance(statement, CreateColumnStatement):
                 # adicionar ao array de assertions o tipo resultante da expressao ao nome da coluna
                 expr_type = self.__expression_type(statement.expr)
-                if isinstance(expr_type, NumberType):
-                    self.assertions.append(Or(column(self.dataset, String(statement.name)) == get_col_type("int"),
-                                           column(self.dataset, String(statement.name)) == get_col_type("float")))
-                else:
-                    str_col_type = get_col_type(str(expr_type))
-                    print("expr_type " + str(expr_type))
-                    print("str_col_type " + str(str_col_type))
-                    self.assertions.append(column(self.dataset, String(statement.name)) == str_col_type)
+                self.assertions.append(column(self.dataset, String(statement.name)) == expr_type)
                 print("-----------------------------------------")
                 print(str(expr_type))
                 print(str(self.col_types))
@@ -75,130 +68,84 @@ class ValidatorAST:
             left = self.__expression_type(expr.left)
             right = self.__expression_type(expr.right)
             if isinstance(expr, AndExpression) or isinstance(expr, OrExpression):
-                type_combinations = {
-                    BoolType: ([BoolType], BoolType),
-                }
-                if isinstance(left, BoolType) and isinstance(right, BoolType):
-                    res_type = BoolType()
-                elif isinstance(left, InferenceType):
-                    res_type = self.__infer_col_type(left, right, type_combinations)
-                elif isinstance(right, InferenceType):
-                    res_type = self.__infer_col_type(right, left, type_combinations)
-
-                if isinstance(left, InferenceType) and isinstance(right, InferenceType):
-                    res_type = BoolType()
-                    # TODO adicionar combinaçaoes ao array de assertions
-                    # tem ambos de ser do tipo bool
-                    self.assertions.append("agsg")
+                self.assertions.append(
+                    Or(
+                        And(left == ColumnType.bool, right == ColumnType.bool),
+                    )
+                )
+                return and_or(left, right)
 
             elif isinstance(expr, EqualExpression) or isinstance(expr, NotEqualExpression):
-                res_type = BoolType()
+                return ColumnType.bool
 
             elif isinstance(expr, GreaterOrEqualExpression) or isinstance(expr, GreaterExpression) or \
                     isinstance(expr, LessOrEqualExpression) or isinstance(expr, LessExpression):
-                type_combinations = {
-                    IntType: ([IntType, FloatType], BoolType),
-                    FloatType: ([IntType, FloatType], BoolType),
-                    StringType: ([StringType], BoolType),
-                }
-                if isinstance(left, NumberType) and isinstance(right, NumberType) or \
-                        isinstance(left, StringType) and isinstance(right, StringType):
-                    res_type = BoolType()
-                elif isinstance(left, InferenceType):
-                    res_type = self.__infer_col_type(left, right, type_combinations)
-                elif isinstance(right, InferenceType):
-                    res_type = self.__infer_col_type(right, left, type_combinations)
-
-                if isinstance(left, InferenceType) and isinstance(right, InferenceType):
-                    res_type = BoolType()
-                    # TODO adicionar combinaçaoes ao array de assertions
-                    self.assertions.append("agsg")
+                self.assertions.append(
+                    Or(
+                        And(left == ColumnType.int, right == ColumnType.int),
+                        And(left == ColumnType.int, right == ColumnType.float),
+                        And(left == ColumnType.float, right == ColumnType.float),
+                        And(left == ColumnType.float, right == ColumnType.int),
+                        And(left == ColumnType.string, right == ColumnType.string),
+                    )
+                )
+                return compare_dimension(left, right)
 
             elif isinstance(expr, SumExpression):
-                type_combinations = {
-                    IntType: ([IntType, FloatType], NumberType),
-                    FloatType: ([IntType, FloatType], FloatType),
-                    StringType: ([StringType], StringType),
-                }
-                if isinstance(left, NumberType) and isinstance(right, NumberType):
-                    res_type = infer_number_type(left, right)
-                elif isinstance(left, StringType) and isinstance(right, StringType):
-                    res_type = StringType()
-                elif isinstance(left, InferenceType):
-                    res_type = self.__infer_col_type(left, right, type_combinations)
-                elif isinstance(right, InferenceType):
-                    res_type = self.__infer_col_type(right, left, type_combinations)
-
-                if isinstance(left, InferenceType) and isinstance(right, InferenceType):
-                    res_type = left
-                    # TODO adicionar combinaçaoes ao array de assertions
-                    self.assertions.append("agsg")
-
+                self.assertions.append(
+                    Or(
+                        And(left == ColumnType.int, right == ColumnType.int),
+                        And(left == ColumnType.int, right == ColumnType.float),
+                        And(left == ColumnType.float, right == ColumnType.float),
+                        And(left == ColumnType.float, right == ColumnType.int),
+                        And(left == ColumnType.string, right == ColumnType.string),
+                    )
+                )
+                return plus(left, right)
             elif isinstance(expr, SubtractionExpression) or isinstance(expr, DivisionExpression) or \
                     isinstance(expr, ModuloExpression):
-                type_combinations = {
-                    IntType: ([IntType, FloatType], NumberType),
-                    FloatType: ([IntType, FloatType], FloatType),
-                }
-                if isinstance(left, NumberType) and isinstance(right, NumberType):
-                    res_type = infer_number_type(left, right)
-                elif isinstance(left, InferenceType):
-                    res_type = self.__infer_col_type(left, right, type_combinations)
-                elif isinstance(right, InferenceType):
-                    res_type = self.__infer_col_type(right, left, type_combinations)
-
-                if isinstance(left, InferenceType) and isinstance(right, InferenceType):
-                    # TODO adicionar combinaçaoes ao array de assertions
-                    self.assertions.append("agsg")
-
+                self.assertions.append(
+                    Or(
+                        And(left == ColumnType.int, right == ColumnType.int),
+                        And(left == ColumnType.int, right == ColumnType.float),
+                        And(left == ColumnType.float, right == ColumnType.float),
+                        And(left == ColumnType.float, right == ColumnType.int),
+                    )
+                )
+                return sub_div_mod(left, right)
             elif isinstance(expr, MultiplicationExpression):
-                type_combinations = {
-                    IntType: ([IntType, FloatType, StringType], InferenceType),
-                    FloatType: ([IntType, FloatType], FloatType),
-                    StringType: ([IntType], StringType),
-                }
-                if isinstance(left, IntType) and isinstance(right, StringType) or \
-                        isinstance(right, IntType) and isinstance(left, StringType):
-                    res_type = StringType()
-                elif isinstance(left, NumberType) and isinstance(right, NumberType):
-                    res_type = infer_number_type(left, right)
-                elif isinstance(left, InferenceType):
-                    res_type = self.__infer_col_type(left, right, type_combinations)
-                elif isinstance(right, InferenceType):
-                    res_type = self.__infer_col_type(right, left, type_combinations)
-
-                if isinstance(left, InferenceType) and isinstance(right, InferenceType):
-                    res_type = left
-                    # TODO adicionar combinaçaoes ao array de assertions
-                    self.assertions.append("agsg")
-
+                self.assertions.append(
+                    Or(
+                        And(left == ColumnType.int, right == ColumnType.int),
+                        And(left == ColumnType.int, right == ColumnType.float),
+                        And(left == ColumnType.float, right == ColumnType.float),
+                        And(left == ColumnType.float, right == ColumnType.int),
+                        And(left == ColumnType.int, right == ColumnType.string),
+                        And(left == ColumnType.string, right == ColumnType.int),
+                    )
+                )
+                return multiplication(left, right)
         elif isinstance(expr, NotExpression):
-            if isinstance(expr.value, BoolType):
-                res_type = BoolType()
-            elif isinstance(expr.value, InferenceType):
-                res_type = BoolType()
-                self.col_types[expr.value.name].add(BoolType)
+            expr_type = self.__expression_type(expr.value)
+            self.assertions.append(expr_type == ColumnType.bool)
+            return expr_type
 
         elif isinstance(expr, NegativeExpression):
-            if isinstance(expr.value, IntType) or isinstance(expr.value, FloatType):
-                res_type = expr.value
-            elif isinstance(expr.value, InferenceType):
-                res_type = NumberType()
-                self.col_types[expr.value.name].add(NumberType)
+            expr_type = self.__expression_type(expr.value)
+            self.assertions.append(Or(expr_type == ColumnType.int, expr_type == ColumnType.float))
+            return expr_type
+
         elif isinstance(expr, LiteralExpression):
             if expr.lit_type == bool:
-                res_type = BoolType()
+                res_type = ColumnType.bool
             elif expr.lit_type == int:
-                res_type = IntType()
+                res_type = ColumnType.int
             elif expr.lit_type == float:
-                res_type = FloatType()
+                res_type = ColumnType.float
             elif expr.lit_type == str:
-                res_type = StringType()
+                res_type = ColumnType.string
         elif isinstance(expr, ColumnReferenceExpression):
-            # adicionar assertion ao array
-            if expr.name not in self.col_types:
-                self.col_types[expr.name] = []
-            res_type = InferenceType(expr.name)
+            res_type = column(self.dataset, String(expr.name))
 
         # if res_type is None:
         #     raise Exception("its None")

@@ -35,6 +35,21 @@ column_index = Function('column_index', StringSort(), IntSort(), ColumnType)
 # column_index = Function('column_name', dataset_id, index, column_name)
 get_col_name = Function('get_col_name', StringSort(), IntSort(), StringSort())
 
+and_or = Function('and_or', ColumnType, ColumnType, ColumnType)
+
+equality = Function('equality', ColumnType, ColumnType, ColumnType)
+
+compare_dimension = Function('compare_dimension', ColumnType, ColumnType, ColumnType)
+
+plus = Function('plus', ColumnType, ColumnType, ColumnType)
+
+sub_div_mod = Function('subtraction', ColumnType, ColumnType, ColumnType)
+
+multiplication = Function('multiplication', ColumnType, ColumnType, ColumnType)
+
+negate = Function('negate', ColumnType, ColumnType)
+
+negative = Function('negative', ColumnType, ColumnType)
 
 def get_col_type(col_str):
     if col_str == "int":
