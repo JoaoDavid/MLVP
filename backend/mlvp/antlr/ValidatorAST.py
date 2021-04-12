@@ -70,7 +70,7 @@ class ValidatorAST:
             if isinstance(expr, AndExpression) or isinstance(expr, OrExpression):
                 self.assertions.append(
                     Or(
-                        And(left == ColumnType.bool, right == ColumnType.bool),
+                        And(left == ColumnType.bool, right == ColumnType.bool, and_or(left, right) == ColumnType.bool)
                     )
                 )
                 return and_or(left, right)
@@ -80,60 +80,98 @@ class ValidatorAST:
 
             elif isinstance(expr, GreaterOrEqualExpression) or isinstance(expr, GreaterExpression) or \
                     isinstance(expr, LessOrEqualExpression) or isinstance(expr, LessExpression):
+                res_type = compare_dimension(left, right)
                 self.assertions.append(
                     Or(
-                        And(left == ColumnType.int, right == ColumnType.int),
-                        And(left == ColumnType.int, right == ColumnType.float),
-                        And(left == ColumnType.float, right == ColumnType.float),
-                        And(left == ColumnType.float, right == ColumnType.int),
-                        And(left == ColumnType.string, right == ColumnType.string),
+                        And(left == ColumnType.int, right == ColumnType.int, res_type == ColumnType.bool),
+                        And(left == ColumnType.int, right == ColumnType.float, res_type == ColumnType.bool),
+                        And(left == ColumnType.float, right == ColumnType.float, res_type == ColumnType.bool),
+                        And(left == ColumnType.float, right == ColumnType.int, res_type == ColumnType.bool),
+                        And(left == ColumnType.string, right == ColumnType.string, res_type == ColumnType.bool),
                     )
                 )
-                return compare_dimension(left, right)
+                return res_type
 
             elif isinstance(expr, SumExpression):
+                res_type = plus(left, right)
                 self.assertions.append(
                     Or(
-                        And(left == ColumnType.int, right == ColumnType.int),
-                        And(left == ColumnType.int, right == ColumnType.float),
-                        And(left == ColumnType.float, right == ColumnType.float),
-                        And(left == ColumnType.float, right == ColumnType.int),
-                        And(left == ColumnType.string, right == ColumnType.string),
+                        And(left == ColumnType.int, right == ColumnType.int, res_type == ColumnType.int),
+                        And(left == ColumnType.int, right == ColumnType.float, res_type == ColumnType.float),
+                        And(left == ColumnType.float, right == ColumnType.float, res_type == ColumnType.float),
+                        And(left == ColumnType.float, right == ColumnType.int, res_type == ColumnType.float),
+                        And(left == ColumnType.string, right == ColumnType.string, res_type == ColumnType.string),
                     )
                 )
-                return plus(left, right)
-            elif isinstance(expr, SubtractionExpression) or isinstance(expr, DivisionExpression) or \
-                    isinstance(expr, ModuloExpression):
+                return res_type
+            elif isinstance(expr, SubtractionExpression):
+                res_type = sub(left, right)
                 self.assertions.append(
                     Or(
-                        And(left == ColumnType.int, right == ColumnType.int),
-                        And(left == ColumnType.int, right == ColumnType.float),
-                        And(left == ColumnType.float, right == ColumnType.float),
-                        And(left == ColumnType.float, right == ColumnType.int),
+                        And(left == ColumnType.int, right == ColumnType.int, res_type == ColumnType.int),
+                        And(left == ColumnType.int, right == ColumnType.float, res_type == ColumnType.float),
+                        And(left == ColumnType.float, right == ColumnType.float, res_type == ColumnType.float),
+                        And(left == ColumnType.float, right == ColumnType.int, res_type == ColumnType.float),
                     )
                 )
-                return sub_div_mod(left, right)
+                return res_type
+            elif isinstance(expr, ModuloExpression):
+                res_type = mod(left, right)
+                self.assertions.append(
+                    Or(
+                        And(left == ColumnType.int, right == ColumnType.int, res_type == ColumnType.int),
+                        And(left == ColumnType.int, right == ColumnType.float, res_type == ColumnType.float),
+                        And(left == ColumnType.float, right == ColumnType.float, res_type == ColumnType.float),
+                        And(left == ColumnType.float, right == ColumnType.int, res_type == ColumnType.float),
+                    )
+                )
+                return res_type
+            elif isinstance(expr, DivisionExpression):
+                res_type = div(left, right)
+                self.assertions.append(
+                    Or(
+                        And(left == ColumnType.int, right == ColumnType.int, res_type == ColumnType.float),
+                        And(left == ColumnType.int, right == ColumnType.float, res_type == ColumnType.float),
+                        And(left == ColumnType.float, right == ColumnType.float, res_type == ColumnType.float),
+                        And(left == ColumnType.float, right == ColumnType.int, res_type == ColumnType.float),
+                    )
+                )
+                return res_type
             elif isinstance(expr, MultiplicationExpression):
+                res_type = multiplication(left, right)
                 self.assertions.append(
                     Or(
-                        And(left == ColumnType.int, right == ColumnType.int),
-                        And(left == ColumnType.int, right == ColumnType.float),
-                        And(left == ColumnType.float, right == ColumnType.float),
-                        And(left == ColumnType.float, right == ColumnType.int),
-                        And(left == ColumnType.int, right == ColumnType.string),
-                        And(left == ColumnType.string, right == ColumnType.int),
+                        And(left == ColumnType.int, right == ColumnType.int, res_type == ColumnType.int),
+                        And(left == ColumnType.int, right == ColumnType.float, res_type == ColumnType.float),
+                        And(left == ColumnType.float, right == ColumnType.float, res_type == ColumnType.float),
+                        And(left == ColumnType.float, right == ColumnType.int, res_type == ColumnType.float),
+                        And(left == ColumnType.int, right == ColumnType.string, res_type == ColumnType.string),
+                        And(left == ColumnType.string, right == ColumnType.int, res_type == ColumnType.string),
                     )
                 )
-                return multiplication(left, right)
+                return res_type
         elif isinstance(expr, NotExpression):
             expr_type = self.__expression_type(expr.value)
-            self.assertions.append(expr_type == ColumnType.bool)
-            return expr_type
+            res_type = negate(expr_type)
+
+            self.assertions.append(
+                Or(
+                    And(expr_type == ColumnType.bool, res_type == ColumnType.bool),
+                )
+            )
+            return res_type
 
         elif isinstance(expr, NegativeExpression):
             expr_type = self.__expression_type(expr.value)
-            self.assertions.append(Or(expr_type == ColumnType.int, expr_type == ColumnType.float))
-            return expr_type
+            res_type = negative(expr_type)
+
+            self.assertions.append(
+                Or(
+                    And(expr_type == ColumnType.int, res_type == ColumnType.int),
+                    And(expr_type == ColumnType.float, res_type == ColumnType.float),
+                )
+            )
+            return res_type
 
         elif isinstance(expr, LiteralExpression):
             if expr.lit_type == bool:

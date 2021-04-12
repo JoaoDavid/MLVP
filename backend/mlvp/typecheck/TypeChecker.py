@@ -88,7 +88,7 @@ class TypeChecker:
             self.solver.add(assertion[1])
 
         # add operators rules to the solver
-        self.solver.add(operator_rules)
+        # self.solver.add(operator_rules)
 
         self.solver.push()
         for assertion in self.all_node_assertions:

@@ -11,8 +11,9 @@ class TreeVisitor:
 
     def visit_tree(self, ctx):
         statements = []
-        for child in ctx.children:
-            statements.append(self.__visit_statement(child))
+        if ctx.children is not None:
+            for child in ctx.children:
+                statements.append(self.__visit_statement(child))
         return FeatureEngProg(statements)
 
     def __visit_statement(self, ctx):
