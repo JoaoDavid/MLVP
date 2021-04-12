@@ -1,4 +1,4 @@
-from mlvp.typecheck import link
+from mlvp.typecheck import link, operator_rules
 from mlvp.ast.nodes import *
 from mlvp.ast.ports import *
 from z3 import *
@@ -86,6 +86,9 @@ class TypeChecker:
 
         for assertion in self.all_link_assertions:
             self.solver.add(assertion[1])
+
+        # add operators rules to the solver
+        self.solver.add(operator_rules)
 
         self.solver.push()
         for assertion in self.all_node_assertions:

@@ -36,20 +36,76 @@ column_index = Function('column_index', StringSort(), IntSort(), ColumnType)
 get_col_name = Function('get_col_name', StringSort(), IntSort(), StringSort())
 
 and_or = Function('and_or', ColumnType, ColumnType, ColumnType)
-
 equality = Function('equality', ColumnType, ColumnType, ColumnType)
-
 compare_dimension = Function('compare_dimension', ColumnType, ColumnType, ColumnType)
-
 plus = Function('plus', ColumnType, ColumnType, ColumnType)
-
-sub_div_mod = Function('subtraction', ColumnType, ColumnType, ColumnType)
-
+sub = Function('subtraction', ColumnType, ColumnType, ColumnType)
+div = Function('subtraction', ColumnType, ColumnType, ColumnType)
+mod = Function('subtraction', ColumnType, ColumnType, ColumnType)
 multiplication = Function('multiplication', ColumnType, ColumnType, ColumnType)
-
 negate = Function('negate', ColumnType, ColumnType)
-
 negative = Function('negative', ColumnType, ColumnType)
+
+and_or_rule = [
+    and_or(ColumnType.bool, ColumnType.bool) == ColumnType.bool
+]
+
+compare_dimension_rule = [
+    compare_dimension(ColumnType.int, ColumnType.int) == ColumnType.bool,
+    compare_dimension(ColumnType.int, ColumnType.float) == ColumnType.bool,
+    compare_dimension(ColumnType.float, ColumnType.float) == ColumnType.bool,
+    compare_dimension(ColumnType.float, ColumnType.int) == ColumnType.bool,
+    compare_dimension(ColumnType.string, ColumnType.string) == ColumnType.bool,
+]
+
+plus_rule = [
+    plus(ColumnType.int, ColumnType.int) == ColumnType.int,
+    plus(ColumnType.int, ColumnType.float) == ColumnType.float,
+    plus(ColumnType.float, ColumnType.float) == ColumnType.float,
+    plus(ColumnType.float, ColumnType.int) == ColumnType.float,
+    plus(ColumnType.string, ColumnType.string) == ColumnType.string,
+]
+
+sub_rule = [
+    sub(ColumnType.int, ColumnType.int) == ColumnType.int,
+    sub(ColumnType.int, ColumnType.float) == ColumnType.float,
+    sub(ColumnType.float, ColumnType.float) == ColumnType.float,
+    sub(ColumnType.float, ColumnType.int) == ColumnType.float,
+]
+
+mod_rule = [
+    sub(ColumnType.int, ColumnType.int) == ColumnType.int,
+    sub(ColumnType.int, ColumnType.float) == ColumnType.float,
+    sub(ColumnType.float, ColumnType.float) == ColumnType.float,
+    sub(ColumnType.float, ColumnType.int) == ColumnType.float,
+]
+
+div_rule = [
+    div(ColumnType.int, ColumnType.int) == ColumnType.float,
+    div(ColumnType.int, ColumnType.float) == ColumnType.float,
+    div(ColumnType.float, ColumnType.float) == ColumnType.float,
+    div(ColumnType.float, ColumnType.int) == ColumnType.float,
+]
+
+mul_rule = [
+    multiplication(ColumnType.int, ColumnType.int) == ColumnType.int,
+    multiplication(ColumnType.int, ColumnType.float) == ColumnType.float,
+    multiplication(ColumnType.float, ColumnType.float) == ColumnType.float,
+    multiplication(ColumnType.float, ColumnType.int) == ColumnType.float,
+]
+
+negate_rule = [
+    negate(ColumnType.bool) == ColumnType.bool,
+]
+
+negative_rule = [
+    negative(ColumnType.int) == ColumnType.int,
+    negative(ColumnType.float) == ColumnType.float,
+]
+
+
+operator_rules = and_or_rule + compare_dimension_rule + plus_rule + sub_rule + \
+                 mod_rule + div_rule + mul_rule + negate_rule + negative_rule
 
 def get_col_type(col_str):
     if col_str == "int":
