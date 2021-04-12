@@ -116,10 +116,9 @@ class ValidatorAST:
 
             elif isinstance(expr, SumExpression):
                 type_combinations = {
-                    IntType: ([IntType, FloatType, BoolType], NumberType),
-                    FloatType: ([IntType, FloatType, BoolType], FloatType),
+                    IntType: ([IntType, FloatType], NumberType),
+                    FloatType: ([IntType, FloatType], FloatType),
                     StringType: ([StringType], StringType),
-                    BoolType: ([IntType, FloatType, BoolType], NumberType),
                 }
                 if isinstance(left, NumberType) and isinstance(right, NumberType):
                     res_type = infer_number_type(left, right)
@@ -140,7 +139,6 @@ class ValidatorAST:
                 type_combinations = {
                     IntType: ([IntType, FloatType], NumberType),
                     FloatType: ([IntType, FloatType], FloatType),
-                    BoolType: ([IntType, FloatType], NumberType),
                 }
                 if isinstance(left, NumberType) and isinstance(right, NumberType):
                     res_type = infer_number_type(left, right)
@@ -157,7 +155,6 @@ class ValidatorAST:
                 type_combinations = {
                     IntType: ([IntType, FloatType, StringType], InferenceType),
                     FloatType: ([IntType, FloatType], FloatType),
-                    BoolType: ([IntType, FloatType, BoolType], NumberType),
                     StringType: ([IntType], StringType),
                 }
                 if isinstance(left, IntType) and isinstance(right, StringType) or \
