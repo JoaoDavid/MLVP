@@ -34,29 +34,29 @@ class ValidatorAST:
         self.col_types = {}
 
     def validate_ast(self):
-        print(IntType)
         for statement in self.root.statements:
             if isinstance(statement, CreateColumnStatement):
                 # adicionar ao array de assertions o tipo resultante da expressao ao nome da coluna
                 expr_type = self.__expression_type(statement.expr)
+                if isinstance(expr_type, NumberType):
+                    self.assertions.append(Or(column(self.dataset, String(statement.name)) == get_col_type("int"),
+                                           column(self.dataset, String(statement.name)) == get_col_type("float")))
+                else:
+                    str_col_type = get_col_type(str(expr_type))
+                    print("expr_type " + str(expr_type))
+                    print("str_col_type " + str(str_col_type))
+                    self.assertions.append(column(self.dataset, String(statement.name)) == str_col_type)
                 print("-----------------------------------------")
                 print(str(expr_type))
                 print(str(self.col_types))
-                print("-----------------------------------------")
         # TODO, adicionar ao array de assertions que as keys de col-types estao no dataset
         for col_name, combinations in self.col_types.items():
             for combination in combinations:
                 curr_combination = []
                 for col_type in combination:
-                    print(str(col_type))
-                    str_col_type = get_col_type(str(col_type))
-                    print(str_col_type)
-                    print(type(str_col_type))
-                    print(self.dataset)
-                    print(type(self.dataset))
+                    str_col_type = get_col_type(str(col_type()))
                     curr_combination.append(column(self.dataset, String(col_name)) == str_col_type)
                 self.assertions.append(Or(curr_combination))
-                print(combination)
         return self.assertions
 
     # type_combinations is a dict, type_b:{([possible types for type_a], res_type)}
@@ -65,7 +65,8 @@ class ValidatorAST:
         for curr_type, combinations in type_combinations.items():
             if isinstance(type_b, curr_type):
                 self.col_types[type_a.name].append(combinations[0])
-                res_type = combinations[1]
+                res_type = combinations[1]()
+                print(res_type)
         return res_type
 
     def __expression_type(self, expr):
@@ -115,9 +116,9 @@ class ValidatorAST:
 
             elif isinstance(expr, SumExpression):
                 type_combinations = {
-                    IntType: ([IntType(), FloatType(), BoolType()], NumberType),
-                    FloatType: ([IntType, FloatType, BoolType], FloatType()),
-                    StringType: ([StringType], StringType()),
+                    IntType: ([IntType, FloatType, BoolType], NumberType),
+                    FloatType: ([IntType, FloatType, BoolType], FloatType),
+                    StringType: ([StringType], StringType),
                     BoolType: ([IntType, FloatType, BoolType], NumberType),
                 }
                 if isinstance(left, NumberType) and isinstance(right, NumberType):
