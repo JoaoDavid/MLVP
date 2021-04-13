@@ -57,8 +57,8 @@ class SplitDataset(Node):
             test_ds.rows == ToInt(ToReal(input_ds.rows) * self.test_size),
             input_ds.cols == train_ds.cols,
             train_ds.cols == test_ds.cols,
-            input_ds.dataset == id_output_train.dataset,
-            input_ds.dataset == id_output_test.dataset,
+            input_ds.dataset == train_ds.dataset,
+            input_ds.dataset == test_ds.dataset,
             train_ds.n_labels == ToInt(ToReal(input_ds.n_labels) * self.train_size),
             test_ds.n_labels == ToInt(ToReal(input_ds.n_labels) * self.test_size),
             z3_stratify_by_class == self.stratify_by_class,  # TODO rever
