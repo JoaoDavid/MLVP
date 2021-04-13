@@ -37,6 +37,7 @@ class Oversampling(Node):
 
         return [
             input_ds.cols == output_ds.cols,
+            input_ds.dataset == output_ds.dataset,
             Implies(input_ds.balanced, And(
                 input_ds.rows == output_ds.rows,
                 input_ds.n_labels == output_ds.n_labels,
@@ -49,5 +50,5 @@ class Oversampling(Node):
                 input_ds.max_label_count == output_ds.max_label_count,
                 output_ds.min_label_count == output_ds.max_label_count,
             )),
-            output_ds.balanced
+            output_ds.balanced,
         ]

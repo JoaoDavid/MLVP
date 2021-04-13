@@ -54,4 +54,5 @@ class FeatureEngineering(Node):
             input_ds.min_label_count == output_ds.min_label_count,
             input_ds.balanced == output_ds.balanced,
             input_ds.time_series == output_ds.time_series,
+            input_ds.dataset == output_ds.dataset,
         ] + col_assertions
