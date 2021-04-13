@@ -184,7 +184,6 @@ class ValidatorAST:
                 res_type = ColumnType.string
         elif isinstance(expr, ColumnReferenceExpression):
             res_type = column(self.dataset, String(expr.name))
+            self.assertions.append(column_exists(self.dataset, String(expr.name)))
 
-        # if res_type is None:
-        #     raise Exception("its None")
         return res_type

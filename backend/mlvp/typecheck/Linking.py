@@ -35,6 +35,9 @@ column_index = Function('column_index', StringSort(), IntSort(), ColumnType)
 # column_index = Function('column_name', dataset_id, index, column_name)
 get_col_name = Function('get_col_name', StringSort(), IntSort(), StringSort())
 
+# column_index = Function('column_name', dataset_id, column_name, exists_or_not)
+column_exists = Function('column_exists', StringSort(), StringSort(), BoolSort())
+
 and_or = Function('and_or', ColumnType, ColumnType, ColumnType)
 equality = Function('equality', ColumnType, ColumnType, ColumnType)
 compare_dimension = Function('compare_dimension', ColumnType, ColumnType, ColumnType)
@@ -51,47 +54,59 @@ and_or_rule = [
 ]
 
 compare_dimension_rule = [
-    compare_dimension(ColumnType.int, ColumnType.int) == ColumnType.bool,
-    compare_dimension(ColumnType.int, ColumnType.float) == ColumnType.bool,
-    compare_dimension(ColumnType.float, ColumnType.float) == ColumnType.bool,
-    compare_dimension(ColumnType.float, ColumnType.int) == ColumnType.bool,
-    compare_dimension(ColumnType.string, ColumnType.string) == ColumnType.bool,
+    Or(
+        compare_dimension(ColumnType.int, ColumnType.int) == ColumnType.bool,
+        compare_dimension(ColumnType.int, ColumnType.float) == ColumnType.bool,
+        compare_dimension(ColumnType.float, ColumnType.float) == ColumnType.bool,
+        compare_dimension(ColumnType.float, ColumnType.int) == ColumnType.bool,
+        compare_dimension(ColumnType.string, ColumnType.string) == ColumnType.bool,
+    )
 ]
 
 plus_rule = [
-    plus(ColumnType.int, ColumnType.int) == ColumnType.int,
-    plus(ColumnType.int, ColumnType.float) == ColumnType.float,
-    plus(ColumnType.float, ColumnType.float) == ColumnType.float,
-    plus(ColumnType.float, ColumnType.int) == ColumnType.float,
-    plus(ColumnType.string, ColumnType.string) == ColumnType.string,
+    Or(
+        plus(ColumnType.int, ColumnType.int) == ColumnType.int,
+        plus(ColumnType.int, ColumnType.float) == ColumnType.float,
+        plus(ColumnType.float, ColumnType.float) == ColumnType.float,
+        plus(ColumnType.float, ColumnType.int) == ColumnType.float,
+        plus(ColumnType.string, ColumnType.string) == ColumnType.string,
+    )
 ]
 
 sub_rule = [
-    sub(ColumnType.int, ColumnType.int) == ColumnType.int,
-    sub(ColumnType.int, ColumnType.float) == ColumnType.float,
-    sub(ColumnType.float, ColumnType.float) == ColumnType.float,
-    sub(ColumnType.float, ColumnType.int) == ColumnType.float,
+    Or(
+        sub(ColumnType.int, ColumnType.int) == ColumnType.int,
+        sub(ColumnType.int, ColumnType.float) == ColumnType.float,
+        sub(ColumnType.float, ColumnType.float) == ColumnType.float,
+        sub(ColumnType.float, ColumnType.int) == ColumnType.float,
+    )
 ]
 
 mod_rule = [
-    sub(ColumnType.int, ColumnType.int) == ColumnType.int,
-    sub(ColumnType.int, ColumnType.float) == ColumnType.float,
-    sub(ColumnType.float, ColumnType.float) == ColumnType.float,
-    sub(ColumnType.float, ColumnType.int) == ColumnType.float,
+    Or(
+        sub(ColumnType.int, ColumnType.int) == ColumnType.int,
+        sub(ColumnType.int, ColumnType.float) == ColumnType.float,
+        sub(ColumnType.float, ColumnType.float) == ColumnType.float,
+        sub(ColumnType.float, ColumnType.int) == ColumnType.float,
+    )
 ]
 
 div_rule = [
-    div(ColumnType.int, ColumnType.int) == ColumnType.float,
-    div(ColumnType.int, ColumnType.float) == ColumnType.float,
-    div(ColumnType.float, ColumnType.float) == ColumnType.float,
-    div(ColumnType.float, ColumnType.int) == ColumnType.float,
+    Or(
+        div(ColumnType.int, ColumnType.int) == ColumnType.float,
+        div(ColumnType.int, ColumnType.float) == ColumnType.float,
+        div(ColumnType.float, ColumnType.float) == ColumnType.float,
+        div(ColumnType.float, ColumnType.int) == ColumnType.float,
+    )
 ]
 
 mul_rule = [
-    multiplication(ColumnType.int, ColumnType.int) == ColumnType.int,
-    multiplication(ColumnType.int, ColumnType.float) == ColumnType.float,
-    multiplication(ColumnType.float, ColumnType.float) == ColumnType.float,
-    multiplication(ColumnType.float, ColumnType.int) == ColumnType.float,
+    Or(
+        multiplication(ColumnType.int, ColumnType.int) == ColumnType.int,
+        multiplication(ColumnType.int, ColumnType.float) == ColumnType.float,
+        multiplication(ColumnType.float, ColumnType.float) == ColumnType.float,
+        multiplication(ColumnType.float, ColumnType.int) == ColumnType.float,
+    )
 ]
 
 negate_rule = [
@@ -99,8 +114,10 @@ negate_rule = [
 ]
 
 negative_rule = [
-    negative(ColumnType.int) == ColumnType.int,
-    negative(ColumnType.float) == ColumnType.float,
+    Or(
+        negative(ColumnType.int) == ColumnType.int,
+        negative(ColumnType.float) == ColumnType.float,
+    )
 ]
 
 
