@@ -1,6 +1,7 @@
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import * as React from "react";
+import {useState} from "react";
 
 interface InputTitleProps {
     name: string;
@@ -9,12 +10,18 @@ interface InputTitleProps {
 }
 
 const ToggleSwitch = (props: InputTitleProps) => {
+    const [toggle, setToggle] = useState(props.bool)
+
+    const toggleChanged = () => {
+        setToggle(!toggle)
+        props.changed();
+    }
     return (
         <FormControlLabel
             control={
                 <Switch
-                    checked={props.bool}
-                    onChange={props.changed}
+                    checked={toggle}
+                    onChange={toggleChanged}
                     color="primary"
                 />
             }

@@ -1,4 +1,4 @@
-from mlvp.typecheck import link
+from mlvp.typecheck import link, operator_rules
 from mlvp.ast.nodes import *
 from mlvp.ast.ports import *
 from z3 import *
@@ -12,10 +12,13 @@ def assertions_to_str(ports, assertions):
     return res
 
 
-def __convert_ids(ports, expr: ExprRef):
+def __convert_ids(ports, expr):
     BINARY_OPERATOR = "({left} {b_op} {right})"
     UNARY_OPERATOR = "({u_op} {expr})"
     res = str(expr)
+    # print(res)
+    if type(expr) == bool:
+        return str(expr)
     if expr.num_args() == 0:
         arr = str(expr).split(":")
         res = "None" if arr[0] == "-1" else arr[0]
@@ -48,6 +51,14 @@ def __convert_ids(ports, expr: ExprRef):
                                           right=__convert_ids(ports, children[1]))
         elif decl in ["ToInt", "ToReal"]:
             return __convert_ids(ports, children[0])
+        elif type(expr.decl()) == FuncDeclRef:
+            arr_str = []
+            for child in children:
+                arr_str.append(__convert_ids(ports, child))
+            return expr.decl().name() + "(" + " , ".join(arr_str) + ")"
+        else:
+            # print(type(expr))
+            return res
 
 
 class TypeChecker:
@@ -75,6 +86,9 @@ class TypeChecker:
 
         for assertion in self.all_link_assertions:
             self.solver.add(assertion[1])
+
+        # add operators rules to the solver
+        # self.solver.add(operator_rules)
 
         self.solver.push()
         for assertion in self.all_node_assertions:

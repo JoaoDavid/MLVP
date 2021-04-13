@@ -33,8 +33,8 @@ expr:	L_RND_BR expr R_RND_BR
 
 
 // ------------------------- DATA TYPES -------------------------
-BOOL    : 'true'
-        | 'false' ;
+BOOL    : 'True'
+        | 'False' ;
 INT     : [0-9]('_'*[0-9])* ;
 FLOAT   : [0-9]*'.'?[0-9]+
         | [0-9]+'.'?[0-9]*[eE][0-9]+;
@@ -72,9 +72,9 @@ DIV        :  '/';
 MOD        :  '%';
 
 //Logical
-AND        :  '&&';
-OR         :  '||';
-NOT        :  '!';
+AND        :  'and';
+OR         :  'or';
+NOT        :  'not';
 
 //Comparison
 EQUAL      :  '==';

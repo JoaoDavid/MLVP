@@ -1,9 +1,7 @@
-// Generated from /home/david/Documents/git/mlvp/src/components/core/antlr4/Grammar.g4 by ANTLR 4.9.1
+// Generated from Grammar.g4 by ANTLR 4.9.2
 // jshint ignore: start
 import antlr4 from 'antlr4';
 import GrammarListener from './GrammarListener.js';
-import GrammarVisitor from './GrammarVisitor.js';
-
 
 const serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786",
     "\u5964\u0003!A\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004\t",
@@ -61,8 +59,8 @@ export default class GrammarParser extends antlr4.Parser {
     static grammarFileName = "Grammar.g4";
     static literalNames = [ null, null, null, null, null, "'('", "')'", 
                             "'['", "']'", "'{'", "'}'", "';'", "':'", "','", 
-                            "'='", "'+'", "'-'", "'*'", "'/'", "'%'", "'&&'", 
-                            "'||'", "'!'", "'=='", "'!='", "'>='", "'>'", 
+                            "'='", "'+'", "'-'", "'*'", "'/'", "'%'", "'and'", 
+                            "'or'", "'not'", "'=='", "'!='", "'>='", "'>'", 
                             "'<='", "'<'" ];
     static symbolicNames = [ null, "BOOL", "INT", "FLOAT", "STRING", "L_RND_BR", 
                              "R_RND_BR", "L_SQR_BR", "R_SQR_BR", "L_CRL_BR", 
@@ -505,14 +503,6 @@ class ProgramContext extends antlr4.ParserRuleContext {
 		}
 	}
 
-	accept(visitor) {
-	    if ( visitor instanceof GrammarVisitor ) {
-	        return visitor.visitProgram(this);
-	    } else {
-	        return visitor.visitChildren(this);
-	    }
-	}
-
 
 }
 
@@ -546,14 +536,6 @@ class StatementContext extends antlr4.ParserRuleContext {
 	    if(listener instanceof GrammarListener ) {
 	        listener.exitStatement(this);
 		}
-	}
-
-	accept(visitor) {
-	    if ( visitor instanceof GrammarVisitor ) {
-	        return visitor.visitStatement(this);
-	    } else {
-	        return visitor.visitChildren(this);
-	    }
 	}
 
 
@@ -601,14 +583,6 @@ class Create_col_statContext extends antlr4.ParserRuleContext {
 	    if(listener instanceof GrammarListener ) {
 	        listener.exitCreate_col_stat(this);
 		}
-	}
-
-	accept(visitor) {
-	    if ( visitor instanceof GrammarVisitor ) {
-	        return visitor.visitCreate_col_stat(this);
-	    } else {
-	        return visitor.visitChildren(this);
-	    }
 	}
 
 
@@ -737,14 +711,6 @@ class ExprContext extends antlr4.ParserRuleContext {
 		}
 	}
 
-	accept(visitor) {
-	    if ( visitor instanceof GrammarVisitor ) {
-	        return visitor.visitExpr(this);
-	    } else {
-	        return visitor.visitChildren(this);
-	    }
-	}
-
 
 }
 
@@ -782,14 +748,6 @@ class Unary_opeContext extends antlr4.ParserRuleContext {
 	    if(listener instanceof GrammarListener ) {
 	        listener.exitUnary_ope(this);
 		}
-	}
-
-	accept(visitor) {
-	    if ( visitor instanceof GrammarVisitor ) {
-	        return visitor.visitUnary_ope(this);
-	    } else {
-	        return visitor.visitChildren(this);
-	    }
 	}
 
 

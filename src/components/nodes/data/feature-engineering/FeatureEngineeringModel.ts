@@ -28,7 +28,7 @@ AnnotatingErrorListener.prototype.syntaxError = function(recognizer, offendingSy
 
 export class FeatureEngineeringModel extends BaseNodeModel {
 
-    private lines: string = "";
+    private lines: string = "# new_col = col3 + 4;";
     private errorLines: boolean = true;
 
     constructor() {

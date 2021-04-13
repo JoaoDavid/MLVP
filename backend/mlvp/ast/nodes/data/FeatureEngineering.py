@@ -1,6 +1,9 @@
+from mlvp.antlr.CodeGenerator import CodeGenerator
+from mlvp.antlr.ValidatorAST import ValidatorAST
 from mlvp.codegen import *
 from mlvp.ast.nodes.Node import *
 from mlvp.typecheck import *
+from mlvp.antlr.AntlrHandler import build_ast
 
 CONCATENATE = "{df} = pd.concat([{old_x},{old_y}], join = 'outer', axis = 1)\n"
 X = "{x} = {df}.drop({old_y}.name, axis=1)\n"
@@ -13,7 +16,7 @@ class FeatureEngineering(Node):
     def __init__(self, data):
         super().__init__(data)
         self.lines = data['lines']
-        print(self.lines)
+        self.ast = build_ast(self.lines)
 
     def import_dependency(self):
         return IMPORT_AS.format(lib_name="pandas", lib_var=PANDAS_VAR)
@@ -27,9 +30,9 @@ class FeatureEngineering(Node):
         y = "y" + str(curr_count)
 
         out_file.write(CONCATENATE.format(df=df, old_x=old_x, old_y=old_y))
-        # for line in self.lines:
-        #     out_file.write(line)
-        out_file.write(self.lines)
+        code_generator = CodeGenerator(self.ast, out_file, df)
+        code_generator.generate()
+
         out_file.write("\n")
         out_file.write(X.format(x=x, df=df, old_y=old_y))
         out_file.write(Y.format(y=y, df=df, old_y=old_y))
@@ -38,11 +41,13 @@ class FeatureEngineering(Node):
         emitter.set(out_ds, (x, y))
 
     def assertions(self):
-        print(self.ports)
         id_input = self.get_port(True, "Dataset").port_id
         id_output = self.get_port(False, "Engineered Dataset").port_id
         input_ds = Dataset(id_input)
         output_ds = Dataset(id_output)
+
+        ast_validator = ValidatorAST(self.ast, input_ds.dataset)
+        col_assertions = ast_validator.validate_ast()
 
         return [
             input_ds.cols == output_ds.cols,  # TODO, depends on the number of columns added
@@ -52,4 +57,5 @@ class FeatureEngineering(Node):
             input_ds.min_label_count == output_ds.min_label_count,
             input_ds.balanced == output_ds.balanced,
             input_ds.time_series == output_ds.time_series,
-        ]
+            input_ds.dataset == output_ds.dataset,
+        ] + col_assertions

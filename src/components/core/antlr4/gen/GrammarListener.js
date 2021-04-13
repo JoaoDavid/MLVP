@@ -1,4 +1,4 @@
-// Generated from /home/david/Documents/git/mlvp/src/components/core/antlr4/Grammar.g4 by ANTLR 4.9.1
+// Generated from Grammar.g4 by ANTLR 4.9.2
 // jshint ignore: start
 import antlr4 from 'antlr4';
 
