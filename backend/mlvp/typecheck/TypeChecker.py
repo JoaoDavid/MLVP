@@ -140,6 +140,13 @@ class TypeChecker:
                 self.link_assertions[parent_link.link_id] = assertions_to_str(ports, link_assertions)
                 self.all_link_assertions.append((parent_link, link_assertions))
 
+                parent_link.target_port.columns = parent_link.source_port.columns
+                print("__add_dataset_links")
+                print("target")
+                print(parent_link.target_port.columns)
+                print("source")
+                print(parent_link.source_port.columns)
+
     def __find_source_unsat(self, list_tuple_assertions):
         for index, assertions in enumerate(list_tuple_assertions):
             node = assertions[0]
