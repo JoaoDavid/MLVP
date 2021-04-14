@@ -34,6 +34,9 @@ class Node(ABC):
                 return True
         return False
 
+    def all_input_ports_linked(self):
+        return len(self.parent_links) == self.num_in_ports
+
     def reset_visited(self):
         self.visited = False
         for child in self.children:

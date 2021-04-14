@@ -29,13 +29,13 @@ class TreeVisitor:
         if ctx.unary_ope() is not None:
             return self.__visit_unary_expression(ctx)
         elif ctx.BOOL() is not None:
-            return LiteralExpression(ctx.BOOL().getText(), bool, Position(ctx))
+            return LiteralExpression(ctx.BOOL().getText(), "bool", Position(ctx))
         elif ctx.INT() is not None:
-            return LiteralExpression(ctx.INT().getText(), int, Position(ctx))
+            return LiteralExpression(ctx.INT().getText(), "int", Position(ctx))
         elif ctx.FLOAT() is not None:
-            return LiteralExpression(ctx.FLOAT().getText(), float, Position(ctx))
+            return LiteralExpression(ctx.FLOAT().getText(), "float", Position(ctx))
         elif ctx.STRING() is not None:
-            return LiteralExpression(ctx.STRING().getText(), str, Position(ctx))
+            return LiteralExpression(ctx.STRING().getText(), "string", Position(ctx))
         elif ctx.ID() is not None:
             return ColumnReferenceExpression(ctx.ID().getText(), Position(ctx))
         elif ctx.L_RND_BR() is not None:

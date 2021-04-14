@@ -56,8 +56,8 @@ class ImportFromCSV(Node):
         column_types = [get_col_type(col['type']) for col in self.columns]
 
         for i in range(len(self.columns)):
-            col_assertions.append(column(output.dataset, column_names[i]) == column_index(output.dataset, i))
-            col_assertions.append(get_col_name(output.dataset, i) == column_names[i])
+            # col_assertions.append(column(output.dataset, column_names[i]) == column_index(output.dataset, i))
+            # col_assertions.append(get_col_name(output.dataset, i) == column_names[i])
             col_assertions.append(column(output.dataset, column_names[i]) == column_types[i])
 
         # print(col_assertions)

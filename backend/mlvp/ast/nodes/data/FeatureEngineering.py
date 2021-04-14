@@ -50,10 +50,10 @@ class FeatureEngineering(Node):
         print(input_port.columns)
 
         output_port.columns = input_port.columns
-        output_port.columns['batata'] = 'arroz'
-
-        ast_validator = ValidatorAST(self.ast, input_ds.dataset)
-        col_assertions = ast_validator.validate_ast()
+        col_assertions = []
+        if self.all_input_ports_linked():
+            ast_validator = ValidatorAST(self.ast, input_ds.dataset, input_port.columns)
+            col_assertions = ast_validator.validate_ast()
 
         return [
             input_ds.cols == output_ds.cols,  # TODO, depends on the number of columns added
