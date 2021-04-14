@@ -37,7 +37,6 @@ class ImportFromCSV(Node):
         out_file.write(X.format(x=x, df=df, target=self.target))
         out_file.write(Y.format(y=y, df=df, target=self.target))
 
-    # TODO passar dicionario como parametro, com as funçoes auxiliares
     def assertions(self):
         output_port = self.get_port(False, "Dataset")
         output = Dataset(output_port.port_id)
@@ -46,10 +45,8 @@ class ImportFromCSV(Node):
         for col in self.columns:
             output_port.columns[col['name']] = col['type']
 
-        #TODO usar aqui as funçoes nao interpretadas
-        # column_names = [String(out_ds + SEP + "col_" + col['name']) for col in self.columns]
-        # column_types = [StringVal(col['type']) for col in self.columns]
-        # column_eq = [column_names[i] == (column_types[i]) for i in range(len(self.labels))]
+        z3_unique_col_names = Bool(NODE_PROP.format(name="unique_col_names", node_id=self.node_id))
+        unique_col_names = len(self.columns) == len(output_port.columns)
 
         col_assertions = []
         column_names = [String(col['name']) for col in self.columns]
@@ -87,4 +84,6 @@ class ImportFromCSV(Node):
                    output.balanced == is_balanced,
                    # output.balanced == And(list_balanced),
                    output.n_labels == len(label_counts),
+                   z3_unique_col_names == unique_col_names,
+                   z3_unique_col_names,
                ] + label_counts_assertions + labels_values + col_assertions
