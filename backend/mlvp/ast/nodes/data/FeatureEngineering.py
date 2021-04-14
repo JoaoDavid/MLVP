@@ -41,10 +41,16 @@ class FeatureEngineering(Node):
         emitter.set(out_ds, (x, y))
 
     def assertions(self):
-        id_input = self.get_port(True, "Dataset").port_id
-        id_output = self.get_port(False, "Engineered Dataset").port_id
-        input_ds = Dataset(id_input)
-        output_ds = Dataset(id_output)
+        input_port = self.get_port(True, "Dataset")
+        output_port = self.get_port(False, "Engineered Dataset")
+        input_ds = Dataset(input_port.port_id)
+        output_ds = Dataset(output_port.port_id)
+
+        print("fea eng input port cols")
+        print(input_port.columns)
+
+        output_port.columns = input_port.columns
+        output_port.columns['batata'] = 'arroz'
 
         ast_validator = ValidatorAST(self.ast, input_ds.dataset)
         col_assertions = ast_validator.validate_ast()

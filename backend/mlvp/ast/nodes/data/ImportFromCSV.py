@@ -39,9 +39,13 @@ class ImportFromCSV(Node):
 
     # TODO passar dicionario como parametro, com as funçoes auxiliares
     def assertions(self):
-        out_ds = self.get_port(False, "Dataset").port_id
-        output = Dataset(out_ds)
-        print(self.columns)
+        output_port = self.get_port(False, "Dataset")
+        output = Dataset(output_port.port_id)
+
+        # set the columns dict for the output port
+        for col in self.columns:
+            output_port.columns[col['name']] = col['type']
+
         #TODO usar aqui as funçoes nao interpretadas
         # column_names = [String(out_ds + SEP + "col_" + col['name']) for col in self.columns]
         # column_types = [StringVal(col['type']) for col in self.columns]
@@ -57,7 +61,7 @@ class ImportFromCSV(Node):
             col_assertions.append(column(output.dataset, column_names[i]) == column_types[i])
 
         # print(col_assertions)
-        label_names = [Int(out_ds + SEP + "label_" + key) for key in self.labels.keys()]
+        label_names = [Int(output_port.port_id + SEP + "label_" + key) for key in self.labels.keys()]
         label_counts = list(self.labels.values())
         labels_values = [label_names[i] == (label_counts[i]) for i in range(len(self.labels))]
 
