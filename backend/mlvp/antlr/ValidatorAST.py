@@ -39,9 +39,9 @@ class ValidatorAST:
                 # adicionar ao array de assertions o tipo resultante da expressao ao nome da coluna
                 expr_type = self.__expression_type(statement.expr)
                 self.assertions.append(column(self.dataset, String(statement.name)) == expr_type)
-                print("-----------------------------------------")
-                print(str(expr_type))
-                print(str(self.col_types))
+                # print("-----------------------------------------")
+                # print(str(expr_type))
+                # print(str(self.col_types))
         # TODO, adicionar ao array de assertions que as keys de col-types estao no dataset
         for col_name, combinations in self.col_types.items():
             for combination in combinations:
@@ -59,7 +59,7 @@ class ValidatorAST:
             if isinstance(type_b, curr_type):
                 self.col_types[type_a.name].append(combinations[0])
                 res_type = combinations[1]()
-                print(res_type)
+                # print(res_type)
         return res_type
 
     def __expression_type(self, expr):

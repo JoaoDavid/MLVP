@@ -33,5 +33,5 @@ def pipeline_verification(diagram):
     roots, loose = parser.parse()
     type_checker = TypeChecker(roots, loose)
     response = type_checker.verify()
-    print(response)
+    # print(response)
     return json.dumps(response, indent=4)
