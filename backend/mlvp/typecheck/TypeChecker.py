@@ -1,4 +1,4 @@
-from mlvp.typecheck import link, operator_rules
+from mlvp.typecheck import link
 from mlvp.ast.nodes import *
 from mlvp.ast.ports import *
 from z3 import *
