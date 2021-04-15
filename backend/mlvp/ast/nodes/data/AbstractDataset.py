@@ -16,6 +16,7 @@ class AbstractDataset(Node):
         super().__init__(data)
         self.num_cols = data['numCols']
         self.num_rows = data['numRows']
+        self.columns = [] #TODO, implement column creation on the frontend
         self.time_series = data['timeSeries']
 
     def import_dependency(self):
@@ -37,11 +38,27 @@ class AbstractDataset(Node):
         out_file.write(Y.format(y=y, df=df))
 
     def assertions(self):
-        out_ds = self.get_port(False, "Dataset").port_id
-        output = Dataset(out_ds)
+        output_port = self.get_port(False, "Dataset")
+        output = Dataset(output_port.port_id)
+
+        # set the columns dict for the output port
+        for col in self.columns:
+            output_port.columns[col['name']] = col['type']
+
+        z3_unique_col_names = Bool(NODE_PROP.format(name="unique_col_names", node_id=self.node_id))
+        unique_col_names = len(self.columns) == len(output_port.columns)
+
+        col_assertions = []
+        column_names = [String(col['name']) for col in self.columns]
+        column_types = [get_col_type(col['type']) for col in self.columns]
+
+        for i in range(len(self.columns)):
+            col_assertions.append(column(output.dataset, column_names[i]) == column_types[i])
 
         return [
             output.cols == self.num_cols,
             output.rows == self.num_rows,
             output.time_series == self.time_series,
+            z3_unique_col_names == unique_col_names,
+            z3_unique_col_names,
         ]
