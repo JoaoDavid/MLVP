@@ -5,10 +5,10 @@ from mlvp.antlr.ast.expressions.unary import *
 from mlvp.antlr.ast.statements.CreateColumnStatement import CreateColumnStatement
 from mlvp.typecheck import *
 
-BINARY = "expression using invalid types \"{left}\" {operator} \"{right}\""
-UNARY = "{operator} {value}"
-NONEXISTENT_COLUMN = "column \"{column_name}\" does not exist on the dataset"
-DUPLICATE_COLUMN = "column \"{column_name}\" is already part of the dataset"
+BINARY = "expression using invalid types \"{left}\" {operator} \"{right}\"  - line {line}"
+UNARY = "expression using invalid types {operator} \"{value}\"  - line {line}"
+NONEXISTENT_COLUMN = "column \"{column_name}\" does not exist on the dataset - line {line}"
+DUPLICATE_COLUMN = "column \"{column_name}\" is already part of the dataset - line {line}"
 
 
 class ValidatorAST:
@@ -28,7 +28,7 @@ class ValidatorAST:
                         self.assertions.append(column(self.dataset, String(statement.name)) == get_col_type(expr_type))
                         self.columns[statement.name] = expr_type
                     else:
-                        z3_duplicate_column = Bool(DUPLICATE_COLUMN.format(column_name=statement.name))
+                        z3_duplicate_column = Bool(DUPLICATE_COLUMN.format(column_name=statement.name, line=statement.pos.start_line))
                         correct_operands = False
                         self.assertions.append(z3_duplicate_column == correct_operands)
                         self.assertions.append(z3_duplicate_column)
@@ -43,7 +43,7 @@ class ValidatorAST:
         if isinstance(expr, BinaryExpression):
             left = self.__expression_type(expr.left)
             right = self.__expression_type(expr.right)
-            z3_binary_operation = Bool(BINARY.format(left=left, operator=str(expr), right=right))
+            z3_binary_operation = Bool(BINARY.format(left=left, operator=str(expr), right=right, line=expr.pos.start_line))
             print("left: " + left + " right: " + right)
             print("left: " + str(expr.left) + " right: " + str(expr.right))
             if isinstance(expr, AndExpression) or isinstance(expr, OrExpression):
@@ -152,7 +152,7 @@ class ValidatorAST:
 
         elif isinstance(expr, NotExpression):
             expr_type = self.__expression_type(expr.value)
-            z3_unary_operation = Bool(UNARY.format(operator=str(expr), value=expr_type))
+            z3_unary_operation = Bool(UNARY.format(operator=str(expr), value=expr_type, line=expr.pos.start_line))
 
             if expr_type == "bool":
                 return "bool"
@@ -163,7 +163,7 @@ class ValidatorAST:
 
         elif isinstance(expr, NegativeExpression):
             expr_type = self.__expression_type(expr.value)
-            z3_unary_operation = Bool(UNARY.format(operator=str(expr), value=expr_type))
+            z3_unary_operation = Bool(UNARY.format(operator=str(expr), value=expr_type, line=expr.pos.start_line))
             if expr_type == "int":
                 return "int"
             elif expr_type == "float":
@@ -181,7 +181,7 @@ class ValidatorAST:
                 self.assertions.append(column(self.dataset, String(expr.name)) == get_col_type(self.columns[expr.name]))
                 return self.columns[expr.name]
             else:
-                z3_nonexistent_column = Bool(NONEXISTENT_COLUMN.format(column_name=expr.name))
+                z3_nonexistent_column = Bool(NONEXISTENT_COLUMN.format(column_name=expr.name, line=expr.pos.start_line))
                 self.assertions.append(z3_nonexistent_column == correct_operands)
                 self.assertions.append(z3_nonexistent_column)
                 raise Exception("column " + expr.name + " does not exist on the dataset")
