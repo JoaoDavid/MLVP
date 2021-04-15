@@ -12,6 +12,7 @@ import {DatasetPortFactory} from "../components/ports/dataset/DatasetPortFactory
 import {ClassifierPortFactory} from "../components/ports/model/ClassifierPortFactory";
 import {SampleFactory} from "../components/nodes/data/import-dataset/sample/SampleFactory";
 import {FeatureEngineeringFactory} from "../components/nodes/data/feature-engineering/FeatureEngineeringFactory";
+import {VisualizeDatasetFactory} from "../components/nodes/data/visualize-dataset/VisualizeDatasetFactory";
 
 
 export class FactoriesManager {
@@ -34,6 +35,7 @@ export class FactoriesManager {
         this.engine.getNodeFactories().registerFactory(AccuracyClassifierFactory.getInstance());
         this.engine.getNodeFactories().registerFactory(SplitDatasetFactory.getInstance());
         this.engine.getNodeFactories().registerFactory(CrossValidationClassifierFactory.getInstance());
+        this.engine.getNodeFactories().registerFactory(VisualizeDatasetFactory.getInstance());
     }
 
     registerPortFactories = () => {

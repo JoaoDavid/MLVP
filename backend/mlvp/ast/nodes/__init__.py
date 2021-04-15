@@ -9,6 +9,8 @@ from .data.Undersampling import UnderSampling
 from .data.PCA import PCA
 from .data.FeatureEngineering import FeatureEngineering
 
+from .data.VisualizeDataset import VisualizeDataset
+
 from .model.RandomForestClassifier import RandomForestClassifier
 
 
