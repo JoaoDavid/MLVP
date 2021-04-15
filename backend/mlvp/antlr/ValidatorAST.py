@@ -5,6 +5,11 @@ from mlvp.antlr.ast.expressions.unary import *
 from mlvp.antlr.ast.statements.CreateColumnStatement import CreateColumnStatement
 from mlvp.typecheck import *
 
+BINARY = "expression using invalid types \"{left}\" {operator} \"{right}\""
+UNARY = "{operator} {value}"
+NONEXISTENT_COLUMN = "column \"{column_name}\" does not exist on the dataset"
+DUPLICATE_COLUMN = "column \"{column_name}\" is already part of the dataset"
+
 
 class ValidatorAST:
 
@@ -16,24 +21,37 @@ class ValidatorAST:
 
     def validate_ast(self):
         for statement in self.root.statements:
-            if isinstance(statement, CreateColumnStatement):
-                if statement.name not in self.columns:
-                    expr_type = self.__expression_type(statement.expr)
-                    self.assertions.append(column(self.dataset, String(statement.name)) == get_col_type(expr_type))
-                    self.columns[statement.name] = expr_type
-                else:
-                    raise Exception("column already created")
+            try:
+                if isinstance(statement, CreateColumnStatement):
+                    if statement.name not in self.columns:
+                        expr_type = self.__expression_type(statement.expr)
+                        self.assertions.append(column(self.dataset, String(statement.name)) == get_col_type(expr_type))
+                        self.columns[statement.name] = expr_type
+                    else:
+                        z3_duplicate_column = Bool(DUPLICATE_COLUMN.format(column_name=statement.name))
+                        correct_operands = False
+                        self.assertions.append(z3_duplicate_column == correct_operands)
+                        self.assertions.append(z3_duplicate_column)
+                        raise Exception("column already created")
+            except Exception as ex:
+                print(ex)
 
         return self.assertions
 
     def __expression_type(self, expr):
+        correct_operands = False
         if isinstance(expr, BinaryExpression):
             left = self.__expression_type(expr.left)
             right = self.__expression_type(expr.right)
+            z3_binary_operation = Bool(BINARY.format(left=left, operator=str(expr), right=right))
+            print("left: " + left + " right: " + right)
+            print("left: " + str(expr.left) + " right: " + str(expr.right))
             if isinstance(expr, AndExpression) or isinstance(expr, OrExpression):
                 if left == "bool" and right == "bool":
                     return "bool"
                 else:
+                    self.assertions.append(z3_binary_operation == correct_operands)
+                    self.assertions.append(z3_binary_operation)
                     raise Exception("AndExpression,OrExpression")
 
             elif isinstance(expr, EqualExpression) or isinstance(expr, NotEqualExpression):
@@ -52,6 +70,8 @@ class ValidatorAST:
                 elif left == "string" and right == "string":
                     return "bool"
                 else:
+                    self.assertions.append(z3_binary_operation == correct_operands)
+                    self.assertions.append(z3_binary_operation)
                     raise Exception("GreaterOrEqualExpression")
 
             elif isinstance(expr, SumExpression):
@@ -66,6 +86,8 @@ class ValidatorAST:
                 elif left == "string" and right == "string":
                     return "string"
                 else:
+                    self.assertions.append(z3_binary_operation == correct_operands)
+                    self.assertions.append(z3_binary_operation)
                     raise Exception("SumExpression")
 
             elif isinstance(expr, SubtractionExpression):
@@ -78,6 +100,8 @@ class ValidatorAST:
                 elif left == "float" and right == "int":
                     return "float"
                 else:
+                    self.assertions.append(z3_binary_operation == correct_operands)
+                    self.assertions.append(z3_binary_operation)
                     raise Exception("SubtractionExpression")
 
             elif isinstance(expr, ModuloExpression):
@@ -90,6 +114,8 @@ class ValidatorAST:
                 elif left == "float" and right == "int":
                     return "float"
                 else:
+                    self.assertions.append(z3_binary_operation == correct_operands)
+                    self.assertions.append(z3_binary_operation)
                     raise Exception("ModuloExpression")
 
             elif isinstance(expr, DivisionExpression):
@@ -102,6 +128,8 @@ class ValidatorAST:
                 elif left == "float" and right == "int":
                     return "float"
                 else:
+                    self.assertions.append(z3_binary_operation == correct_operands)
+                    self.assertions.append(z3_binary_operation)
                     raise Exception("DivisionExpression")
 
             elif isinstance(expr, MultiplicationExpression):
@@ -118,22 +146,31 @@ class ValidatorAST:
                 elif left == "string" and right == "int":
                     return "string"
                 else:
+                    self.assertions.append(z3_binary_operation == correct_operands)
+                    self.assertions.append(z3_binary_operation)
                     raise Exception("MultiplicationExpression")
 
         elif isinstance(expr, NotExpression):
             expr_type = self.__expression_type(expr.value)
+            z3_unary_operation = Bool(UNARY.format(operator=str(expr), value=expr_type))
+
             if expr_type == "bool":
                 return "bool"
             else:
+                self.assertions.append(z3_unary_operation == correct_operands)
+                self.assertions.append(z3_unary_operation)
                 raise Exception("NotExpression")
 
         elif isinstance(expr, NegativeExpression):
             expr_type = self.__expression_type(expr.value)
+            z3_unary_operation = Bool(UNARY.format(operator=str(expr), value=expr_type))
             if expr_type == "int":
                 return "int"
             elif expr_type == "float":
                 return "float"
             else:
+                self.assertions.append(z3_unary_operation == correct_operands)
+                self.assertions.append(z3_unary_operation)
                 raise Exception("NegativeExpression")
 
         elif isinstance(expr, LiteralExpression):
@@ -144,4 +181,7 @@ class ValidatorAST:
                 self.assertions.append(column(self.dataset, String(expr.name)) == get_col_type(self.columns[expr.name]))
                 return self.columns[expr.name]
             else:
+                z3_nonexistent_column = Bool(NONEXISTENT_COLUMN.format(column_name=expr.name))
+                self.assertions.append(z3_nonexistent_column == correct_operands)
+                self.assertions.append(z3_nonexistent_column)
                 raise Exception("column " + expr.name + " does not exist on the dataset")
