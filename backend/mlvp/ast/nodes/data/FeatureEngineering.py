@@ -31,7 +31,8 @@ class FeatureEngineering(Node):
 
         out_file.write(CONCATENATE.format(df=df, old_x=old_x, old_y=old_y))
         code_generator = CodeGenerator(self.ast, out_file, df)
-        code_generator.generate()
+        if self.ast is not None:
+            code_generator.generate()
 
         out_file.write("\n")
         out_file.write(X.format(x=x, df=df, old_y=old_y))
@@ -53,7 +54,11 @@ class FeatureEngineering(Node):
         col_assertions = []
         if self.all_input_ports_linked():
             ast_validator = ValidatorAST(self.ast, input_ds.dataset, input_port.columns)
-            col_assertions = ast_validator.validate_ast()
+            if self.ast is not None:
+                col_assertions = ast_validator.validate_ast()
+            else:
+                print("ast is NOne")
+                #TODO add assertions with errors
 
         return [
             input_ds.cols == output_ds.cols,  # TODO, depends on the number of columns added
