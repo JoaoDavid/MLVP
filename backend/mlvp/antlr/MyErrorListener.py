@@ -4,10 +4,10 @@ from antlr4.error.ErrorListener import ErrorListener
 class MyErrorListener(ErrorListener):
 
     def __init__(self):
-        self.list_errors = []
+        self.syntax_errors = []
 
     def syntaxError(self, recognizer, offendingSymbol, line, column, msg, e):
-        self.list_errors.append("line " + str(line) + ":" + str(column) + " " + msg)
+        self.syntax_errors.append("line " + str(line) + ":" + str(column) + " " + msg)
 
     def reportAmbiguity(self, recognizer, dfa, startIndex, stopIndex, exact, ambigAlts, configs):
         print("Ambiguity ERROR, " + str(configs))

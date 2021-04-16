@@ -16,13 +16,11 @@ def build_ast(text):
     error_listener = MyErrorListener()
     parser.addErrorListener(error_listener)
 
-    tree = parser.program()
-    print(error_listener.list_errors)
+    parser_tree = parser.program()
+    syntax_errors = error_listener.syntax_errors
+    ast = None
 
-    if len(error_listener.list_errors) == 0:
+    if len(error_listener.syntax_errors) == 0:
         tree_visitor = TreeVisitor()
-        ast = tree_visitor.visit_tree(tree)
-        return ast
-    else:
-        print("Found errors when creating ParserTree")
-        return None
+        ast = tree_visitor.visit_tree(parser_tree)
+    return ast, syntax_errors

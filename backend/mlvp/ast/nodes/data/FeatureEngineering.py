@@ -16,7 +16,7 @@ class FeatureEngineering(Node):
     def __init__(self, data):
         super().__init__(data)
         self.lines = data['lines']
-        self.ast = build_ast(self.lines)
+        self.ast, self.error_msg = build_ast(self.lines)
 
     def import_dependency(self):
         return IMPORT_AS.format(lib_name="pandas", lib_var=PANDAS_VAR)
@@ -44,24 +44,21 @@ class FeatureEngineering(Node):
     def assertions(self):
         input_port = self.get_port(True, "Dataset")
         output_port = self.get_port(False, "Engineered Dataset")
+        output_port.columns = input_port.columns
+
         input_ds = Dataset(input_port.port_id)
         output_ds = Dataset(output_port.port_id)
 
-        print("fea eng input port cols")
-        print(input_port.columns)
-
-        output_port.columns = input_port.columns
         col_assertions = []
         if self.all_input_ports_linked():
             ast_validator = ValidatorAST(self.ast, input_ds.dataset, input_port.columns)
             if self.ast is not None:
                 col_assertions = ast_validator.validate_ast()
-            else:
-                print("ast is NOne")
-                #TODO add assertions with errors
+
+        z3_has_errors = Bool(NODE_PROP.format(name="has_errors", node_id=self.node_id))
 
         return [
-            input_ds.cols == output_ds.cols,  # TODO, depends on the number of columns added
+            input_ds.cols + len(output_port.columns) == output_ds.cols,  # TODO, depends on the number of columns added
             input_ds.rows == output_ds.rows,
             input_ds.n_labels == output_ds.n_labels,
             input_ds.max_label_count == output_ds.max_label_count,
@@ -69,4 +66,6 @@ class FeatureEngineering(Node):
             input_ds.balanced == output_ds.balanced,
             input_ds.time_series == output_ds.time_series,
             input_ds.dataset == output_ds.dataset,
+            z3_has_errors == (len(self.error_msg) == 0),
+            z3_has_errors,
         ] + col_assertions

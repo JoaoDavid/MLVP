@@ -17,7 +17,7 @@ def link(id_source_port: str, id_target_port: str):
     ]
 
 
-PORT_PROP = "{id_port}:{name}"
+PORT_PROP = "{id_port};{name}"
 ColumnType = Datatype('ColumnType')
 ColumnType.declare('int')
 ColumnType.declare('float')
