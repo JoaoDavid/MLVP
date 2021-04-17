@@ -3,7 +3,8 @@ from mlvp.ast.nodes.Node import *
 from mlvp.typecheck import *
 
 PCA_INIT = "{pca_var} = PCA(random_state={random_state}, n_components={n_components})\n"
-FIT_TRANSFORM_CALL = "{x_pca} = {pca_var}.fit_transform({x})\n"
+FIT_TRANSFORM_CALL = "{numpy_array} = {pca_var}.fit_transform({x})\n"
+CONVERT_TO_DF = "{x_pca} = pd.DataFrame({numpy_array}, columns={columns})\n"
 
 
 class PCA(Node):
@@ -12,6 +13,8 @@ class PCA(Node):
         super().__init__(data)
         self.random_state = data['randomState']
         self.num_components = data['numComponents']
+        # TODO receber do front-end os nomes das novas colunas
+        self.column_names = ['col' + str(i) for i in range(self.num_components)]
 
     def import_dependency(self):
         return FROM_IMPORT.format(package="sklearn.decomposition", class_to_import="PCA")
@@ -21,19 +24,28 @@ class PCA(Node):
         parent_port = self.parent_links[0].source_port
         x, y = emitter.get(parent_port)
         pca_var = "pca" + str(curr_count)
+        numpy_array = "numpy_array" + str(curr_count)
         x_pca = "x_pca" + str(curr_count)
         # y_pca = "y_pca" + str(curr_count)
         out_file.write(PCA_INIT.format(pca_var=pca_var, random_state=self.random_state, n_components=self.num_components))
-        out_file.write(FIT_TRANSFORM_CALL.format(x_pca=x_pca, pca_var=pca_var, x=x))
+        out_file.write(FIT_TRANSFORM_CALL.format(numpy_array=numpy_array, pca_var=pca_var, x=x))
+        out_file.write(CONVERT_TO_DF.format(x_pca=x_pca, numpy_array=numpy_array, columns=self.column_names))
         out_ds = self.get_port(False, "Reduced Dataset")
         emitter.set(out_ds, (x_pca, y))
 
     def assertions(self):
-        id_input = self.get_port(True, "Dataset").port_id
-        id_output = self.get_port(False, "Reduced Dataset").port_id
-        input_ds = Dataset(id_input)
-        output_ds = Dataset(id_output)
+        input_port = self.get_port(True, "Dataset")
+        output_port = self.get_port(False, "Reduced Dataset")
+        input_ds = Dataset(input_port.port_id)
+        output_ds = Dataset(output_port.port_id)
         z3_n_components = Int(NODE_PROP.format(name="n_components", node_id=self.node_id))
+
+        columns = {}
+
+        print(self.column_names)
+        for curr_name in self.column_names:
+            columns[curr_name] = "float"
+        output_port.columns = columns
 
         return [
             # requires
