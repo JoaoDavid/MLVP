@@ -8,6 +8,7 @@ from .data.Oversampling import Oversampling
 from .data.Undersampling import UnderSampling
 from .data.PCA import PCA
 from .data.FeatureEngineering import FeatureEngineering
+from .data.TemporalAggregation import TemporalAggregation
 
 from .data.VisualizeDataset import VisualizeDataset
 

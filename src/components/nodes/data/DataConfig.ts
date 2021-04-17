@@ -47,6 +47,11 @@ export const VISUALIZE_DATASET: NodeConfig = {
     name: "Visualize Dataset",
 }
 
+export const TEMPORAL_AGGREGATION: NodeConfig = {
+    codeName: "TemporalAggregation",
+    name: "Temporal Aggregation",
+}
+
 
 /*
 Every node type must be added to the nodes array
@@ -56,5 +61,6 @@ export const DATA_CONFIG: CategoryConfig = {
     category: Category.DATA,
     color: 'green',
     nodes: [ABSTRACT_DS, IMPORT_FROM_CSV, SAMPLE_CSV, SPLIT_DATASET,
-        OVERSAMPLING, UNDERSAMPLING, PCA, FEATURE_ENGINEERING, VISUALIZE_DATASET],
+        OVERSAMPLING, UNDERSAMPLING, PCA, FEATURE_ENGINEERING, VISUALIZE_DATASET,
+        TEMPORAL_AGGREGATION],
 }
