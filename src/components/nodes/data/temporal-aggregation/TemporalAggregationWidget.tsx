@@ -14,12 +14,12 @@ const TemporalAggregationWidget = (props: TemporalAggregationProps) => {
 
     const newColumnNameChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
         props.node.setNewColumnName(event.target.value);
-        eventNodeUpdated(props.engine, props.node);
+        // eventNodeUpdated(props.engine, props.node); TODO
     }
 
     const originalColumnNameChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
         props.node.setOriginalColumnName(event.target.value);
-        eventNodeUpdated(props.engine, props.node);
+        // eventNodeUpdated(props.engine, props.node); TODO
     }
 
     const metricChanged = (event: React.ChangeEvent<HTMLInputElement>) => {

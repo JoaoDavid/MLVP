@@ -13,8 +13,8 @@ export enum MetricEnum {
 
 export class TemporalAggregationModel extends BaseNodeModel {
 
-    private newColumnName: string = "";
-    private originalColumnName: string = "";
+    private newColumnName: string = "new_column";
+    private originalColumnName: string = "original_column";
     private metric: MetricEnum = MetricEnum.MEAN;
     private windowSize: number = 1;
 
