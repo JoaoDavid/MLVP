@@ -46,7 +46,7 @@ export class FeatureEngineeringModel extends BaseNodeModel {
     }
 
     setLines(value: string) {
-        const annotations = [];
+/*        const annotations = [];
         try {
             const chars = new antlr4.InputStream(value);
             const lexer = new GrammarLexer(chars);
@@ -60,9 +60,9 @@ export class FeatureEngineeringModel extends BaseNodeModel {
         }catch (Exception) {
             console.log("error")
             this.errorLines = true;
-        }
+        }*/
         this.lines = value;
-        console.log(annotations);
+        // console.log(annotations);
         console.log(this.lines);
     }
 

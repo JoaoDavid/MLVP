@@ -5,7 +5,6 @@ import Col from "react-bootstrap/Col";
 import InputGroup from "react-bootstrap/InputGroup";
 import {TemporalAggregationModel, MetricEnum} from "./TemporalAggregationModel";
 import classes from "../../../UI/modal/BaseModal.module.css";
-import {CriterionEnum} from "../../model/classifier/random-forest-classifier/RandomForestClassifierModel";
 
 
 interface ModalProps {

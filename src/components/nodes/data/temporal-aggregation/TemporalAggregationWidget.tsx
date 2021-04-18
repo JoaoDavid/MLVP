@@ -13,13 +13,25 @@ interface TemporalAggregationProps {
 const TemporalAggregationWidget = (props: TemporalAggregationProps) => {
 
     const newColumnNameChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        props.node.setNewColumnName(event.target.value);
-        // eventNodeUpdated(props.engine, props.node); TODO
+        let value = event.target.value;
+        if (value.length > 20) {
+            return;
+        }
+        if(value.match("^[a-zA-Z_][a-zA-Z0-9_]*$") != null || value.match("^[a-zA-Z_]*$") != null){
+            props.node.setNewColumnName(value);
+            eventNodeUpdated(props.engine, props.node); // TODO
+        }
     }
 
     const originalColumnNameChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        props.node.setOriginalColumnName(event.target.value);
-        // eventNodeUpdated(props.engine, props.node); TODO
+        let value = event.target.value;
+        if (value.length > 20) {
+            return;
+        }
+        if(value.match("^[a-zA-Z_][a-zA-Z0-9_]*$") != null || value.match("^[a-zA-Z_]*$") != null){
+            props.node.setOriginalColumnName(value);
+            eventNodeUpdated(props.engine, props.node); // TODO
+        }
     }
 
     const metricChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
