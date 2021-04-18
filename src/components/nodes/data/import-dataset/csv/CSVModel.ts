@@ -71,6 +71,8 @@ export class CSVModel extends ImportDataset {
                             this.targetIndex = this.getCols() - 1;
                             console.log(this.labels);
                             console.log(this.columns);
+                            // let outPort = this.getOutPorts()[0] as DatasetPortModel;
+                            // outPort.setColumns(this.columns);
                         }
                         complete(results.data);
                     }
@@ -142,5 +144,14 @@ export class CSVModel extends ImportDataset {
         };
     }
 
+    updateLink = () => {
+        if (!this.isVisited()) {
+            console.log("Import From CSV update LInk")
+            let outPort = this.getOutPorts()[0] as DatasetPortModel;
+            outPort.setColumns(this.columns);
+            this.setVisited();
+            this.updateOutputLinks();
+        }
+    }
 
 }

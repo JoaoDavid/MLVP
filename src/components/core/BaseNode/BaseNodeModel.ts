@@ -2,6 +2,7 @@ import { NodeModel, NodeModelGenerics } from '@projectstorm/react-diagrams-core'
 import {BasePortModel} from "../BasePort/BasePortModel";
 import { BasePositionModelOptions, DeserializeEvent } from '@projectstorm/react-canvas-core';
 import {NodeConfig} from "../../nodes/Config";
+import {DatasetPortModel} from "../../ports/dataset/DatasetPortModel";
 
 export interface BaseNodeModelOptions extends BasePositionModelOptions {
     name: string;
@@ -16,7 +17,7 @@ export abstract class BaseNodeModel extends NodeModel<BaseNodeModelGenerics> {
     protected portsIn: BasePortModel[];
     protected portsOut: BasePortModel[];
     private title: string;
-
+    private visited: boolean = false;
 
     protected constructor(nodeConfig: NodeConfig) {
         super({
@@ -89,12 +90,57 @@ export abstract class BaseNodeModel extends NodeModel<BaseNodeModelGenerics> {
         return this.portsOut;
     }
 
+    isRootNode(): boolean {
+        return this.getInPorts().length == 0;
+    }
+
     setTitle = (title: string) => {
         this.title = title;
     }
 
     getTitle = () => {
         return this.title;
+    }
+
+    isVisited = () => {
+        return this.visited;
+    }
+
+    resetVisited = () => {
+        this.visited = false;
+    }
+
+    setVisited = () => {
+        this.visited = true;
+    }
+
+    updateInputLinks = () => {
+        this.getInPorts().forEach((port) => {
+            if (port instanceof DatasetPortModel) {
+                port.getPortLinks().forEach((link) => {
+                    let sourceNode = link.getSourcePort().getNode() as BaseNodeModel;
+                    sourceNode.updateLink();
+                });
+            }
+        });
+    }
+
+    updateOutputLinks = () => {
+        this.getOutPorts().forEach((port) => {
+            if (port instanceof DatasetPortModel) {
+                port.getPortLinks().forEach((link) => {
+                    let targetPort = link.getTargetPort() as DatasetPortModel;
+                    let targetNode = link.getTargetPort().getNode() as BaseNodeModel;
+                    console.log(port)
+                    targetPort.setColumns(port.getColumns());
+                    targetNode.updateLink();
+                });
+            }
+        });
+    }
+
+    updateLink = () => {
+        console.log("BaseNodeModel update LInk")
     }
 
 }

@@ -75,4 +75,8 @@ export abstract class BasePortModel extends PortModel<BasePortModelGenerics> {
         return this.options.label
     }
 
+    getPortLinks(): LinkModel[] {
+        return Object.values(this.getLinks());
+    }
+
 }
