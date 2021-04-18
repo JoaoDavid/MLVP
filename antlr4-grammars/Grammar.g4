@@ -4,7 +4,7 @@ grammar Grammar;
 
 // ------------------------- PROGRAM -------------------------
 
-program: (statement)+ ;
+program: (statement)* ;
 
 
 // ------------------------- STATEMENTS -------------------------
