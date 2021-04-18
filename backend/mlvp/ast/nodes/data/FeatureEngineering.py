@@ -16,7 +16,7 @@ class FeatureEngineering(Node):
     def __init__(self, data):
         super().__init__(data)
         self.lines = data['lines']
-        self.ast = build_ast(self.lines)
+        self.ast, self.error_msg = build_ast(self.lines)
 
     def import_dependency(self):
         return IMPORT_AS.format(lib_name="pandas", lib_var=PANDAS_VAR)
@@ -31,7 +31,8 @@ class FeatureEngineering(Node):
 
         out_file.write(CONCATENATE.format(df=df, old_x=old_x, old_y=old_y))
         code_generator = CodeGenerator(self.ast, out_file, df)
-        code_generator.generate()
+        if self.ast is not None:
+            code_generator.generate()
 
         out_file.write("\n")
         out_file.write(X.format(x=x, df=df, old_y=old_y))
@@ -41,16 +42,23 @@ class FeatureEngineering(Node):
         emitter.set(out_ds, (x, y))
 
     def assertions(self):
-        id_input = self.get_port(True, "Dataset").port_id
-        id_output = self.get_port(False, "Engineered Dataset").port_id
-        input_ds = Dataset(id_input)
-        output_ds = Dataset(id_output)
+        input_port = self.get_port(True, "Dataset")
+        output_port = self.get_port(False, "Engineered Dataset")
+        output_port.columns = input_port.columns
 
-        ast_validator = ValidatorAST(self.ast, input_ds.dataset)
-        col_assertions = ast_validator.validate_ast()
+        input_ds = Dataset(input_port.port_id)
+        output_ds = Dataset(output_port.port_id)
+
+        col_assertions = []
+        if self.all_input_ports_linked():
+            ast_validator = ValidatorAST(self.ast, input_ds.dataset, input_port.columns)
+            if self.ast is not None:
+                col_assertions = ast_validator.validate_ast()
+
+        z3_has_errors = Bool(NODE_PROP.format(name="has_errors", node_id=self.node_id))
 
         return [
-            input_ds.cols == output_ds.cols,  # TODO, depends on the number of columns added
+            input_ds.cols + len(output_port.columns) == output_ds.cols,  # TODO, depends on the number of columns added
             input_ds.rows == output_ds.rows,
             input_ds.n_labels == output_ds.n_labels,
             input_ds.max_label_count == output_ds.max_label_count,
@@ -58,4 +66,6 @@ class FeatureEngineering(Node):
             input_ds.balanced == output_ds.balanced,
             input_ds.time_series == output_ds.time_series,
             input_ds.dataset == output_ds.dataset,
+            z3_has_errors == (len(self.error_msg) == 0),
+            z3_has_errors,
         ] + col_assertions

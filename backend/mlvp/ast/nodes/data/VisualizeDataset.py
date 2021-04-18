@@ -1,0 +1,33 @@
+from mlvp.codegen import *
+from mlvp.ast.nodes.Node import *
+from mlvp.typecheck import *
+
+CONCATENATE = "{df} = pd.concat([{x},{y}], join = 'outer', axis = 1)\n"
+PRINT = "print({df})\n"
+PANDAS_VAR = "pd"
+
+
+class VisualizeDataset(Node):
+
+    def __init__(self, data):
+        super().__init__(data)
+
+    def import_dependency(self):
+        return IMPORT_AS.format(lib_name="pandas", lib_var=PANDAS_VAR)
+
+    def codegen(self, emitter: Emitter, out_file):
+        curr_count = emitter.get_count()
+        parent_port = self.parent_links[0].source_port
+        x, y = emitter.get(parent_port)
+        df = "df" + str(curr_count)
+
+        out_file.write(CONCATENATE.format(df=df, x=x, y=y))
+        out_file.write(PRINT.format(df=df))
+
+    def assertions(self):
+        id_input = self.get_port(True, "Dataset").port_id
+        input_ds = Dataset(id_input)
+
+        return [
+
+        ]

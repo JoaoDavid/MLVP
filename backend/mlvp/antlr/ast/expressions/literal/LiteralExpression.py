@@ -8,3 +8,6 @@ class LiteralExpression(Expression):
         self.lit_type = lit_type
         self.pos = pos
         pass
+
+    def __str__(self):
+        return str(self.value)

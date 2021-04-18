@@ -1,11 +1,12 @@
 from abc import ABC, abstractmethod
 from z3 import *
 
-SEP = ":"
-NODE_PROP = "node:{name}:{node_id}"
+SEP = ";"
+NODE_PROP = "node;{name};{node_id}"
 
 IMPORT_AS = "import {lib_name} as {lib_var}\n"
 FROM_IMPORT = "from {package} import {class_to_import}\n"
+
 
 class Node(ABC):
 
@@ -20,6 +21,7 @@ class Node(ABC):
         self.visited = False
         self.num_in_ports = 0
         self.num_out_ports = 0
+        self.error_msg = []
         pass
 
     def get_port(self, in_port: bool, name: str):
@@ -33,6 +35,9 @@ class Node(ABC):
             if port.in_port:
                 return True
         return False
+
+    def all_input_ports_linked(self):
+        return len(self.parent_links) == self.num_in_ports
 
     def reset_visited(self):
         self.visited = False

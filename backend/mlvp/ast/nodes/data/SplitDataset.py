@@ -34,16 +34,20 @@ class SplitDataset(Node):
         emitter.set(out_test_ds, (x_test, y_test))
 
     def assertions(self):
-        id_input = self.get_port(True, "Dataset").port_id
-        id_output_train = self.get_port(False, "Train Dataset").port_id
-        id_output_test = self.get_port(False, "Test Dataset").port_id
-        input_ds = Dataset(id_input)
-        train_ds = Dataset(id_output_train)
-        test_ds = Dataset(id_output_test)
+        input_port = self.get_port(True, "Dataset")
+        output_train_port = self.get_port(False, "Train Dataset")
+        output_test_port = self.get_port(False, "Test Dataset")
 
-        shuffle_input = Bool(PORT_PROP.format(id_port=id_input, name="shuffled"))
-        shuffle_train = Bool(PORT_PROP.format(id_port=id_output_train, name="shuffled"))
-        shuffle_test = Bool(PORT_PROP.format(id_port=id_output_test, name="shuffled"))
+        output_train_port.columns = input_port.columns
+        output_test_port.columns = input_port.columns
+
+        input_ds = Dataset(input_port.port_id)
+        train_ds = Dataset(output_train_port.port_id)
+        test_ds = Dataset(output_test_port.port_id)
+
+        shuffle_input = Bool(PORT_PROP.format(id_port=input_port, name="shuffled"))
+        shuffle_train = Bool(PORT_PROP.format(id_port=output_train_port, name="shuffled"))
+        shuffle_test = Bool(PORT_PROP.format(id_port=output_test_port, name="shuffled"))
         z3_shuffle = Bool(NODE_PROP.format(name="shuffle", node_id=self.node_id))
         output_shuffles = Or(shuffle_input, z3_shuffle)
         z3_stratify_by_class = Bool(NODE_PROP.format(name="stratify_by_class", node_id=self.node_id))

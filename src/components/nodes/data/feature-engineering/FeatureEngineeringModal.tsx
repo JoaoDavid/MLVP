@@ -25,7 +25,7 @@ const FeatureEngineeringModal = (props: FeatureEngineeringModalProps) => {
                             onChange={props.linesChanged}
                             defaultValue={props.node.getLines()}
                             fullWidth={true}
-                            error={props.node.getErrorLines()}
+                            // error={props.node.getErrorLines()} TODO
                         />
                     </Col>
                 </Row>

@@ -38,10 +38,24 @@ class SampleCSV(Node):
         out_file.write(Y.format(y=y, df=df, target=self.target))
 
     def assertions(self):
-        out_ds = self.get_port(False, "Dataset").port_id
-        output = Dataset(out_ds)
+        output_port = self.get_port(False, "Dataset")
+        output = Dataset(output_port.port_id)
 
-        label_names = [Int(out_ds + SEP + "label_" + key) for key in self.labels.keys()]
+        # set the columns dict for the output port
+        for col in self.columns:
+            output_port.columns[col['name']] = col['type']
+
+        z3_unique_col_names = Bool(NODE_PROP.format(name="unique_col_names", node_id=self.node_id))
+        unique_col_names = len(self.columns) == len(output_port.columns)
+
+        col_assertions = []
+        column_names = [String(col['name']) for col in self.columns]
+        column_types = [get_col_type(col['type']) for col in self.columns]
+
+        for i in range(len(self.columns)):
+            col_assertions.append(column(output.dataset, column_names[i]) == column_types[i])
+
+        label_names = [Int(output_port.port_id + SEP + "label_" + key) for key in self.labels.keys()]
         label_counts = list(self.labels.values())
         labels_values = [label_names[i] == (label_counts[i]) for i in range(len(self.labels))]
 
@@ -68,4 +82,6 @@ class SampleCSV(Node):
                    output.balanced == is_balanced,
                    # output.balanced == And(list_balanced),
                    output.n_labels == len(label_counts),
-               ] + label_counts_assertions + labels_values
+                   z3_unique_col_names == unique_col_names,
+                   z3_unique_col_names,
+               ] + label_counts_assertions + labels_values + col_assertions

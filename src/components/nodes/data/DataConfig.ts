@@ -42,6 +42,16 @@ export const FEATURE_ENGINEERING: NodeConfig = {
     name: "Feature Engineering",
 }
 
+export const VISUALIZE_DATASET: NodeConfig = {
+    codeName: "VisualizeDataset",
+    name: "Visualize Dataset",
+}
+
+export const TEMPORAL_AGGREGATION: NodeConfig = {
+    codeName: "TemporalAggregation",
+    name: "Temporal Aggregation",
+}
+
 
 /*
 Every node type must be added to the nodes array
@@ -50,5 +60,7 @@ so it can appear on the side bar for the drag and drop feature
 export const DATA_CONFIG: CategoryConfig = {
     category: Category.DATA,
     color: 'green',
-    nodes: [ABSTRACT_DS, IMPORT_FROM_CSV, SAMPLE_CSV, SPLIT_DATASET, OVERSAMPLING, UNDERSAMPLING, PCA, FEATURE_ENGINEERING],
+    nodes: [ABSTRACT_DS, IMPORT_FROM_CSV, SAMPLE_CSV, SPLIT_DATASET,
+        OVERSAMPLING, UNDERSAMPLING, PCA, FEATURE_ENGINEERING, VISUALIZE_DATASET,
+        TEMPORAL_AGGREGATION],
 }

@@ -1,4 +1,4 @@
-from mlvp.typecheck import link, operator_rules
+from mlvp.typecheck import link
 from mlvp.ast.nodes import *
 from mlvp.ast.ports import *
 from z3 import *
@@ -20,7 +20,7 @@ def __convert_ids(ports, expr):
     if type(expr) == bool:
         return str(expr)
     if expr.num_args() == 0:
-        arr = str(expr).split(":")
+        arr = str(expr).split(";")
         res = "None" if arr[0] == "-1" else arr[0]
         if len(arr) > 1:
             if arr[0] != "node":
@@ -121,10 +121,9 @@ class TypeChecker:
             # parents are all visited
             self.__add_dataset_links(node.parent_links)
             # add current node assertions to the array
+            node_assertions = node.assertions()
             if self.strong_type_check:
-                node_assertions = node.input_ports_linked()
-            else:
-                node_assertions = node.assertions()
+                node_assertions += node.input_ports_linked()
             self.all_node_assertions.append((node, node_assertions))
             self.node_assertions[node.node_id] = assertions_to_str(node.ports, node_assertions)
             # visit every child node
@@ -140,6 +139,13 @@ class TypeChecker:
                 self.link_assertions[parent_link.link_id] = assertions_to_str(ports, link_assertions)
                 self.all_link_assertions.append((parent_link, link_assertions))
 
+                parent_link.target_port.columns = parent_link.source_port.columns
+                print("__add_dataset_links")
+                print("target")
+                print(parent_link.target_port.columns)
+                print("source")
+                print(parent_link.source_port.columns)
+
     def __find_source_unsat(self, list_tuple_assertions):
         for index, assertions in enumerate(list_tuple_assertions):
             node = assertions[0]
@@ -151,6 +157,7 @@ class TypeChecker:
                 print("Found source of UNSAT at index " + str(index))
                 specific_assertions = self.__find_unsat_node_assertion(assertions)
                 self.unsat_node_assertions[node.node_id] = assertions_to_str(node.ports, specific_assertions)
+                self.unsat_node_assertions[node.node_id] += node.error_msg
                 # info = {'title': node.title, 'assertions': assertions_to_str(node.ports, specific_assertions)}
                 # self.unsat_node_assertions[node.node_id] = info
                 self.solver.push()
