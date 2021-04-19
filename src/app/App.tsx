@@ -72,6 +72,9 @@ class App extends React.Component<AppProps, AppState> {
             linkCreated: (event) => {
                 console.log('linkCreated');
                 console.log(event);
+                this.updateDatasetPorts();
+                this.typeChecker.requestTypeCheck();
+                this.resetNodesVisitedFlag();
             },
             nodeUpdated: (event) => {
                 console.log("nodeUpdated");
@@ -105,7 +108,7 @@ class App extends React.Component<AppProps, AppState> {
         nodes.forEach((node) => {
             if (node.isRootNode()) {
                 rootNodes.push(node);
-                console.log(node.getTitle())
+                console.log("is root Node" + node.getTitle());
             }
         });
         rootNodes.forEach((rootNode) => {

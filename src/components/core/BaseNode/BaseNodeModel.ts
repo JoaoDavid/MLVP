@@ -126,14 +126,16 @@ export abstract class BaseNodeModel extends NodeModel<BaseNodeModelGenerics> {
     }
 
     updateOutputLinks = () => {
-        this.getOutPorts().forEach((port) => {
-            if (port instanceof DatasetPortModel) {
-                port.getPortLinks().forEach((link) => {
+        this.getOutPorts().forEach((outputPort) => {
+            if (outputPort instanceof DatasetPortModel) {
+                outputPort.getPortLinks().forEach((link) => {
                     let targetPort = link.getTargetPort() as DatasetPortModel;
                     let targetNode = link.getTargetPort().getNode() as BaseNodeModel;
-                    console.log(port)
-                    targetPort.setColumns(port.getColumns());
+                    console.log(outputPort);
+                    targetPort.setColumns(outputPort.getColumns());
+                    console.log(targetPort);
                     targetNode.updateLink();
+
                 });
             }
         });

@@ -110,7 +110,7 @@ export class MyDragNewLinkState extends AbstractDisplacementState<DiagramEngine>
             targetPort.setColumns(sourcePort.getColumns());
         }
         let targetNode = targetPort.getNode() as BaseNodeModel;
-        targetNode.updateLink();
+        // targetNode.updateLink();
         //TODO
     }
 
