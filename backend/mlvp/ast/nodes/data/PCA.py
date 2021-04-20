@@ -33,7 +33,7 @@ class PCA(Node):
         out_ds = self.get_port(False, "Reduced Dataset")
         emitter.set(out_ds, (x_pca, y))
 
-    def assertions(self):
+    def assertions(self, node_columns):
         input_port = self.get_port(True, "Dataset")
         output_port = self.get_port(False, "Reduced Dataset")
         input_ds = Dataset(input_port.port_id)

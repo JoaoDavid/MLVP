@@ -72,14 +72,14 @@ class App extends React.Component<AppProps, AppState> {
             linkCreated: (event) => {
                 console.log('linkCreated');
                 console.log(event);
-                this.updateDatasetPorts();
+                // this.updateDatasetPorts();
                 this.typeChecker.requestTypeCheck();
                 this.resetNodesVisitedFlag();
             },
             nodeUpdated: (event) => {
                 console.log("nodeUpdated");
                 console.log(event);
-                this.updateDatasetPorts();
+                // this.updateDatasetPorts();
                 this.typeChecker.requestTypeCheck();
                 this.resetNodesVisitedFlag();
             },
@@ -93,6 +93,7 @@ class App extends React.Component<AppProps, AppState> {
                 const allNodeAssertions = this.processNodeAssertions(event.typeCheckResponse.nodeAssertions);
                 const allLinkAssertions = this.processLinkAssertions(event.typeCheckResponse);
                 const unsatNodeAssertions = this.processNodeAssertions(event.typeCheckResponse.unsatNodeAssertions);
+                this.processNodeColumns(event.typeCheckResponse.nodeColumns);
                 this.setState({
                     unsatNodeAssertions: unsatNodeAssertions,
                     allNodeAssertions: allNodeAssertions,
@@ -131,6 +132,13 @@ class App extends React.Component<AppProps, AppState> {
             map.set(node, mapNodeAssertions[k]);
         }
         return map;
+    }
+
+    processNodeColumns = (mapNodeColumns) => {
+        for (let k of Object.keys(mapNodeColumns)) {
+            const node = this.engine.getModel().getNode(k) as BaseNodeModel;
+            node.setColumnsAndTypes(mapNodeColumns[k])
+        }
     }
 
     processLinkAssertions = (typeCheckResponse: TypeCheckResponse) => {

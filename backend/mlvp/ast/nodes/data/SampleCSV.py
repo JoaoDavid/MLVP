@@ -37,7 +37,7 @@ class SampleCSV(Node):
         out_file.write(X.format(x=x, df=df, target=self.target))
         out_file.write(Y.format(y=y, df=df, target=self.target))
 
-    def assertions(self):
+    def assertions(self, node_columns):
         output_port = self.get_port(False, "Dataset")
         output = Dataset(output_port.port_id)
 

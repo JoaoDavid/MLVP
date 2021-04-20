@@ -28,7 +28,7 @@ class CrossValidation(Node):
         out_file.write(CROSS_VAL_SCORE_CALL.format(score=score, model=model_var, x=x, y=y, cv=self.number_folds))
         out_file.write("print(" + score + ")\n")
 
-    def assertions(self):
+    def assertions(self, node_columns):
         id_input_ds = self.get_port(True, "Dataset").port_id
         input_ds = Dataset(id_input_ds)
 

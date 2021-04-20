@@ -41,7 +41,7 @@ class FeatureEngineering(Node):
         out_ds = self.get_port(False, "Engineered Dataset")
         emitter.set(out_ds, (x, y))
 
-    def assertions(self):
+    def assertions(self, node_columns):
         input_port = self.get_port(True, "Dataset")
         output_port = self.get_port(False, "Engineered Dataset")
         output_port.columns = input_port.columns

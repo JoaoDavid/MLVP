@@ -66,7 +66,7 @@ class Node(ABC):
     # z3_n_trees > 0,
 
     @abstractmethod
-    def assertions(self):
+    def assertions(self, node_columns):
         pass
 
     def input_ports_linked(self):
