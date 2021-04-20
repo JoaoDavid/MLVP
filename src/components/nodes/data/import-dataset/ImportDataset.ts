@@ -18,7 +18,7 @@ export abstract class ImportDataset extends BaseNodeModel {
     protected resetFile(): void {
         this.numCols = 0;
         this.numRows = 0;
-        this.timeSeries = false;
+        // this.timeSeries = false;
     }
 
     getCols = (): number => {
