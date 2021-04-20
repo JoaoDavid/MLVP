@@ -29,6 +29,12 @@ export abstract class BaseNodeModel extends NodeModel<BaseNodeModelGenerics> {
         this.title = nodeConfig.name;
     }
 
+    addNewColumn = (array, value) => {
+        if (array.length > 0) {
+            array.splice(array.length-1, 0, value);
+        }
+    }
+
     doClone(lookupTable: {}, clone: any): void {
         clone.portsIn = [];
         clone.portsOut = [];

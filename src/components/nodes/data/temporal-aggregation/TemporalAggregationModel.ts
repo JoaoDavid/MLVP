@@ -2,6 +2,7 @@ import {BaseNodeModel} from "../../../core/BaseNode/BaseNodeModel";
 import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
 import {TEMPORAL_AGGREGATION} from "../DataConfig";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
+import {Column, ColumnType} from "../import-dataset/Column";
 
 export enum MetricEnum {
     MAX = 'max',
@@ -13,6 +14,8 @@ export enum MetricEnum {
 
 export class TemporalAggregationModel extends BaseNodeModel {
 
+    private originalColumns: string[] = [];
+
     private newColumnName: string = "new_column";
     private originalColumnName: string = "original_column";
     private metric: MetricEnum = MetricEnum.MEAN;
@@ -22,6 +25,10 @@ export class TemporalAggregationModel extends BaseNodeModel {
         super(TEMPORAL_AGGREGATION);
         this.addInPort();
         this.addOutPort();
+    }
+
+    getOriginalColumns() {
+        return this.originalColumns;
     }
 
     getNewColumnName(): string {
@@ -92,6 +99,28 @@ export class TemporalAggregationModel extends BaseNodeModel {
             metric: this.metric,
             windowSize: this.windowSize,
         };
+    }
+
+    updateLink = () => {
+        if (!this.isVisited()) {
+            console.log("Oversampling update LInk")
+            this.updateInputLinks();
+            let inPort = this.getInPorts()[0] as DatasetPortModel;
+            this.originalColumns = [];
+            inPort.getColumns().forEach((column) => {
+                if (column.getType() === ColumnType.FLOAT || column.getType() === ColumnType.INT) {
+                    this.originalColumns.push(column.getName());
+                    console.log(column.getName())
+                }
+            });
+
+            let outColumns = [...inPort.getColumns()];
+            let outPort = this.getOutPorts()[0] as DatasetPortModel;
+            this.addNewColumn(outColumns, Column.createColumn(this.newColumnName, "float", 0))
+            outPort.setColumns(outColumns);
+            this.setVisited();
+            this.updateOutputLinks();
+        }
     }
 
 }
