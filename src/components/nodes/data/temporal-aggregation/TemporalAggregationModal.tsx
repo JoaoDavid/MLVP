@@ -18,11 +18,12 @@ interface ModalProps {
 const TemporalAggregationModal = (props: ModalProps) => {
     const columnNames: JSX.Element[] = [];
     let counter = 0;
-    props.node.getOriginalColumns().forEach((col) => {
+    let columnsAndTypes = props.node.getColumnsAndTypes();
+    for (let k of Object.keys(columnsAndTypes)) {
         counter += 1;
         columnNames.push(
-            <option key={col}>{col}</option>);
-    });
+            <option key={k}>{k}</option>);
+    }
 
     return (
         <Form>

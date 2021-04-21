@@ -40,12 +40,20 @@ class PCA(Node):
         output_ds = Dataset(output_port.port_id)
         z3_n_components = Int(NODE_PROP.format(name="n_components", node_id=self.node_id))
 
-        columns = {}
+        this_node_columns = {}
+        for i in range(self.num_components):
+            this_node_columns["V" + str(i)] = "float"
 
-        print(self.column_names)
-        for curr_name in self.column_names:
-            columns[curr_name] = "float"
-        output_port.columns = columns
+        if len(input_port.columns) > 0:
+            last = list(input_port.columns.items())[-1]
+            print(last)
+            this_node_columns[last[0]] = last[1]
+        node_columns[self.node_id] = this_node_columns
+
+        # print(self.column_names)
+        # for curr_name in self.column_names:
+        #     columns[curr_name] = "float"
+        output_port.columns = this_node_columns
 
         return [
             # requires

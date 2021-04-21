@@ -16,17 +16,15 @@ interface PCAModalProps {
 const PCAModal = (props: PCAModalProps) => {
     const columnNames: JSX.Element[] = [];
     const columnTypes: JSX.Element[] = [];
-    const columnNulls: JSX.Element[] = [];
     let counter = 0;
-    props.node.getColumns().forEach((col) => {
+    let columnsAndTypes = props.node.getColumnsAndTypes();
+    for (let k of Object.keys(columnsAndTypes)) {
         counter += 1;
         columnNames.push(
-            <th key={col.getName() + "" + counter}>{col.getName()}</th>);
+            <th key={k + "" + counter}>{k}</th>);
         columnTypes.push(
-            <td key={col.getType() + "" + counter}>{col.getType()}</td>);
-        columnNulls.push(
-            <td key={col.getType() + "" + col.getNullCounter() + "" + counter}>{col.getNullCounter()}</td>);
-    });
+            <td key={columnsAndTypes[k] + "" + counter}>{columnsAndTypes[k]}</td>);
+    }
 
     return (
         <Form>
@@ -53,9 +51,6 @@ const PCAModal = (props: PCAModalProps) => {
                     <tbody>
                     <tr>
                         {columnTypes}
-                    </tr>
-                    <tr>
-                        {columnNulls}
                     </tr>
                     </tbody>
                 </Table>

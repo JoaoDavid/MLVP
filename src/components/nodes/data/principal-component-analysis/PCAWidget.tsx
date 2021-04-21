@@ -18,8 +18,11 @@ const PCAWidget = (props: PCAProps) => {
     }
 
     const numComponentsChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        props.node.setNumComponents(+event.target.value);
-        eventNodeUpdated(props.engine, props.node);
+        let value: number = +event.target.value;
+        if (value > 0) {
+            props.node.setNumComponents(+event.target.value);
+            eventNodeUpdated(props.engine, props.node);
+        }
     }
 
     const modal = <PCAModal node={props.node} randomStateChanged={randomStateChanged} numComponentsChanged={numComponentsChanged}/>;
