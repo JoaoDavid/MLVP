@@ -55,6 +55,15 @@ class PCA(Node):
         #     columns[curr_name] = "float"
         output_port.columns = this_node_columns
 
+        col_assertions = []
+        if len(input_port.columns) > 0:
+            columns = list(input_port.columns.keys())
+            columns.pop()
+            column_names = [String(col) for col in columns]
+            string_type = get_col_type("string")
+            for i in range(len(columns)):
+                col_assertions.append(Not(column(input_ds.dataset, column_names[i]) == string_type))
+
         return [
             # requires
             z3_n_components == self.num_components,
@@ -67,4 +76,4 @@ class PCA(Node):
             output_ds.max_label_count == input_ds.max_label_count,
             output_ds.min_label_count == input_ds.min_label_count,
             input_ds.balanced == output_ds.balanced,
-        ]
+        ] + col_assertions
