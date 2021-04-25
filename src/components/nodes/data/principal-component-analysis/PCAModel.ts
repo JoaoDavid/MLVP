@@ -61,23 +61,4 @@ export class PCAModel extends BaseNodeModel {
         return this.columns;
     }
 
-    updateLink = () => {
-        if (!this.isVisited()) {
-            console.log("Oversampling update LInk")
-            this.updateInputLinks();
-            let inPort = this.getInPorts()[0] as DatasetPortModel;
-            let outPort = this.getOutPorts()[0] as DatasetPortModel;
-            this.columns = [];
-            for (let i = 0; i < this.numComponents; i++) {
-                this.columns.push(Column.createColumn("V" + i, "float", 0));
-            }
-            this.columns.push(inPort.getColumns().slice(-1).pop());
-
-            outPort.setColumns(this.columns);
-            this.setVisited();
-            this.updateOutputLinks();
-        }
-    }
-
-
 }

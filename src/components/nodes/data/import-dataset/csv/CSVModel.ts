@@ -144,14 +144,4 @@ export class CSVModel extends ImportDataset {
         };
     }
 
-    updateLink = () => {
-        if (!this.isVisited()) {
-            console.log("Import From CSV update LInk")
-            let outPort = this.getOutPorts()[0] as DatasetPortModel;
-            outPort.setColumns(this.columns);
-            this.setVisited();
-            this.updateOutputLinks();
-        }
-    }
-
 }

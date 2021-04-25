@@ -33,16 +33,4 @@ export class VisualizeDatasetModel extends BaseNodeModel {
         return this.columns;
     }
 
-    updateLink = () => {
-        if (!this.isVisited()) {
-            console.log("Visualize Dataset update LInk")
-            this.updateInputLinks();
-            let inputPort = this.getInPorts()[0] as DatasetPortModel;
-            console.log(inputPort)
-            this.columns = inputPort.getColumns();
-            this.updateOutputLinks();
-        }
-    }
-
-
 }

@@ -38,7 +38,6 @@ class App extends React.Component<AppProps, AppState> {
     private readonly factoriesManager: FactoriesManager;
     private readonly typeChecker: TypeChecker;
     private generated_nodes_counter = 0;
-    private rootNodes: BaseNodeModel[] = []; //TODO iterate over all nodes, and pick the root ones
 
     constructor(props: AppProps) {
         super(props);
@@ -72,16 +71,12 @@ class App extends React.Component<AppProps, AppState> {
             linkCreated: (event) => {
                 console.log('linkCreated');
                 console.log(event);
-                // this.updateDatasetPorts();
                 this.typeChecker.requestTypeCheck();
-                // this.resetNodesVisitedFlag();
             },
             nodeUpdated: (event) => {
                 console.log("nodeUpdated");
                 console.log(event);
-                // this.updateDatasetPorts();
                 this.typeChecker.requestTypeCheck();
-                // this.resetNodesVisitedFlag();
             },
             nodesUpdated: (event) => {
                 console.log("nodesUpdated");
@@ -101,27 +96,6 @@ class App extends React.Component<AppProps, AppState> {
                 });
                 this.engine.repaintCanvas();
             }
-        });
-    }
-
-    updateDatasetPorts = () => {
-        let nodes = this.engine.getModel().getNodes() as BaseNodeModel[];
-        let rootNodes: BaseNodeModel[] = [];
-        nodes.forEach((node) => {
-            if (node.isRootNode()) {
-                rootNodes.push(node);
-                console.log("is root Node" + node.getTitle());
-            }
-        });
-        rootNodes.forEach((rootNode) => {
-            rootNode.updateLink();
-        })
-    }
-
-    resetNodesVisitedFlag = () => {
-        let nodes = this.engine.getModel().getNodes() as BaseNodeModel[];
-        nodes.forEach((node) => {
-            node.resetVisited();
         });
     }
 

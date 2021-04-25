@@ -17,7 +17,6 @@ export abstract class BaseNodeModel extends NodeModel<BaseNodeModelGenerics> {
     protected portsIn: BasePortModel[];
     protected portsOut: BasePortModel[];
     private title: string;
-    private visited: boolean = false;
     private columnsTypes: Map<string,string> = new Map<string, string>();
 
     protected constructor(nodeConfig: NodeConfig) {
@@ -105,59 +104,12 @@ export abstract class BaseNodeModel extends NodeModel<BaseNodeModelGenerics> {
         return this.portsOut;
     }
 
-    isRootNode(): boolean {
-        return this.getInPorts().length == 0;
-    }
-
     setTitle = (title: string) => {
         this.title = title;
     }
 
     getTitle = () => {
         return this.title;
-    }
-
-    isVisited = () => {
-        return this.visited;
-    }
-
-    resetVisited = () => {
-        this.visited = false;
-    }
-
-    setVisited = () => {
-        this.visited = true;
-    }
-
-    updateInputLinks = () => {
-        this.getInPorts().forEach((port) => {
-            if (port instanceof DatasetPortModel) {
-                port.getPortLinks().forEach((link) => {
-                    let sourceNode = link.getSourcePort().getNode() as BaseNodeModel;
-                    sourceNode.updateLink();
-                });
-            }
-        });
-    }
-
-    updateOutputLinks = () => {
-        this.getOutPorts().forEach((outputPort) => {
-            if (outputPort instanceof DatasetPortModel) {
-                outputPort.getPortLinks().forEach((link) => {
-                    let targetPort = link.getTargetPort() as DatasetPortModel;
-                    let targetNode = link.getTargetPort().getNode() as BaseNodeModel;
-                    console.log(outputPort);
-                    targetPort.setColumns(outputPort.getColumns());
-                    console.log(targetPort);
-                    targetNode.updateLink();
-
-                });
-            }
-        });
-    }
-
-    updateLink = () => {
-        console.log("BaseNodeModel update LInk")
     }
 
 }

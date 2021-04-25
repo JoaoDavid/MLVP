@@ -101,26 +101,4 @@ export class TemporalAggregationModel extends BaseNodeModel {
         };
     }
 
-    updateLink = () => {
-        if (!this.isVisited()) {
-            console.log("Oversampling update LInk")
-            this.updateInputLinks();
-            let inPort = this.getInPorts()[0] as DatasetPortModel;
-            this.originalColumns = [];
-            inPort.getColumns().forEach((column) => {
-                if (column.getType() === ColumnType.FLOAT || column.getType() === ColumnType.INT) {
-                    this.originalColumns.push(column.getName());
-                    console.log(column.getName())
-                }
-            });
-
-            let outColumns = [...inPort.getColumns()];
-            let outPort = this.getOutPorts()[0] as DatasetPortModel;
-            this.addNewColumn(outColumns, Column.createColumn(this.newColumnName, "float", 0))
-            outPort.setColumns(outColumns);
-            this.setVisited();
-            this.updateOutputLinks();
-        }
-    }
-
 }

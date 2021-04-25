@@ -44,17 +44,4 @@ export class OversamplingModel extends BaseNodeModel {
         };
     }
 
-    updateLink = () => {
-        if (!this.isVisited()) {
-            console.log("Oversampling update LInk")
-            this.updateInputLinks();
-            let inPort = this.getInPorts()[0] as DatasetPortModel;
-            let outPort = this.getOutPorts()[0] as DatasetPortModel;
-            outPort.setColumns(inPort.getColumns());
-            this.setVisited();
-            this.updateOutputLinks();
-        }
-    }
-
-
 }
