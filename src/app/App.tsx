@@ -74,14 +74,14 @@ class App extends React.Component<AppProps, AppState> {
                 console.log(event);
                 // this.updateDatasetPorts();
                 this.typeChecker.requestTypeCheck();
-                this.resetNodesVisitedFlag();
+                // this.resetNodesVisitedFlag();
             },
             nodeUpdated: (event) => {
                 console.log("nodeUpdated");
                 console.log(event);
                 // this.updateDatasetPorts();
                 this.typeChecker.requestTypeCheck();
-                this.resetNodesVisitedFlag();
+                // this.resetNodesVisitedFlag();
             },
             nodesUpdated: (event) => {
                 console.log("nodesUpdated");
@@ -98,7 +98,8 @@ class App extends React.Component<AppProps, AppState> {
                     unsatNodeAssertions: unsatNodeAssertions,
                     allNodeAssertions: allNodeAssertions,
                     allLinkAssertions: allLinkAssertions,
-                })
+                });
+                this.engine.repaintCanvas();
             }
         });
     }
