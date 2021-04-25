@@ -41,7 +41,7 @@ class PCA(Node):
         z3_n_components = Int(NODE_PROP.format(name="n_components", node_id=self.node_id))
 
         this_node_columns = {}
-        for i in range(self.num_components):
+        for i in range(1, self.num_components + 1):
             this_node_columns["V" + str(i)] = "float"
 
         if len(input_port.columns) > 0:
