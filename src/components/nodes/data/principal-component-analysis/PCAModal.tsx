@@ -5,11 +5,13 @@ import Col from "react-bootstrap/Col";
 import {PCAModel} from "./PCAModel";
 import Table from "react-bootstrap/Table";
 import {FormGroup} from "react-bootstrap";
+import InputCheckBox from "../../../UI/modal/input-checkbox/InputCheckBox";
 
 
 interface PCAModalProps {
     node: PCAModel;
-    randomStateChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    randomStateChanged: (value: number) => void;
+    randomStateCheckedChanged: (value: boolean) => void;
     numComponentsChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -30,10 +32,7 @@ const PCAModal = (props: PCAModalProps) => {
         <Form>
             <Form.Group>
                 <Row>
-                    <Col>
-                        <Form.Label>Random State</Form.Label>
-                        <Form.Control type="number" value={props.node.getRandomState()} onChange={props.randomStateChanged} />
-                    </Col>
+                    <InputCheckBox name={"Random State"} checked={props.node.getRandomStateChecked()} setChecked={props.randomStateCheckedChanged} value={props.node.getRandomState()} setValue={props.randomStateChanged}/>
                     <Col>
                         <Form.Label>Num Components</Form.Label>
                         <Form.Control type="number" min={1} value={props.node.getNumComponents()} onChange={props.numComponentsChanged} />

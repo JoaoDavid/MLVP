@@ -8,6 +8,7 @@ import {Column} from "../import-dataset/Column";
 export class PCAModel extends BaseNodeModel {
 
     private columns: Column[] = [];
+    private randomStateChecked: boolean = true;
     private randomState: number = 0;
     private numComponents: number = 1;
 
@@ -15,6 +16,14 @@ export class PCAModel extends BaseNodeModel {
         super(PCA);
         this.addInPort();
         this.addOutPort();
+    }
+
+    getRandomStateChecked (): boolean {
+        return this.randomStateChecked;
+    }
+
+    setRandomStateChecked (value: boolean) {
+        this.randomStateChecked = value;
     }
 
     getRandomState(): number {
@@ -45,14 +54,21 @@ export class PCAModel extends BaseNodeModel {
 
     deserialize(event: DeserializeEvent<this>) {
         super.deserialize(event);
-        this.randomState = event.data.randomState;
+        let randomState = event.data.randomState;
+        if (randomState === "None") {
+            this.randomState = 0;
+            this.randomStateChecked = false;
+        } else {
+            this.randomState = randomState;
+            this.randomStateChecked = true;
+        }
         this.numComponents = event.data.numComponents;
     }
 
     serialize(): any {
         return {
             ...super.serialize(),
-            randomState: this.randomState,
+            randomState: this.randomStateChecked?this.randomState:"None",
             numComponents: this.numComponents,
         };
     }

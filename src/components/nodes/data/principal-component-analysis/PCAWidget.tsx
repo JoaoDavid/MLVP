@@ -12,8 +12,13 @@ interface PCAProps {
 
 const PCAWidget = (props: PCAProps) => {
 
-    const randomStateChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        props.node.setRandomState(+event.target.value);
+    const randomStateChanged = (value: number) => {
+        props.node.setRandomState(value);
+        eventNodeUpdated(props.engine, props.node);
+    }
+
+    const randomStateCheckedChanged = (value: boolean) => {
+        props.node.setRandomStateChecked(value);
         eventNodeUpdated(props.engine, props.node);
     }
 
@@ -25,7 +30,7 @@ const PCAWidget = (props: PCAProps) => {
         }
     }
 
-    const modal = <PCAModal node={props.node} randomStateChanged={randomStateChanged} numComponentsChanged={numComponentsChanged}/>;
+    const modal = <PCAModal node={props.node} randomStateChanged={randomStateChanged} randomStateCheckedChanged={randomStateCheckedChanged} numComponentsChanged={numComponentsChanged}/>;
     return (
         <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
             <p>Random State: {props.node.getRandomState()}</p>
