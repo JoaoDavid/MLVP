@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import {OversamplingModel} from "./OversamplingModel";
 import InputCheckBox from "../../../UI/modal/input-checkbox/InputCheckBox";
 

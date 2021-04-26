@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {VisualizeDatasetModel} from './VisualizeDatasetModel';
-import BaseNodeWidget, {eventNodeUpdated} from '../../../core/BaseNode/BaseNodeWidget';
+import BaseNodeWidget from '../../../core/BaseNode/BaseNodeWidget';
 import VisualizeDatasetModal from "./VisualizeDatasetModal";
 import {DATA_CONFIG} from '../DataConfig';
 

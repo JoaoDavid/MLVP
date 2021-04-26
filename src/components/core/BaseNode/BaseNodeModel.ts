@@ -2,7 +2,6 @@ import { NodeModel, NodeModelGenerics } from '@projectstorm/react-diagrams-core'
 import {BasePortModel} from "../BasePort/BasePortModel";
 import { BasePositionModelOptions, DeserializeEvent } from '@projectstorm/react-canvas-core';
 import {NodeConfig} from "../../nodes/Config";
-import {DatasetPortModel} from "../../ports/dataset/DatasetPortModel";
 
 export interface BaseNodeModelOptions extends BasePositionModelOptions {
     name: string;

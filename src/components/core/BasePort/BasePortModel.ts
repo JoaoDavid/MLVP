@@ -45,7 +45,7 @@ export abstract class BasePortModel extends PortModel<BasePortModelGenerics> {
     }
 
     isNewLinkAllowed(): boolean {
-        return this.getPortLinks().length < this.getMaximumLinks() && (!this.getIsIn() || this.getPortLinks().length == 0)
+        return this.getPortLinks().length < this.getMaximumLinks() && (!this.getIsIn() || this.getPortLinks().length === 0)
 
         ;
     }
@@ -62,7 +62,7 @@ export abstract class BasePortModel extends PortModel<BasePortModelGenerics> {
     inputPortFree = (port: BasePortModel) => {
         if (port.getIsIn()) {
             console.log(port.getPortLinks())
-            return port.getPortLinks().length == 0
+            return port.getPortLinks().length === 0
         } else {
             return true;
         }

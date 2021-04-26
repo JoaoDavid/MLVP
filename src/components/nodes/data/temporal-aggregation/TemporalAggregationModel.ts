@@ -2,7 +2,6 @@ import {BaseNodeModel} from "../../../core/BaseNode/BaseNodeModel";
 import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
 import {TEMPORAL_AGGREGATION} from "../DataConfig";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
-import {Column, ColumnType} from "../import-dataset/Column";
 
 export enum MetricEnum {
     MAX = 'max',
