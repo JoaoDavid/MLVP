@@ -2,6 +2,7 @@ import {BaseNodeModel} from "../../../core/BaseNode/BaseNodeModel";
 import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
 import {TEMPORAL_AGGREGATION} from "../DataConfig";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
+import {Column, ColumnType} from "../import-dataset/Column";
 
 export enum MetricEnum {
     MAX = 'max',
@@ -13,6 +14,8 @@ export enum MetricEnum {
 
 export class TemporalAggregationModel extends BaseNodeModel {
 
+    private originalColumns: string[] = [];
+
     private newColumnName: string = "new_column";
     private originalColumnName: string = "original_column";
     private metric: MetricEnum = MetricEnum.MEAN;
@@ -22,6 +25,10 @@ export class TemporalAggregationModel extends BaseNodeModel {
         super(TEMPORAL_AGGREGATION);
         this.addInPort();
         this.addOutPort();
+    }
+
+    getOriginalColumns() {
+        return this.originalColumns;
     }
 
     getNewColumnName(): string {

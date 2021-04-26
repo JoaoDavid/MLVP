@@ -26,7 +26,7 @@ export abstract class BasePortModel extends PortModel<BasePortModelGenerics> {
             alignment: isIn ? PortModelAlignment.LEFT : PortModelAlignment.RIGHT,
             type: codename,
             in: isIn,
-            maximumLinks: maxLinks?maxLinks:1,
+            maximumLinks: maxLinks?maxLinks:10,
         });
     }
 
@@ -45,14 +45,45 @@ export abstract class BasePortModel extends PortModel<BasePortModelGenerics> {
     }
 
     isNewLinkAllowed(): boolean {
-        return (
-            Object.keys(this.getLinks()).length < this.getMaximumLinks()
-        );
+        return this.getPortLinks().length < this.getMaximumLinks() && (!this.getIsIn() || this.getPortLinks().length == 0)
+
+        ;
     }
 
     canLinkToPort(port: BasePortModel): boolean {
         console.log('canLinkToPort at BasePortModel');
-        return (this.getNode().getID() !== port.getNode().getID()) && (this.getIsIn() !== port.getIsIn()) && port.isNewLinkAllowed();
+        return (this.getNode().getID() !== port.getNode().getID()) &&
+            (this.getIsIn() !== port.getIsIn()) &&
+            port.isNewLinkAllowed() &&
+            !this.duplicateLink(port) &&
+            this.inputPortFree(port)
+    }
+
+    inputPortFree = (port: BasePortModel) => {
+        if (port.getIsIn()) {
+            console.log(port.getPortLinks())
+            return port.getPortLinks().length == 0
+        } else {
+            return true;
+        }
+    }
+
+    duplicateLink(port: BasePortModel): boolean {
+        let res = false;
+        let links = this.getPortLinks();
+        console.log(links)
+        links.forEach((link) => {
+            let targetPort = link.getTargetPort() as BasePortModel;
+            if (targetPort) {
+                console.log(targetPort.getID())
+                console.log(port.getID())
+                console.log(targetPort.getID() === port.getID())
+                if (targetPort.getID() === port.getID()) {
+                    res = true;
+                }
+            }
+        })
+        return res;
     }
 
     createLinkModel(factory?: AbstractModelFactory<LinkModel>): LinkModel {
@@ -73,6 +104,10 @@ export abstract class BasePortModel extends PortModel<BasePortModelGenerics> {
 
     getLabel(): string {
         return this.options.label
+    }
+
+    getPortLinks(): LinkModel[] {
+        return Object.values(this.getLinks());
     }
 
 }

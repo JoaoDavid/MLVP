@@ -6,6 +6,7 @@ export interface TypeCheckResponse {
     nodeAssertions: Map<string, string[]>,
     linkAssertions: Map<string, string[]>,
     unsatNodeAssertions: Map<string, string[]>,
+    nodeColumns: Map<string, string>,
 }
 
 export class TypeChecker {

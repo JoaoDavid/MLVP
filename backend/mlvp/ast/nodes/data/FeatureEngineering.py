@@ -41,19 +41,24 @@ class FeatureEngineering(Node):
         out_ds = self.get_port(False, "Engineered Dataset")
         emitter.set(out_ds, (x, y))
 
-    def assertions(self):
+    def assertions(self, node_columns):
         input_port = self.get_port(True, "Dataset")
         output_port = self.get_port(False, "Engineered Dataset")
-        output_port.columns = input_port.columns
+        output_port.columns = input_port.columns.copy()
 
         input_ds = Dataset(input_port.port_id)
         output_ds = Dataset(output_port.port_id)
 
         col_assertions = []
         if self.all_input_ports_linked():
-            ast_validator = ValidatorAST(self.ast, input_ds.dataset, input_port.columns)
+            ast_validator = ValidatorAST(self.ast, input_ds.dataset, output_port.columns)
             if self.ast is not None:
                 col_assertions = ast_validator.validate_ast()
+
+        if len(input_port.columns) > 0:
+            last = list(input_port.columns.items())[-1]
+            del output_port.columns[last[0]]
+            output_port.columns[last[0]] = last[1]
 
         z3_has_errors = Bool(NODE_PROP.format(name="has_errors", node_id=self.node_id))
 

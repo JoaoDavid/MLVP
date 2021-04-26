@@ -29,7 +29,7 @@ class Oversampling(Node):
         out_ds = self.get_port(False, "Balanced Dataset")
         emitter.set(out_ds, (x_ros_res, y_ros_res))
 
-    def assertions(self):
+    def assertions(self, node_columns):
         input_port = self.get_port(True, "Dataset")
         output_port = self.get_port(False, "Balanced Dataset")
         output_port.columns = input_port.columns

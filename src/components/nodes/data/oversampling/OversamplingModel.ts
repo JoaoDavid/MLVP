@@ -44,5 +44,4 @@ export class OversamplingModel extends BaseNodeModel {
         };
     }
 
-
 }

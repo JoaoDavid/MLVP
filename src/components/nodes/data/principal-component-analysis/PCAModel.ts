@@ -2,10 +2,12 @@ import {BaseNodeModel} from "../../../core/BaseNode/BaseNodeModel";
 import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
 import {PCA} from "../DataConfig";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
+import {Column} from "../import-dataset/Column";
 
 
 export class PCAModel extends BaseNodeModel {
 
+    private columns: Column[] = [];
     private randomState: number = 0;
     private numComponents: number = 1;
 
@@ -55,5 +57,8 @@ export class PCAModel extends BaseNodeModel {
         };
     }
 
+    getColumns() {
+        return this.columns;
+    }
 
 }

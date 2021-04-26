@@ -25,13 +25,8 @@ const TemporalAggregationWidget = (props: TemporalAggregationProps) => {
 
     const originalColumnNameChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
         let value = event.target.value;
-        if (value.length > 20) {
-            return;
-        }
-        if(value.match("^[a-zA-Z_][a-zA-Z0-9_]*$") != null || value.match("^[a-zA-Z_]*$") != null){
-            props.node.setOriginalColumnName(value);
-            eventNodeUpdated(props.engine, props.node); // TODO
-        }
+        props.node.setOriginalColumnName(value);
+        eventNodeUpdated(props.engine, props.node);
     }
 
     const metricChanged = (event: React.ChangeEvent<HTMLInputElement>) => {

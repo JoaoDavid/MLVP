@@ -28,7 +28,7 @@ class RandomForestClassifier(Node):
                                                  max_depth=self.max_depth))
         out_file.write(MODEL_FIT.format(var=clf_var, x=x, y=y))
 
-    def assertions(self):
+    def assertions(self, node_columns):
         id_input = self.get_port(True, "Dataset").port_id
         input_ds = Dataset(id_input)
         z3_n_trees = Int(NODE_PROP.format(name="n_trees", node_id=self.node_id))

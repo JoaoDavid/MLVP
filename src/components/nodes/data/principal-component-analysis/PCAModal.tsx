@@ -3,6 +3,8 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {PCAModel} from "./PCAModel";
+import Table from "react-bootstrap/Table";
+import {FormGroup} from "react-bootstrap";
 
 
 interface PCAModalProps {
@@ -12,6 +14,18 @@ interface PCAModalProps {
 }
 
 const PCAModal = (props: PCAModalProps) => {
+    const columnNames: JSX.Element[] = [];
+    const columnTypes: JSX.Element[] = [];
+    let counter = 0;
+    let columnsAndTypes = props.node.getColumnsAndTypes();
+    for (let k of Object.keys(columnsAndTypes)) {
+        counter += 1;
+        columnNames.push(
+            <th key={k + "" + counter}>{k}</th>);
+        columnTypes.push(
+            <td key={columnsAndTypes[k] + "" + counter}>{columnsAndTypes[k]}</td>);
+    }
+
     return (
         <Form>
             <Form.Group>
@@ -26,6 +40,21 @@ const PCAModal = (props: PCAModalProps) => {
                     </Col>
                 </Row>
             </Form.Group>
+            <FormGroup>
+                {columnNames.length > 0 ? <Form.Label>Column Types</Form.Label> : null}
+                <Table striped bordered hover responsive>
+                    <thead>
+                    <tr>
+                        {columnNames}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        {columnTypes}
+                    </tr>
+                    </tbody>
+                </Table>
+            </FormGroup>
         </Form>
     )
 }
