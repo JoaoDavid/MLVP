@@ -12,12 +12,17 @@ interface UndersamplingProps {
 
 const UndersamplingWidget = (props: UndersamplingProps) => {
 
-    const randomStateChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        props.node.setRandomState(+event.target.value);
+    const randomStateChanged = (value: number) => {
+        props.node.setRandomState(value);
         eventNodeUpdated(props.engine, props.node);
     }
 
-    const modal = <UndersamplingModal node={props.node} randomStateChanged={randomStateChanged}/>;
+    const randomStateCheckedChanged = (value: boolean) => {
+        props.node.setRandomStateChecked(value);
+        eventNodeUpdated(props.engine, props.node);
+    }
+
+    const modal = <UndersamplingModal node={props.node} randomStateChanged={randomStateChanged} randomStateCheckedChanged={randomStateCheckedChanged}/>;
     return (
         <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
             <p>Random State: {props.node.getRandomState()}</p>
