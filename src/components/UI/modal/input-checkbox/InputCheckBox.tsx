@@ -20,7 +20,7 @@ const InputCheckBox = (props: InputEnableProps) => {
         setCheckState(!checked);
         props.setChecked(!checked);
         if (checked) {
-            setValue(value+1)
+            setValue(value)
         }
     }
 
