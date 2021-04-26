@@ -10,8 +10,6 @@ import {MouseEvent} from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams';
 import {BasePortModel} from "../../components/core/BasePort/BasePortModel";
 import {TypeChecker} from "../typecheck/TypeChecker";
-import {DatasetPortModel} from "../../components/ports/dataset/DatasetPortModel";
-import {BaseNodeModel} from "../../components/core/BaseNode/BaseNodeModel";
 
 
 export class MyDragNewLinkState extends AbstractDisplacementState<DiagramEngine> {
@@ -69,7 +67,6 @@ export class MyDragNewLinkState extends AbstractDisplacementState<DiagramEngine>
                                 if(res) {
                                     //valid link created between nodes
                                     this.typeChecker.eventLinkCreated(this.link);
-                                    this.passPortProperties();
                                 } else {
                                     this.link.remove();
                                     this.engine.repaintCanvas();
@@ -101,17 +98,6 @@ export class MyDragNewLinkState extends AbstractDisplacementState<DiagramEngine>
             portA.reportPosition();
         }
         portB.reportPosition();
-    }
-
-    passPortProperties = () => {
-        let sourcePort = this.link.getSourcePort();
-        let targetPort = this.link.getTargetPort();
-        if(sourcePort instanceof DatasetPortModel && targetPort instanceof DatasetPortModel) {
-            targetPort.setColumns(sourcePort.getColumns());
-        }
-        let targetNode = targetPort.getNode() as BaseNodeModel;
-        // targetNode.updateLink();
-        //TODO
     }
 
     /**
