@@ -12,7 +12,7 @@ export class CrossValidationClassifierFactory extends BaseNodeFactory<CrossValid
     private static INSTANCE: CrossValidationClassifierFactory;
 
     private constructor() {
-        super(Category.DATA, CROSS_VALIDATION_CLASSIFIER.codeName);
+        super(Category.DATA_SOURCE, CROSS_VALIDATION_CLASSIFIER.codeName);
     }
 
     static getInstance = () => {

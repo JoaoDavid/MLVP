@@ -4,7 +4,11 @@ import createEngine, {DiagramEngine} from '@projectstorm/react-diagrams';
 import TopNav from '../components/UI/top-nav/TopNav';
 import SideBar from "../components/UI/side-bar/SideBar";
 import {CategoryConfig, NodeConfig} from "../components/nodes/Config";
-import {DATA_CONFIG} from "../components/nodes/data/DataConfig";
+import {
+    DATA_BALANCING_CONFIG,
+    DATA_SOURCE_CONFIG,
+    DATA_TRANSFORMATION_CONFIG, VISUALISE_CONFIG
+} from "../components/nodes/data/DataConfig";
 import {CLASSIFIER_CONFIG, REGRESSOR_CONFIG} from "../components/nodes/model/ModelConfig";
 import {EVALUATE_CONFIG} from "../components/nodes/evaluate/EvaluateConfig";
 import axios from "axios";
@@ -145,7 +149,10 @@ class App extends React.Component<AppProps, AppState> {
 
     loadMapCategoryNodes = () => {
         const map = new Map<CategoryConfig, NodeConfig[]>();
-        map.set(DATA_CONFIG, DATA_CONFIG.nodes);
+        map.set(DATA_SOURCE_CONFIG, DATA_SOURCE_CONFIG.nodes);
+        map.set(DATA_TRANSFORMATION_CONFIG, DATA_TRANSFORMATION_CONFIG.nodes);
+        map.set(DATA_BALANCING_CONFIG, DATA_BALANCING_CONFIG.nodes);
+        map.set(VISUALISE_CONFIG, VISUALISE_CONFIG.nodes);
         map.set(CLASSIFIER_CONFIG, CLASSIFIER_CONFIG.nodes);
         map.set(REGRESSOR_CONFIG, REGRESSOR_CONFIG.nodes);
         map.set(EVALUATE_CONFIG, EVALUATE_CONFIG.nodes);

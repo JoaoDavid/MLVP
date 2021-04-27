@@ -12,7 +12,7 @@ export class OversamplingFactory extends BaseNodeFactory<OversamplingModel, Diag
     private static INSTANCE: OversamplingFactory;
 
     private constructor() {
-        super(Category.DATA, OVERSAMPLING.codeName);
+        super(Category.DATA_SOURCE, OVERSAMPLING.codeName);
     }
 
     static getInstance = () => {

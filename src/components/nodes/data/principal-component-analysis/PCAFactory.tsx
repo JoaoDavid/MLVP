@@ -12,7 +12,7 @@ export class PCAFactory extends BaseNodeFactory<PCAModel, DiagramEngine> {
     private static INSTANCE: PCAFactory;
 
     private constructor() {
-        super(Category.DATA, PCA.codeName);
+        super(Category.DATA_SOURCE, PCA.codeName);
     }
 
     static getInstance = () => {

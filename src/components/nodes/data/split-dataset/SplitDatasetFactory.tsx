@@ -12,7 +12,7 @@ export class SplitDatasetFactory extends BaseNodeFactory<SplitDatasetModel, Diag
     private static INSTANCE: SplitDatasetFactory;
 
     private constructor() {
-        super(Category.DATA, SPLIT_DATASET.codeName);
+        super(Category.DATA_SOURCE, SPLIT_DATASET.codeName);
     }
 
     static getInstance = () => {

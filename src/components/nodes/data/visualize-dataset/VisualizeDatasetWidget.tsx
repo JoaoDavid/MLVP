@@ -3,7 +3,7 @@ import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {VisualizeDatasetModel} from './VisualizeDatasetModel';
 import BaseNodeWidget from '../../../core/BaseNode/BaseNodeWidget';
 import VisualizeDatasetModal from "./VisualizeDatasetModal";
-import {DATA_CONFIG} from '../DataConfig';
+import {VISUALISE_CONFIG} from '../DataConfig';
 
 interface VisualizeDatasetProps {
     node: VisualizeDatasetModel;
@@ -14,7 +14,7 @@ const VisualizeDatasetWidget = (props: VisualizeDatasetProps) => {
 
     const modal = <VisualizeDatasetModal node={props.node}/>;
     return (
-        <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
+        <BaseNodeWidget node={props.node} engine={props.engine} color={VISUALISE_CONFIG.color} modalChildren={modal}>
         </BaseNodeWidget>
     );
 

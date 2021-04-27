@@ -12,7 +12,7 @@ export class UndersamplingFactory extends BaseNodeFactory<UndersamplingModel, Di
     private static INSTANCE: UndersamplingFactory;
 
     private constructor() {
-        super(Category.DATA, UNDERSAMPLING.codeName);
+        super(Category.DATA_SOURCE, UNDERSAMPLING.codeName);
     }
 
     static getInstance = () => {

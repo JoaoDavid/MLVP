@@ -13,7 +13,7 @@ export class TemporalAggregationFactory extends BaseNodeFactory<TemporalAggregat
     private static INSTANCE: TemporalAggregationFactory;
 
     private constructor() {
-        super(Category.DATA, TEMPORAL_AGGREGATION.codeName);
+        super(Category.DATA_SOURCE, TEMPORAL_AGGREGATION.codeName);
     }
 
     static getInstance = () => {

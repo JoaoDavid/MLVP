@@ -3,7 +3,7 @@ import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {SampleModel} from './SampleModel';
 import BaseNodeWidget, {eventNodeUpdated} from '../../../../core/BaseNode/BaseNodeWidget';
 import SampleModal from "./SampleModal";
-import {DATA_CONFIG} from '../../DataConfig';
+import {DATA_SOURCE_CONFIG} from '../../DataConfig';
 
 interface SampleNodeProps {
     node: SampleModel;
@@ -29,7 +29,7 @@ const SampleWidget = (props: SampleNodeProps) => {
 
     const modal = <SampleModal node={props.node} loadCSV={loadCSV} timeSeriesChanged={timeSeriesChanged}/>;
     return (
-        <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
+        <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_SOURCE_CONFIG.color} modalChildren={modal}>
             <p>{props.node.getFileName() || "File:"}</p>
             <p>Columns: {props.node.getCols()}</p>
             <p>Time Series: {""+props.node.getTimeSeries()}</p>

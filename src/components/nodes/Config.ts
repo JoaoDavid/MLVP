@@ -1,5 +1,8 @@
 export enum Category {
-    DATA = 'Data',
+    DATA_SOURCE = 'Data Source',
+    DATA_TRANSFORMATION = 'Data Transformation',
+    DATA_BALANCING = 'Data Balancing',
+    VISUALISE = 'Visualise',
     CLASSIFIER = 'Classifier',
     REGRESSOR = 'Regressor',
     EVALUATE = 'Evaluate',

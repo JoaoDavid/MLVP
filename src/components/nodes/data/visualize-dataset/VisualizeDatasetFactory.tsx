@@ -12,7 +12,7 @@ export class VisualizeDatasetFactory extends BaseNodeFactory<VisualizeDatasetMod
     private static INSTANCE: VisualizeDatasetFactory;
 
     private constructor() {
-        super(Category.DATA, VISUALIZE_DATASET.codeName);
+        super(Category.DATA_SOURCE, VISUALIZE_DATASET.codeName);
     }
 
     static getInstance = () => {
