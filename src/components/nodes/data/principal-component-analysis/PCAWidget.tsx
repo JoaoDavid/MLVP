@@ -33,7 +33,7 @@ const PCAWidget = (props: PCAProps) => {
     const modal = <PCAModal node={props.node} randomStateChanged={randomStateChanged} randomStateCheckedChanged={randomStateCheckedChanged} numComponentsChanged={numComponentsChanged}/>;
     return (
         <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
-            <p>Random State: {props.node.getRandomState()}</p>
+            <p>Random State: {props.node.getRandomStateChecked()?props.node.getRandomState():"None"}</p>
             <p>Num Components: {props.node.getNumComponents()}</p>
         </BaseNodeWidget>
     );
