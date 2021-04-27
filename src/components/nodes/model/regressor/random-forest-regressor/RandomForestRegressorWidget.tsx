@@ -3,7 +3,7 @@ import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {RandomForestRegressorModel} from './RandomForestRegressorModel';
 import BaseNodeWidget, {eventNodeUpdated} from '../../../../core/BaseNode/BaseNodeWidget';
 import RandomForestRegressorModal from './RandomForestRegressorModal';
-import {MODEL_CONFIG} from '../../ModelConfig';
+import {REGRESSOR_CONFIG} from '../../ModelConfig';
 
 interface RandomForestRegressorProps {
     node: RandomForestRegressorModel;
@@ -31,7 +31,7 @@ const RandomForestRegressorWidget = (props: RandomForestRegressorProps) => {
                                                setMaxTrees={setMaxTrees}
                                                criterionChanged={criterionChanged}/>;
     return (
-        <BaseNodeWidget node={props.node} engine={props.engine} color={MODEL_CONFIG.color}
+        <BaseNodeWidget node={props.node} engine={props.engine} color={REGRESSOR_CONFIG.color}
                         modalChildren={modal}>
             <p>Trees: {props.node.getNumTrees()}</p>
             <p>Max Depth: {props.node.getMaxDepth() > 0 ? props.node.getMaxDepth() : "None"}</p>

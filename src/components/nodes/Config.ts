@@ -1,6 +1,7 @@
 export enum Category {
     DATA = 'Data',
-    MODEL = 'Model',
+    CLASSIFIER = 'Classifier',
+    REGRESSOR = 'Regressor',
     EVALUATE = 'Evaluate',
 }
 

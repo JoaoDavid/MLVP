@@ -13,7 +13,7 @@ export class RandomForestRegressorFactory extends BaseNodeFactory<RandomForestRe
     private static INSTANCE: RandomForestRegressorFactory;
 
     private constructor() {
-        super(Category.MODEL, RANDOM_FOREST_REGRESSOR.codeName);
+        super(Category.REGRESSOR, RANDOM_FOREST_REGRESSOR.codeName);
     }
 
     static getInstance = () => {
