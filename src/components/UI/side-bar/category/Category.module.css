@@ -3,16 +3,19 @@
 }
 
 .Title {
-    color: white;
-    font-weight: lighter;
+    color: #dbdbdb;
+    font-weight: bold;
     font-size: larger;
     font-family: Helvetica;
+    /*font-variant: small-caps;*/
 }
 
 .Body {
-    background-color: rgb(68, 72, 78);
-    color: white;
+    background-color: rgb(51, 58, 64);
+    color: #9a9da0;
+    font-weight: bold;
     padding: 0px !important;
+    font-family: Helvetica;
 }
 
 .Node {
