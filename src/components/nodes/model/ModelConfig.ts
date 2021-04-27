@@ -18,12 +18,12 @@ so it can appear on the side bar for the drag and drop feature
 */
 export const CLASSIFIER_CONFIG: CategoryConfig = {
     category: Category.CLASSIFIER,
-    color: 'rgb(0,192,255)',
+    color: 'rgb(0,164,217)',
     nodes: [RANDOM_FOREST_CLASSIFIER],
 }
 
 export const REGRESSOR_CONFIG: CategoryConfig = {
     category: Category.REGRESSOR,
-    color: 'rgb(151,65,0)',
+    color: 'rgb(142,61,1)',
     nodes: [RANDOM_FOREST_REGRESSOR],
 }
