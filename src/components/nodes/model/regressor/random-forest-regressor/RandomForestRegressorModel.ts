@@ -5,14 +5,14 @@ import {DeserializeEvent} from "@projectstorm/react-canvas-core";
 import {RegressorPortModel} from "../../../../ports/model/RegressorPortModel";
 
 export enum CriterionEnum {
-    GINI = 'gini',
-    ENTROPY = 'entropy',
+    MSE = 'mse',
+    MAE = 'mae',
 }
 
 export class RandomForestRegressorModel extends BaseNodeModel {
 
     private numTrees: number = 100; //int
-    private criterion: CriterionEnum = CriterionEnum.GINI;
+    private criterion: CriterionEnum = CriterionEnum.MSE;
     private maxDepth: number = -1; //int
 
     constructor() {
@@ -34,10 +34,10 @@ export class RandomForestRegressorModel extends BaseNodeModel {
     }
 
     setCriterion(value: string) {
-        if (value === CriterionEnum.GINI) {
-            this.criterion = CriterionEnum.GINI;
-        } else if (value === CriterionEnum.ENTROPY) {
-            this.criterion = CriterionEnum.ENTROPY;
+        if (value === CriterionEnum.MSE) {
+            this.criterion = CriterionEnum.MSE;
+        } else if (value === CriterionEnum.MAE) {
+            this.criterion = CriterionEnum.MAE;
         }
         console.log(this.criterion);
     }
