@@ -71,7 +71,7 @@ export const DATA_TRANSFORMATION_CONFIG: CategoryConfig = {
 
 export const DATA_BALANCING_CONFIG: CategoryConfig = {
     category: Category.DATA_BALANCING,
-    color: 'rgb(100,163,126)',
+    color: 'rgb(79,132,102)',
     nodes: [OVERSAMPLING, UNDERSAMPLING, SPLIT_DATASET],
 }
 

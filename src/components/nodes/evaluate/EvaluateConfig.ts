@@ -19,7 +19,7 @@ so it can appear on the side bar for the drag and drop feature
 */
 export const EVALUATE_CONFIG: CategoryConfig = {
     category: Category.EVALUATE,
-    color: 'rgb(135,52,95)',
+    color: 'rgb(116,45,83)',
     nodes: [EVALUATE_CLASSIFIER, CROSS_VALIDATION_CLASSIFIER],
 }
 
