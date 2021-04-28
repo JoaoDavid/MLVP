@@ -10,7 +10,7 @@ import {
     DATA_TRANSFORMATION_CONFIG, VISUALISE_CONFIG
 } from "../components/nodes/data/DataConfig";
 import {CLASSIFIER_CONFIG, REGRESSOR_CONFIG} from "../components/nodes/model/ModelConfig";
-import {EVALUATE_CONFIG} from "../components/nodes/evaluate/EvaluateConfig";
+import {EVALUATE_CLASSIFIER_CONFIG, EVALUATE_REGRESSOR_CONFIG} from "../components/nodes/evaluate/EvaluateConfig";
 import axios from "axios";
 import download from 'js-file-download';
 import BottomNav from "../components/UI/bottom-nav/BottomNav";
@@ -160,7 +160,8 @@ class App extends React.Component<AppProps, AppState> {
         map.set(VISUALISE_CONFIG, VISUALISE_CONFIG.nodes);
         map.set(CLASSIFIER_CONFIG, CLASSIFIER_CONFIG.nodes);
         map.set(REGRESSOR_CONFIG, REGRESSOR_CONFIG.nodes);
-        map.set(EVALUATE_CONFIG, EVALUATE_CONFIG.nodes);
+        map.set(EVALUATE_CLASSIFIER_CONFIG, EVALUATE_CLASSIFIER_CONFIG.nodes);
+        map.set(EVALUATE_REGRESSOR_CONFIG, EVALUATE_REGRESSOR_CONFIG.nodes);
         return map;
     }
 

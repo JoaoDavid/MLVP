@@ -16,6 +16,7 @@ import {VisualizeDatasetFactory} from "../components/nodes/data/visualize-datase
 import {TemporalAggregationFactory} from "../components/nodes/data/temporal-aggregation/TemporalAggregationFactory";
 import {RandomForestRegressorFactory} from "../components/nodes/model/regressor/random-forest-regressor/RandomForestRegressorFactory";
 import {RegressorPortFactory} from "../components/ports/model/RegressorPortFactory";
+import {EvaluateRegressorFactory} from "../components/nodes/evaluate/regressor/evaluate-regressor/EvaluateRegressorFactory";
 
 
 export class FactoriesManager {
@@ -41,6 +42,7 @@ export class FactoriesManager {
         this.engine.getNodeFactories().registerFactory(CrossValidationClassifierFactory.getInstance());
         this.engine.getNodeFactories().registerFactory(VisualizeDatasetFactory.getInstance());
         this.engine.getNodeFactories().registerFactory(TemporalAggregationFactory.getInstance());
+        this.engine.getNodeFactories().registerFactory(EvaluateRegressorFactory.getInstance());
     }
 
     registerPortFactories = () => {

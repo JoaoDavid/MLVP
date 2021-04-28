@@ -41,7 +41,6 @@ class RandomForestRegressor(Node):
             z3_n_trees > 0,
             z3_max_depth == max_depth,
             Or(z3_max_depth > 0, z3_max_depth == -1),
-            input_ds.balanced,
             input_ds.rows > 0,
             input_ds.cols > IntVal(1)
         ]

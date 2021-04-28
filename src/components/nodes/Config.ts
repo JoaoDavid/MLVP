@@ -5,7 +5,8 @@ export enum Category {
     VISUALISE = 'Visualise',
     CLASSIFIER = 'Classifier',
     REGRESSOR = 'Regressor',
-    EVALUATE = 'Evaluate',
+    EVALUATE_CLASSIFIER = 'Evaluate Classifier',
+    EVALUATE_REGRESSOR = 'Evaluate Regressor',
 }
 
 export type NodeConfig = {

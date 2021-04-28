@@ -19,3 +19,5 @@ from .model.RandomForestRegressor import RandomForestRegressor
 from .evaluate.EvaluateClassifier import EvaluateClassifier
 from .evaluate.CrossValidation import CrossValidation
 
+from .evaluate.EvaluateRegressor import EvaluateRegressor
+
