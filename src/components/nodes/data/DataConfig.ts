@@ -77,6 +77,6 @@ export const DATA_BALANCING_CONFIG: CategoryConfig = {
 
 export const VISUALISE_CONFIG: CategoryConfig = {
     category: Category.VISUALISE,
-    color: '#a88da4',
+    color: 'rgb(59,72,107)',
     nodes: [VISUALIZE_DATASET],
 }
