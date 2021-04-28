@@ -17,6 +17,7 @@ import BottomNav from "../components/UI/bottom-nav/BottomNav";
 import Canvas from "../components/UI/canvas/Canvas";
 import {MyDiagramModel} from "./diagram/MyDiagramModel";
 import splitEvaluate from '../demos/split-n-evaluate.json';
+import posterDemo from '../demos/poster-demo.json';
 import {MyZoomCanvasAction} from "./actions/MyZoomCanvasAction";
 import {DiagramStateManager} from "./states/DiagramStateManager";
 import {TypeChecker, TypeCheckResponse} from "./typecheck/TypeChecker";
@@ -137,6 +138,10 @@ class App extends React.Component<AppProps, AppState> {
         map.set("Simple Pipeline", () => {
             this.canvasLoadDiagram(splitEvaluate);
             this.updateLog("Loaded demo Simple Pipeline");
+        });
+        map.set("Poster - Balanced Dataset Problem", () => {
+            this.canvasLoadDiagram(posterDemo);
+            this.updateLog("Loaded demo Poster - Balanced Dataset Problem");
         });
         return map;
     }
