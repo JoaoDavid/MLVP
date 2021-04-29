@@ -1,6 +1,7 @@
 import json
 
 from mlvp.ast.ParseJSON import ParseJSON
+from mlvp.ast.TopologicalSorter import TopologicalSorter
 from mlvp.codegen.CodeGen import CodeGen
 from mlvp.typecheck.TypeChecker import TypeChecker
 
@@ -8,19 +9,17 @@ from mlvp.typecheck.TypeChecker import TypeChecker
 def generate_code(diagram, file_name="mlvp-code-output"):
     parser = ParseJSON(json_diagram=diagram)
     roots, loose = parser.parse()
-    type_checker = TypeChecker(roots.copy(), loose)
+    topo_sorter = TopologicalSorter(roots, loose)
+    sorted_nodes, sorted_loose_nodes = topo_sorter.topological_sort()
+    type_checker = TypeChecker(sorted_nodes, sorted_loose_nodes)
     tc_res = type_checker.verify(strong_type_check=True)
-    # the type checker will set the nodes visited flag to True
-    # we need to reset them before generating the code
-    for root in roots:
-        root.reset_visited()
+
     response = {}
     if tc_res['canLink']:
-        codegen = CodeGen(file_name, roots)
+        codegen = CodeGen(file_name, sorted_nodes)
         code = codegen.generate_code()
         response["successful"] = True
         response["code"] = code
-        # print(code)
     else:
         response["successful"] = False
     # print(response)
@@ -31,7 +30,9 @@ def generate_code(diagram, file_name="mlvp-code-output"):
 def pipeline_verification(diagram):
     parser = ParseJSON(json_diagram=diagram)
     roots, loose = parser.parse()
-    type_checker = TypeChecker(roots, loose)
+    topo_sorter = TopologicalSorter(roots, loose)
+    sorted_nodes, sorted_loose_nodes = topo_sorter.topological_sort()
+    type_checker = TypeChecker(sorted_nodes, sorted_loose_nodes)
     response = type_checker.verify()
     # print(response)
     return json.dumps(response, indent=4)

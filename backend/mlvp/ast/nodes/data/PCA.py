@@ -47,7 +47,6 @@ class PCA(Node):
 
         if len(input_port.columns) > 0:
             last = list(input_port.columns.items())[-1]
-            print(last)
             this_node_columns[last[0]] = last[1]
         node_columns[self.node_id] = this_node_columns
 

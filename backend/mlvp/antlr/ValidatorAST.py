@@ -44,8 +44,8 @@ class ValidatorAST:
             left = self.__expression_type(expr.left)
             right = self.__expression_type(expr.right)
             z3_binary_operation = Bool(BINARY.format(left=left, operator=str(expr), right=right, line=expr.pos.start_line))
-            print("left: " + left + " right: " + right)
-            print("left: " + str(expr.left) + " right: " + str(expr.right))
+            # print("left: " + left + " right: " + right)
+            # print("left: " + str(expr.left) + " right: " + str(expr.right))
             if isinstance(expr, AndExpression) or isinstance(expr, OrExpression):
                 if left == "bool" and right == "bool":
                     return "bool"
