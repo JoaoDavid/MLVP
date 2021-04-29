@@ -1,7 +1,6 @@
 .BottomNav {
     overflow: hidden;
-    background-color: rgb(68, 72, 78);
-    /*border-top: 3px solid rgba(51,58,64,255);*/
+    background-color: rgb(51, 58, 64);
     text-align: left;
 }
 
@@ -10,12 +9,12 @@
     padding: 0;
     margin: 0;
     display: flex;
-    border-top: 3px solid rgba(51,58,64,255);
 }
 
 .tabs > li {
     padding: 0.2em 1em;
-    color: rgba(255, 255, 255, 0.5);
+    color: #9a9da0;
+    font-weight: bold;
 }
 
 .notCurrent {
@@ -28,7 +27,7 @@
 
 .current {
     color: rgba(255, 255, 255, 0.5);
-    background-color: rgba(51,58,64,255);
+    background-color: rgb(68, 72, 78);
 }
 
 .content {
@@ -39,7 +38,6 @@
 .Box {
     border-top: 3px solid rgba(51,58,64,255);
     max-height: 200px;
-    /*height: 200px;*/
     background-color: rgb(68, 72, 78);
     color: rgba(255, 255, 255, 0.5);
     overflow: auto;
@@ -55,6 +53,3 @@
     -ms-user-select: none; /* IE 10+ and Edge */
     user-select: none; /* Standard syntax */
 }
-
-
-
