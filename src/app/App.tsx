@@ -171,6 +171,11 @@ class App extends React.Component<AppProps, AppState> {
         this.registerListeners(model);
         this.generated_nodes_counter = 0;
         this.updateLog("New canvas");
+        this.setState({
+            unsatNodeAssertions: new Map(),
+            allNodeAssertions: new Map(),
+            allLinkAssertions: new Map(),
+        });
     }
 
     onDropCanvas = (event: DragEvent<HTMLDivElement>) => {
@@ -229,6 +234,14 @@ class App extends React.Component<AppProps, AppState> {
             });
     }
 
+    compile = () => {
+        if (this.state.unsatNodeAssertions.size == 0) {
+            this.requestCompilation();
+        } else {
+            this.updateLog("Cannot compile with problems!");
+        }
+    }
+
     updateLog = (message: string) => {
         let currentDate = new Date();
         let time = currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds();
@@ -241,7 +254,7 @@ class App extends React.Component<AppProps, AppState> {
         return (
             <div className={classes.FrontPage}>
                 <TopNav newCanvas={this.newCanvas} open={this.openSave} save={this.downloadSave}
-                        requestCompilation={this.requestCompilation} loadDemos={this.loadDemos()}/>
+                        compile={this.compile} loadDemos={this.loadDemos()}/>
                 <div className={classes.Container}>
                     <SideBar catAndNames={this.loadMapCategoryNodes()} format={this.dragDropFormat}/>
                     <Canvas engine={this.engine} onDropCanvas={this.onDropCanvas}/>
