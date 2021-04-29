@@ -1,4 +1,4 @@
-from mlvp.ast.nodes.AssertionsHelper import no_features_of_type
+from mlvp.ast.nodes.AssertionsHelper import no_features_of_type, categorical_last_column
 from mlvp.codegen import *
 from mlvp.ast.nodes.Node import *
 from mlvp.typecheck import *
@@ -47,4 +47,4 @@ class RandomForestClassifier(Node):
             input_ds.balanced,
             input_ds.rows > 0,
             input_ds.cols > 1
-        ] + features_assertions
+        ] + features_assertions + categorical_last_column(input_port, input_ds.dataset)

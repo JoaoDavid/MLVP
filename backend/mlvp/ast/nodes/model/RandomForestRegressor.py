@@ -1,4 +1,4 @@
-from mlvp.ast.nodes.AssertionsHelper import no_features_of_type
+from mlvp.ast.nodes.AssertionsHelper import no_features_of_type, continuous_last_column
 from mlvp.codegen import *
 from mlvp.ast.nodes.Node import *
 from mlvp.typecheck import *
@@ -46,4 +46,4 @@ class RandomForestRegressor(Node):
             Or(z3_max_depth > 0, z3_max_depth == -1),
             input_ds.rows > 0,
             input_ds.cols > 1
-        ] + features_assertions
+        ] + features_assertions + continuous_last_column(input_port, input_ds.dataset)
