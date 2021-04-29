@@ -30,7 +30,6 @@ class Node(ABC):
                 return port
 
     def __has_input_ports(self):
-        print(self.ports)
         for _, port in self.ports.items():
             if port.in_port:
                 return True

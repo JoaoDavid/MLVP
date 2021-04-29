@@ -69,7 +69,6 @@ class SampleCSV(Node):
                 output.min_label_count == min(label_counts)
             ]
 
-        print(And(list_balanced).num_args())
         is_balanced = all(list_balanced)
 
         return [
