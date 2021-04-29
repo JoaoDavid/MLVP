@@ -63,11 +63,11 @@ def __convert_ids(ports, expr):
 
 class TypeChecker:
 
-    def __init__(self, roots, loose):
+    def __init__(self, sorted_nodes, sorted_loose_nodes):
         self.strong_type_check = False
         self.solver = Solver()
-        self.roots = roots
-        self.loose = loose
+        self.sorted_nodes = sorted_nodes
+        self.sorted_loose_nodes = sorted_loose_nodes
         self.node_assertions = {}
         self.link_assertions = {}
         self.unsat_node_assertions = {}
@@ -78,12 +78,12 @@ class TypeChecker:
     def verify(self, strong_type_check=False):
         self.strong_type_check = strong_type_check
 
-        for root in self.roots:
-            self.__traverse_pipeline(root)
+        for root in self.sorted_nodes:
+            self.__type_check_node(root)
 
         if not self.strong_type_check:
-            for loose in self.loose:
-                self.__traverse_pipeline(loose)
+            for loose in self.sorted_loose_nodes:
+                self.__type_check_node(loose)
 
         for assertion in self.all_link_assertions:
             self.solver.add(assertion[1])
@@ -114,23 +114,14 @@ class TypeChecker:
         result["nodeColumns"] = self.node_columns
         return result
 
-    # traverse the pipeline, appending the corresponding assertions to the all_node_assertions list
-    def __traverse_pipeline(self, node: Node):
-        if not node.visited:
-            node.visited = True
-            for parent_link in node.parent_links:
-                self.__traverse_pipeline(parent_link.parent_node)
-            # parents are all visited
-            self.__add_dataset_links(node.parent_links)
-            # add current node assertions to the array
-            node_assertions = node.assertions(self.node_columns)
-            if self.strong_type_check:
-                node_assertions += node.input_ports_linked()
-            self.all_node_assertions.append((node, node_assertions))
-            self.node_assertions[node.node_id] = assertions_to_str(node.ports, node_assertions)
-            # visit every child node
-            for child in node.children:
-                self.__traverse_pipeline(child)
+    def __type_check_node(self, node):
+        self.__add_dataset_links(node.parent_links)
+        # add current node assertions to the array
+        node_assertions = node.assertions(self.node_columns)
+        if self.strong_type_check:
+            node_assertions += node.input_ports_linked()
+        self.all_node_assertions.append((node, node_assertions))
+        self.node_assertions[node.node_id] = assertions_to_str(node.ports, node_assertions)
 
     def __add_dataset_links(self, parent_links):
         for parent_link in parent_links:

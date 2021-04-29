@@ -4,30 +4,17 @@ from mlvp.ast.nodes import Node
 
 class CodeGen:
 
-    def __init__(self, name, roots):
+    def __init__(self, name, sorted_nodes):
         self.name = name + ".py"
         self.libraries = set()
-        self.roots = roots
-        self.out_file = open(self.name, "w+")
+        self.sorted_nodes = sorted_nodes
+        self.out_file = open(self.name, "w")
         self.emitter = Emitter()
-
-    def __gather_libraries(self, node: Node):
-        self.libraries.add(node.import_dependency())
-        # visit every child node
-        for child in node.children:
-            self.__gather_libraries(child)
-
-    def __write_imports(self):
-        for root in self.roots:
-            self.__gather_libraries(root)
-        for lib in self.libraries:
-            self.out_file.write(lib)
-        self.out_file.write("\n\n")
 
     def generate_code(self):
         self.__write_imports()
-        for root in self.roots:
-            self.__write_nodes(root)
+        for root in self.sorted_nodes:
+            self.__write_node(root)
 
         self.out_file.close()
         final_file = open(self.name, "r")
@@ -35,16 +22,14 @@ class CodeGen:
         final_file.close()
         return file_text
 
-    def __write_nodes(self, node: Node):
-        if not node.visited:
-            node.visited = True
-            for parent_link in node.parent_links:
-                self.__write_nodes(parent_link.parent_node)
-            # node's parents are all visited and written
-            # write current node code to the out file
-            node.codegen(self.emitter, self.out_file)
-            print(node)
-            self.out_file.write("\n")
-            # visit every child node
-            for child in node.children:
-                self.__write_nodes(child)
+    def __write_imports(self):
+        for node in self.sorted_nodes:
+            self.libraries.add(node.import_dependency())
+        for lib in self.libraries:
+            self.out_file.write(lib)
+        self.out_file.write("\n\n")
+
+    def __write_node(self, node: Node):
+        # write current node code to the out file
+        node.codegen(self.emitter, self.out_file)
+        self.out_file.write("\n")
