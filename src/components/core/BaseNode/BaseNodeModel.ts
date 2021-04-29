@@ -16,7 +16,7 @@ export abstract class BaseNodeModel extends NodeModel<BaseNodeModelGenerics> {
     protected portsIn: BasePortModel[];
     protected portsOut: BasePortModel[];
     private title: string;
-
+    private columnsTypes: Map<string,string> = new Map<string, string>();
 
     protected constructor(nodeConfig: NodeConfig) {
         super({
@@ -26,6 +26,20 @@ export abstract class BaseNodeModel extends NodeModel<BaseNodeModelGenerics> {
         this.portsOut = [];
         this.portsIn = [];
         this.title = nodeConfig.name;
+    }
+
+    setColumnsAndTypes = (columnsTypes: Map<string, string>) => {
+        this.columnsTypes = columnsTypes;
+    }
+
+    getColumnsAndTypes = () => {
+        return this.columnsTypes;
+    }
+
+    addNewColumn = (array, value) => {
+        if (array.length > 0) {
+            array.splice(array.length-1, 0, value);
+        }
     }
 
     doClone(lookupTable: {}, clone: any): void {

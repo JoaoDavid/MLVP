@@ -12,7 +12,7 @@ export class AbstractDsFactory extends BaseNodeFactory<AbstractDsModel, DiagramE
     private static INSTANCE: AbstractDsFactory;
 
     private constructor() {
-        super(Category.DATA, ABSTRACT_DS.codeName);
+        super(Category.DATA_SOURCE, ABSTRACT_DS.codeName);
     }
 
     static getInstance = () => {

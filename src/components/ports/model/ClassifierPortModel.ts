@@ -2,7 +2,7 @@ import {PortModel} from '@projectstorm/react-diagrams-core';
 import {ModelPortModel} from "./ModelPortModel";
 import {RegressorPortModel} from "./RegressorPortModel";
 
-export const CLASSIFIER_PORT = "ModelPort";
+export const CLASSIFIER_PORT = "ClassifierPort";
 
 export class ClassifierPortModel extends ModelPortModel {
 

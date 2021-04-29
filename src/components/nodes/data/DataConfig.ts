@@ -57,10 +57,26 @@ export const TEMPORAL_AGGREGATION: NodeConfig = {
 Every node type must be added to the nodes array
 so it can appear on the side bar for the drag and drop feature
 */
-export const DATA_CONFIG: CategoryConfig = {
-    category: Category.DATA,
-    color: 'green',
-    nodes: [ABSTRACT_DS, IMPORT_FROM_CSV, SAMPLE_CSV, SPLIT_DATASET,
-        OVERSAMPLING, UNDERSAMPLING, PCA, FEATURE_ENGINEERING, VISUALIZE_DATASET,
-        TEMPORAL_AGGREGATION],
+export const DATA_SOURCE_CONFIG: CategoryConfig = {
+    category: Category.DATA_SOURCE,
+    color: 'rgb(56,109,38)',
+    nodes: [ABSTRACT_DS, IMPORT_FROM_CSV, SAMPLE_CSV],
+}
+
+export const DATA_TRANSFORMATION_CONFIG: CategoryConfig = {
+    category: Category.DATA_TRANSFORMATION,
+    color: 'rgb(27,97,72)',
+    nodes: [PCA, FEATURE_ENGINEERING, TEMPORAL_AGGREGATION],
+}
+
+export const DATA_BALANCING_CONFIG: CategoryConfig = {
+    category: Category.DATA_BALANCING,
+    color: 'rgb(79,132,102)',
+    nodes: [OVERSAMPLING, UNDERSAMPLING, SPLIT_DATASET],
+}
+
+export const VISUALISE_CONFIG: CategoryConfig = {
+    category: Category.VISUALISE,
+    color: 'rgb(59,72,107)',
+    nodes: [VISUALIZE_DATASET],
 }

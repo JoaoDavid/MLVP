@@ -12,7 +12,7 @@ export class SampleFactory extends BaseNodeFactory<SampleModel, DiagramEngine> {
     private static INSTANCE: SampleFactory;
 
     private constructor() {
-        super(Category.DATA, SAMPLE_CSV.codeName);
+        super(Category.DATA_SOURCE, SAMPLE_CSV.codeName);
     }
 
     static getInstance = () => {

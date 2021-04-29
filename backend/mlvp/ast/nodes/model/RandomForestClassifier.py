@@ -1,3 +1,4 @@
+from mlvp.ast.nodes.AssertionsHelper import no_features_of_type, categorical_last_column
 from mlvp.codegen import *
 from mlvp.ast.nodes.Node import *
 from mlvp.typecheck import *
@@ -28,12 +29,14 @@ class RandomForestClassifier(Node):
                                                  max_depth=self.max_depth))
         out_file.write(MODEL_FIT.format(var=clf_var, x=x, y=y))
 
-    def assertions(self):
-        id_input = self.get_port(True, "Dataset").port_id
-        input_ds = Dataset(id_input)
+    def assertions(self, node_columns):
+        input_port = self.get_port(True, "Dataset")
+        input_ds = Dataset(input_port.port_id)
         z3_n_trees = Int(NODE_PROP.format(name="n_trees", node_id=self.node_id))
         z3_max_depth = Int(NODE_PROP.format(name="max_depth", node_id=self.node_id))
         max_depth = -1 if self.max_depth == "None" else self.max_depth
+
+        features_assertions = no_features_of_type(input_port, "string", input_ds.dataset)
 
         return [
             # requires
@@ -43,5 +46,5 @@ class RandomForestClassifier(Node):
             Or(z3_max_depth > 0, z3_max_depth == -1),
             input_ds.balanced,
             input_ds.rows > 0,
-            input_ds.cols > IntVal(1)
-        ]
+            input_ds.cols > 1
+        ] + features_assertions + categorical_last_column(input_port, input_ds.dataset)

@@ -2,6 +2,7 @@ import React from 'react';
 import classes from './SideBar.module.css';
 import Category from "./category/Category";
 import {CategoryConfig, NodeConfig} from "../../nodes/Config";
+import Accordion from "react-bootstrap/Accordion";
 
 interface SideBarProps {
     catAndNames: Map<CategoryConfig, NodeConfig[]>,
@@ -17,7 +18,9 @@ const SideBar = (props: SideBarProps) => {
     console.log(props.catAndNames);
     return (
         <div className={classes.SideBar}>
-            {categories}
+            <Accordion defaultActiveKey="0">
+                {categories}
+            </Accordion>
         </div>
     )
 }

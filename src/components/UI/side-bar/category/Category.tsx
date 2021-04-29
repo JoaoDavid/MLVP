@@ -15,25 +15,25 @@ interface CategoryProps {
 const Category = (props: CategoryProps) => {
     return (
         <div>
-            <Accordion defaultActiveKey="0">
-                <Card className={classes.MyCard}>
-                    <Accordion.Toggle className={classes.Title} style={{background: props.color}} as={Card.Header} eventKey="0">
-                        {props.title}
-                    </Accordion.Toggle>
-                    <Accordion.Collapse eventKey="0">
-                        <Card.Body className={classes.Body}>
-                            {props.nodes.map((node) => {
-                                return <div key={node.name} draggable={true} className={classes.Node}
-                                          onDragStart={(event) => {
-                                              event.dataTransfer.setData(props.format, JSON.stringify(node));
-                                          }}>
-                                    {node.name}
-                                </div>
-                            })}
-                        </Card.Body>
-                    </Accordion.Collapse>
-                </Card>
-            </Accordion>
+            <Card className={classes.MyCard}>
+                <Accordion.Toggle className={classes.Title} style={{background: props.color}} as={Card.Header}
+                                  eventKey={props.title}>
+                    {props.title}
+                </Accordion.Toggle>
+                <Accordion.Collapse eventKey={props.title}>
+                    <Card.Body className={classes.Body}>
+                        {props.nodes.map((node) => {
+                            return <div key={node.name} draggable={true} className={classes.Node}
+                                        onDragStart={(event) => {
+                                            event.dataTransfer.setData(props.format, JSON.stringify(node));
+                                        }}>
+                                {node.name}
+                            </div>
+                        })}
+                    </Card.Body>
+                </Accordion.Collapse>
+            </Card>
+
         </div>
     )
 }

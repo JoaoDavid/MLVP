@@ -14,6 +14,9 @@ import {SampleFactory} from "../components/nodes/data/import-dataset/sample/Samp
 import {FeatureEngineeringFactory} from "../components/nodes/data/feature-engineering/FeatureEngineeringFactory";
 import {VisualizeDatasetFactory} from "../components/nodes/data/visualize-dataset/VisualizeDatasetFactory";
 import {TemporalAggregationFactory} from "../components/nodes/data/temporal-aggregation/TemporalAggregationFactory";
+import {RandomForestRegressorFactory} from "../components/nodes/model/regressor/random-forest-regressor/RandomForestRegressorFactory";
+import {RegressorPortFactory} from "../components/ports/model/RegressorPortFactory";
+import {EvaluateRegressorFactory} from "../components/nodes/evaluate/regressor/evaluate-regressor/EvaluateRegressorFactory";
 
 
 export class FactoriesManager {
@@ -29,6 +32,7 @@ export class FactoriesManager {
         this.engine.getNodeFactories().registerFactory(CSVFactory.getInstance());
         this.engine.getNodeFactories().registerFactory(SampleFactory.getInstance());
         this.engine.getNodeFactories().registerFactory(RandomForestClassifierFactory.getInstance());
+        this.engine.getNodeFactories().registerFactory(RandomForestRegressorFactory.getInstance());
         this.engine.getNodeFactories().registerFactory(OversamplingFactory.getInstance());
         this.engine.getNodeFactories().registerFactory(UndersamplingFactory.getInstance());
         this.engine.getNodeFactories().registerFactory(PCAFactory.getInstance());
@@ -38,11 +42,13 @@ export class FactoriesManager {
         this.engine.getNodeFactories().registerFactory(CrossValidationClassifierFactory.getInstance());
         this.engine.getNodeFactories().registerFactory(VisualizeDatasetFactory.getInstance());
         this.engine.getNodeFactories().registerFactory(TemporalAggregationFactory.getInstance());
+        this.engine.getNodeFactories().registerFactory(EvaluateRegressorFactory.getInstance());
     }
 
     registerPortFactories = () => {
         this.engine.getPortFactories().registerFactory(DatasetPortFactory.getInstance());
         this.engine.getPortFactories().registerFactory(ClassifierPortFactory.getInstance());
+        this.engine.getPortFactories().registerFactory(RegressorPortFactory.getInstance());
     }
 
     delDefaultFactory = () => {

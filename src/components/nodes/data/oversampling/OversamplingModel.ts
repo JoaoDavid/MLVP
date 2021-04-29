@@ -6,12 +6,21 @@ import {DeserializeEvent} from "@projectstorm/react-canvas-core";
 
 export class OversamplingModel extends BaseNodeModel {
 
+    private randomStateChecked: boolean = true;
     private randomState: number = 0;
 
     constructor() {
         super(OVERSAMPLING);
         this.addInPort();
         this.addOutPort();
+    }
+
+    getRandomStateChecked (): boolean {
+        return this.randomStateChecked;
+    }
+
+    setRandomStateChecked (value: boolean) {
+        this.randomStateChecked = value;
     }
 
     getRandomState(): number {
@@ -34,15 +43,21 @@ export class OversamplingModel extends BaseNodeModel {
 
     deserialize(event: DeserializeEvent<this>) {
         super.deserialize(event);
-        this.randomState = event.data.randomState;
+        let randomState = event.data.randomState;
+        if (randomState === "None") {
+            this.randomState = 0;
+            this.randomStateChecked = false;
+        } else {
+            this.randomState = randomState;
+            this.randomStateChecked = true;
+        }
     }
 
     serialize(): any {
         return {
             ...super.serialize(),
-            randomState: this.randomState,
+            randomState: this.randomStateChecked?this.randomState:"None",
         };
     }
-
 
 }

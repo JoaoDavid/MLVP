@@ -63,14 +63,16 @@ export class CSVModel extends ImportDataset {
                     dynamicTyping: true,
                     complete: (results: any) => {
                         if (results.data.length > 0) {
-                            console.log(results.data);
+                            // console.log(results.data);
                             this.setCols(results.data[0].length);//num features
                             this.setRows(results.data.length - 1);//num entries, -1 because of column name's row
                             this.labels = this.processLabels(results.data);
                             this.processColumns(results.data);
                             this.targetIndex = this.getCols() - 1;
-                            console.log(this.labels);
-                            console.log(this.columns);
+                            // console.log(this.labels);
+                            // console.log(this.columns);
+                            // let outPort = this.getOutPorts()[0] as DatasetPortModel;
+                            // outPort.setColumns(this.columns);
                         }
                         complete(results.data);
                     }
@@ -141,6 +143,5 @@ export class CSVModel extends ImportDataset {
             targetIndex: this.targetIndex,
         };
     }
-
 
 }

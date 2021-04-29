@@ -41,22 +41,34 @@ class TemporalAggregation(Node):
         out_ds = self.get_port(False, "Engineered Dataset")
         emitter.set(out_ds, (x, y))
 
-    def assertions(self):
+    def assertions(self, node_columns):
         input_port = self.get_port(True, "Dataset")
         output_port = self.get_port(False, "Engineered Dataset")
-        output_port.columns = input_port.columns
+        # output_port.columns = input_port.columns.copy()
 
         input_ds = Dataset(input_port.port_id)
         output_ds = Dataset(output_port.port_id)
 
+        this_node_columns = {}
+        i = 0
+        for col_name, col_type in input_port.columns.items():
+            if i == len(input_port.columns) - 1:
+                output_port.columns[self.new_col_name] = "float"
+            output_port.columns[col_name] = col_type
+            i += 1
+            if col_type == "int" or col_type == "float":
+                this_node_columns[col_name] = col_type
+        node_columns[self.node_id] = this_node_columns
+
         z3_len_new_col = Int(NODE_PROP.format(name="len_new_column_name", node_id=self.node_id))
         z3_len_org_col = Int(NODE_PROP.format(name="len_original_column_name", node_id=self.node_id))
         z3_duplicate_column = Bool(DUPLICATE_COLUMN.format(column_name=self.new_col_name))
-        z3_nonexistent_column = Bool(NONEXISTENT_COLUMN.format(column_name=self.original_col_name))
+        # z3_nonexistent_column = Bool(NONEXISTENT_COLUMN.format(column_name=self.original_col_name))
         duplicate_column = True
         nonexistent_column = True
 
         if len(input_port.columns) > 0:
+            last = list(input_port.columns.items())[-1]
             duplicate_column = self.new_col_name not in input_port.columns
             nonexistent_column = self.original_col_name in input_port.columns
 
@@ -71,8 +83,8 @@ class TemporalAggregation(Node):
             z3_len_org_col > 0,
             z3_duplicate_column == duplicate_column,
             z3_duplicate_column,
-            z3_nonexistent_column == nonexistent_column,
-            z3_nonexistent_column,
+            # z3_nonexistent_column == nonexistent_column,
+            # z3_nonexistent_column,
             Or(
                 column(input_ds.dataset, String(self.original_col_name)) == get_col_type("int"),
                 column(input_ds.dataset, String(self.original_col_name)) == get_col_type("float")),

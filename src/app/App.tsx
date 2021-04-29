@@ -4,15 +4,20 @@ import createEngine, {DiagramEngine} from '@projectstorm/react-diagrams';
 import TopNav from '../components/UI/top-nav/TopNav';
 import SideBar from "../components/UI/side-bar/SideBar";
 import {CategoryConfig, NodeConfig} from "../components/nodes/Config";
-import {DATA_CONFIG} from "../components/nodes/data/DataConfig";
-import {MODEL_CONFIG} from "../components/nodes/model/ModelConfig";
-import {EVALUATE_CONFIG} from "../components/nodes/evaluate/EvaluateConfig";
+import {
+    DATA_BALANCING_CONFIG,
+    DATA_SOURCE_CONFIG,
+    DATA_TRANSFORMATION_CONFIG, VISUALISE_CONFIG
+} from "../components/nodes/data/DataConfig";
+import {CLASSIFIER_CONFIG, REGRESSOR_CONFIG} from "../components/nodes/model/ModelConfig";
+import {EVALUATE_CLASSIFIER_CONFIG, EVALUATE_REGRESSOR_CONFIG} from "../components/nodes/evaluate/EvaluateConfig";
 import axios from "axios";
 import download from 'js-file-download';
 import BottomNav from "../components/UI/bottom-nav/BottomNav";
 import Canvas from "../components/UI/canvas/Canvas";
 import {MyDiagramModel} from "./diagram/MyDiagramModel";
 import splitEvaluate from '../demos/split-n-evaluate.json';
+import posterDemo from '../demos/poster-demo.json';
 import {MyZoomCanvasAction} from "./actions/MyZoomCanvasAction";
 import {DiagramStateManager} from "./states/DiagramStateManager";
 import {TypeChecker, TypeCheckResponse} from "./typecheck/TypeChecker";
@@ -71,6 +76,7 @@ class App extends React.Component<AppProps, AppState> {
             linkCreated: (event) => {
                 console.log('linkCreated');
                 console.log(event);
+                this.typeChecker.requestTypeCheck();
             },
             nodeUpdated: (event) => {
                 console.log("nodeUpdated");
@@ -87,11 +93,13 @@ class App extends React.Component<AppProps, AppState> {
                 const allNodeAssertions = this.processNodeAssertions(event.typeCheckResponse.nodeAssertions);
                 const allLinkAssertions = this.processLinkAssertions(event.typeCheckResponse);
                 const unsatNodeAssertions = this.processNodeAssertions(event.typeCheckResponse.unsatNodeAssertions);
+                this.processNodeColumns(event.typeCheckResponse.nodeColumns);
                 this.setState({
                     unsatNodeAssertions: unsatNodeAssertions,
                     allNodeAssertions: allNodeAssertions,
                     allLinkAssertions: allLinkAssertions,
-                })
+                });
+                this.engine.repaintCanvas();
             }
         });
     }
@@ -104,6 +112,13 @@ class App extends React.Component<AppProps, AppState> {
             map.set(node, mapNodeAssertions[k]);
         }
         return map;
+    }
+
+    processNodeColumns = (mapNodeColumns) => {
+        for (let k of Object.keys(mapNodeColumns)) {
+            const node = this.engine.getModel().getNode(k) as BaseNodeModel;
+            node.setColumnsAndTypes(mapNodeColumns[k])
+        }
     }
 
     processLinkAssertions = (typeCheckResponse: TypeCheckResponse) => {
@@ -124,6 +139,10 @@ class App extends React.Component<AppProps, AppState> {
             this.canvasLoadDiagram(splitEvaluate);
             this.updateLog("Loaded demo Simple Pipeline");
         });
+        map.set("Poster - Balanced Dataset Problem", () => {
+            this.canvasLoadDiagram(posterDemo);
+            this.updateLog("Loaded demo Poster - Balanced Dataset Problem");
+        });
         return map;
     }
 
@@ -135,9 +154,14 @@ class App extends React.Component<AppProps, AppState> {
 
     loadMapCategoryNodes = () => {
         const map = new Map<CategoryConfig, NodeConfig[]>();
-        map.set(DATA_CONFIG, DATA_CONFIG.nodes);
-        map.set(MODEL_CONFIG, MODEL_CONFIG.nodes);
-        map.set(EVALUATE_CONFIG, EVALUATE_CONFIG.nodes);
+        map.set(DATA_SOURCE_CONFIG, DATA_SOURCE_CONFIG.nodes);
+        map.set(DATA_TRANSFORMATION_CONFIG, DATA_TRANSFORMATION_CONFIG.nodes);
+        map.set(DATA_BALANCING_CONFIG, DATA_BALANCING_CONFIG.nodes);
+        map.set(VISUALISE_CONFIG, VISUALISE_CONFIG.nodes);
+        map.set(CLASSIFIER_CONFIG, CLASSIFIER_CONFIG.nodes);
+        map.set(REGRESSOR_CONFIG, REGRESSOR_CONFIG.nodes);
+        map.set(EVALUATE_CLASSIFIER_CONFIG, EVALUATE_CLASSIFIER_CONFIG.nodes);
+        map.set(EVALUATE_REGRESSOR_CONFIG, EVALUATE_REGRESSOR_CONFIG.nodes);
         return map;
     }
 

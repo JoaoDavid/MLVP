@@ -3,7 +3,7 @@ import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {RandomForestClassifierModel} from './RandomForestClassifierModel';
 import BaseNodeWidget, {eventNodeUpdated} from '../../../../core/BaseNode/BaseNodeWidget';
 import RandomForestClassifierModal from './RandomForestClassifierModal';
-import {MODEL_CONFIG} from '../../ModelConfig';
+import {CLASSIFIER_CONFIG} from '../../ModelConfig';
 
 interface RandomForestClassifierProps {
     node: RandomForestClassifierModel;
@@ -31,7 +31,7 @@ const RandomForestClassifierWidget = (props: RandomForestClassifierProps) => {
                                                setMaxTrees={setMaxTrees}
                                                criterionChanged={criterionChanged}/>;
     return (
-        <BaseNodeWidget node={props.node} engine={props.engine} color={MODEL_CONFIG.color}
+        <BaseNodeWidget node={props.node} engine={props.engine} color={CLASSIFIER_CONFIG.color}
                         modalChildren={modal}>
             <p>Trees: {props.node.getNumTrees()}</p>
             <p>Max Depth: {props.node.getMaxDepth() > 0 ? props.node.getMaxDepth() : "None"}</p>

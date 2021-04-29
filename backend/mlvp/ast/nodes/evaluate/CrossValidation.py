@@ -1,6 +1,6 @@
 from mlvp.codegen import *
 from mlvp.ast.nodes.Node import *
-from mlvp.ast.ports import DatasetPort, ModelPort
+from mlvp.ast.ports import DatasetPort, ClassifierPort
 from mlvp.typecheck import *
 
 CROSS_VAL_SCORE_CALL = "{score} = cross_val_score({model}, {x}, {y}, cv={cv})\n"
@@ -21,14 +21,14 @@ class CrossValidation(Node):
         model_var, x, y = "", "", ""
         for curr in self.parent_links:
             parent_port = curr.source_port
-            if isinstance(parent_port, ModelPort):
+            if isinstance(parent_port, ClassifierPort):
                 model_var = emitter.get(parent_port)
             elif isinstance(parent_port, DatasetPort):
                 x, y = emitter.get(parent_port)
         out_file.write(CROSS_VAL_SCORE_CALL.format(score=score, model=model_var, x=x, y=y, cv=self.number_folds))
         out_file.write("print(" + score + ")\n")
 
-    def assertions(self):
+    def assertions(self, node_columns):
         id_input_ds = self.get_port(True, "Dataset").port_id
         input_ds = Dataset(id_input_ds)
 

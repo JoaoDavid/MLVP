@@ -37,7 +37,7 @@ class ImportFromCSV(Node):
         out_file.write(X.format(x=x, df=df, target=self.target))
         out_file.write(Y.format(y=y, df=df, target=self.target))
 
-    def assertions(self):
+    def assertions(self, node_columns):
         output_port = self.get_port(False, "Dataset")
         output = Dataset(output_port.port_id)
 
@@ -86,4 +86,5 @@ class ImportFromCSV(Node):
                    output.n_labels == len(label_counts),
                    z3_unique_col_names == unique_col_names,
                    z3_unique_col_names,
-               ] + label_counts_assertions + labels_values + col_assertions
+               ] + col_assertions
+               # ] + label_counts_assertions + labels_values + col_assertions

@@ -12,7 +12,7 @@ export class FeatureEngineeringFactory extends BaseNodeFactory<FeatureEngineerin
     private static INSTANCE: FeatureEngineeringFactory;
 
     private constructor() {
-        super(Category.DATA, FEATURE_ENGINEERING.codeName);
+        super(Category.DATA_SOURCE, FEATURE_ENGINEERING.codeName);
     }
 
     static getInstance = () => {

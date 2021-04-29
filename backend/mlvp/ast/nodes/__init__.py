@@ -13,8 +13,11 @@ from .data.TemporalAggregation import TemporalAggregation
 from .data.VisualizeDataset import VisualizeDataset
 
 from .model.RandomForestClassifier import RandomForestClassifier
+from .model.RandomForestRegressor import RandomForestRegressor
 
 
 from .evaluate.EvaluateClassifier import EvaluateClassifier
 from .evaluate.CrossValidation import CrossValidation
+
+from .evaluate.EvaluateRegressor import EvaluateRegressor
 

@@ -1,3 +1,4 @@
+from mlvp.ast.nodes.AssertionsHelper import no_features_of_type
 from mlvp.codegen import *
 from mlvp.ast.nodes.Node import *
 from mlvp.typecheck import *
@@ -33,19 +34,29 @@ class PCA(Node):
         out_ds = self.get_port(False, "Reduced Dataset")
         emitter.set(out_ds, (x_pca, y))
 
-    def assertions(self):
+    def assertions(self, node_columns):
         input_port = self.get_port(True, "Dataset")
         output_port = self.get_port(False, "Reduced Dataset")
         input_ds = Dataset(input_port.port_id)
         output_ds = Dataset(output_port.port_id)
         z3_n_components = Int(NODE_PROP.format(name="n_components", node_id=self.node_id))
 
-        columns = {}
+        this_node_columns = {}
+        for i in range(1, self.num_components + 1):
+            this_node_columns["V" + str(i)] = "float"
 
-        print(self.column_names)
-        for curr_name in self.column_names:
-            columns[curr_name] = "float"
-        output_port.columns = columns
+        if len(input_port.columns) > 0:
+            last = list(input_port.columns.items())[-1]
+            print(last)
+            this_node_columns[last[0]] = last[1]
+        node_columns[self.node_id] = this_node_columns
+
+        # print(self.column_names)
+        # for curr_name in self.column_names:
+        #     columns[curr_name] = "float"
+        output_port.columns = this_node_columns
+
+        features_assertions = no_features_of_type(input_port, "string", input_ds.dataset)
 
         return [
             # requires
@@ -59,4 +70,4 @@ class PCA(Node):
             output_ds.max_label_count == input_ds.max_label_count,
             output_ds.min_label_count == input_ds.min_label_count,
             input_ds.balanced == output_ds.balanced,
-        ]
+        ] + features_assertions

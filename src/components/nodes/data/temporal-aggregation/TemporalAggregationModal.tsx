@@ -16,6 +16,14 @@ interface ModalProps {
 }
 
 const TemporalAggregationModal = (props: ModalProps) => {
+    const columnNames: JSX.Element[] = [];
+
+    let columnsAndTypes = props.node.getColumnsAndTypes();
+    for (let k of Object.keys(columnsAndTypes)) {
+        columnNames.push(
+            <option key={k}>{k}</option>);
+    }
+
     return (
         <Form>
             <Form.Group>
@@ -26,7 +34,9 @@ const TemporalAggregationModal = (props: ModalProps) => {
                     </Col>
                     <Col>
                         <Form.Label>Original Column</Form.Label>
-                        <Form.Control type="text" min="1" value={props.node.getOriginalColumnName()} onChange={props.originalColumnNameChanged}/>
+                        <Form.Control as="select" defaultValue={props.node.getOriginalColumnName()} onChange={props.originalColumnNameChanged}>
+                            {columnNames}
+                        </Form.Control>
                     </Col>
                     <Col>
                         <Form.Label>Window Size</Form.Label>

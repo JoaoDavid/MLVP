@@ -13,6 +13,8 @@ export enum MetricEnum {
 
 export class TemporalAggregationModel extends BaseNodeModel {
 
+    private originalColumns: string[] = [];
+
     private newColumnName: string = "new_column";
     private originalColumnName: string = "original_column";
     private metric: MetricEnum = MetricEnum.MEAN;
@@ -22,6 +24,10 @@ export class TemporalAggregationModel extends BaseNodeModel {
         super(TEMPORAL_AGGREGATION);
         this.addInPort();
         this.addOutPort();
+    }
+
+    getOriginalColumns() {
+        return this.originalColumns;
     }
 
     getNewColumnName(): string {

@@ -73,6 +73,7 @@ class TypeChecker:
         self.unsat_node_assertions = {}
         self.all_link_assertions = []  # list of tuples of type: (link, link_assertions)
         self.all_node_assertions = []  # list of tuples of type: (node, node_assertions)
+        self.node_columns = {}
 
     def verify(self, strong_type_check=False):
         self.strong_type_check = strong_type_check
@@ -110,6 +111,7 @@ class TypeChecker:
         result["nodeAssertions"] = self.node_assertions
         result["linkAssertions"] = self.link_assertions
         result["unsatNodeAssertions"] = self.unsat_node_assertions
+        result["nodeColumns"] = self.node_columns
         return result
 
     # traverse the pipeline, appending the corresponding assertions to the all_node_assertions list
@@ -121,7 +123,7 @@ class TypeChecker:
             # parents are all visited
             self.__add_dataset_links(node.parent_links)
             # add current node assertions to the array
-            node_assertions = node.assertions()
+            node_assertions = node.assertions(self.node_columns)
             if self.strong_type_check:
                 node_assertions += node.input_ports_linked()
             self.all_node_assertions.append((node, node_assertions))

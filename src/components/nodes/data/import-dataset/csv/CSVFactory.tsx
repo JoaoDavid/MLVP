@@ -12,7 +12,7 @@ export class CSVFactory extends BaseNodeFactory<CSVModel, DiagramEngine> {
     private static INSTANCE: CSVFactory;
 
     private constructor() {
-        super(Category.DATA, IMPORT_FROM_CSV.codeName);
+        super(Category.DATA_SOURCE, IMPORT_FROM_CSV.codeName);
     }
 
     static getInstance = () => {

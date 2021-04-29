@@ -1,6 +1,6 @@
 from mlvp.codegen import *
 from mlvp.ast.nodes.Node import *
-from mlvp.ast.ports import DatasetPort, ModelPort
+from mlvp.ast.ports import DatasetPort, ClassifierPort
 from mlvp.typecheck import *
 
 MODEL_PREDICT = "{var} = {clf_var}.predict({x})\n"
@@ -21,7 +21,7 @@ class EvaluateClassifier(Node):
         clf_var, x, y = "", "", ""
         for curr in self.parent_links:
             parent_port = curr.source_port
-            if isinstance(parent_port, ModelPort):
+            if isinstance(parent_port, ClassifierPort):
                 clf_var = emitter.get(parent_port)
             elif isinstance(parent_port, DatasetPort):
                 x, y = emitter.get(parent_port)
@@ -30,7 +30,7 @@ class EvaluateClassifier(Node):
         out_file.write(score + " = " + ACCURACY_SCORE_CALL.format(y_true=y, y_pred=y_predicted))
         out_file.write("print(" + score + ")\n")
 
-    def assertions(self):
+    def assertions(self, node_columns):
         id_input_ds = self.get_port(True, "Dataset").port_id
         input_ds = Dataset(id_input_ds)
 

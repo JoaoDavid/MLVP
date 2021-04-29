@@ -3,7 +3,7 @@ import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {AbstractDsModel} from './AbstractDsModel';
 import BaseNodeWidget, {eventNodeUpdated} from '../../../../core/BaseNode/BaseNodeWidget';
 import AbstractDsModal from "./AbstractDsModal";
-import {DATA_CONFIG} from '../../DataConfig';
+import {DATA_SOURCE_CONFIG} from '../../DataConfig';
 
 interface CSVNodeProps {
     node: AbstractDsModel;
@@ -30,7 +30,7 @@ const AbstractDsWidget = (props: CSVNodeProps) => {
     const modal = <AbstractDsModal node={props.node} numColsChanged={numColsChanged} numRowsChanged={numRowsChanged} timeSeriesChanged={timeSeriesChanged}/>;
 
     return (
-            <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_CONFIG.color} modalChildren={modal}>
+            <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_SOURCE_CONFIG.color} modalChildren={modal}>
                 <p>Rows: {props.node.getRows()}</p>
                 <p>Columns: {props.node.getCols()}</p>
                 <p>Time Series: {""+props.node.getTimeSeries()}</p>
