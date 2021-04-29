@@ -86,4 +86,5 @@ class ImportFromCSV(Node):
                    output.n_labels == len(label_counts),
                    z3_unique_col_names == unique_col_names,
                    z3_unique_col_names,
-               ] + label_counts_assertions + labels_values + col_assertions
+               ] + col_assertions
+               # ] + label_counts_assertions + labels_values + col_assertions
