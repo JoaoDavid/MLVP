@@ -13,6 +13,7 @@ interface SampleModalProps {
     node: SampleModel;
     loadCSV: (files: FileList) => void;
     timeSeriesChanged: () => void;
+    balancedChanged: () => void;
 }
 
 const SampleModal = (props: SampleModalProps) => {
@@ -59,6 +60,8 @@ const SampleModal = (props: SampleModalProps) => {
                 <Col>
                     <ToggleSwitch name={"Time Series"} bool={props.node.getTimeSeries()}
                                   changed={props.timeSeriesChanged}/>
+                    <ToggleSwitch name={"Balanced"} bool={props.node.getBalanced()}
+                                  changed={props.balancedChanged}/>
                 </Col>
             </FormGroup>
             <FormGroup>

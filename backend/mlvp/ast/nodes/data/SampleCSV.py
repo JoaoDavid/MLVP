@@ -15,11 +15,11 @@ class SampleCSV(Node):
         super().__init__(data)
         self.file_name = data['fileName']
         self.num_cols = data['numCols']
-        self.num_rows = data['numRows']
         self.columns = data['columns']
         self.target = None if data['targetIndex'] == -1 else self.columns[data['targetIndex']]['name']
         self.labels = data['labels']
         self.time_series = data['timeSeries']
+        self.balanced = data['balanced']
 
     def import_dependency(self):
         return IMPORT_AS.format(lib_name="pandas", lib_var=PANDAS_VAR)
@@ -33,7 +33,7 @@ class SampleCSV(Node):
         emitter.set(out_ds, (x, y))
         out_file.write(LOAD_CSV.format(df=df, pandas_var=PANDAS_VAR, file_name=self.file_name))
         out_file.write(ASSERT.format(arg1=self.num_rows, arg2=df))
-        out_file.write(ASSERT.format(arg1=self.num_cols, arg2=df+".columns"))
+        out_file.write(ASSERT.format(arg1=self.num_cols, arg2=df + ".columns"))
         out_file.write(X.format(x=x, df=df, target=self.target))
         out_file.write(Y.format(y=y, df=df, target=self.target))
 
@@ -55,32 +55,10 @@ class SampleCSV(Node):
         for i in range(len(self.columns)):
             col_assertions.append(column(output.dataset, column_names[i]) == column_types[i])
 
-        label_names = [Int(output_port.port_id + SEP + "label_" + key) for key in self.labels.keys()]
-        label_counts = list(self.labels.values())
-        labels_values = [label_names[i] == (label_counts[i]) for i in range(len(self.labels))]
-
-        list_balanced = [IntVal(label_counts[i]) == IntVal(label_counts[i + 1]) for i in range(len(self.labels) - 1)]
-        # list_balanced = [abs(label_counts[i] - label_counts[i + 1]) <= 1 for i in range(len(self.labels) - 1)]
-
-        label_counts_assertions = []
-        if len(self.labels) > 0:
-            label_counts_assertions = [
-                output.max_label_count == max(label_counts),
-                output.min_label_count == min(label_counts)
-            ]
-
-        is_balanced = all(list_balanced)
-
         return [
                    output.cols == self.num_cols,
-                   # TODO
-                   # output.rows == self.num_rows,
-                   # output.rows == sum(label_counts),
                    output.time_series == self.time_series,
-                   # And(labels_values),
-                   output.balanced == is_balanced,
-                   # output.balanced == And(list_balanced),
-                   output.n_labels == len(label_counts),
+                   output.balanced == self.balanced,
                    z3_unique_col_names == unique_col_names,
                    z3_unique_col_names,
-               ] + label_counts_assertions + labels_values + col_assertions
+               ] + col_assertions

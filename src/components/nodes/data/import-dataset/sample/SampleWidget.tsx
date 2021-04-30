@@ -27,7 +27,12 @@ const SampleWidget = (props: SampleNodeProps) => {
         eventNodeUpdated(props.engine, props.node);
     }
 
-    const modal = <SampleModal node={props.node} loadCSV={loadCSV} timeSeriesChanged={timeSeriesChanged}/>;
+    const balancedChanged = () => {
+        props.node.setBalanced(!props.node.getBalanced());
+        eventNodeUpdated(props.engine, props.node);
+    }
+
+    const modal = <SampleModal node={props.node} loadCSV={loadCSV} timeSeriesChanged={timeSeriesChanged} balancedChanged={balancedChanged}/>;
     return (
         <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_SOURCE_CONFIG.color} modalChildren={modal}>
             <p>{props.node.getFileName() || "File:"}</p>
