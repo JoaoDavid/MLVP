@@ -2,11 +2,11 @@ export enum Category {
     DATA_SOURCE = 'Data Source',
     DATA_TRANSFORMATION = 'Data Transformation',
     DATA_BALANCING = 'Data Balancing',
-    VISUALISE = 'Visualise',
-    CLASSIFIER = 'Classifier',
-    REGRESSOR = 'Regressor',
-    EVALUATE_CLASSIFIER = 'Evaluate Classifier',
-    EVALUATE_REGRESSOR = 'Evaluate Regressor',
+    VISUALIZATION = 'Visualization',
+    CLASSIFICATION = 'Classification',
+    REGRESSION = 'Regression',
+    CLASSIFIER_EVALUATION = 'Classifier Evaluation',
+    REGRESSOR_EVALUATION = 'Regressor Evaluation',
 }
 
 export type NodeConfig = {

@@ -13,7 +13,7 @@ export class RandomForestClassifierFactory extends BaseNodeFactory<RandomForestC
     private static INSTANCE: RandomForestClassifierFactory;
 
     private constructor() {
-        super(Category.CLASSIFIER, RANDOM_FOREST_CLASSIFIER.codeName);
+        super(Category.CLASSIFICATION, RANDOM_FOREST_CLASSIFIER.codeName);
     }
 
     static getInstance = () => {

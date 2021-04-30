@@ -75,8 +75,8 @@ export const DATA_BALANCING_CONFIG: CategoryConfig = {
     nodes: [OVERSAMPLING, UNDERSAMPLING, SPLIT_DATASET],
 }
 
-export const VISUALISE_CONFIG: CategoryConfig = {
-    category: Category.VISUALISE,
+export const VISUALIZATION_CONFIG: CategoryConfig = {
+    category: Category.VISUALIZATION,
     color: 'rgb(59,72,107)',
     nodes: [VISUALIZE_DATASET],
 }

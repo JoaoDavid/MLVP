@@ -13,7 +13,7 @@ export class EvaluateRegressorFactory extends BaseNodeFactory<EvaluateRegressorM
     private static INSTANCE: EvaluateRegressorFactory;
 
     private constructor() {
-        super(Category.EVALUATE_REGRESSOR, EVALUATE_REGRESSOR.codeName);
+        super(Category.REGRESSOR_EVALUATION, EVALUATE_REGRESSOR.codeName);
     }
 
     static getInstance = () => {

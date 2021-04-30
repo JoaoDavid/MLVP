@@ -7,7 +7,7 @@ import {CategoryConfig, NodeConfig} from "../components/nodes/Config";
 import {
     DATA_BALANCING_CONFIG,
     DATA_SOURCE_CONFIG,
-    DATA_TRANSFORMATION_CONFIG, VISUALISE_CONFIG
+    DATA_TRANSFORMATION_CONFIG, VISUALIZATION_CONFIG
 } from "../components/nodes/data/DataConfig";
 import {CLASSIFIER_CONFIG, REGRESSOR_CONFIG} from "../components/nodes/model/ModelConfig";
 import {EVALUATE_CLASSIFIER_CONFIG, EVALUATE_REGRESSOR_CONFIG} from "../components/nodes/evaluate/EvaluateConfig";
@@ -157,7 +157,7 @@ class App extends React.Component<AppProps, AppState> {
         map.set(DATA_SOURCE_CONFIG, DATA_SOURCE_CONFIG.nodes);
         map.set(DATA_TRANSFORMATION_CONFIG, DATA_TRANSFORMATION_CONFIG.nodes);
         map.set(DATA_BALANCING_CONFIG, DATA_BALANCING_CONFIG.nodes);
-        map.set(VISUALISE_CONFIG, VISUALISE_CONFIG.nodes);
+        map.set(VISUALIZATION_CONFIG, VISUALIZATION_CONFIG.nodes);
         map.set(CLASSIFIER_CONFIG, CLASSIFIER_CONFIG.nodes);
         map.set(REGRESSOR_CONFIG, REGRESSOR_CONFIG.nodes);
         map.set(EVALUATE_CLASSIFIER_CONFIG, EVALUATE_CLASSIFIER_CONFIG.nodes);

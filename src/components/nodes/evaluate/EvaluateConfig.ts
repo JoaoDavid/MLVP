@@ -23,13 +23,13 @@ Every node type must be added to the nodes array
 so it can appear on the side bar for the drag and drop feature
 */
 export const EVALUATE_CLASSIFIER_CONFIG: CategoryConfig = {
-    category: Category.EVALUATE_CLASSIFIER,
+    category: Category.CLASSIFIER_EVALUATION,
     color: 'rgb(116,45,83)',
     nodes: [EVALUATE_CLASSIFIER, CROSS_VALIDATION_CLASSIFIER],
 }
 
 export const EVALUATE_REGRESSOR_CONFIG: CategoryConfig = {
-    category: Category.EVALUATE_REGRESSOR,
+    category: Category.REGRESSOR_EVALUATION,
     color: 'rgb(96,65,113)',
     nodes: [EVALUATE_REGRESSOR],
 }

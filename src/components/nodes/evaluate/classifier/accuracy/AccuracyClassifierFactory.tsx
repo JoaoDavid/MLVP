@@ -13,7 +13,7 @@ export class AccuracyClassifierFactory extends BaseNodeFactory<AccuracyClassifie
     private static INSTANCE: AccuracyClassifierFactory;
 
     private constructor() {
-        super(Category.EVALUATE_CLASSIFIER, EVALUATE_CLASSIFIER.codeName);
+        super(Category.CLASSIFIER_EVALUATION, EVALUATE_CLASSIFIER.codeName);
     }
 
     static getInstance = () => {
