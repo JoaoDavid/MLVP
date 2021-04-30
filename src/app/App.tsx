@@ -117,7 +117,7 @@ class App extends React.Component<AppProps, AppState> {
     processNodeColumns = (mapNodeColumns) => {
         for (let k of Object.keys(mapNodeColumns)) {
             const node = this.engine.getModel().getNode(k) as BaseNodeModel;
-            node.setColumnsAndTypes(mapNodeColumns[k])
+            node.setColumnsAndTypes(mapNodeColumns[k]);
         }
     }
 

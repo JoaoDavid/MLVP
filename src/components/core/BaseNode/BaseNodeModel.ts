@@ -28,8 +28,13 @@ export abstract class BaseNodeModel extends NodeModel<BaseNodeModelGenerics> {
         this.title = nodeConfig.name;
     }
 
+    updateNode = () => {
+        console.log("UPDATE")
+    }
+
     setColumnsAndTypes = (columnsTypes: Map<string, string>) => {
         this.columnsTypes = columnsTypes;
+        this.updateNode();
     }
 
     getColumnsAndTypes = () => {

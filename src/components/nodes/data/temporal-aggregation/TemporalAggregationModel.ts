@@ -13,10 +13,8 @@ export enum MetricEnum {
 
 export class TemporalAggregationModel extends BaseNodeModel {
 
-    private originalColumns: string[] = [];
-
     private newColumnName: string = "new_column";
-    private originalColumnName: string = "original_column";
+    private originalColumnName: string = "no_columns_found";
     private metric: MetricEnum = MetricEnum.MEAN;
     private windowSize: number = 1;
 
@@ -26,8 +24,15 @@ export class TemporalAggregationModel extends BaseNodeModel {
         this.addOutPort();
     }
 
-    getOriginalColumns() {
-        return this.originalColumns;
+    updateNode = () => {
+        let colMap = this.getColumnsAndTypes();
+        let listColNames = Object.keys(colMap);
+
+        if (listColNames.length > 0) {
+            if (!listColNames.includes(this.originalColumnName)) {
+                this.originalColumnName =  listColNames[0];
+            }
+        }
     }
 
     getNewColumnName(): string {
