@@ -235,7 +235,7 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     compile = () => {
-        if (this.state.unsatNodeAssertions.size == 0) {
+        if (this.state.unsatNodeAssertions.size === 0) {
             this.requestCompilation();
         } else {
             this.updateLog("Cannot compile with problems!");
