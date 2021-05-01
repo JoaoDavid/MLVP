@@ -1,6 +1,6 @@
 import {DiagramEngine} from "@projectstorm/react-diagrams";
-import {AbstractDsFactory} from "../components/nodes/data/import-dataset/abstract/AbstractDsFactory";
-import {CSVFactory} from "../components/nodes/data/import-dataset/csv/CSVFactory";
+import {AbstractDsFactory} from "../components/nodes/data-source/abstract/AbstractDsFactory";
+import {CSVFactory} from "../components/nodes/data-source/csv/CSVFactory";
 import {RandomForestClassifierFactory} from "../components/nodes/model/classifier/random-forest-classifier/RandomForestClassifierFactory";
 import {OversamplingFactory} from "../components/nodes/data/oversampling/OversamplingFactory";
 import {UndersamplingFactory} from "../components/nodes/data/undersampling/UndersamplingFactory";
@@ -10,7 +10,7 @@ import {SplitDatasetFactory} from "../components/nodes/data/split-dataset/SplitD
 import {CrossValidationClassifierFactory} from "../components/nodes/evaluate/classifier/cross-validation/CrossValidationClassifierFactory";
 import {DatasetPortFactory} from "../components/ports/dataset/DatasetPortFactory";
 import {ClassifierPortFactory} from "../components/ports/model/ClassifierPortFactory";
-import {SampleFactory} from "../components/nodes/data/import-dataset/sample/SampleFactory";
+import {SampleFactory} from "../components/nodes/data-source/sample/SampleFactory";
 import {FeatureEngineeringFactory} from "../components/nodes/data/feature-engineering/FeatureEngineeringFactory";
 import {VisualizeDatasetFactory} from "../components/nodes/data/visualize-dataset/VisualizeDatasetFactory";
 import {TemporalAggregationFactory} from "../components/nodes/data/temporal-aggregation/TemporalAggregationFactory";

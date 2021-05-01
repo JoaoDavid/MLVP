@@ -4,7 +4,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {AbstractDsModel} from "./AbstractDsModel";
 import {FormGroup} from "react-bootstrap";
-import ToggleSwitch from "../../../../UI/modal/toggle-switch/ToggleSwitch";
+import ToggleSwitch from "../../../UI/modal/toggle-switch/ToggleSwitch";
 
 interface AbstractDsModalProps {
     node: AbstractDsModel;

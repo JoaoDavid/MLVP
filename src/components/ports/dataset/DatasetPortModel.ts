@@ -1,6 +1,6 @@
 import {PortModel} from '@projectstorm/react-diagrams-core';
 import {BasePortModel} from "../../core/BasePort/BasePortModel";
-import {Column} from "../../nodes/data/import-dataset/Column";
+import {Column} from "../../nodes/data-source/Column";
 
 export const DATASET_PORT = "DatasetPort";
 

@@ -1,4 +1,4 @@
-import {SAMPLE_CSV} from "../../DataConfig";
+import {SAMPLE_CSV} from "../../data/DataConfig";
 import {CSVModel} from "../csv/CSVModel";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
 

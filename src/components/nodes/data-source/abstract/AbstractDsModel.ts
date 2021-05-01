@@ -1,4 +1,4 @@
-import {ABSTRACT_DS} from "../../DataConfig";
+import {ABSTRACT_DS} from "../../data/DataConfig";
 import {ImportDataset} from "../ImportDataset";
 
 

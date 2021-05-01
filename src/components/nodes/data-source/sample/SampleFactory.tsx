@@ -3,8 +3,8 @@ import { SampleModel } from './SampleModel';
 import SampleWidget from './SampleWidget';
 import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-canvas-core';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
-import { SAMPLE_CSV } from "../../DataConfig";
-import {BaseNodeFactory} from "../../../../core/BaseNode/BaseNodeFactory";
+import { SAMPLE_CSV } from "../../data/DataConfig";
+import {BaseNodeFactory} from "../../../core/BaseNode/BaseNodeFactory";
 
 export class SampleFactory extends BaseNodeFactory<SampleModel, DiagramEngine> {
 

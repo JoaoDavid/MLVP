@@ -1,16 +1,16 @@
 import * as React from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams-core';
-import {CSVModel} from './CSVModel';
-import BaseNodeWidget, {eventNodeUpdated} from '../../../../core/BaseNode/BaseNodeWidget';
-import CSVModal from "./CSVModal";
-import {DATA_SOURCE_CONFIG} from '../../DataConfig';
+import {SampleModel} from './SampleModel';
+import BaseNodeWidget, {eventNodeUpdated} from '../../../core/BaseNode/BaseNodeWidget';
+import SampleModal from "./SampleModal";
+import {DATA_SOURCE_CONFIG} from '../../data/DataConfig';
 
-interface CSVNodeProps {
-    node: CSVModel;
+interface SampleNodeProps {
+    node: SampleModel;
     engine: DiagramEngine;
 }
 
-const CSVWidget = (props: CSVNodeProps) => {
+const SampleWidget = (props: SampleNodeProps) => {
     // const [, setCount] = useState(0);
     // const forceUpdate = () => setCount(prevCount => prevCount + 1);
 
@@ -27,11 +27,15 @@ const CSVWidget = (props: CSVNodeProps) => {
         eventNodeUpdated(props.engine, props.node);
     }
 
-    const modal = <CSVModal node={props.node} loadCSV={loadCSV} timeSeriesChanged={timeSeriesChanged}/>;
+    const balancedChanged = () => {
+        props.node.setBalanced(!props.node.getBalanced());
+        eventNodeUpdated(props.engine, props.node);
+    }
+
+    const modal = <SampleModal node={props.node} loadCSV={loadCSV} timeSeriesChanged={timeSeriesChanged} balancedChanged={balancedChanged}/>;
     return (
         <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_SOURCE_CONFIG.color} modalChildren={modal}>
             <p>{props.node.getFileName() || "File:"}</p>
-            <p>Rows: {props.node.getRows()}</p>
             <p>Columns: {props.node.getCols()}</p>
             <p>Time Series: {""+props.node.getTimeSeries()}</p>
         </BaseNodeWidget>
@@ -39,4 +43,4 @@ const CSVWidget = (props: CSVNodeProps) => {
 
 }
 
-export default CSVWidget;
+export default SampleWidget;

@@ -1,7 +1,7 @@
-import {BaseNodeModel} from "../../../core/BaseNode/BaseNodeModel";
-import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
+import {BaseNodeModel} from "../../core/BaseNode/BaseNodeModel";
+import {DatasetPortModel} from "../../ports/dataset/DatasetPortModel";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
-import {NodeConfig} from "../../Config";
+import {NodeConfig} from "../Config";
 
 
 export abstract class ImportDataset extends BaseNodeModel {

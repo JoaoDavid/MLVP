@@ -2,7 +2,7 @@ import {BaseNodeModel} from "../../../core/BaseNode/BaseNodeModel";
 import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
 import {VISUALIZE_DATASET} from "../DataConfig";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
-import {Column} from "../import-dataset/Column";
+import {Column} from "../../data-source/Column";
 
 
 export class VisualizeDatasetModel extends BaseNodeModel {

@@ -4,18 +4,19 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Table from "react-bootstrap/Table";
-import {CSVModel} from "./CSVModel";
+import {SampleModel} from "./SampleModel";
 import {FormGroup} from "react-bootstrap";
-import ToggleSwitch from "../../../../UI/modal/toggle-switch/ToggleSwitch";
+import ToggleSwitch from "../../../UI/modal/toggle-switch/ToggleSwitch";
 
 
-interface CSVModalProps {
-    node: CSVModel;
+interface SampleModalProps {
+    node: SampleModel;
     loadCSV: (files: FileList) => void;
     timeSeriesChanged: () => void;
+    balancedChanged: () => void;
 }
 
-const CSVModal = (props: CSVModalProps) => {
+const SampleModal = (props: SampleModalProps) => {
     const labelNames: JSX.Element[] = [];
     const labelCounts: JSX.Element[] = [];
     let counter = 0;
@@ -50,20 +51,17 @@ const CSVModal = (props: CSVModalProps) => {
             <Form.Group>
                 <Row>
                     <Col>
-                        <Form.Label>Rows</Form.Label>
-                        <Form.Control readOnly placeholder={props.node.getRows().toString()}/>
-                    </Col>
-                    <Col>
                         <Form.Label>Columns</Form.Label>
                         <Form.Control readOnly placeholder={props.node.getCols().toString()}/>
                     </Col>
                 </Row>
             </Form.Group>
             <FormGroup>
-                <Form.Label>Dataset Properties</Form.Label>
                 <Col>
                     <ToggleSwitch name={"Time Series"} bool={props.node.getTimeSeries()}
                                   changed={props.timeSeriesChanged}/>
+                    <ToggleSwitch name={"Balanced"} bool={props.node.getBalanced()}
+                                  changed={props.balancedChanged}/>
                 </Col>
             </FormGroup>
             <FormGroup>
@@ -103,4 +101,4 @@ const CSVModal = (props: CSVModalProps) => {
     )
 }
 
-export default CSVModal;
+export default SampleModal;
