@@ -1,6 +1,6 @@
 import {BaseNodeModel} from "../../../core/BaseNode/BaseNodeModel";
 import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
-import {FEATURE_ENGINEERING} from "../DataConfig";
+import {FEATURE_ENGINEERING} from "../../data/DataConfig";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
 
 

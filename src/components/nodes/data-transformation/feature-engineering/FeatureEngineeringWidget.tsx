@@ -3,7 +3,7 @@ import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {FeatureEngineeringModel} from './FeatureEngineeringModel';
 import BaseNodeWidget, {eventNodeUpdated} from '../../../core/BaseNode/BaseNodeWidget';
 import FeatureEngineeringModal from "./FeatureEngineeringModal";
-import {DATA_TRANSFORMATION_CONFIG} from '../DataConfig';
+import {DATA_TRANSFORMATION_CONFIG} from '../../data/DataConfig';
 
 interface FeatureEngineeringProps {
     node: FeatureEngineeringModel;

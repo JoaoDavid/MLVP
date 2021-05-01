@@ -3,7 +3,7 @@ import { FeatureEngineeringModel } from './FeatureEngineeringModel';
 import FeatureEngineeringWidget from './FeatureEngineeringWidget';
 import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-canvas-core';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
-import { FEATURE_ENGINEERING } from "../DataConfig";
+import { FEATURE_ENGINEERING } from "../../data/DataConfig";
 import {BaseNodeFactory} from "../../../core/BaseNode/BaseNodeFactory";
 
 export class FeatureEngineeringFactory extends BaseNodeFactory<FeatureEngineeringModel, DiagramEngine> {

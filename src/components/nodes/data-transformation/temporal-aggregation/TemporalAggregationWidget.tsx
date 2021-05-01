@@ -3,7 +3,7 @@ import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {TemporalAggregationModel} from './TemporalAggregationModel';
 import BaseNodeWidget, {eventNodeUpdated} from '../../../core/BaseNode/BaseNodeWidget';
 import TemporalAggregationModal from './TemporalAggregationModal';
-import {DATA_TRANSFORMATION_CONFIG} from '../DataConfig';
+import {DATA_TRANSFORMATION_CONFIG} from '../../data/DataConfig';
 
 interface TemporalAggregationProps {
     node: TemporalAggregationModel;

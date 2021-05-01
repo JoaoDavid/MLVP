@@ -1,6 +1,6 @@
 import {BaseNodeModel} from "../../../core/BaseNode/BaseNodeModel";
 import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
-import {TEMPORAL_AGGREGATION} from "../DataConfig";
+import {TEMPORAL_AGGREGATION} from "../../data/DataConfig";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
 
 export enum MetricEnum {
