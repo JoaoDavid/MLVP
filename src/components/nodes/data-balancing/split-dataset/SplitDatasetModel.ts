@@ -1,6 +1,6 @@
 import {BaseNodeModel} from "../../../core/BaseNode/BaseNodeModel";
 import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
-import {SPLIT_DATASET} from "../DataConfig";
+import {SPLIT_DATASET} from "../../data/DataConfig";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
 
 

@@ -1,20 +1,19 @@
 import {BaseNodeModel} from "../../../core/BaseNode/BaseNodeModel";
 import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
-import {OVERSAMPLING} from "../DataConfig";
+import {UNDERSAMPLING} from "../../data/DataConfig";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
 
 
-export class OversamplingModel extends BaseNodeModel {
+export class UndersamplingModel extends BaseNodeModel {
 
     private randomStateChecked: boolean = true;
     private randomState: number = 0;
 
     constructor() {
-        super(OVERSAMPLING);
+        super(UNDERSAMPLING);
         this.addInPort();
         this.addOutPort();
     }
-
     getRandomStateChecked (): boolean {
         return this.randomStateChecked;
     }
@@ -59,5 +58,6 @@ export class OversamplingModel extends BaseNodeModel {
             randomState: this.randomStateChecked?this.randomState:"None",
         };
     }
+
 
 }

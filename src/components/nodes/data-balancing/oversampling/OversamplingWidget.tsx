@@ -3,7 +3,7 @@ import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {OversamplingModel} from './OversamplingModel';
 import BaseNodeWidget, {eventNodeUpdated} from '../../../core/BaseNode/BaseNodeWidget';
 import OversamplingModal from "./OversamplingModal";
-import {DATA_BALANCING_CONFIG} from '../DataConfig';
+import {DATA_BALANCING_CONFIG} from '../../data/DataConfig';
 
 interface OversamplingProps {
     node: OversamplingModel;

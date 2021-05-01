@@ -3,7 +3,7 @@ import { SplitDatasetModel } from './SplitDatasetModel';
 import CSVNodeWidget from './SplitDatasetWidget';
 import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-canvas-core';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
-import { SPLIT_DATASET } from "../DataConfig";
+import { SPLIT_DATASET } from "../../data/DataConfig";
 import {BaseNodeFactory} from "../../../core/BaseNode/BaseNodeFactory";
 
 export class SplitDatasetFactory extends BaseNodeFactory<SplitDatasetModel, DiagramEngine> {

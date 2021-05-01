@@ -3,7 +3,7 @@ import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {SplitDatasetModel} from './SplitDatasetModel';
 import BaseNodeWidget, {eventNodeUpdated} from '../../../core/BaseNode/BaseNodeWidget';
 import SplitDatasetModal from "./SplitDatasetModal";
-import {DATA_BALANCING_CONFIG} from '../DataConfig';
+import {DATA_BALANCING_CONFIG} from '../../data/DataConfig';
 
 interface SplitDatasetProps {
     node: SplitDatasetModel;
