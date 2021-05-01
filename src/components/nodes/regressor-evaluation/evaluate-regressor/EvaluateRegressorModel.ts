@@ -1,7 +1,7 @@
-import {BaseNodeModel} from "../../../../core/BaseNode/BaseNodeModel";
-import {EVALUATE_REGRESSOR} from "../../EvaluateConfig";
-import {DatasetPortModel} from "../../../../ports/dataset/DatasetPortModel";
-import {RegressorPortModel} from "../../../../ports/model/RegressorPortModel";
+import {BaseNodeModel} from "../../../core/BaseNode/BaseNodeModel";
+import {EVALUATE_REGRESSOR} from "../../evaluate/EvaluateConfig";
+import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
+import {RegressorPortModel} from "../../../ports/model/RegressorPortModel";
 
 
 export class EvaluateRegressorModel extends BaseNodeModel {

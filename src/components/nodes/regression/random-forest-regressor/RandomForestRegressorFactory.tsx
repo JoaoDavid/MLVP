@@ -3,8 +3,8 @@ import { RandomForestRegressorModel } from './RandomForestRegressorModel';
 import RandomForestRegressorWidget from './RandomForestRegressorWidget';
 import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-canvas-core';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
-import { RANDOM_FOREST_REGRESSOR } from "../../ModelConfig";
-import {BaseNodeFactory} from "../../../../core/BaseNode/BaseNodeFactory";
+import { RANDOM_FOREST_REGRESSOR } from "../../model/ModelConfig";
+import {BaseNodeFactory} from "../../../core/BaseNode/BaseNodeFactory";
 
 
 export class RandomForestRegressorFactory extends BaseNodeFactory<RandomForestRegressorModel, DiagramEngine> {

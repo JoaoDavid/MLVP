@@ -1,7 +1,7 @@
-import {BaseNodeModel} from "../../../../core/BaseNode/BaseNodeModel";
-import {DatasetPortModel} from "../../../../ports/dataset/DatasetPortModel";
-import {RANDOM_FOREST_CLASSIFIER} from "../../ModelConfig";
-import {ClassifierPortModel} from "../../../../ports/model/ClassifierPortModel";
+import {BaseNodeModel} from "../../../core/BaseNode/BaseNodeModel";
+import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
+import {RANDOM_FOREST_CLASSIFIER} from "../../model/ModelConfig";
+import {ClassifierPortModel} from "../../../ports/model/ClassifierPortModel";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
 
 export enum CriterionEnum {

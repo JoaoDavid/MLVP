@@ -1,8 +1,8 @@
-import {BaseNodeModel} from "../../../../core/BaseNode/BaseNodeModel";
-import {DatasetPortModel} from "../../../../ports/dataset/DatasetPortModel";
-import { CROSS_VALIDATION_CLASSIFIER } from "../../EvaluateConfig";
+import {BaseNodeModel} from "../../../core/BaseNode/BaseNodeModel";
+import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
+import { CROSS_VALIDATION_CLASSIFIER } from "../../evaluate/EvaluateConfig";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
-import {ClassifierPortModel} from "../../../../ports/model/ClassifierPortModel";
+import {ClassifierPortModel} from "../../../ports/model/ClassifierPortModel";
 
 
 export class CrossValidationClassifierModel extends BaseNodeModel {

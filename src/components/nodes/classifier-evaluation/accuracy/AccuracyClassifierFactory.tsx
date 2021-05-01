@@ -3,8 +3,8 @@ import { AccuracyClassifierModel } from './AccuracyClassifierModel';
 import AccuracyClassifierWidget from './AccuracyClassifierWidget';
 import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-canvas-core';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
-import { EVALUATE_CLASSIFIER } from "../../EvaluateConfig";
-import {BaseNodeFactory} from "../../../../core/BaseNode/BaseNodeFactory";
+import { EVALUATE_CLASSIFIER } from "../../evaluate/EvaluateConfig";
+import {BaseNodeFactory} from "../../../core/BaseNode/BaseNodeFactory";
 
 
 export class AccuracyClassifierFactory extends BaseNodeFactory<AccuracyClassifierModel, DiagramEngine> {

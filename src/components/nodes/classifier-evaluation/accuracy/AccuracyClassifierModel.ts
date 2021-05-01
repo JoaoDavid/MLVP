@@ -1,7 +1,7 @@
-import {BaseNodeModel} from "../../../../core/BaseNode/BaseNodeModel";
-import {EVALUATE_CLASSIFIER} from "../../EvaluateConfig";
-import {DatasetPortModel} from "../../../../ports/dataset/DatasetPortModel";
-import {ClassifierPortModel} from "../../../../ports/model/ClassifierPortModel";
+import {BaseNodeModel} from "../../../core/BaseNode/BaseNodeModel";
+import {EVALUATE_CLASSIFIER} from "../../evaluate/EvaluateConfig";
+import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
+import {ClassifierPortModel} from "../../../ports/model/ClassifierPortModel";
 
 
 export class AccuracyClassifierModel extends BaseNodeModel {

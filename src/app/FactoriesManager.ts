@@ -1,22 +1,22 @@
 import {DiagramEngine} from "@projectstorm/react-diagrams";
 import {AbstractDsFactory} from "../components/nodes/data-source/abstract/AbstractDsFactory";
 import {CSVFactory} from "../components/nodes/data-source/csv/CSVFactory";
-import {RandomForestClassifierFactory} from "../components/nodes/model/classifier/random-forest-classifier/RandomForestClassifierFactory";
+import {RandomForestClassifierFactory} from "../components/nodes/classification/random-forest-classifier/RandomForestClassifierFactory";
 import {OversamplingFactory} from "../components/nodes/data-balancing/oversampling/OversamplingFactory";
 import {UndersamplingFactory} from "../components/nodes/data-balancing/undersampling/UndersamplingFactory";
 import {PCAFactory} from "../components/nodes/data-transformation/principal-component-analysis/PCAFactory";
-import {AccuracyClassifierFactory} from "../components/nodes/evaluate/classifier/accuracy/AccuracyClassifierFactory";
+import {AccuracyClassifierFactory} from "../components/nodes/classifier-evaluation/accuracy/AccuracyClassifierFactory";
 import {SplitDatasetFactory} from "../components/nodes/data-balancing/split-dataset/SplitDatasetFactory";
-import {CrossValidationClassifierFactory} from "../components/nodes/evaluate/classifier/cross-validation/CrossValidationClassifierFactory";
+import {CrossValidationClassifierFactory} from "../components/nodes/classifier-evaluation/cross-validation/CrossValidationClassifierFactory";
 import {DatasetPortFactory} from "../components/ports/dataset/DatasetPortFactory";
 import {ClassifierPortFactory} from "../components/ports/model/ClassifierPortFactory";
 import {SampleFactory} from "../components/nodes/data-source/sample/SampleFactory";
 import {FeatureEngineeringFactory} from "../components/nodes/data-transformation/feature-engineering/FeatureEngineeringFactory";
 import {VisualizeDatasetFactory} from "../components/nodes/visualization/visualize-dataset/VisualizeDatasetFactory";
 import {TemporalAggregationFactory} from "../components/nodes/data-transformation/temporal-aggregation/TemporalAggregationFactory";
-import {RandomForestRegressorFactory} from "../components/nodes/model/regressor/random-forest-regressor/RandomForestRegressorFactory";
+import {RandomForestRegressorFactory} from "../components/nodes/regression/random-forest-regressor/RandomForestRegressorFactory";
 import {RegressorPortFactory} from "../components/ports/model/RegressorPortFactory";
-import {EvaluateRegressorFactory} from "../components/nodes/evaluate/regressor/evaluate-regressor/EvaluateRegressorFactory";
+import {EvaluateRegressorFactory} from "../components/nodes/regressor-evaluation/evaluate-regressor/EvaluateRegressorFactory";
 
 
 export class FactoriesManager {

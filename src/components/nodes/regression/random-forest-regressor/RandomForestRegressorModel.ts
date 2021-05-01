@@ -1,8 +1,8 @@
-import {BaseNodeModel} from "../../../../core/BaseNode/BaseNodeModel";
-import {DatasetPortModel} from "../../../../ports/dataset/DatasetPortModel";
-import {RANDOM_FOREST_REGRESSOR} from "../../ModelConfig";
+import {BaseNodeModel} from "../../../core/BaseNode/BaseNodeModel";
+import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
+import {RANDOM_FOREST_REGRESSOR} from "../../model/ModelConfig";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
-import {RegressorPortModel} from "../../../../ports/model/RegressorPortModel";
+import {RegressorPortModel} from "../../../ports/model/RegressorPortModel";
 
 export enum CriterionEnum {
     MSE = 'mse',
