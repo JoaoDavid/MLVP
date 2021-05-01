@@ -3,14 +3,6 @@ import classes from './App.module.css';
 import createEngine, {DiagramEngine} from '@projectstorm/react-diagrams';
 import TopNav from '../components/UI/top-nav/TopNav';
 import SideBar from "../components/UI/side-bar/SideBar";
-import {CategoryConfig, NodeConfig} from "../components/nodes/Config";
-import {
-    DATA_BALANCING_CONFIG,
-    DATA_SOURCE_CONFIG,
-    DATA_TRANSFORMATION_CONFIG, VISUALIZATION_CONFIG
-} from "../components/nodes/data/DataConfig";
-import {CLASSIFIER_CONFIG, REGRESSOR_CONFIG} from "../components/nodes/model/ModelConfig";
-import {EVALUATE_CLASSIFIER_CONFIG, EVALUATE_REGRESSOR_CONFIG} from "../components/nodes/evaluate/EvaluateConfig";
 import axios from "axios";
 import download from 'js-file-download';
 import BottomNav from "../components/UI/bottom-nav/BottomNav";
@@ -21,9 +13,18 @@ import posterDemo from '../demos/poster-demo.json';
 import {MyZoomCanvasAction} from "./actions/MyZoomCanvasAction";
 import {DiagramStateManager} from "./states/DiagramStateManager";
 import {TypeChecker, TypeCheckResponse} from "./typecheck/TypeChecker";
-import {BaseNodeModel} from "../components/core/BaseNode/BaseNodeModel";
+import {BaseNodeModel, NodeConfig} from "../components/core/BaseNode/BaseNodeModel";
 import {DefaultLinkModel} from "@projectstorm/react-diagrams-defaults";
 import {FactoriesManager} from "./FactoriesManager";
+import {
+    CategoryConfig,
+    CLASSIFIER_CONFIG,
+    DATA_BALANCING_CONFIG,
+    DATA_SOURCE_CONFIG,
+    DATA_TRANSFORMATION_CONFIG, EVALUATE_CLASSIFIER_CONFIG,
+    EVALUATE_REGRESSOR_CONFIG,
+    REGRESSOR_CONFIG, VISUALIZATION_CONFIG
+} from "../components/nodes/Config";
 
 interface AppProps {
 
@@ -131,7 +132,6 @@ class App extends React.Component<AppProps, AppState> {
         }
         return map;
     }
-
 
     loadDemos = () => {
         const map = new Map<String, () => void>();

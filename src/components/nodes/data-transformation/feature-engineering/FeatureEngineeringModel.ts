@@ -1,8 +1,11 @@
-import {BaseNodeModel} from "../../../core/BaseNode/BaseNodeModel";
+import {BaseNodeModel, NodeConfig} from "../../../core/BaseNode/BaseNodeModel";
 import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
-import {FEATURE_ENGINEERING} from "../../data/DataConfig";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
 
+export const FEATURE_ENGINEERING: NodeConfig = {
+    codeName: "FeatureEngineering",
+    name: "Feature Engineering",
+}
 
 export class FeatureEngineeringModel extends BaseNodeModel {
 

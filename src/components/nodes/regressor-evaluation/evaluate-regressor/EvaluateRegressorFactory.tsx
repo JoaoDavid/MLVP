@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { EvaluateRegressorModel } from './EvaluateRegressorModel';
+import {EVALUATE_REGRESSOR, EvaluateRegressorModel} from './EvaluateRegressorModel';
 import EvaluateRegressorWidget from './EvaluateRegressorWidget';
 import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-canvas-core';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
-import { EVALUATE_REGRESSOR } from "../../evaluate/EvaluateConfig";
 import {BaseNodeFactory} from "../../../core/BaseNode/BaseNodeFactory";
 
 

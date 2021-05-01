@@ -3,7 +3,7 @@ import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {PCAModel} from './PCAModel';
 import BaseNodeWidget, {eventNodeUpdated} from '../../../core/BaseNode/BaseNodeWidget';
 import PCAModal from "./PCAModal";
-import {DATA_TRANSFORMATION_CONFIG} from '../../data/DataConfig';
+import {DATA_TRANSFORMATION_CONFIG} from "../../Config";
 
 interface PCAProps {
     node: PCAModel;

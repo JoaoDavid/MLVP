@@ -3,7 +3,7 @@ import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {SampleModel} from './SampleModel';
 import BaseNodeWidget, {eventNodeUpdated} from '../../../core/BaseNode/BaseNodeWidget';
 import SampleModal from "./SampleModal";
-import {DATA_SOURCE_CONFIG} from '../../data/DataConfig';
+import {DATA_SOURCE_CONFIG} from "../../Config";
 
 interface SampleNodeProps {
     node: SampleModel;

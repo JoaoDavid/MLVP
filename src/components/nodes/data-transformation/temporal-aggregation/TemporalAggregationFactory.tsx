@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { TemporalAggregationModel } from './TemporalAggregationModel';
+import {TEMPORAL_AGGREGATION, TemporalAggregationModel} from './TemporalAggregationModel';
 import TemporalAggregationWidget from './TemporalAggregationWidget';
 import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-canvas-core';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
-import { TEMPORAL_AGGREGATION } from "../../data/DataConfig";
 import {BaseNodeFactory} from "../../../core/BaseNode/BaseNodeFactory";
 
 

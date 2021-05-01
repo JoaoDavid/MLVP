@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { RandomForestClassifierModel } from './RandomForestClassifierModel';
+import {RANDOM_FOREST_CLASSIFIER, RandomForestClassifierModel} from './RandomForestClassifierModel';
 import RandomForestClassifierWidget from './RandomForestClassifierWidget';
 import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-canvas-core';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
-import { RANDOM_FOREST_CLASSIFIER } from "../../model/ModelConfig";
 import {BaseNodeFactory} from "../../../core/BaseNode/BaseNodeFactory";
 
 

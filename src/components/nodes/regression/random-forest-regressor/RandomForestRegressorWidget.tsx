@@ -3,7 +3,7 @@ import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {RandomForestRegressorModel} from './RandomForestRegressorModel';
 import BaseNodeWidget, {eventNodeUpdated} from '../../../core/BaseNode/BaseNodeWidget';
 import RandomForestRegressorModal from './RandomForestRegressorModal';
-import {REGRESSOR_CONFIG} from '../../model/ModelConfig';
+import {REGRESSOR_CONFIG} from "../../Config";
 
 interface RandomForestRegressorProps {
     node: RandomForestRegressorModel;

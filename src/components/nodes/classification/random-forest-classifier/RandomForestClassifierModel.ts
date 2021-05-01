@@ -1,8 +1,12 @@
-import {BaseNodeModel} from "../../../core/BaseNode/BaseNodeModel";
+import {BaseNodeModel, NodeConfig} from "../../../core/BaseNode/BaseNodeModel";
 import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
-import {RANDOM_FOREST_CLASSIFIER} from "../../model/ModelConfig";
 import {ClassifierPortModel} from "../../../ports/model/ClassifierPortModel";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
+
+export const RANDOM_FOREST_CLASSIFIER: NodeConfig = {
+    codeName: "RandomForestClassifier",
+    name: "Random Forest Classifier",
+}
 
 export enum CriterionEnum {
     GINI = 'gini',

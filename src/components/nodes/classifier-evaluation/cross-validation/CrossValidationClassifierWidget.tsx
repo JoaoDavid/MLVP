@@ -3,7 +3,7 @@ import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {CrossValidationClassifierModel} from './CrossValidationClassifierModel';
 import BaseNodeWidget, {eventNodeUpdated} from '../../../core/BaseNode/BaseNodeWidget';
 import CrossValidationClassifierModal from "./CrossValidationClassifierModal";
-import {EVALUATE_CLASSIFIER_CONFIG} from '../../evaluate/EvaluateConfig';
+import {EVALUATE_CLASSIFIER_CONFIG} from "../../Config";
 
 interface CrossValidationProps {
     node: CrossValidationClassifierModel;

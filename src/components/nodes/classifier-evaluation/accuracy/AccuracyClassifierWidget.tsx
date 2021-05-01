@@ -2,7 +2,7 @@ import * as React from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {AccuracyClassifierModel} from './AccuracyClassifierModel';
 import BaseNodeWidget from '../../../core/BaseNode/BaseNodeWidget';
-import {EVALUATE_CLASSIFIER_CONFIG} from '../../evaluate/EvaluateConfig';
+import {EVALUATE_CLASSIFIER_CONFIG} from "../../Config";
 
 interface AccuracyNodeProps {
     node: AccuracyClassifierModel;

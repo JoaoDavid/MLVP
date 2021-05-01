@@ -1,9 +1,8 @@
 import React from 'react';
-import {AbstractDsModel} from './AbstractDsModel';
+import {ABSTRACT_DS, AbstractDsModel} from './AbstractDsModel';
 import AbstractDsWidget from './AbstractDsWidget';
 import {GenerateModelEvent, GenerateWidgetEvent} from '@projectstorm/react-canvas-core';
 import {DiagramEngine} from '@projectstorm/react-diagrams-core';
-import {ABSTRACT_DS} from "../../data/DataConfig";
 import {BaseNodeFactory} from "../../../core/BaseNode/BaseNodeFactory";
 
 export class AbstractDsFactory extends BaseNodeFactory<AbstractDsModel, DiagramEngine> {

@@ -1,8 +1,12 @@
-import {BaseNodeModel} from "../../../core/BaseNode/BaseNodeModel";
+import {BaseNodeModel, NodeConfig} from "../../../core/BaseNode/BaseNodeModel";
 import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
-import {RANDOM_FOREST_REGRESSOR} from "../../model/ModelConfig";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
 import {RegressorPortModel} from "../../../ports/model/RegressorPortModel";
+
+export const RANDOM_FOREST_REGRESSOR: NodeConfig = {
+    codeName: "RandomForestRegressor",
+    name: "Random Forest Regressor",
+}
 
 export enum CriterionEnum {
     MSE = 'mse',

@@ -3,7 +3,7 @@ import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {UndersamplingModel} from './UndersamplingModel';
 import BaseNodeWidget, {eventNodeUpdated} from '../../../core/BaseNode/BaseNodeWidget';
 import UndersamplingModal from "./UndersamplingModal";
-import {DATA_BALANCING_CONFIG} from '../../data/DataConfig';
+import {DATA_BALANCING_CONFIG} from "../../Config";
 
 interface UndersamplingProps {
     node: UndersamplingModel;

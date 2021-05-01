@@ -1,9 +1,12 @@
-import {BaseNodeModel} from "../../../core/BaseNode/BaseNodeModel";
+import {BaseNodeModel, NodeConfig} from "../../../core/BaseNode/BaseNodeModel";
 import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
-import {PCA} from "../../data/DataConfig";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
 import {Column} from "../../data-source/Column";
 
+export const PCA: NodeConfig = {
+    codeName: "PCA",
+    name: "PCA",
+}
 
 export class PCAModel extends BaseNodeModel {
 

@@ -1,8 +1,9 @@
 import React from 'react';
 import classes from './SideBar.module.css';
 import Category from "./category/Category";
-import {CategoryConfig, NodeConfig} from "../../nodes/Config";
+import {CategoryConfig} from "../../nodes/Config";
 import Accordion from "react-bootstrap/Accordion";
+import {NodeConfig} from "../../core/BaseNode/BaseNodeModel";
 
 interface SideBarProps {
     catAndNames: Map<CategoryConfig, NodeConfig[]>,

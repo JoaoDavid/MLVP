@@ -3,7 +3,7 @@ import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {AbstractDsModel} from './AbstractDsModel';
 import BaseNodeWidget, {eventNodeUpdated} from '../../../core/BaseNode/BaseNodeWidget';
 import AbstractDsModal from "./AbstractDsModal";
-import {DATA_SOURCE_CONFIG} from '../../data/DataConfig';
+import {DATA_SOURCE_CONFIG} from "../../Config";
 
 interface CSVNodeProps {
     node: AbstractDsModel;

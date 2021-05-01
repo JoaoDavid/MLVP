@@ -1,9 +1,8 @@
 import React from 'react';
-import { OversamplingModel } from './OversamplingModel';
+import {OVERSAMPLING, OversamplingModel} from './OversamplingModel';
 import OversamplingWidget from './OversamplingWidget';
 import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-canvas-core';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
-import { OVERSAMPLING } from "../../data/DataConfig";
 import {BaseNodeFactory} from "../../../core/BaseNode/BaseNodeFactory";
 
 export class OversamplingFactory extends BaseNodeFactory<OversamplingModel, DiagramEngine> {

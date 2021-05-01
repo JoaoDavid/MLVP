@@ -1,7 +1,11 @@
-import {BaseNodeModel} from "../../../core/BaseNode/BaseNodeModel";
+import {BaseNodeModel, NodeConfig} from "../../../core/BaseNode/BaseNodeModel";
 import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
-import {TEMPORAL_AGGREGATION} from "../../data/DataConfig";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
+
+export const TEMPORAL_AGGREGATION: NodeConfig = {
+    codeName: "TemporalAggregation",
+    name: "Temporal Aggregation",
+}
 
 export enum MetricEnum {
     MAX = 'max',

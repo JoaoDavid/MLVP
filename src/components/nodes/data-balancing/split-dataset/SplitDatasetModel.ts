@@ -1,8 +1,11 @@
-import {BaseNodeModel} from "../../../core/BaseNode/BaseNodeModel";
+import {BaseNodeModel, NodeConfig} from "../../../core/BaseNode/BaseNodeModel";
 import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
-import {SPLIT_DATASET} from "../../data/DataConfig";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
 
+export const SPLIT_DATASET: NodeConfig = {
+    codeName: "SplitDataset",
+    name: "Split Dataset",
+}
 
 export class SplitDatasetModel extends BaseNodeModel {
 

@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { RandomForestRegressorModel } from './RandomForestRegressorModel';
+import {RANDOM_FOREST_REGRESSOR, RandomForestRegressorModel} from './RandomForestRegressorModel';
 import RandomForestRegressorWidget from './RandomForestRegressorWidget';
 import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-canvas-core';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
-import { RANDOM_FOREST_REGRESSOR } from "../../model/ModelConfig";
 import {BaseNodeFactory} from "../../../core/BaseNode/BaseNodeFactory";
 
 

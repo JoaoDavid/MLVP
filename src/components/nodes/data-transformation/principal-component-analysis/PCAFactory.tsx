@@ -1,9 +1,8 @@
 import React from 'react';
-import { PCAModel } from './PCAModel';
+import {PCA, PCAModel} from './PCAModel';
 import PCAWidget from './PCAWidget';
 import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-canvas-core';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
-import { PCA } from "../../data/DataConfig";
 import {BaseNodeFactory} from "../../../core/BaseNode/BaseNodeFactory";
 
 export class PCAFactory extends BaseNodeFactory<PCAModel, DiagramEngine> {

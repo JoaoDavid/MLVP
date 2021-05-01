@@ -3,7 +3,7 @@ import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {VisualizeDatasetModel} from './VisualizeDatasetModel';
 import BaseNodeWidget from '../../../core/BaseNode/BaseNodeWidget';
 import VisualizeDatasetModal from "./VisualizeDatasetModal";
-import {VISUALIZATION_CONFIG} from '../../data/DataConfig';
+import {VISUALIZATION_CONFIG} from "../../Config";
 
 interface VisualizeDatasetProps {
     node: VisualizeDatasetModel;

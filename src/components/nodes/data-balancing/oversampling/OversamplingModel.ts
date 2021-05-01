@@ -1,8 +1,11 @@
-import {BaseNodeModel} from "../../../core/BaseNode/BaseNodeModel";
+import {BaseNodeModel, NodeConfig} from "../../../core/BaseNode/BaseNodeModel";
 import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
-import {OVERSAMPLING} from "../../data/DataConfig";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
 
+export const OVERSAMPLING: NodeConfig = {
+    codeName: "Oversampling",
+    name: "Oversampling",
+}
 
 export class OversamplingModel extends BaseNodeModel {
 

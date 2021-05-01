@@ -1,7 +1,7 @@
 import { NodeModel, NodeModelGenerics } from '@projectstorm/react-diagrams-core';
 import {BasePortModel} from "../BasePort/BasePortModel";
 import { BasePositionModelOptions, DeserializeEvent } from '@projectstorm/react-canvas-core';
-import {NodeConfig} from "../../nodes/Config";
+
 
 export interface BaseNodeModelOptions extends BasePositionModelOptions {
     name: string;
@@ -9,6 +9,11 @@ export interface BaseNodeModelOptions extends BasePositionModelOptions {
 
 export interface BaseNodeModelGenerics extends NodeModelGenerics {
     OPTIONS: BaseNodeModelOptions;
+}
+
+export type NodeConfig = {
+    codeName: string,
+    name: string,
 }
 
 export abstract class BaseNodeModel extends NodeModel<BaseNodeModelGenerics> {

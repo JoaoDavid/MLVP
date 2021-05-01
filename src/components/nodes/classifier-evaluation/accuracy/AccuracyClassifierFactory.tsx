@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { AccuracyClassifierModel } from './AccuracyClassifierModel';
+import {AccuracyClassifierModel, EVALUATE_CLASSIFIER} from './AccuracyClassifierModel';
 import AccuracyClassifierWidget from './AccuracyClassifierWidget';
 import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-canvas-core';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
-import { EVALUATE_CLASSIFIER } from "../../evaluate/EvaluateConfig";
 import {BaseNodeFactory} from "../../../core/BaseNode/BaseNodeFactory";
 
 

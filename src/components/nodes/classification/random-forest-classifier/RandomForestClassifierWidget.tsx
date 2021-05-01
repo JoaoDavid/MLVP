@@ -3,7 +3,7 @@ import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {RandomForestClassifierModel} from './RandomForestClassifierModel';
 import BaseNodeWidget, {eventNodeUpdated} from '../../../core/BaseNode/BaseNodeWidget';
 import RandomForestClassifierModal from './RandomForestClassifierModal';
-import {CLASSIFIER_CONFIG} from '../../model/ModelConfig';
+import {CLASSIFIER_CONFIG} from "../../Config";
 
 interface RandomForestClassifierProps {
     node: RandomForestClassifierModel;

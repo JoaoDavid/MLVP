@@ -1,9 +1,8 @@
 import React from 'react';
-import { UndersamplingModel } from './UndersamplingModel';
+import {UNDERSAMPLING, UndersamplingModel} from './UndersamplingModel';
 import UndersamplingWidget from './UndersamplingWidget';
 import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-canvas-core';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
-import { UNDERSAMPLING } from "../../data/DataConfig";
 import {BaseNodeFactory} from "../../../core/BaseNode/BaseNodeFactory";
 
 export class UndersamplingFactory extends BaseNodeFactory<UndersamplingModel, DiagramEngine> {

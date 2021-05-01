@@ -1,9 +1,8 @@
 import React from 'react';
-import { VisualizeDatasetModel } from './VisualizeDatasetModel';
+import {VISUALIZE_DATASET, VisualizeDatasetModel} from './VisualizeDatasetModel';
 import VisualizeDatasetWidget from './VisualizeDatasetWidget';
 import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-canvas-core';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
-import { VISUALIZE_DATASET } from "../../data/DataConfig";
 import {BaseNodeFactory} from "../../../core/BaseNode/BaseNodeFactory";
 
 export class VisualizeDatasetFactory extends BaseNodeFactory<VisualizeDatasetModel, DiagramEngine> {
