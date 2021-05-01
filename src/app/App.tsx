@@ -16,15 +16,6 @@ import {TypeChecker, TypeCheckResponse} from "./typecheck/TypeChecker";
 import {BaseNodeModel, NodeConfig} from "../components/core/BaseNode/BaseNodeModel";
 import {DefaultLinkModel} from "@projectstorm/react-diagrams-defaults";
 import {FactoriesManager} from "./FactoriesManager";
-import {
-    CategoryConfig,
-    CLASSIFIER_CONFIG,
-    DATA_BALANCING_CONFIG,
-    DATA_SOURCE_CONFIG,
-    DATA_TRANSFORMATION_CONFIG, EVALUATE_CLASSIFIER_CONFIG,
-    EVALUATE_REGRESSOR_CONFIG,
-    REGRESSOR_CONFIG, VISUALIZATION_CONFIG
-} from "../components/nodes/Config";
 
 interface AppProps {
 
@@ -152,19 +143,6 @@ class App extends React.Component<AppProps, AppState> {
         this.typeChecker.requestTypeCheck(diagram);
     }
 
-    loadMapCategoryNodes = () => {
-        const map = new Map<CategoryConfig, NodeConfig[]>();
-        map.set(DATA_SOURCE_CONFIG, DATA_SOURCE_CONFIG.nodes);
-        map.set(DATA_TRANSFORMATION_CONFIG, DATA_TRANSFORMATION_CONFIG.nodes);
-        map.set(DATA_BALANCING_CONFIG, DATA_BALANCING_CONFIG.nodes);
-        map.set(VISUALIZATION_CONFIG, VISUALIZATION_CONFIG.nodes);
-        map.set(CLASSIFIER_CONFIG, CLASSIFIER_CONFIG.nodes);
-        map.set(REGRESSOR_CONFIG, REGRESSOR_CONFIG.nodes);
-        map.set(EVALUATE_CLASSIFIER_CONFIG, EVALUATE_CLASSIFIER_CONFIG.nodes);
-        map.set(EVALUATE_REGRESSOR_CONFIG, EVALUATE_REGRESSOR_CONFIG.nodes);
-        return map;
-    }
-
     newCanvas = () => {
         const model = new MyDiagramModel();
         this.engine.setModel(model);
@@ -256,7 +234,7 @@ class App extends React.Component<AppProps, AppState> {
                 <TopNav newCanvas={this.newCanvas} open={this.openSave} save={this.downloadSave}
                         compile={this.compile} loadDemos={this.loadDemos()}/>
                 <div className={classes.Container}>
-                    <SideBar catAndNames={this.loadMapCategoryNodes()} format={this.dragDropFormat}/>
+                    <SideBar format={this.dragDropFormat}/>
                     <Canvas engine={this.engine} onDropCanvas={this.onDropCanvas}/>
                 </div>
                 <BottomNav unsatNodeAssertions={this.state.unsatNodeAssertions}

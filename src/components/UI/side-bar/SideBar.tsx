@@ -1,22 +1,19 @@
 import React from 'react';
 import classes from './SideBar.module.css';
 import Category from "./category/Category";
-import {CategoryConfig} from "../../nodes/Config";
+import {CATEGORIES} from "../../nodes/Config";
 import Accordion from "react-bootstrap/Accordion";
-import {NodeConfig} from "../../core/BaseNode/BaseNodeModel";
 
 interface SideBarProps {
-    catAndNames: Map<CategoryConfig, NodeConfig[]>,
     format: string,
 }
 
 const SideBar = (props: SideBarProps) => {
     const categories: JSX.Element[] = [];
-    props.catAndNames.forEach((value, key) => {
+    CATEGORIES.forEach((config) => {
         categories.push(
-            <Category key={key.category} color={key.color} title={key.category} nodes={value} format={props.format}/>);
+            <Category key={config.category} color={config.color} title={config.category} nodes={config.nodes} format={props.format}/>);
     });
-    console.log(props.catAndNames);
     return (
         <div className={classes.SideBar}>
             <Accordion defaultActiveKey="0">
