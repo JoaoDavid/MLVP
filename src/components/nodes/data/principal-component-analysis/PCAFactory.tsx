@@ -5,14 +5,13 @@ import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-can
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
 import { PCA } from "../DataConfig";
 import {BaseNodeFactory} from "../../../core/BaseNode/BaseNodeFactory";
-import {Category} from "../../Config";
 
 export class PCAFactory extends BaseNodeFactory<PCAModel, DiagramEngine> {
 
     private static INSTANCE: PCAFactory;
 
     private constructor() {
-        super(Category.DATA_SOURCE, PCA.codeName);
+        super(PCA.codeName);
     }
 
     static getInstance = () => {

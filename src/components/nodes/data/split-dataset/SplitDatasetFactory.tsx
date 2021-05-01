@@ -5,14 +5,13 @@ import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-can
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
 import { SPLIT_DATASET } from "../DataConfig";
 import {BaseNodeFactory} from "../../../core/BaseNode/BaseNodeFactory";
-import {Category} from "../../Config";
 
 export class SplitDatasetFactory extends BaseNodeFactory<SplitDatasetModel, DiagramEngine> {
 
     private static INSTANCE: SplitDatasetFactory;
 
     private constructor() {
-        super(Category.DATA_SOURCE, SPLIT_DATASET.codeName);
+        super(SPLIT_DATASET.codeName);
     }
 
     static getInstance = () => {

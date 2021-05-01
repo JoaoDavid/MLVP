@@ -5,7 +5,6 @@ import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-can
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
 import { RANDOM_FOREST_CLASSIFIER } from "../../ModelConfig";
 import {BaseNodeFactory} from "../../../../core/BaseNode/BaseNodeFactory";
-import {Category} from "../../../Config";
 
 
 export class RandomForestClassifierFactory extends BaseNodeFactory<RandomForestClassifierModel, DiagramEngine> {
@@ -13,7 +12,7 @@ export class RandomForestClassifierFactory extends BaseNodeFactory<RandomForestC
     private static INSTANCE: RandomForestClassifierFactory;
 
     private constructor() {
-        super(Category.CLASSIFICATION, RANDOM_FOREST_CLASSIFIER.codeName);
+        super(RANDOM_FOREST_CLASSIFIER.codeName);
     }
 
     static getInstance = () => {

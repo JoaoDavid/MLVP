@@ -5,14 +5,13 @@ import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-can
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
 import { OVERSAMPLING } from "../DataConfig";
 import {BaseNodeFactory} from "../../../core/BaseNode/BaseNodeFactory";
-import {Category} from "../../Config";
 
 export class OversamplingFactory extends BaseNodeFactory<OversamplingModel, DiagramEngine> {
 
     private static INSTANCE: OversamplingFactory;
 
     private constructor() {
-        super(Category.DATA_SOURCE, OVERSAMPLING.codeName);
+        super(OVERSAMPLING.codeName);
     }
 
     static getInstance = () => {

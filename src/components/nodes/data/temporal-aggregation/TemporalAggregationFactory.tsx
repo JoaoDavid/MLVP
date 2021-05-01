@@ -5,7 +5,6 @@ import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-can
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
 import { TEMPORAL_AGGREGATION } from "../DataConfig";
 import {BaseNodeFactory} from "../../../core/BaseNode/BaseNodeFactory";
-import {Category} from "../../Config";
 
 
 export class TemporalAggregationFactory extends BaseNodeFactory<TemporalAggregationModel, DiagramEngine> {
@@ -13,7 +12,7 @@ export class TemporalAggregationFactory extends BaseNodeFactory<TemporalAggregat
     private static INSTANCE: TemporalAggregationFactory;
 
     private constructor() {
-        super(Category.DATA_SOURCE, TEMPORAL_AGGREGATION.codeName);
+        super(TEMPORAL_AGGREGATION.codeName);
     }
 
     static getInstance = () => {

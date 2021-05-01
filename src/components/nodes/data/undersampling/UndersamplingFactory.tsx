@@ -5,14 +5,13 @@ import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-can
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
 import { UNDERSAMPLING } from "../DataConfig";
 import {BaseNodeFactory} from "../../../core/BaseNode/BaseNodeFactory";
-import {Category} from "../../Config";
 
 export class UndersamplingFactory extends BaseNodeFactory<UndersamplingModel, DiagramEngine> {
 
     private static INSTANCE: UndersamplingFactory;
 
     private constructor() {
-        super(Category.DATA_SOURCE, UNDERSAMPLING.codeName);
+        super(UNDERSAMPLING.codeName);
     }
 
     static getInstance = () => {

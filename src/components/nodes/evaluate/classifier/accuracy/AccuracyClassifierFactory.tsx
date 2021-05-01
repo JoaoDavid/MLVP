@@ -5,7 +5,6 @@ import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-can
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
 import { EVALUATE_CLASSIFIER } from "../../EvaluateConfig";
 import {BaseNodeFactory} from "../../../../core/BaseNode/BaseNodeFactory";
-import {Category} from "../../../Config";
 
 
 export class AccuracyClassifierFactory extends BaseNodeFactory<AccuracyClassifierModel, DiagramEngine> {
@@ -13,7 +12,7 @@ export class AccuracyClassifierFactory extends BaseNodeFactory<AccuracyClassifie
     private static INSTANCE: AccuracyClassifierFactory;
 
     private constructor() {
-        super(Category.CLASSIFIER_EVALUATION, EVALUATE_CLASSIFIER.codeName);
+        super(EVALUATE_CLASSIFIER.codeName);
     }
 
     static getInstance = () => {

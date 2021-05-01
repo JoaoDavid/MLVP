@@ -5,7 +5,6 @@ import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-can
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
 import { RANDOM_FOREST_REGRESSOR } from "../../ModelConfig";
 import {BaseNodeFactory} from "../../../../core/BaseNode/BaseNodeFactory";
-import {Category} from "../../../Config";
 
 
 export class RandomForestRegressorFactory extends BaseNodeFactory<RandomForestRegressorModel, DiagramEngine> {
@@ -13,7 +12,7 @@ export class RandomForestRegressorFactory extends BaseNodeFactory<RandomForestRe
     private static INSTANCE: RandomForestRegressorFactory;
 
     private constructor() {
-        super(Category.REGRESSION, RANDOM_FOREST_REGRESSOR.codeName);
+        super(RANDOM_FOREST_REGRESSOR.codeName);
     }
 
     static getInstance = () => {

@@ -5,7 +5,6 @@ import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-can
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
 import { EVALUATE_REGRESSOR } from "../../EvaluateConfig";
 import {BaseNodeFactory} from "../../../../core/BaseNode/BaseNodeFactory";
-import {Category} from "../../../Config";
 
 
 export class EvaluateRegressorFactory extends BaseNodeFactory<EvaluateRegressorModel, DiagramEngine> {
@@ -13,7 +12,7 @@ export class EvaluateRegressorFactory extends BaseNodeFactory<EvaluateRegressorM
     private static INSTANCE: EvaluateRegressorFactory;
 
     private constructor() {
-        super(Category.REGRESSOR_EVALUATION, EVALUATE_REGRESSOR.codeName);
+        super(EVALUATE_REGRESSOR.codeName);
     }
 
     static getInstance = () => {

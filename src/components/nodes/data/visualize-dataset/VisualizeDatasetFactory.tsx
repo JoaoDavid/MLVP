@@ -5,14 +5,13 @@ import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-can
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
 import { VISUALIZE_DATASET } from "../DataConfig";
 import {BaseNodeFactory} from "../../../core/BaseNode/BaseNodeFactory";
-import {Category} from "../../Config";
 
 export class VisualizeDatasetFactory extends BaseNodeFactory<VisualizeDatasetModel, DiagramEngine> {
 
     private static INSTANCE: VisualizeDatasetFactory;
 
     private constructor() {
-        super(Category.DATA_SOURCE, VISUALIZE_DATASET.codeName);
+        super(VISUALIZE_DATASET.codeName);
     }
 
     static getInstance = () => {

@@ -5,14 +5,13 @@ import {GenerateModelEvent, GenerateWidgetEvent} from '@projectstorm/react-canva
 import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {ABSTRACT_DS} from "../../DataConfig";
 import {BaseNodeFactory} from "../../../../core/BaseNode/BaseNodeFactory";
-import {Category} from "../../../Config";
 
 export class AbstractDsFactory extends BaseNodeFactory<AbstractDsModel, DiagramEngine> {
 
     private static INSTANCE: AbstractDsFactory;
 
     private constructor() {
-        super(Category.DATA_SOURCE, ABSTRACT_DS.codeName);
+        super(ABSTRACT_DS.codeName);
     }
 
     static getInstance = () => {

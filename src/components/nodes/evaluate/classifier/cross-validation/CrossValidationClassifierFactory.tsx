@@ -5,14 +5,13 @@ import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-can
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
 import { CROSS_VALIDATION_CLASSIFIER } from "../../EvaluateConfig";
 import {BaseNodeFactory} from "../../../../core/BaseNode/BaseNodeFactory";
-import {Category} from "../../../Config";
 
 export class CrossValidationClassifierFactory extends BaseNodeFactory<CrossValidationClassifierModel, DiagramEngine> {
 
     private static INSTANCE: CrossValidationClassifierFactory;
 
     private constructor() {
-        super(Category.CLASSIFIER_EVALUATION, CROSS_VALIDATION_CLASSIFIER.codeName);
+        super(CROSS_VALIDATION_CLASSIFIER.codeName);
     }
 
     static getInstance = () => {

@@ -5,14 +5,13 @@ import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-can
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
 import { SAMPLE_CSV } from "../../DataConfig";
 import {BaseNodeFactory} from "../../../../core/BaseNode/BaseNodeFactory";
-import {Category} from "../../../Config";
 
 export class SampleFactory extends BaseNodeFactory<SampleModel, DiagramEngine> {
 
     private static INSTANCE: SampleFactory;
 
     private constructor() {
-        super(Category.DATA_SOURCE, SAMPLE_CSV.codeName);
+        super(SAMPLE_CSV.codeName);
     }
 
     static getInstance = () => {

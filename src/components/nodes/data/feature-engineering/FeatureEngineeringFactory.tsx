@@ -5,14 +5,13 @@ import { GenerateModelEvent, GenerateWidgetEvent } from '@projectstorm/react-can
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
 import { FEATURE_ENGINEERING } from "../DataConfig";
 import {BaseNodeFactory} from "../../../core/BaseNode/BaseNodeFactory";
-import {Category} from "../../Config";
 
 export class FeatureEngineeringFactory extends BaseNodeFactory<FeatureEngineeringModel, DiagramEngine> {
 
     private static INSTANCE: FeatureEngineeringFactory;
 
     private constructor() {
-        super(Category.DATA_SOURCE, FEATURE_ENGINEERING.codeName);
+        super(FEATURE_ENGINEERING.codeName);
     }
 
     static getInstance = () => {
