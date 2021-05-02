@@ -13,7 +13,7 @@ import posterDemo from '../demos/poster-demo.json';
 import {MyZoomCanvasAction} from "./actions/MyZoomCanvasAction";
 import {DiagramStateManager} from "./states/DiagramStateManager";
 import {TypeChecker, TypeCheckResponse} from "./typecheck/TypeChecker";
-import {BaseNodeModel, NodeConfig} from "../components/core/BaseNode/BaseNodeModel";
+import {BaseNodeModel} from "../components/core/BaseNode/BaseNodeModel";
 import {DefaultLinkModel} from "@projectstorm/react-diagrams-defaults";
 import {FactoriesManager} from "./FactoriesManager";
 
@@ -62,26 +62,25 @@ class App extends React.Component<AppProps, AppState> {
     registerListeners = (model: MyDiagramModel) => {
         model.registerListener({
             linksUpdated: (event) => {
-                console.log('linksUpdated');
+                console.log('event: linksUpdated');
                 console.log(event);
             },
             linkCreated: (event) => {
-                console.log('linkCreated');
+                console.log('event: linkCreated');
                 console.log(event);
                 this.typeChecker.requestTypeCheck();
             },
             nodeUpdated: (event) => {
-                console.log("nodeUpdated");
+                console.log("event: nodeUpdated");
                 console.log(event);
                 this.typeChecker.requestTypeCheck();
             },
             nodesUpdated: (event) => {
-                console.log("nodesUpdated");
+                console.log("event: nodesUpdated");
                 console.log(event);
             },
             typeCheckResponse: (event) => {
-                console.log("typeCheckResponse");
-                console.log(event.typeCheckResponse);
+                console.log("event: typeCheckResponse");
                 const allNodeAssertions = this.processNodeAssertions(event.typeCheckResponse.nodeAssertions);
                 const allLinkAssertions = this.processLinkAssertions(event.typeCheckResponse);
                 const unsatNodeAssertions = this.processNodeAssertions(event.typeCheckResponse.unsatNodeAssertions);
@@ -161,7 +160,7 @@ class App extends React.Component<AppProps, AppState> {
         const data = event.dataTransfer.getData(this.dragDropFormat);
         try {
             const inJSON = JSON.parse(data);
-            console.log(data);
+            // data = {"codeName":"...","name":"..."}
             const factory = this.engine.getNodeFactories().getFactory(inJSON.codeName);
             const node = factory.generateModel({}) as BaseNodeModel;
             let point = this.engine.getRelativeMousePoint(event);

@@ -44,7 +44,7 @@ export class TypeChecker {
             .catch(error => {
                 console.log(error);
             });
-        console.log(JSON.stringify(response, null, 4));
+        // console.log(JSON.stringify(response, null, 4));
         this.eventTypeChecked(response);
         return response.canLink;
     }

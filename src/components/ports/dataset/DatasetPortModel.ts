@@ -13,7 +13,7 @@ export class DatasetPortModel extends BasePortModel {
     }
 
     canLinkToPort(port: PortModel): boolean {
-        console.log('canLinkToPort at DatasetPortModel');
+        // console.log('canLinkToPort at DatasetPortModel');
         if (port instanceof DatasetPortModel) {
             return super.canLinkToPort(port);
         }

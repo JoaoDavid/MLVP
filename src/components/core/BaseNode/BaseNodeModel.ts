@@ -34,7 +34,7 @@ export abstract class BaseNodeModel extends NodeModel<BaseNodeModelGenerics> {
     }
 
     updateNode = () => {
-        console.log("UPDATE")
+        console.log("updateNode call at BaseNodeModel")
     }
 
     setColumnsAndTypes = (columnsTypes: Map<string, string>) => {
