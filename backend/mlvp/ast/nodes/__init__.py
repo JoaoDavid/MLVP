@@ -1,23 +1,10 @@
 from .Node import Node
-from .data.AbstractDataset import AbstractDataset
-from .data.ImportFromCSV import ImportFromCSV
-from .data.SampleCSV import SampleCSV
 
-from .data.SplitDataset import SplitDataset
-from .data.Oversampling import Oversampling
-from .data.Undersampling import UnderSampling
-from .data.PCA import PCA
-from .data.FeatureEngineering import FeatureEngineering
-from .data.TemporalAggregation import TemporalAggregation
-
-from .data.VisualizeDataset import VisualizeDataset
-
-from .model.RandomForestClassifier import RandomForestClassifier
-from .model.RandomForestRegressor import RandomForestRegressor
-
-
-from .evaluate.EvaluateClassifier import EvaluateClassifier
-from .evaluate.CrossValidation import CrossValidation
-
-from .evaluate.EvaluateRegressor import EvaluateRegressor
-
+from mlvp.ast.nodes.classification import *
+from mlvp.ast.nodes.classifier_evaluation import *
+from mlvp.ast.nodes.data_balancing import *
+from mlvp.ast.nodes.data_source import *
+from mlvp.ast.nodes.data_transformation import *
+from mlvp.ast.nodes.regression import *
+from mlvp.ast.nodes.regressor_evaluation import *
+from mlvp.ast.nodes.visualization import *
