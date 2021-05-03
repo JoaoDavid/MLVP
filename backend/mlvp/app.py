@@ -1,7 +1,7 @@
 import json
 
-from mlvp.ast.ParseJSON import ParseJSON
-from mlvp.ast.TopologicalSorter import TopologicalSorter
+from mlvp.graph.ParseJSON import ParseJSON
+from mlvp.graph.TopologicalSorter import TopologicalSorter
 from mlvp.codegen.CodeGen import CodeGen
 from mlvp.typecheck.TypeChecker import TypeChecker
 

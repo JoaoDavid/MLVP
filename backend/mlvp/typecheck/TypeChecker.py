@@ -1,6 +1,6 @@
 from mlvp.typecheck import link
-from mlvp.ast.nodes import *
-from mlvp.ast.ports import *
+from mlvp.graph.nodes import *
+from mlvp.graph.ports import *
 from z3 import *
 
 
