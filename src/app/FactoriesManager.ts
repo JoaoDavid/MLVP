@@ -17,6 +17,7 @@ import {TemporalAggregationFactory} from "../components/nodes/data-transformatio
 import {RandomForestRegressorFactory} from "../components/nodes/regression/random-forest-regressor/RandomForestRegressorFactory";
 import {RegressorPortFactory} from "../components/ports/model/RegressorPortFactory";
 import {EvaluateRegressorFactory} from "../components/nodes/regressor-evaluation/evaluate-regressor/EvaluateRegressorFactory";
+import {LabelEncodingFactory} from "../components/nodes/data-transformation/label-encoding/LabelEncodingFactory";
 
 
 export class FactoriesManager {
@@ -43,6 +44,7 @@ export class FactoriesManager {
         this.engine.getNodeFactories().registerFactory(VisualizeDatasetFactory.getInstance());
         this.engine.getNodeFactories().registerFactory(TemporalAggregationFactory.getInstance());
         this.engine.getNodeFactories().registerFactory(EvaluateRegressorFactory.getInstance());
+        this.engine.getNodeFactories().registerFactory(LabelEncodingFactory.getInstance());
     }
 
     registerPortFactories = () => {

@@ -14,6 +14,7 @@ import {CROSS_VALIDATION_CLASSIFIER} from "./classifier-evaluation/cross-validat
 import {EVALUATE_REGRESSOR} from "./regressor-evaluation/evaluate-regressor/EvaluateRegressorModel";
 import {RANDOM_FOREST_CLASSIFIER} from "./classification/random-forest-classifier/RandomForestClassifierModel";
 import {RANDOM_FOREST_REGRESSOR} from "./regression/random-forest-regressor/RandomForestRegressorModel";
+import {LABEL_ENCODING} from "./data-transformation/label-encoding/LabelEncodingModel";
 
 /*
 Every node type must be added to the nodes array
@@ -38,7 +39,7 @@ export const DATA_SOURCE_CONFIG: CategoryConfig = {
 export const DATA_TRANSFORMATION_CONFIG: CategoryConfig = {
     category: 'Data Transformation',
     color: 'rgb(27,97,72)',
-    nodes: [PCA, FEATURE_ENGINEERING, TEMPORAL_AGGREGATION],
+    nodes: [PCA, FEATURE_ENGINEERING, TEMPORAL_AGGREGATION, LABEL_ENCODING],
 }
 
 export const DATA_BALANCING_CONFIG: CategoryConfig = {
