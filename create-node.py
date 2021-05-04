@@ -5,7 +5,7 @@ CATEGORY_CONFIG = "CATEGORY_CONFIG"
 NODE_CONFIG = "TEMPLATE_CONFIG_VAR"
 NODE_CODENAME = "TemplateCodeName"
 NODE_NAME = "TemplateName"
-
+FROM_IMPORT = "from .{code_name} import {code_name}\n"
 
 def create_node(input_fp, output_fp, category, name, code_name, node_config_var):
     print(output_fp)
@@ -42,8 +42,8 @@ def main():
     category_ts = category.lower().replace("_", "-")
     node_folder_ts = node_config_var.lower().replace("_", "-")
     output_directory_ts = "./src/components/nodes/" + category_ts + "/" + node_folder_ts
-    category_ts = category.lower()
-    output_directory_py = "./backend/mlvp/graph/nodes/" + category_ts
+    category_py = category.lower()
+    output_directory_py = "./backend/mlvp/graph/nodes/" + category_py
     if not os.path.exists(output_directory_ts):
         os.makedirs(output_directory_ts)
     if not os.path.exists(output_directory_py):
@@ -54,6 +54,9 @@ def main():
     for file_name in os.listdir(template_directory):
         input_fp = os.path.join(template_directory, file_name)
         if ".py" in file_name:
+            init_file = open(output_directory_py + "/__init__.py" , "a+")
+            init_file.write(FROM_IMPORT.format(code_name=code_name))
+            init_file.close()
             output_fp = output_directory_py + "/" + code_name + file_name
         else:
             output_fp = output_directory_ts + "/" + code_name + file_name
