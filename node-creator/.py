@@ -19,7 +19,8 @@ class TemplateCodeName(Node):
         return FROM_IMPORT.format(package="imblearn.over_sampling", class_to_import="RANDOM_OVERSAMPLER")
 
     def codegen(self, emitter: Emitter, out_file):
-        print("")
+        curr_count = emitter.get_count()
+        parent_port = self.parent_links[0].source_port
         # TODO
 
     def assertions(self, node_columns):

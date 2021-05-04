@@ -7,7 +7,6 @@ export const TEMPLATE_CONFIG_VAR: NodeConfig = {
     name: "TemplateName",
 }
 
-
 export class TemplateCodeNameModel extends BaseNodeModel {
 
     constructor() {
@@ -37,20 +36,14 @@ export class TemplateCodeNameModel extends BaseNodeModel {
     deserialize(event: DeserializeEvent<this>) {
         super.deserialize(event);
         // TODO
-/*        this.newColumnName = event.data.column_name;
-        this.originalColumnName = event.data.originalColumnName;
-        this.metric = event.data.metric;
-        this.windowSize = event.data.windowSize;*/
+        // this.newColumnName = event.data.column_name;
     }
 
     serialize(): any {
         return {
             ...super.serialize(),
             // TODO
-/*            newColumnName: this.newColumnName,
-            originalColumnName: this.originalColumnName,
-            metric: this.metric,
-            windowSize: this.windowSize,*/
+            // newColumnName: this.newColumnName,
         };
     }
 
