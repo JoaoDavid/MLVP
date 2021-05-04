@@ -12,9 +12,13 @@ interface LabelEncodingProps {
 
 const LabelEncodingWidget = (props: LabelEncodingProps) => {
 
+    const encodedColumnChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        let value = event.target.value;
+        props.node.setEncodedColumn(value);
+        eventNodeUpdated(props.engine, props.node);
+    }
 
-
-    const modal = <LabelEncodingModal node={props.node}/>;
+    const modal = <LabelEncodingModal node={props.node} encodedColumnChanged={encodedColumnChanged}/>;
     return (
         <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_TRANSFORMATION_CONFIG.color}
                         modalChildren={modal}>
