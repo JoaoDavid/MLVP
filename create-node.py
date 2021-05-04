@@ -8,7 +8,7 @@ NODE_NAME = "TemplateName"
 
 
 def create_node(input_fp, output_fp, category, name, code_name, node_config_var):
-    print(input_fp)
+    print(output_fp)
     # print(file_name)
     input_file = open(input_fp, "r")
     # name = os.path.basename(path)
@@ -50,6 +50,7 @@ def main():
         os.makedirs(output_directory_py)
     # iterate over files in
     # that directory
+    print("Generated files at:")
     for file_name in os.listdir(template_directory):
         input_fp = os.path.join(template_directory, file_name)
         if ".py" in file_name:
