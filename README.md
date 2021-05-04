@@ -25,6 +25,9 @@ You will also see any lint errors in the console.
 Runs the back-end in the development mode.\
 Listening for HTTP requests at localhost:8080
 
+### `python create-node.py "Block Category" "Block Name"`
+
+Creates the four front-end and single back-end class files for the new block in the respective category directories
 
 ## Deployment
 
