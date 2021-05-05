@@ -5,10 +5,9 @@ from mlvp.typecheck import *
 CONCATENATE = "{df} = pd.concat([{old_x},{old_y}], join = 'outer', axis = 1)\n"
 LABEL_ENCODER_INIT = "{le} = LabelEncoder()\n"
 TRANSFORM = "{df}['{encoded_column}'] = {le}.fit_transform({df}['{encoded_column}'])\n"
-NEW_DF = "{df} = {df}.drop('{encoded_column}', axis=1)\n"
+RENAME_COLUMN = "{df} = {df}.rename(columns={{'{encoded_column}': '{new_column}'}})\n"
 X = "{x} = {df}.drop({old_y}.name, axis=1)\n"
 Y = "{y} = {df}[{old_y}.name]\n"
-NEW_COLUMN = "{encoded_col}_encoded"
 
 NONEXISTENT_COLUMN = "column \"{column_name}\" exists on the dataset"
 DUPLICATE_COLUMN = "column \"{column_name}\" is unique on the dataset"
@@ -19,7 +18,7 @@ class LabelEncoding(Node):
     def __init__(self, data):
         super().__init__(data)
         self.encoded_column = data['encodedColumn']
-        self.new_column = NEW_COLUMN.format(encoded_col=self.encoded_column)
+        self.new_column = self.encoded_col + "_encoded"
 
     def import_dependency(self):
         return FROM_IMPORT.format(package="sklearn.preprocessing", class_to_import="LabelEncoder")
@@ -35,9 +34,8 @@ class LabelEncoding(Node):
 
         out_file.write(CONCATENATE.format(df=df, old_x=old_x, old_y=old_y))
         out_file.write(LABEL_ENCODER_INIT.format(le=le))
-        out_file.write(
-            TRANSFORM.format(le=le, df=df, encoded_column=self.encoded_column))
-        out_file.write(NEW_DF.format(df=df, encoded_column=self.encoded_column))
+        out_file.write(TRANSFORM.format(le=le, df=df, encoded_column=self.encoded_column))
+        out_file.write(RENAME_COLUMN.format(df=df, encoded_column=self.encoded_column, new_column=self.new_column))
         out_file.write(X.format(x=x, df=df, old_y=old_y))
         out_file.write(Y.format(y=y, df=df, old_y=old_y))
 
@@ -71,6 +69,8 @@ class LabelEncoding(Node):
 
         assert_existent_column = []
         if len(input_port.columns) > 0:
+            output_port.label_encoded = input_port.label_encoded
+            output_port.label_encoded.append(self.new_column)
             last = list(input_port.columns.items())[-1]
             duplicate_column = self.new_column not in input_port.columns
             nonexistent_column = self.encoded_column in input_port.columns
