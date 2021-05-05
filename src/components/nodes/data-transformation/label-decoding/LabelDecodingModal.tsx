@@ -2,14 +2,17 @@ import * as React from 'react';
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {LabelEncodingModel} from "./LabelEncodingModel";
+import InputGroup from "react-bootstrap/InputGroup";
+import {LabelDecodingModel} from "./LabelDecodingModel";
+import classes from "../../../UI/modal/BaseModal.module.css";
 
-interface LabelEncodingModalProps {
-    node: LabelEncodingModel;
+
+interface LabelDecodingModalProps {
+    node: LabelDecodingModel;
     encodedColumnChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const LabelEncodingModal = (props: LabelEncodingModalProps) => {
+const LabelDecodingModal = (props: LabelDecodingModalProps) => {
     const columnNames: JSX.Element[] = [];
 
     let columnsAndTypes = props.node.getColumnsAndTypes();
@@ -23,8 +26,8 @@ const LabelEncodingModal = (props: LabelEncodingModalProps) => {
             <Form.Group>
                 <Row>
                     <Col>
-                        <Form.Label>Original Column</Form.Label>
-                        <Form.Control as="select" defaultValue={props.node.getOriginalColumn()} onChange={props.encodedColumnChanged}>
+                        <Form.Label>Encoded Column</Form.Label>
+                        <Form.Control as="select" defaultValue={props.node.getEncodedColumn()} onChange={props.encodedColumnChanged}>
                             {columnNames}
                         </Form.Control>
                     </Col>
@@ -34,4 +37,4 @@ const LabelEncodingModal = (props: LabelEncodingModalProps) => {
     )
 }
 
-export default LabelEncodingModal;
+export default LabelDecodingModal;

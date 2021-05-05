@@ -10,6 +10,7 @@ import Canvas from "../components/UI/canvas/Canvas";
 import {MyDiagramModel} from "./diagram/MyDiagramModel";
 import splitEvaluate from '../demos/split-n-evaluate.json';
 import posterDemo from '../demos/poster-demo.json';
+import encodeDecode from '../demos/encode_decode_demo.json';
 import {MyZoomCanvasAction} from "./actions/MyZoomCanvasAction";
 import {DiagramStateManager} from "./states/DiagramStateManager";
 import {TypeChecker, TypeCheckResponse} from "./typecheck/TypeChecker";
@@ -132,6 +133,10 @@ class App extends React.Component<AppProps, AppState> {
         map.set("Poster - Balanced Dataset Problem", () => {
             this.canvasLoadDiagram(posterDemo);
             this.updateLog("Loaded demo Poster - Balanced Dataset Problem");
+        });
+        map.set("Encode Decode Demo", () => {
+            this.canvasLoadDiagram(encodeDecode);
+            this.updateLog("Loaded demo Encode Decode Demo");
         });
         return map;
     }

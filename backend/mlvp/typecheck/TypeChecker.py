@@ -133,6 +133,7 @@ class TypeChecker:
                 self.all_link_assertions.append((parent_link, link_assertions))
 
                 parent_link.target_port.columns = parent_link.source_port.columns
+                parent_link.target_port.label_encoded = parent_link.source_port.label_encoded
                 # print("__add_dataset_links")
                 # print("target")
                 # print(parent_link.target_port.columns)

@@ -17,7 +17,7 @@ class LabelEncoding(Node):
 
     def __init__(self, data):
         super().__init__(data)
-        self.original_column = data['encodedColumn']
+        self.original_column = data['originalColumn']
         self.encoded_col = self.original_column + "_encoded"
 
     def import_dependency(self):
@@ -41,6 +41,7 @@ class LabelEncoding(Node):
 
         out_ds = self.get_port(False, "Encoded Dataset")
         emitter.set(out_ds, (x, y))
+        emitter.set(self.encoded_col, le)
 
     def assertions(self, node_columns):
         input_port = self.get_port(True, "Dataset")
@@ -70,7 +71,7 @@ class LabelEncoding(Node):
         assert_existent_column = []
         if len(input_port.columns) > 0:
             output_port.label_encoded = input_port.label_encoded
-            output_port.label_encoded[self.original_column] = self.encoded_col
+            output_port.label_encoded[self.encoded_col] = self.original_column
             last = list(input_port.columns.items())[-1]
             duplicate_column = self.encoded_col not in input_port.columns
             nonexistent_column = self.original_column in input_port.columns

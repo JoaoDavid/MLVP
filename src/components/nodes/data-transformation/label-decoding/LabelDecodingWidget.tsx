@@ -1,24 +1,24 @@
 import * as React from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams-core';
-import {LabelEncodingModel} from './LabelEncodingModel';
+import {LabelDecodingModel} from './LabelDecodingModel';
 import BaseNodeWidget, {eventNodeUpdated} from '../../../core/BaseNode/BaseNodeWidget';
-import LabelEncodingModal from './LabelEncodingModal';
+import LabelDecodingModal from './LabelDecodingModal';
 import {DATA_TRANSFORMATION_CONFIG} from "../../Config";
 
-interface LabelEncodingProps {
-    node: LabelEncodingModel;
+interface LabelDecodingProps {
+    node: LabelDecodingModel;
     engine: DiagramEngine;
 }
 
-const LabelEncodingWidget = (props: LabelEncodingProps) => {
+const LabelDecodingWidget = (props: LabelDecodingProps) => {
 
     const encodedColumnChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
         let value = event.target.value;
-        props.node.setOriginalColumn(value);
+        props.node.setEncodedColumn(value);
         eventNodeUpdated(props.engine, props.node);
     }
 
-    const modal = <LabelEncodingModal node={props.node} encodedColumnChanged={encodedColumnChanged}/>;
+    const modal = <LabelDecodingModal node={props.node} encodedColumnChanged={encodedColumnChanged}/>;
     return (
         <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_TRANSFORMATION_CONFIG.color}
                         modalChildren={modal}>
@@ -29,4 +29,4 @@ const LabelEncodingWidget = (props: LabelEncodingProps) => {
 
 }
 
-export default LabelEncodingWidget;
+export default LabelDecodingWidget;

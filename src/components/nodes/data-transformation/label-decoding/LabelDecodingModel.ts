@@ -2,17 +2,17 @@ import {BaseNodeModel, NodeConfig} from "../../../core/BaseNode/BaseNodeModel";
 import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
 
-export const LABEL_ENCODING: NodeConfig = {
-    codeName: "LabelEncoding",
-    name: "Label Encoding",
+export const LABEL_DECODING: NodeConfig = {
+    codeName: "LabelDecoding",
+    name: "Label Decoding",
 }
 
-export class LabelEncodingModel extends BaseNodeModel {
+export class LabelDecodingModel extends BaseNodeModel {
 
-    private originalColumn: string = "no_columns_found";
+    private encodedColumn: string = "no_columns_found";
 
     constructor() {
-        super(LABEL_ENCODING);
+        super(LABEL_DECODING);
         this.addInPort();
         this.addOutPort();
     }
@@ -22,18 +22,18 @@ export class LabelEncodingModel extends BaseNodeModel {
         let listColNames = Object.keys(colMap);
 
         if (listColNames.length > 0) {
-            if (!listColNames.includes(this.originalColumn)) {
-                this.originalColumn =  listColNames[0];
+            if (!listColNames.includes(this.encodedColumn)) {
+                this.encodedColumn =  listColNames[0];
             }
         }
     }
 
-    getOriginalColumn(): string {
-        return this.originalColumn;
+    getEncodedColumn(): string {
+        return this.encodedColumn;
     }
 
-    setOriginalColumn(value: string) {
-        this.originalColumn = value;
+    setEncodedColumn(value: string) {
+        this.encodedColumn = value;
     }
 
     protected addInPort(): void {
@@ -42,19 +42,19 @@ export class LabelEncodingModel extends BaseNodeModel {
     }
 
     protected addOutPort(): void {
-        const p = new DatasetPortModel(false, "Encoded Dataset");
+        const p = new DatasetPortModel(false, "Decoded Dataset");
         super.addPort(p);
     }
 
     deserialize(event: DeserializeEvent<this>) {
         super.deserialize(event);
-        this.originalColumn = event.data.originalColumn;
+        this.encodedColumn = event.data.encodedColumn;
     }
 
     serialize(): any {
         return {
             ...super.serialize(),
-            originalColumn: this.originalColumn,
+            encodedColumn: this.encodedColumn,
         };
     }
 
