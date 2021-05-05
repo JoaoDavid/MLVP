@@ -4,8 +4,8 @@ from mlvp.typecheck import *
 
 CONCATENATE = "{df} = pd.concat([{old_x},{old_y}], join = 'outer', axis = 1)\n"
 LABEL_ENCODER_INIT = "{le} = LabelEncoder()\n"
-TRANSFORM = "{df}['{encoded_column}'] = {le}.fit_transform({df}['{encoded_column}'])\n"
-RENAME_COLUMN = "{df} = {df}.rename(columns={{'{encoded_column}': '{new_column}'}})\n"
+TRANSFORM = "{df}['{original_column}'] = {le}.fit_transform({df}['{original_column}'])\n"
+RENAME_COLUMN = "{df} = {df}.rename(columns={{'{original_column}': '{encoded_col}'}})\n"
 X = "{x} = {df}.drop({old_y}.name, axis=1)\n"
 Y = "{y} = {df}[{old_y}.name]\n"
 
@@ -17,8 +17,8 @@ class LabelEncoding(Node):
 
     def __init__(self, data):
         super().__init__(data)
-        self.encoded_column = data['encodedColumn']
-        self.new_column = self.encoded_col + "_encoded"
+        self.original_column = data['encodedColumn']
+        self.encoded_col = self.original_column + "_encoded"
 
     def import_dependency(self):
         return FROM_IMPORT.format(package="sklearn.preprocessing", class_to_import="LabelEncoder")
@@ -34,8 +34,8 @@ class LabelEncoding(Node):
 
         out_file.write(CONCATENATE.format(df=df, old_x=old_x, old_y=old_y))
         out_file.write(LABEL_ENCODER_INIT.format(le=le))
-        out_file.write(TRANSFORM.format(le=le, df=df, encoded_column=self.encoded_column))
-        out_file.write(RENAME_COLUMN.format(df=df, encoded_column=self.encoded_column, new_column=self.new_column))
+        out_file.write(TRANSFORM.format(le=le, df=df, original_column=self.original_column))
+        out_file.write(RENAME_COLUMN.format(df=df, original_column=self.original_column, encoded_col=self.encoded_col))
         out_file.write(X.format(x=x, df=df, old_y=old_y))
         out_file.write(Y.format(y=y, df=df, old_y=old_y))
 
@@ -53,9 +53,9 @@ class LabelEncoding(Node):
         i = 0
         for col_name, col_type in input_port.columns.items():
             if i == len(input_port.columns) - 1:
-                output_port.columns[self.new_column] = "int"
-            if col_name == self.encoded_column:
-                output_port.columns[self.new_column] = "int"
+                output_port.columns[self.encoded_col] = "int"
+            if col_name == self.original_column:
+                output_port.columns[self.encoded_col] = "int"
             else:
                 output_port.columns[col_name] = col_type
             i += 1
@@ -63,23 +63,23 @@ class LabelEncoding(Node):
                 this_node_columns[col_name] = col_type
         node_columns[self.node_id] = this_node_columns
 
-        z3_duplicate_column = Bool(DUPLICATE_COLUMN.format(column_name=self.new_column))
-        z3_nonexistent_column = Bool(NONEXISTENT_COLUMN.format(column_name=self.encoded_column))
+        z3_duplicate_column = Bool(DUPLICATE_COLUMN.format(column_name=self.encoded_col))
+        z3_nonexistent_column = Bool(NONEXISTENT_COLUMN.format(column_name=self.original_column))
         duplicate_column = True
 
         assert_existent_column = []
         if len(input_port.columns) > 0:
             output_port.label_encoded = input_port.label_encoded
-            output_port.label_encoded.append(self.new_column)
+            output_port.label_encoded[self.original_column] = self.encoded_col
             last = list(input_port.columns.items())[-1]
-            duplicate_column = self.new_column not in input_port.columns
-            nonexistent_column = self.encoded_column in input_port.columns
+            duplicate_column = self.encoded_col not in input_port.columns
+            nonexistent_column = self.original_column in input_port.columns
             assert_existent_column = [
                 z3_nonexistent_column == nonexistent_column,
                 z3_nonexistent_column,
                 z3_duplicate_column == duplicate_column,
                 z3_duplicate_column,
-                column(input_ds.dataset, String(self.new_column)) == get_col_type("int"),
+                column(input_ds.dataset, String(self.encoded_col)) == get_col_type("int"),
             ]
 
         return [
