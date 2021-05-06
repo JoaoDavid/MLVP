@@ -71,8 +71,8 @@ class LabelEncoding(Node):
         assert_existent_column = []
         if len(input_port.columns) > 0:
             output_port.label_encoded = input_port.label_encoded
-            output_port.label_encoded[self.encoded_col] = self.original_column
-            last = list(input_port.columns.items())[-1]
+            output_port.label_encoded[self.encoded_col] = (self.original_column, input_port.columns[self.original_column])
+
             duplicate_column = self.encoded_col not in input_port.columns
             nonexistent_column = self.original_column in input_port.columns
             assert_existent_column = [
