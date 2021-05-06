@@ -81,9 +81,9 @@ class LabelDecoding(Node):
             if len(input_port.label_encoded) == 0:
                 z3_num_encoded_cols = Int(NODE_PROP.format(name="num_encoded_cols", node_id=self.node_id))
                 encoded_cols = len(input_port.label_encoded) > 0
-            assert_existent_column.append(z3_num_encoded_cols == encoded_cols)
-            assert_existent_column.append(z3_num_encoded_cols > 0)
-            
+                assert_existent_column.append(z3_num_encoded_cols == encoded_cols)
+                assert_existent_column.append(z3_num_encoded_cols > 0)
+
         return [
             output_ds.cols == input_ds.cols,
             output_ds.rows == input_ds.rows,
