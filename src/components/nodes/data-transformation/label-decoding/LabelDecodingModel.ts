@@ -9,7 +9,7 @@ export const LABEL_DECODING: NodeConfig = {
 
 export class LabelDecodingModel extends BaseNodeModel {
 
-    private encodedColumn: string = "no_columns_found";
+    private encodedColumn: string = "None";
 
     constructor() {
         super(LABEL_DECODING);

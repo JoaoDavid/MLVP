@@ -22,8 +22,7 @@ const LabelDecodingWidget = (props: LabelDecodingProps) => {
     return (
         <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_TRANSFORMATION_CONFIG.color}
                         modalChildren={modal}>
-            <p></p>
-            <p></p>
+            <p>To decode: {props.node.getEncodedColumn()}</p>
         </BaseNodeWidget>
     )
 

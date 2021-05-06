@@ -26,7 +26,7 @@ const LabelDecodingModal = (props: LabelDecodingModalProps) => {
             <Form.Group>
                 <Row>
                     <Col>
-                        <Form.Label>Encoded Column</Form.Label>
+                        <Form.Label>Column to be Decoded</Form.Label>
                         <Form.Control as="select" defaultValue={props.node.getEncodedColumn()} onChange={props.encodedColumnChanged}>
                             {columnNames}
                         </Form.Control>

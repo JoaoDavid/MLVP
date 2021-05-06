@@ -18,7 +18,7 @@ export enum MetricEnum {
 export class TemporalAggregationModel extends BaseNodeModel {
 
     private newColumnName: string = "new_column";
-    private originalColumnName: string = "no_columns_found";
+    private originalColumnName: string = "None";
     private metric: MetricEnum = MetricEnum.MEAN;
     private windowSize: number = 1;
 

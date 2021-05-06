@@ -23,7 +23,7 @@ const LabelEncodingModal = (props: LabelEncodingModalProps) => {
             <Form.Group>
                 <Row>
                     <Col>
-                        <Form.Label>Original Column</Form.Label>
+                        <Form.Label>Column to be Encoded</Form.Label>
                         <Form.Control as="select" defaultValue={props.node.getOriginalColumn()} onChange={props.encodedColumnChanged}>
                             {columnNames}
                         </Form.Control>
