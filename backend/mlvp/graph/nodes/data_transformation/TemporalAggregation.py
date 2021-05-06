@@ -61,7 +61,6 @@ class TemporalAggregation(Node):
         node_columns[self.node_id] = this_node_columns
 
         z3_len_new_col = Int(NODE_PROP.format(name="len_new_column_name", node_id=self.node_id))
-        z3_len_org_col = Int(NODE_PROP.format(name="len_original_column_name", node_id=self.node_id))
         z3_duplicate_column = Bool(DUPLICATE_COLUMN.format(column_name=self.new_col_name))
         z3_nonexistent_column = Bool(NONEXISTENT_COLUMN.format(column_name=self.original_col_name))
         duplicate_column = True
@@ -88,7 +87,5 @@ class TemporalAggregation(Node):
             input_ds.time_series,
             z3_len_new_col == len(self.new_col_name),
             z3_len_new_col > 0,
-            z3_len_org_col == len(self.original_col_name),
-            z3_len_org_col > 0,
             input_ds.time_series == output_ds.time_series,
         ] + assert_existent_column
