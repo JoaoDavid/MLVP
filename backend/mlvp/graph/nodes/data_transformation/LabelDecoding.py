@@ -43,29 +43,26 @@ class LabelDecoding(Node):
     def assertions(self, node_columns):
         input_port = self.get_port(True, "Dataset")
         output_port = self.get_port(False, "Decoded Dataset")
-
         input_ds = Dataset(input_port.port_id)
         output_ds = Dataset(output_port.port_id)
-
+        print(input_port.label_encoded)
         for col_name, col_type in input_port.columns.items():
             if col_name == self.encoded_column:
                 output_port.columns[self.original_column] = input_port.label_encoded[self.encoded_column][1]
             else:
                 output_port.columns[col_name] = col_type
 
-        print(input_port.label_encoded)
-        this_node_columns = {}
+        encoded_columns = {}
         for key, value in input_port.label_encoded.items():
-            this_node_columns[key] = value[0]
-        node_columns[self.node_id] = this_node_columns
+            encoded_columns[key] = value[0]
+        node_columns[self.node_id] = encoded_columns
 
         z3_duplicate_column = Bool(DUPLICATE_COLUMN.format(column_name=self.original_column))
         # z3_nonexistent_column = Bool(NONEXISTENT_COLUMN.format(column_name=self.encoded_column))
-        duplicate_column = True
 
         assert_existent_column = []
         if len(input_port.columns) > 0:
-            output_port.label_encoded = input_port.label_encoded
+            output_port.label_encoded = input_port.label_encoded.copy()
             if self.encoded_column in output_port.label_encoded:
                 del output_port.label_encoded[self.encoded_column]
 
@@ -81,6 +78,7 @@ class LabelDecoding(Node):
             if len(input_port.label_encoded) == 0:
                 z3_num_encoded_cols = Int(NODE_PROP.format(name="num_encoded_cols", node_id=self.node_id))
                 encoded_cols = len(input_port.label_encoded)
+                print(input_port.label_encoded)
                 assert_existent_column.append(z3_num_encoded_cols == encoded_cols)
                 assert_existent_column.append(z3_num_encoded_cols > 0)
 
