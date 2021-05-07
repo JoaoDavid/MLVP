@@ -21,11 +21,17 @@
 }
 
 .ChildrenDiv {
-    padding-top: 10px;
-    padding-left: 15px;
+    padding-top: 5px;
+    padding-left: 10px;
     width: 100%;
-    line-height: 20%;
     font-weight: bold;
     font-size: small;
     font-family: Helvetica;
+    overflow: hidden;
+    word-wrap:break-word;
+}
+
+.ChildrenDiv p {
+    line-height: 11px;   /* within paragraph */
+    margin-bottom: 7px; /* between paragraphs */
 }
