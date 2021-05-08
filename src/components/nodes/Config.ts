@@ -17,6 +17,7 @@ import {RANDOM_FOREST_REGRESSOR} from "./regression/random-forest-regressor/Rand
 import {LABEL_ENCODING} from "./data-transformation/label-encoding/LabelEncodingModel";
 import {LABEL_DECODING} from "./data-transformation/label-decoding/LabelDecodingModel";
 import {ONE_HOT_ENCODING} from "./data-transformation/one-hot-encoding/OneHotEncodingModel";
+import {ONE_HOT_DECODING} from "./data-transformation/one-hot-decoding/OneHotDecodingModel";
 
 /*
 Every node type must be added to the nodes array
@@ -41,7 +42,7 @@ export const DATA_SOURCE_CONFIG: CategoryConfig = {
 export const DATA_TRANSFORMATION_CONFIG: CategoryConfig = {
     category: 'Data Transformation',
     color: 'rgb(27,97,72)',
-    nodes: [PCA, FEATURE_ENGINEERING, TEMPORAL_AGGREGATION, LABEL_ENCODING, LABEL_DECODING, ONE_HOT_ENCODING],
+    nodes: [PCA, FEATURE_ENGINEERING, TEMPORAL_AGGREGATION, LABEL_ENCODING, LABEL_DECODING, ONE_HOT_ENCODING, ONE_HOT_DECODING],
 }
 
 export const DATA_BALANCING_CONFIG: CategoryConfig = {
