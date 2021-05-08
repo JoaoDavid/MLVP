@@ -31,6 +31,7 @@ class VisualizeDataset(Node):
     def assertions(self, node_columns):
         input_port = self.get_port(True, "Dataset")
         input_ds = Dataset(input_port.port_id)
+        self.data_flow(node_columns)
 
         return [
 
