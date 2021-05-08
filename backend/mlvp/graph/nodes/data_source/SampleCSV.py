@@ -37,13 +37,17 @@ class SampleCSV(Node):
         out_file.write(X.format(x=x, df=df, target=self.target))
         out_file.write(Y.format(y=y, df=df, target=self.target))
 
-    def assertions(self, node_columns):
+    def data_flow(self, node_columns):
         output_port = self.get_port(False, "Dataset")
-        output = Dataset(output_port.port_id)
 
         # set the columns dict for the output port
         for col in self.columns:
             output_port.columns[col['name']] = col['type']
+
+    def assertions(self, node_columns):
+        output_port = self.get_port(False, "Dataset")
+        output = Dataset(output_port.port_id)
+        self.data_flow(node_columns)
 
         z3_unique_col_names = Bool(NODE_PROP.format(name="unique_col_names", node_id=self.node_id))
         unique_col_names = len(self.columns) == len(output_port.columns)

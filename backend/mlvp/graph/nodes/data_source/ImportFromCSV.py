@@ -37,13 +37,17 @@ class ImportFromCSV(Node):
         out_file.write(X.format(x=x, df=df, target=self.target))
         out_file.write(Y.format(y=y, df=df, target=self.target))
 
-    def assertions(self, node_columns):
+    def data_flow(self, node_columns):
         output_port = self.get_port(False, "Dataset")
-        output = Dataset(output_port.port_id)
 
         # set the columns dict for the output port
         for col in self.columns:
             output_port.columns[col['name']] = col['type']
+
+    def assertions(self, node_columns):
+        output_port = self.get_port(False, "Dataset")
+        output = Dataset(output_port.port_id)
+        self.data_flow(node_columns)
 
         z3_unique_col_names = Bool(NODE_PROP.format(name="unique_col_names", node_id=self.node_id))
         unique_col_names = len(self.columns) == len(output_port.columns)
@@ -53,8 +57,6 @@ class ImportFromCSV(Node):
         column_types = [get_col_type(col['type']) for col in self.columns]
 
         for i in range(len(self.columns)):
-            # col_assertions.append(column(output.dataset, column_names[i]) == column_index(output.dataset, i))
-            # col_assertions.append(get_col_name(output.dataset, i) == column_names[i])
             col_assertions.append(column(output.dataset, column_names[i]) == column_types[i])
 
         # print(col_assertions)
@@ -86,4 +88,3 @@ class ImportFromCSV(Node):
                    z3_unique_col_names == unique_col_names,
                    z3_unique_col_names,
                ] + col_assertions
-               # ] + label_counts_assertions + labels_values + col_assertions

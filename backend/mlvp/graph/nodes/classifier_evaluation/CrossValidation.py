@@ -28,9 +28,12 @@ class CrossValidation(Node):
         out_file.write(CROSS_VAL_SCORE_CALL.format(score=score, model=model_var, x=x, y=y, cv=self.number_folds))
         out_file.write("print(" + score + ")\n")
 
+    def data_flow(self, node_columns):
+        pass
+
     def assertions(self, node_columns):
-        id_input_ds = self.get_port(True, "Dataset").port_id
-        input_ds = Dataset(id_input_ds)
+        input_ds_port = self.get_port(True, "Dataset")
+        input_ds = Dataset(input_ds_port.port_id)
 
         z3_n_folds = Int(NODE_PROP.format(name="n_folds", node_id=self.node_id))
 

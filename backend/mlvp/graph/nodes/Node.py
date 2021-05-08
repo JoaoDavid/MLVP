@@ -49,6 +49,17 @@ class Node(ABC):
     def codegen(self, emitter, out_file):
         pass
 
+    # Operates over the columns coming through the input port/s
+    # and sends the result to the output port/s
+    # based on the node's operations written in the codegen method
+    #
+    # The columns that must sent to the front-end should be added
+    # to the node_columns dict, for instance, for the data scientist
+    # to be able to select which column to chose for label encoding
+    @abstractmethod
+    def data_flow(self, node_columns):
+        pass
+
     # When creating node property assertions with Z3,
     # first assert that the z3 variable is equal to the received as parameter
     # then use the received as parameter to assert whatever you want about it
@@ -58,7 +69,6 @@ class Node(ABC):
     # then the assertions
     # z3_n_trees == n_trees,
     # z3_n_trees > 0,
-
     @abstractmethod
     def assertions(self, node_columns):
         pass

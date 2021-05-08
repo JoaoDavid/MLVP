@@ -43,11 +43,9 @@ class LabelEncoding(Node):
         emitter.set(out_ds, (x, y))
         emitter.set(self.encoded_column, le)
 
-    def assertions(self, node_columns):
+    def data_flow(self, node_columns):
         input_port = self.get_port(True, "Dataset")
         output_port = self.get_port(False, "Encoded Dataset")
-        input_ds = Dataset(input_port.port_id)
-        output_ds = Dataset(output_port.port_id)
 
         encodable_columns = {}
         for col_name, col_type in input_port.columns.items():
@@ -61,15 +59,28 @@ class LabelEncoding(Node):
             else:
                 output_port.columns[col_name] = col_type
 
-        z3_duplicate_column = Bool(DUPLICATE_COLUMN.format(column_name=self.encoded_column))
-        # z3_nonexistent_column = Bool(NONEXISTENT_COLUMN.format(column_name=self.original_column))
-
-        assert_existent_column = []
         if len(input_port.columns) > 0:
             output_port.encoded_columns = input_port.encoded_columns.copy()
             if self.original_column in input_port.columns:
                 output_port.encoded_columns[self.encoded_column] = (self.original_column, input_port.columns[self.original_column])
 
+    def assertions(self, node_columns):
+        input_port = self.get_port(True, "Dataset")
+        output_port = self.get_port(False, "Encoded Dataset")
+        input_ds = Dataset(input_port.port_id)
+        output_ds = Dataset(output_port.port_id)
+        self.data_flow(node_columns)
+
+        z3_duplicate_column = Bool(DUPLICATE_COLUMN.format(column_name=self.encoded_column))
+        # z3_nonexistent_column = Bool(NONEXISTENT_COLUMN.format(column_name=self.original_column))
+
+        num_encodable_columns = 0
+        for col_type in input_port.columns.values():
+            if col_type == "int" or col_type == "string":
+                num_encodable_columns += 1
+
+        assert_existent_column = []
+        if len(input_port.columns) > 0:
             duplicate_column = self.encoded_column not in input_port.columns
             nonexistent_column = self.original_column in input_port.columns
             assert_existent_column = [
@@ -79,13 +90,11 @@ class LabelEncoding(Node):
                 z3_duplicate_column,
                 column(input_ds.dataset, String(self.encoded_column)) == get_col_type("int"),
             ]
-            if len(encodable_columns) == 0:
+            if num_encodable_columns == 0:
                 z3_num_encodable_cols = Int(NODE_PROP.format(name="num_encodable_cols", node_id=self.node_id))
-                num_encodable_cols = len(encodable_columns)
-                assert_existent_column.append(z3_num_encodable_cols == num_encodable_cols)
+                assert_existent_column.append(z3_num_encodable_cols == num_encodable_columns)
                 assert_existent_column.append(z3_num_encodable_cols > 0)
-        print(output_port.encoded_columns)
-        print(output_port.columns)
+
         return [
             output_ds.cols == input_ds.cols,
             output_ds.rows == input_ds.rows,

@@ -29,9 +29,13 @@ class RandomForestRegressor(Node):
                                                  max_depth=self.max_depth))
         out_file.write(MODEL_FIT.format(var=clf_var, x=x, y=y))
 
+    def data_flow(self, node_columns):
+        pass
+
     def assertions(self, node_columns):
         input_port = self.get_port(True, "Dataset")
         input_ds = Dataset(input_port.port_id)
+
         z3_n_trees = Int(NODE_PROP.format(name="n_trees", node_id=self.node_id))
         z3_max_depth = Int(NODE_PROP.format(name="max_depth", node_id=self.node_id))
         max_depth = -1 if self.max_depth == "None" else self.max_depth

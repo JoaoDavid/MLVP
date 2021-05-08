@@ -24,10 +24,14 @@ class VisualizeDataset(Node):
         out_file.write(CONCATENATE.format(df=df, x=x, y=y))
         out_file.write(PRINT.format(df=df))
 
+    def data_flow(self, node_columns):
+        input_port = self.get_port(True, "Dataset")
+        node_columns[self.node_id] = input_port.columns
+
     def assertions(self, node_columns):
         input_port = self.get_port(True, "Dataset")
         input_ds = Dataset(input_port.port_id)
-        node_columns[self.node_id] = input_port.columns
+
         return [
 
         ]

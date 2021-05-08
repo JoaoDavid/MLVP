@@ -36,8 +36,6 @@ class ValidatorAST:
             except Exception as ex:
                 print(ex)
 
-        return self.assertions
-
     def __expression_type(self, expr):
         correct_operands = False
         if isinstance(expr, BinaryExpression):

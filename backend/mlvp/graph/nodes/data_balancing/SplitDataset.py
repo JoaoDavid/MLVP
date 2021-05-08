@@ -33,17 +33,21 @@ class SplitDataset(Node):
         emitter.set(out_train_ds, (x_train, y_train))
         emitter.set(out_test_ds, (x_test, y_test))
 
+    def data_flow(self, node_columns):
+        input_port = self.get_port(True, "Dataset")
+        output_train_port = self.get_port(False, "Train Dataset")
+        output_test_port = self.get_port(False, "Test Dataset")
+        output_train_port.columns = input_port.columns
+        output_test_port.columns = input_port.columns
+
     def assertions(self, node_columns):
         input_port = self.get_port(True, "Dataset")
         output_train_port = self.get_port(False, "Train Dataset")
         output_test_port = self.get_port(False, "Test Dataset")
-
-        output_train_port.columns = input_port.columns
-        output_test_port.columns = input_port.columns
-
         input_ds = Dataset(input_port.port_id)
         train_ds = Dataset(output_train_port.port_id)
         test_ds = Dataset(output_test_port.port_id)
+        self.data_flow(node_columns)
 
         shuffle_input = Bool(PORT_PROP.format(id_port=input_port.port_id, name="shuffled"))
         shuffle_train = Bool(PORT_PROP.format(id_port=output_train_port.port_id, name="shuffled"))

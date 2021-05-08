@@ -41,13 +41,9 @@ class TemporalAggregation(Node):
         out_ds = self.get_port(False, "Engineered Dataset")
         emitter.set(out_ds, (x, y))
 
-    def assertions(self, node_columns):
+    def data_flow(self, node_columns):
         input_port = self.get_port(True, "Dataset")
         output_port = self.get_port(False, "Engineered Dataset")
-        # output_port.columns = input_port.columns.copy()
-
-        input_ds = Dataset(input_port.port_id)
-        output_ds = Dataset(output_port.port_id)
 
         this_node_columns = {}
         i = 0
@@ -59,6 +55,13 @@ class TemporalAggregation(Node):
             if col_type == "int" or col_type == "float":
                 this_node_columns[col_name] = col_type
         node_columns[self.node_id] = this_node_columns
+
+    def assertions(self, node_columns):
+        input_port = self.get_port(True, "Dataset")
+        output_port = self.get_port(False, "Engineered Dataset")
+        input_ds = Dataset(input_port.port_id)
+        output_ds = Dataset(output_port.port_id)
+        self.data_flow(node_columns)
 
         z3_len_new_col = Int(NODE_PROP.format(name="len_new_column_name", node_id=self.node_id))
         z3_duplicate_column = Bool(DUPLICATE_COLUMN.format(column_name=self.new_col_name))

@@ -17,6 +17,7 @@ class FeatureEngineering(Node):
         super().__init__(data)
         self.lines = data['lines']
         self.ast, self.error_msg = build_ast(self.lines)
+        self.ast_validator = None
 
     def import_dependency(self):
         return IMPORT_AS.format(lib_name="pandas", lib_var=PANDAS_VAR)
@@ -41,26 +42,31 @@ class FeatureEngineering(Node):
         out_ds = self.get_port(False, "Engineered Dataset")
         emitter.set(out_ds, (x, y))
 
-    def assertions(self, node_columns):
+    def data_flow(self, node_columns):
         input_port = self.get_port(True, "Dataset")
         output_port = self.get_port(False, "Engineered Dataset")
-        output_port.columns = input_port.columns.copy()
-
         input_ds = Dataset(input_port.port_id)
-        output_ds = Dataset(output_port.port_id)
+        output_port.columns = input_port.columns
 
-        col_assertions = []
         if self.all_input_ports_linked():
-            ast_validator = ValidatorAST(self.ast, input_ds.dataset, output_port.columns)
+            self.ast_validator = ValidatorAST(self.ast, input_ds.dataset, output_port.columns)
             if self.ast is not None:
-                col_assertions = ast_validator.validate_ast()
+                self.ast_validator.validate_ast()
 
         if len(input_port.columns) > 0:
             last = list(input_port.columns.items())[-1]
             del output_port.columns[last[0]]
             output_port.columns[last[0]] = last[1]
 
-        z3_has_errors = Bool(NODE_PROP.format(name="has_errors", node_id=self.node_id))
+    def assertions(self, node_columns):
+        input_port = self.get_port(True, "Dataset")
+        output_port = self.get_port(False, "Engineered Dataset")
+        input_ds = Dataset(input_port.port_id)
+        output_ds = Dataset(output_port.port_id)
+        self.data_flow(node_columns)
+
+        z3_has_errors = Bool(NODE_PROP.format(name="has_no_errors", node_id=self.node_id))
+        ast_assertions = self.ast_validator.assertions if self.ast_validator is not None else []
 
         return [
             input_ds.cols + len(output_port.columns) == output_ds.cols,  # TODO, depends on the number of columns added
@@ -73,4 +79,4 @@ class FeatureEngineering(Node):
             input_ds.dataset == output_ds.dataset,
             z3_has_errors == (len(self.error_msg) == 0),
             z3_has_errors,
-        ] + col_assertions
+        ] + ast_assertions
