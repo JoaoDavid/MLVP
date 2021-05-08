@@ -7,3 +7,4 @@ class DatasetPort(PortType):
         super().__init__(data)
         self.columns = {}
         self.encoded_columns = {}
+        self.categories = {}
