@@ -23,13 +23,18 @@ class TemplateCodeName(Node):
         parent_port = self.parent_links[0].source_port
         # TODO
 
-    def assertions(self, node_columns):
+    def data_flow(self, node_columns):
         input_port = self.get_port(True, "Dataset")
         output_port = self.get_port(False, "Engineered Dataset")
         output_port.columns = input_port.columns
+        # TODO
 
+    def assertions(self, node_columns):
+        input_port = self.get_port(True, "Dataset")
+        output_port = self.get_port(False, "Engineered Dataset")
         input_ds = Dataset(input_port.port_id)
         output_ds = Dataset(output_port.port_id)
+        self.data_flow(node_columns)
 
         # TODO
 
