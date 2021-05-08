@@ -48,12 +48,12 @@ class LabelDecoding(Node):
 
         for col_name, col_type in input_port.columns.items():
             if col_name == self.encoded_column:
-                output_port.columns[self.original_column] = input_port.label_encoded[self.encoded_column][1]
+                output_port.columns[self.original_column] = input_port.encoded_columns[self.encoded_column][1]
             else:
                 output_port.columns[col_name] = col_type
 
         encoded_columns = {}
-        for key, value in input_port.label_encoded.items():
+        for key, value in input_port.encoded_columns.items():
             encoded_columns[key] = value[0]
         node_columns[self.node_id] = encoded_columns
 
@@ -62,12 +62,12 @@ class LabelDecoding(Node):
 
         assert_existent_column = []
         if len(input_port.columns) > 0:
-            # self.original_column = input_port.label_encoded[self.encoded_column][0]
+            # self.original_column = input_port.encoded_columns[self.encoded_column][0]
             # print(self.original_column)
 
-            output_port.label_encoded = input_port.label_encoded.copy()
-            if self.encoded_column in output_port.label_encoded:
-                del output_port.label_encoded[self.encoded_column]
+            output_port.encoded_columns = input_port.encoded_columns.copy()
+            if self.encoded_column in output_port.encoded_columns:
+                del output_port.encoded_columns[self.encoded_column]
 
             duplicate_column = self.original_column not in input_port.columns
             nonexistent_column = self.encoded_column in input_port.columns
@@ -78,10 +78,10 @@ class LabelDecoding(Node):
                 z3_duplicate_column,
                 column(input_ds.dataset, String(self.encoded_column)) == get_col_type("int"),
             ]
-            if len(input_port.label_encoded) == 0:
+            if len(input_port.encoded_columns) == 0:
                 z3_num_encoded_cols = Int(NODE_PROP.format(name="num_encoded_cols", node_id=self.node_id))
-                encoded_cols = len(input_port.label_encoded)
-                print(input_port.label_encoded)
+                encoded_cols = len(input_port.encoded_columns)
+                print(input_port.encoded_columns)
                 assert_existent_column.append(z3_num_encoded_cols == encoded_cols)
                 assert_existent_column.append(z3_num_encoded_cols > 0)
 
