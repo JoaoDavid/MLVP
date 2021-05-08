@@ -19,6 +19,7 @@ import {RegressorPortFactory} from "../components/ports/model/RegressorPortFacto
 import {EvaluateRegressorFactory} from "../components/nodes/regressor-evaluation/evaluate-regressor/EvaluateRegressorFactory";
 import {LabelEncodingFactory} from "../components/nodes/data-transformation/label-encoding/LabelEncodingFactory";
 import {LabelDecodingFactory} from "../components/nodes/data-transformation/label-decoding/LabelDecodingFactory";
+import {OneHotEncodingFactory} from "../components/nodes/data-transformation/one-hot-encoding/OneHotEncodingFactory";
 
 
 export class FactoriesManager {
@@ -47,6 +48,7 @@ export class FactoriesManager {
         this.engine.getNodeFactories().registerFactory(EvaluateRegressorFactory.getInstance());
         this.engine.getNodeFactories().registerFactory(LabelEncodingFactory.getInstance());
         this.engine.getNodeFactories().registerFactory(LabelDecodingFactory.getInstance());
+        this.engine.getNodeFactories().registerFactory(OneHotEncodingFactory.getInstance());
     }
 
     registerPortFactories = () => {
