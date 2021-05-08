@@ -15,7 +15,7 @@ class PCA(Node):
         self.random_state = data['randomState']
         self.num_components = data['numComponents']
         # TODO receber do front-end os nomes das novas colunas
-        self.column_names = ['col' + str(i) for i in range(self.num_components)]
+        self.column_names = ['V' + str(i) for i in range(1, self.num_components + 1)]
 
     def import_dependency(self):
         return FROM_IMPORT.format(package="sklearn.decomposition", class_to_import="PCA")
@@ -39,8 +39,8 @@ class PCA(Node):
         output_port = self.get_port(False, "Reduced Dataset")
 
         this_node_columns = {}
-        for i in range(1, self.num_components + 1):
-            this_node_columns["V" + str(i)] = "float"
+        for column_name in self.column_names:
+            this_node_columns[column_name] = "float"
 
         if len(input_port.columns) > 0:
             last = list(input_port.columns.items())[-1]
@@ -59,6 +59,10 @@ class PCA(Node):
         z3_n_components = Int(NODE_PROP.format(name="n_components", node_id=self.node_id))
         features_assertions = no_features_of_type(input_port, "string", input_ds.dataset)
 
+        new_columns_assertions = []
+        for column_name in self.column_names:
+            new_columns_assertions.append(column(output_ds.dataset, String(column_name)) == get_col_type("float"))
+
         return [
             # requires
             z3_n_components == self.num_components,
@@ -71,4 +75,4 @@ class PCA(Node):
             output_ds.max_label_count == input_ds.max_label_count,
             output_ds.min_label_count == input_ds.min_label_count,
             input_ds.balanced == output_ds.balanced,
-        ] + features_assertions
+        ] + features_assertions + new_columns_assertions
