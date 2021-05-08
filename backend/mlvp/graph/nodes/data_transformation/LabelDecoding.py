@@ -45,7 +45,7 @@ class LabelDecoding(Node):
         output_port = self.get_port(False, "Decoded Dataset")
         input_ds = Dataset(input_port.port_id)
         output_ds = Dataset(output_port.port_id)
-        print(input_port.label_encoded)
+
         for col_name, col_type in input_port.columns.items():
             if col_name == self.encoded_column:
                 output_port.columns[self.original_column] = input_port.label_encoded[self.encoded_column][1]
@@ -62,6 +62,9 @@ class LabelDecoding(Node):
 
         assert_existent_column = []
         if len(input_port.columns) > 0:
+            # self.original_column = input_port.label_encoded[self.encoded_column][0]
+            # print(self.original_column)
+
             output_port.label_encoded = input_port.label_encoded.copy()
             if self.encoded_column in output_port.label_encoded:
                 del output_port.label_encoded[self.encoded_column]
