@@ -11,6 +11,7 @@ export class Column {
     private readonly name: string;
     private type: ColumnType = ColumnType.UNKNOWN;
     private nullCounter: number = 0;
+    private categories = new Set();
 
     constructor(name: string) {
         this.name = name;
@@ -35,6 +36,19 @@ export class Column {
             this.type = this.type === ColumnType.STRING ? ColumnType.STRING : ColumnType.MIXED;
         } else {
             this.type = ColumnType.MIXED;
+        }
+        this.updateCategories(value);
+    }
+
+    updateCategories = (value: string) => {
+        if (this.type === ColumnType.STRING ) {
+            this.categories.add(value);
+        }
+    }
+
+    cleanCategories = () => {
+        if (this.type !== ColumnType.STRING ) {
+            this.categories.clear();
         }
     }
 
@@ -90,6 +104,19 @@ export class Column {
 
     getNullCounter = () => {
         return this.nullCounter;
+    }
+
+    getCategories = () => {
+        return Array.from(this.categories.values());
+    }
+
+    serialize(): any {
+        return {
+            name: this.name,
+            type: this.type,
+            nullCounter: this.nullCounter,
+            categories: this.getCategories(),
+        };
     }
 
 
