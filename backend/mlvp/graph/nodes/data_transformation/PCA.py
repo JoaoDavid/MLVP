@@ -62,6 +62,11 @@ class PCA(Node):
         new_columns_assertions = []
         for column_name in self.column_names:
             new_columns_assertions.append(column(output_ds.dataset, String(column_name)) == get_col_type("float"))
+            # z3_unique_column = Bool(PORT_PROP.format(id_port=output_port.port_id, name="column_"+column_name+"_is_unique"))
+            # unique_column = column_name not in input_port.columns
+            # new_columns_assertions.append(column_unique(output_ds.dataset, String(column_name)) == z3_unique_column)
+            # new_columns_assertions.append(z3_unique_column == unique_column)
+            # new_columns_assertions.append(z3_unique_column)
 
         return [
             # requires

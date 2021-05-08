@@ -3,6 +3,7 @@ from z3 import *
 
 SEP = ";"
 NODE_PROP = "node;{name};{node_id}"
+PORT_PROP = "{id_port};{name}"
 
 IMPORT_AS = "import {lib_name} as {lib_var}\n"
 FROM_IMPORT = "from {package} import {class_to_import}\n"
