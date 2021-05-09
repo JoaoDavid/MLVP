@@ -46,6 +46,8 @@ class FeatureEngineering(Node):
         input_port = self.get_port(True, "Dataset")
         output_port = self.get_port(False, "Engineered Dataset")
         input_ds = Dataset(input_port.port_id)
+        output_port.categories = input_port.categories
+        output_port.encoded_columns = input_port.encoded_columns
         output_port.columns = input_port.columns
 
         if self.all_input_ports_linked():

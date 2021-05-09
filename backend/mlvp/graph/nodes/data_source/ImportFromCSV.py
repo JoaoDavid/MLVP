@@ -46,7 +46,6 @@ class ImportFromCSV(Node):
             categories = col['categories']
             if len(categories) > 0:
                 output_port.categories[col['name']] = categories
-                print(categories)
 
     def assertions(self, node_columns):
         output_port = self.get_port(False, "Dataset")

@@ -54,7 +54,7 @@ class OneHotDecoding(Node):
 
         for col_name, tuple_encoded in input_port.encoded_columns.items():
             if tuple_encoded[0] == "one-hot-encoded":
-                self.decodable_columns [col_name] = tuple_encoded[2]
+                self.decodable_columns[col_name] = tuple_encoded[2]
         node_columns[self.node_id] = self.decodable_columns
 
         if self.encoded_column in input_port.encoded_columns:

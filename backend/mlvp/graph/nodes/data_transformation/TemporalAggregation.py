@@ -44,6 +44,8 @@ class TemporalAggregation(Node):
     def data_flow(self, node_columns):
         input_port = self.get_port(True, "Dataset")
         output_port = self.get_port(False, "Engineered Dataset")
+        output_port.categories = input_port.categories
+        output_port.encoded_columns = input_port.encoded_columns
 
         this_node_columns = {}
         i = 0
