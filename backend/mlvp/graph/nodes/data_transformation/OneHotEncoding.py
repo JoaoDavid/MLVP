@@ -70,7 +70,7 @@ class OneHotEncoding(Node):
                 output_port.columns[col_name] = col_type
 
         if self.original_column in output_port.categories:
-            output_port.encoded_columns[self.original_column] = input_port.categories[self.original_column]
+            output_port.encoded_columns[self.original_column] = ("one-hot-encoded", input_port.categories[self.original_column])
 
     def assertions(self, node_columns):
         input_port = self.get_port(True, "Dataset")
