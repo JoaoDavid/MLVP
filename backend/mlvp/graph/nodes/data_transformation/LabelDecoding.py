@@ -43,22 +43,23 @@ class LabelDecoding(Node):
     def data_flow(self, node_columns):
         input_port = self.get_port(True, "Dataset")
         output_port = self.get_port(False, "Decoded Dataset")
+        output_port.categories = input_port.categories.copy()
+        output_port.encoded_columns = input_port.encoded_columns.copy()
+
+        decodable_columns = {}
+        for col_name, tuple_encoded in input_port.encoded_columns.items():
+            if tuple_encoded[0] == "label-encoded":
+                decodable_columns[col_name] = tuple_encoded[2]
+        node_columns[self.node_id] = decodable_columns
+
+        if self.encoded_column in input_port.encoded_columns:
+            del output_port.encoded_columns[self.encoded_column]
 
         for col_name, col_type in input_port.columns.items():
             if col_name == self.encoded_column:
                 output_port.columns[self.original_column] = input_port.encoded_columns[self.encoded_column][1]
             else:
                 output_port.columns[col_name] = col_type
-
-        encoded_columns = {}
-        for key, value in input_port.encoded_columns.items():
-            encoded_columns[key] = value[0]
-        node_columns[self.node_id] = encoded_columns
-
-        if len(input_port.columns) > 0:
-            output_port.encoded_columns = input_port.encoded_columns.copy()
-            if self.encoded_column in output_port.encoded_columns:
-                del output_port.encoded_columns[self.encoded_column]
 
     def assertions(self, node_columns):
         input_port = self.get_port(True, "Dataset")

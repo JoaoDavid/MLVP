@@ -55,9 +55,15 @@ class OneHotEncoding(Node):
         output_port.categories = input_port.categories.copy()
         output_port.encoded_columns = input_port.encoded_columns.copy()
 
+        # get all columns originated by an encoding
+        encoded_columns = []
+        for col_name, tuple_encoded in input_port.encoded_columns.items():
+            encoded_columns += tuple_encoded[2]
+            encoded_columns.append(col_name)
+
         encodable_columns = {}
         for col_name, col_type in input_port.columns.items():
-            if col_type == "string" and col_name not in input_port.encoded_columns:
+            if col_type == "string" and col_name not in encoded_columns:
                 encodable_columns[col_name] = col_type
         node_columns[self.node_id] = encodable_columns
 
@@ -70,7 +76,7 @@ class OneHotEncoding(Node):
                 output_port.columns[col_name] = col_type
 
         if self.original_column in output_port.categories:
-            output_port.encoded_columns[self.original_column] = ("one-hot-encoded", input_port.categories[self.original_column])
+            output_port.encoded_columns[self.original_column] = ("one-hot-encoded", "string", input_port.categories[self.original_column])
 
     def assertions(self, node_columns):
         input_port = self.get_port(True, "Dataset")
