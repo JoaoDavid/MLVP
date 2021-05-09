@@ -12,13 +12,15 @@ FINAL_CONCATENATE = "{df_final} = pd.concat([{df_left}, {dummies}, {df_right}], 
 X = "{x} = {df_final}.drop({old_y}.name, axis=1)\n"
 Y = "{y} = {df_final}[{old_y}.name]\n"
 
+DUPLICATE_COLUMN = "column \"{column_name}\" is unique on the dataset"
+
 
 class OneHotEncoding(Node):
 
     def __init__(self, data):
         super().__init__(data)
         self.original_column = data['originalColumn']
-        # TODO
+        self.encodable_columns = {}
 
     def import_dependency(self):
         return IMPORT_AS.format(lib_name="numpy", lib_var="np")
@@ -61,11 +63,10 @@ class OneHotEncoding(Node):
             encoded_columns += tuple_encoded[2]
             encoded_columns.append(col_name)
 
-        encodable_columns = {}
         for col_name, col_type in input_port.columns.items():
             if col_type == "string" and col_name not in encoded_columns:
-                encodable_columns[col_name] = col_type
-        node_columns[self.node_id] = encodable_columns
+                self.encodable_columns[col_name] = col_type
+        node_columns[self.node_id] = self.encodable_columns
 
         for col_name, col_type in input_port.columns.items():
             if col_name == self.original_column:
@@ -85,8 +86,31 @@ class OneHotEncoding(Node):
         output_ds = Dataset(output_port.port_id)
         self.data_flow(node_columns)
 
-        # TODO
+        aux_assertions = []
+        if len(input_port.columns) > 0:
+            categories = []
+            if self.original_column in output_port.encoded_columns:
+                categories = input_port.categories[self.original_column]
+            for category in categories:
+                aux_assertions.append(column(input_ds.dataset, String(category)) == get_col_type("int"))
+                if category in input_port.columns:
+                    z3_duplicate_column = Bool(DUPLICATE_COLUMN.format(column_name=category))
+                    aux_assertions.append(z3_duplicate_column == (category not in input_port.columns))
+                    aux_assertions.append(z3_duplicate_column)
+
+            if len(self.encodable_columns) == 0:
+                z3_num_encoded_cols = Int(NODE_PROP.format(name="num_encoded_cols", node_id=self.node_id))
+                encoded_cols = len(input_port.encoded_columns)
+                aux_assertions.append(z3_num_encoded_cols == encoded_cols)
+                aux_assertions.append(z3_num_encoded_cols > 0)
 
         return [
-            # TODO
-        ]
+            output_ds.cols == len(output_port.columns),
+            output_ds.rows == input_ds.rows,
+            output_ds.n_labels == input_ds.n_labels,
+            output_ds.max_label_count == input_ds.max_label_count,
+            output_ds.min_label_count == input_ds.min_label_count,
+            output_ds.balanced == input_ds.balanced,
+            output_ds.time_series == input_ds.time_series,
+            output_ds.dataset == input_ds.dataset,
+        ] + aux_assertions

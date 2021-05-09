@@ -19,6 +19,7 @@ class LabelEncoding(Node):
         super().__init__(data)
         self.original_column = data['originalColumn']
         self.encoded_column = self.original_column + "_encoded"
+        self.encodable_columns = {}
 
     def import_dependency(self):
         return FROM_IMPORT.format(package="sklearn.preprocessing", class_to_import="LabelEncoder")
@@ -55,11 +56,10 @@ class LabelEncoding(Node):
             encoded_columns += tuple_encoded[2]
             encoded_columns.append(col_name)
 
-        encodable_columns = {}
         for col_name, col_type in input_port.columns.items():
             if (col_type == "int" or col_type == "string") and col_name not in encoded_columns:
-                encodable_columns[col_name] = col_type
-        node_columns[self.node_id] = encodable_columns
+                self.encodable_columns[col_name] = col_type
+        node_columns[self.node_id] = self.encodable_columns
 
         for col_name, col_type in input_port.columns.items():
             if col_name == self.original_column:
@@ -80,26 +80,21 @@ class LabelEncoding(Node):
         z3_duplicate_column = Bool(DUPLICATE_COLUMN.format(column_name=self.encoded_column))
         # z3_nonexistent_column = Bool(NONEXISTENT_COLUMN.format(column_name=self.original_column))
 
-        num_encodable_columns = 0
-        for col_type in input_port.columns.values():
-            if col_type == "int" or col_type == "string":
-                num_encodable_columns += 1
-
-        assert_existent_column = []
+        aux_assertions = []
         if len(input_port.columns) > 0:
             duplicate_column = self.encoded_column not in input_port.columns
             nonexistent_column = self.original_column in input_port.columns
-            assert_existent_column = [
+            aux_assertions = [
                 # z3_nonexistent_column == nonexistent_column,
                 # z3_nonexistent_column,
                 z3_duplicate_column == duplicate_column,
                 z3_duplicate_column,
                 column(input_ds.dataset, String(self.encoded_column)) == get_col_type("int"),
             ]
-            if num_encodable_columns == 0:
+            if len(self.encodable_columns) == 0:
                 z3_num_encodable_cols = Int(NODE_PROP.format(name="num_encodable_cols", node_id=self.node_id))
-                assert_existent_column.append(z3_num_encodable_cols == num_encodable_columns)
-                assert_existent_column.append(z3_num_encodable_cols > 0)
+                aux_assertions.append(z3_num_encodable_cols == len(self.encodable_columns))
+                aux_assertions.append(z3_num_encodable_cols > 0)
 
         return [
             output_ds.cols == input_ds.cols,
@@ -110,4 +105,4 @@ class LabelEncoding(Node):
             output_ds.balanced == input_ds.balanced,
             output_ds.time_series == input_ds.time_series,
             output_ds.dataset == input_ds.dataset,
-        ] + assert_existent_column
+        ] + aux_assertions
