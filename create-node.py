@@ -38,7 +38,7 @@ def main():
     print("code_name: " + code_name)
     print("node_config_var: " + node_config_var)
 
-    template_directory = './node-creator'
+    template_directory = './node-creator/' + sys.argv[3]
     category_ts = category.lower().replace("_", "-")
     node_folder_ts = node_config_var.lower().replace("_", "-")
     output_directory_ts = "./src/components/nodes/" + category_ts + "/" + node_folder_ts
