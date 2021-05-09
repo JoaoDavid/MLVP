@@ -2,10 +2,13 @@ from mlvp.codegen import *
 from mlvp.graph.nodes.Node import *
 from mlvp.typecheck import *
 
-# SAMPLER_INIT = "{var} = {sampler}(random_state={random_state})\n"
-# FIT_RESAMPLE = "{x_res}, {y_res} = {var}.fit_resample({x}, {y})\n"
-# TODO
-# RANDOM_OVERSAMPLER = "RandomOverSampler"
+CONCATENATE = "{df} = pd.concat([{old_x},{old_y}], join = 'outer', axis = 1)\n"
+DECODED = "{decoded} = pd.Series({dummies}.columns[np.where({dummies}!=0)[1]])\n"
+INDEX = "{index} = {df}.columns.get_loc(\'{category}\')\n"
+INSERT = "{df}.insert(loc={index}, column=\'{encoded_column}\', value={decoded})\n"
+DROP = "{df} = {df}.drop(columns={categories})\n"
+X = "{x} = {df}.drop({old_y}.name, axis=1)\n"
+Y = "{y} = {df}[{old_y}.name]\n"
 
 
 class OneHotDecoding(Node):
@@ -13,24 +16,48 @@ class OneHotDecoding(Node):
     def __init__(self, data):
         super().__init__(data)
         self.encoded_column = data['encodedColumn']
-        # TODO
+        self.categories = []
 
     def import_dependency(self):
-        # TODO
-        return FROM_IMPORT.format(package="numpy", class_to_import="np")
+        return IMPORT_AS.format(lib_name="numpy", lib_var="np")
 
     def codegen(self, emitter: Emitter, out_file):
         curr_count = emitter.get_count()
         parent_port = self.parent_links[0].source_port
         old_x, old_y = emitter.get(parent_port)
         dummies = emitter.get(self.encoded_column)
-        # TODO
+        decoded = "decoded" + str(curr_count)
+        index = "index" + str(curr_count)
+        df = "df" + str(curr_count)
+        x = "x" + str(curr_count)
+        y = "y" + str(curr_count)
+        print(self.categories)
+        out_file.write(CONCATENATE.format(df=df, old_x=old_x, old_y=old_y))
+        out_file.write(DECODED.format(decoded=decoded, dummies=dummies))
+        out_file.write(INDEX.format(index=index, df=df, category=self.categories[0]))
+        out_file.write(INSERT.format(df=df, index=index, encoded_column=self.encoded_column, decoded=decoded))
+        out_file.write(DROP.format(df=df, categories=self.categories))
+        out_file.write(X.format(x=x, df=df, old_y=old_y))
+        out_file.write(Y.format(y=y, df=df, old_y=old_y))
+
+        out_ds = self.get_port(False, "Decoded Dataset")
+        emitter.set(out_ds, (x, y))
 
     def data_flow(self, node_columns):
         input_port = self.get_port(True, "Dataset")
         output_port = self.get_port(False, "Decoded Dataset")
-        output_port.columns = input_port.columns
-        # TODO
+        print(input_port.encoded_columns)
+        # decodable_columns = {}
+        # for col_name, categories in input_port.encoded_columns.items():
+        #     if col_name in input_port.categories[col_name]:
+        #         decodable_columns[col_name] = col_type
+        node_columns[self.node_id] = input_port.encoded_columns
+        self.categories = input_port.categories[self.encoded_column]
+        for col_name, col_type in input_port.columns.items():
+            if col_name in self.categories:
+                output_port.columns[self.encoded_column] = "string"
+            else:
+                output_port.columns[col_name] = col_type
 
     def assertions(self, node_columns):
         input_port = self.get_port(True, "Dataset")

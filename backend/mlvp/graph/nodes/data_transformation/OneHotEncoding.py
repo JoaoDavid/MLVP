@@ -47,7 +47,7 @@ class OneHotEncoding(Node):
 
         out_ds = self.get_port(False, "Encoded Dataset")
         emitter.set(out_ds, (x, y))
-        emitter.set(self.encoded_column, dummies)  # TODO
+        emitter.set(self.original_column, dummies)
 
     def data_flow(self, node_columns):
         input_port = self.get_port(True, "Dataset")
@@ -71,7 +71,6 @@ class OneHotEncoding(Node):
 
         if self.original_column in output_port.categories:
             output_port.encoded_columns[self.original_column] = input_port.categories[self.original_column]
-            del output_port.categories[self.original_column]
 
     def assertions(self, node_columns):
         input_port = self.get_port(True, "Dataset")
