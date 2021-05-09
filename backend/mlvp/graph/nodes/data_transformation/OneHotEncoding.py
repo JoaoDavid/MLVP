@@ -57,7 +57,7 @@ class OneHotEncoding(Node):
 
         encodable_columns = {}
         for col_name, col_type in input_port.columns.items():
-            if col_type == "string":
+            if col_type == "string" and col_name not in input_port.encoded_columns:
                 encodable_columns[col_name] = col_type
         node_columns[self.node_id] = encodable_columns
 

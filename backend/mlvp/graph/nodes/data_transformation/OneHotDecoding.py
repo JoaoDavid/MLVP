@@ -48,20 +48,19 @@ class OneHotDecoding(Node):
         output_port = self.get_port(False, "Decoded Dataset")
         output_port.categories = input_port.categories.copy()
         output_port.encoded_columns = input_port.encoded_columns.copy()
-        output_port.columns = input_port.columns.copy()
 
         decodable_columns = {}
         for col_name, tuple_encoded in input_port.encoded_columns.items():
             if tuple_encoded[0] == "one-hot-encoded":
                 decodable_columns[col_name] = tuple_encoded[1]
         node_columns[self.node_id] = decodable_columns
-        self.categories = input_port.categories[self.encoded_column]
 
         if self.encoded_column in input_port.encoded_columns:
+            self.categories = input_port.categories[self.encoded_column]
             del output_port.encoded_columns[self.encoded_column]
 
         for col_name, col_type in input_port.columns.items():
-            if col_name in input_port.encoded_columns:
+            if col_name in self.categories:
                 output_port.columns[self.encoded_column] = "string"
             else:
                 output_port.columns[col_name] = col_type
