@@ -3,8 +3,8 @@ from mlvp.codegen import *
 from mlvp.graph.nodes.Node import *
 from mlvp.typecheck import *
 
-RANDOM_FOREST_INIT = "{var} = RandomForestRegressor(n_estimators={num_trees}, criterion=\"{criterion}\", max_depth={max_depth})\n"
-MODEL_FIT = "{var}.fit({x}, {y})\n"
+INIT = "{reg} = RandomForestRegressor(n_estimators={num_trees}, criterion=\"{criterion}\", max_depth={max_depth})\n"
+FIT = "{reg}.fit({x}, {y})\n"
 
 
 class RandomForestRegressor(Node):
@@ -20,14 +20,16 @@ class RandomForestRegressor(Node):
 
     def codegen(self, emitter: Emitter, out_file):
         curr_count = emitter.get_count()
-        clf_var = "clf" + str(curr_count)
-        out_clf = self.get_port(False, "Regressor")
-        emitter.set(out_clf, clf_var)
         parent_port = self.parent_links[0].source_port
+        reg = "reg" + str(curr_count)
         x, y = emitter.get(parent_port)
-        out_file.write(RANDOM_FOREST_INIT.format(var=clf_var, num_trees=self.num_trees, criterion=self.criterion,
+
+        out_file.write(INIT.format(reg=reg, num_trees=self.num_trees, criterion=self.criterion,
                                                  max_depth=self.max_depth))
-        out_file.write(MODEL_FIT.format(var=clf_var, x=x, y=y))
+        out_file.write(FIT.format(reg=reg, x=x, y=y))
+        
+        out_reg = self.get_port(False, "Regressor")
+        emitter.set(out_reg, reg)
 
     def data_flow(self, node_columns):
         pass
