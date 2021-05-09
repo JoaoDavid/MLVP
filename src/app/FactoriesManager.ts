@@ -21,6 +21,7 @@ import {LabelEncodingFactory} from "../components/nodes/data-transformation/labe
 import {LabelDecodingFactory} from "../components/nodes/data-transformation/label-decoding/LabelDecodingFactory";
 import {OneHotEncodingFactory} from "../components/nodes/data-transformation/one-hot-encoding/OneHotEncodingFactory";
 import {OneHotDecodingFactory} from "../components/nodes/data-transformation/one-hot-decoding/OneHotDecodingFactory";
+import {SVMClassifierFactory} from "../components/nodes/classification/svm-classifier/SVMClassifierFactory";
 
 
 export class FactoriesManager {
@@ -51,6 +52,7 @@ export class FactoriesManager {
         this.engine.getNodeFactories().registerFactory(LabelDecodingFactory.getInstance());
         this.engine.getNodeFactories().registerFactory(OneHotEncodingFactory.getInstance());
         this.engine.getNodeFactories().registerFactory(OneHotDecodingFactory.getInstance());
+        this.engine.getNodeFactories().registerFactory(SVMClassifierFactory.getInstance());
     }
 
     registerPortFactories = () => {

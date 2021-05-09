@@ -18,6 +18,7 @@ import {LABEL_ENCODING} from "./data-transformation/label-encoding/LabelEncoding
 import {LABEL_DECODING} from "./data-transformation/label-decoding/LabelDecodingModel";
 import {ONE_HOT_ENCODING} from "./data-transformation/one-hot-encoding/OneHotEncodingModel";
 import {ONE_HOT_DECODING} from "./data-transformation/one-hot-decoding/OneHotDecodingModel";
+import {SVM_CLASSIFIER} from "./classification/svm-classifier/SVMClassifierModel";
 
 /*
 Every node type must be added to the nodes array
@@ -60,7 +61,7 @@ export const VISUALIZATION_CONFIG: CategoryConfig = {
 export const CLASSIFIER_CONFIG: CategoryConfig = {
     category: 'Classification',
     color: 'rgb(46,139,192)',
-    nodes: [RANDOM_FOREST_CLASSIFIER],
+    nodes: [RANDOM_FOREST_CLASSIFIER, SVM_CLASSIFIER],
 }
 
 export const REGRESSOR_CONFIG: CategoryConfig = {

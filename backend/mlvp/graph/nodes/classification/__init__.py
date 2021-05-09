@@ -1,1 +1,2 @@
 from .RandomForestClassifier import RandomForestClassifier
+from .SVMClassifier import SVMClassifier
