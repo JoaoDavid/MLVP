@@ -1,5 +1,5 @@
 from mlvp.codegen.Emitter import Emitter
-from mlvp.ast.nodes import Node
+from mlvp.graph.nodes import Node
 
 
 class CodeGen:

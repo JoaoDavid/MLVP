@@ -7,6 +7,7 @@ import {BaseNodeModel} from "../../components/core/BaseNode/BaseNodeModel";
 export interface MyDiagramListener extends BaseEntityListener {
     typeCheckResponse?(event: BaseEntityEvent & { typeCheckResponse: TypeCheckResponse }): void;
     nodeUpdated?(event: BaseEntityEvent & { node: BaseNodeModel }): void;
+    dataSourceUpdated?(event: BaseEntityEvent & { node: BaseNodeModel }): void;
 }
 
 export interface DiagramModelGenerics extends CanvasModelGenerics {

@@ -8,7 +8,7 @@ export class ModelPortModel extends BasePortModel {
     }
 
     canLinkToPort(port: PortModel): boolean {
-        console.log('canLinkToPort at ModelPortModel');
+        // console.log('canLinkToPort at ModelPortModel');
         if (port instanceof ModelPortModel) {
             return super.canLinkToPort(port);
         }

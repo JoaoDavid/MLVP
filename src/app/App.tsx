@@ -3,14 +3,6 @@ import classes from './App.module.css';
 import createEngine, {DiagramEngine} from '@projectstorm/react-diagrams';
 import TopNav from '../components/UI/top-nav/TopNav';
 import SideBar from "../components/UI/side-bar/SideBar";
-import {CategoryConfig, NodeConfig} from "../components/nodes/Config";
-import {
-    DATA_BALANCING_CONFIG,
-    DATA_SOURCE_CONFIG,
-    DATA_TRANSFORMATION_CONFIG, VISUALISE_CONFIG
-} from "../components/nodes/data/DataConfig";
-import {CLASSIFIER_CONFIG, REGRESSOR_CONFIG} from "../components/nodes/model/ModelConfig";
-import {EVALUATE_CLASSIFIER_CONFIG, EVALUATE_REGRESSOR_CONFIG} from "../components/nodes/evaluate/EvaluateConfig";
 import axios from "axios";
 import download from 'js-file-download';
 import BottomNav from "../components/UI/bottom-nav/BottomNav";
@@ -18,6 +10,7 @@ import Canvas from "../components/UI/canvas/Canvas";
 import {MyDiagramModel} from "./diagram/MyDiagramModel";
 import splitEvaluate from '../demos/split-n-evaluate.json';
 import posterDemo from '../demos/poster-demo.json';
+import encodeDecode from '../demos/encode_decode_demo.json';
 import {MyZoomCanvasAction} from "./actions/MyZoomCanvasAction";
 import {DiagramStateManager} from "./states/DiagramStateManager";
 import {TypeChecker, TypeCheckResponse} from "./typecheck/TypeChecker";
@@ -70,26 +63,32 @@ class App extends React.Component<AppProps, AppState> {
     registerListeners = (model: MyDiagramModel) => {
         model.registerListener({
             linksUpdated: (event) => {
-                console.log('linksUpdated');
+                console.log('event: linksUpdated');
                 console.log(event);
             },
             linkCreated: (event) => {
-                console.log('linkCreated');
+                console.log('event: linkCreated');
                 console.log(event);
                 this.typeChecker.requestTypeCheck();
             },
             nodeUpdated: (event) => {
-                console.log("nodeUpdated");
+                console.log("event: nodeUpdated");
                 console.log(event);
                 this.typeChecker.requestTypeCheck();
             },
+            dataSourceUpdated: (event) => {
+                console.log("event: dataSourceUpdated");
+                console.log(event);
+                this.typeChecker.requestTypeCheck().then(() => {
+                    this.typeChecker.requestTypeCheck();
+                });
+            },
             nodesUpdated: (event) => {
-                console.log("nodesUpdated");
+                console.log("event: nodesUpdated");
                 console.log(event);
             },
             typeCheckResponse: (event) => {
-                console.log("typeCheckResponse");
-                console.log(event.typeCheckResponse);
+                console.log("event: typeCheckResponse");
                 const allNodeAssertions = this.processNodeAssertions(event.typeCheckResponse.nodeAssertions);
                 const allLinkAssertions = this.processLinkAssertions(event.typeCheckResponse);
                 const unsatNodeAssertions = this.processNodeAssertions(event.typeCheckResponse.unsatNodeAssertions);
@@ -117,7 +116,7 @@ class App extends React.Component<AppProps, AppState> {
     processNodeColumns = (mapNodeColumns) => {
         for (let k of Object.keys(mapNodeColumns)) {
             const node = this.engine.getModel().getNode(k) as BaseNodeModel;
-            node.setColumnsAndTypes(mapNodeColumns[k])
+            node.setColumnsAndTypes(mapNodeColumns[k]);
         }
     }
 
@@ -132,7 +131,6 @@ class App extends React.Component<AppProps, AppState> {
         return map;
     }
 
-
     loadDemos = () => {
         const map = new Map<String, () => void>();
         map.set("Simple Pipeline", () => {
@@ -143,6 +141,10 @@ class App extends React.Component<AppProps, AppState> {
             this.canvasLoadDiagram(posterDemo);
             this.updateLog("Loaded demo Poster - Balanced Dataset Problem");
         });
+        map.set("Encode Decode Demo", () => {
+            this.canvasLoadDiagram(encodeDecode);
+            this.updateLog("Loaded demo Encode Decode Demo");
+        });
         return map;
     }
 
@@ -150,19 +152,6 @@ class App extends React.Component<AppProps, AppState> {
         this.engine.getModel().deserializeModel(diagram, this.engine);
         this.engine.repaintCanvas();
         this.typeChecker.requestTypeCheck(diagram);
-    }
-
-    loadMapCategoryNodes = () => {
-        const map = new Map<CategoryConfig, NodeConfig[]>();
-        map.set(DATA_SOURCE_CONFIG, DATA_SOURCE_CONFIG.nodes);
-        map.set(DATA_TRANSFORMATION_CONFIG, DATA_TRANSFORMATION_CONFIG.nodes);
-        map.set(DATA_BALANCING_CONFIG, DATA_BALANCING_CONFIG.nodes);
-        map.set(VISUALISE_CONFIG, VISUALISE_CONFIG.nodes);
-        map.set(CLASSIFIER_CONFIG, CLASSIFIER_CONFIG.nodes);
-        map.set(REGRESSOR_CONFIG, REGRESSOR_CONFIG.nodes);
-        map.set(EVALUATE_CLASSIFIER_CONFIG, EVALUATE_CLASSIFIER_CONFIG.nodes);
-        map.set(EVALUATE_REGRESSOR_CONFIG, EVALUATE_REGRESSOR_CONFIG.nodes);
-        return map;
     }
 
     newCanvas = () => {
@@ -183,7 +172,7 @@ class App extends React.Component<AppProps, AppState> {
         const data = event.dataTransfer.getData(this.dragDropFormat);
         try {
             const inJSON = JSON.parse(data);
-            console.log(data);
+            // data = {"codeName":"...","name":"..."}
             const factory = this.engine.getNodeFactories().getFactory(inJSON.codeName);
             const node = factory.generateModel({}) as BaseNodeModel;
             let point = this.engine.getRelativeMousePoint(event);
@@ -235,7 +224,7 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     compile = () => {
-        if (this.state.unsatNodeAssertions.size == 0) {
+        if (this.state.unsatNodeAssertions.size === 0) {
             this.requestCompilation();
         } else {
             this.updateLog("Cannot compile with problems!");
@@ -256,7 +245,7 @@ class App extends React.Component<AppProps, AppState> {
                 <TopNav newCanvas={this.newCanvas} open={this.openSave} save={this.downloadSave}
                         compile={this.compile} loadDemos={this.loadDemos()}/>
                 <div className={classes.Container}>
-                    <SideBar catAndNames={this.loadMapCategoryNodes()} format={this.dragDropFormat}/>
+                    <SideBar format={this.dragDropFormat}/>
                     <Canvas engine={this.engine} onDropCanvas={this.onDropCanvas}/>
                 </div>
                 <BottomNav unsatNodeAssertions={this.state.unsatNodeAssertions}

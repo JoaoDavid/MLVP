@@ -11,7 +11,7 @@ export class ClassifierPortModel extends ModelPortModel {
     }
 
     canLinkToPort(port: PortModel): boolean {
-        console.log('canLinkToPort at ClassifierPortModel');
+        // console.log('canLinkToPort at ClassifierPortModel');
         if (port instanceof RegressorPortModel) {
             return false;
         } else if (port instanceof ModelPortModel) {

@@ -2,8 +2,7 @@ import React from 'react';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
 import classes from './Category.module.css';
-import {NodeConfig} from "../../../nodes/Config";
-
+import {NodeConfig} from "../../../core/BaseNode/BaseNodeModel";
 
 interface CategoryProps {
     title: string;

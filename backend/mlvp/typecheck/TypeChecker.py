@@ -1,6 +1,6 @@
 from mlvp.typecheck import link
-from mlvp.ast.nodes import *
-from mlvp.ast.ports import *
+from mlvp.graph.nodes import *
+from mlvp.graph.ports import *
 from z3 import *
 
 
@@ -133,11 +133,8 @@ class TypeChecker:
                 self.all_link_assertions.append((parent_link, link_assertions))
 
                 parent_link.target_port.columns = parent_link.source_port.columns
-                # print("__add_dataset_links")
-                # print("target")
-                # print(parent_link.target_port.columns)
-                # print("source")
-                # print(parent_link.source_port.columns)
+                parent_link.target_port.encoded_columns = parent_link.source_port.encoded_columns
+                parent_link.target_port.categories = parent_link.source_port.categories
 
     def __find_source_unsat(self, list_tuple_assertions):
         for index, assertions in enumerate(list_tuple_assertions):

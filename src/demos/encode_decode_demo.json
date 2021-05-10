@@ -1,0 +1,411 @@
+{
+    "id": "980417ba-c1cb-489c-951c-bf4ca475f7ef",
+    "offsetX": 4,
+    "offsetY": 217,
+    "zoom": 100,
+    "gridSize": 0,
+    "layers": [
+        {
+            "id": "5d0fde66-9dbe-4678-9c26-bac9813515dc",
+            "type": "diagram-links",
+            "isSvg": true,
+            "transformed": true,
+            "models": {
+                "de6d1ebe-f5a8-4fb2-98a4-e66881b998d8": {
+                    "id": "de6d1ebe-f5a8-4fb2-98a4-e66881b998d8",
+                    "type": "default",
+                    "selected": false,
+                    "source": "3fb5b24d-39ae-4e67-a4f5-f30c8c7b0a99",
+                    "sourcePort": "b953c5bf-c3c0-405b-9a7c-939394f5a6e2",
+                    "target": "abffff72-0965-4997-a521-fd8b27c3baf9",
+                    "targetPort": "b94ca5a1-87f8-4a10-94ae-eb8919e03224",
+                    "points": [
+                        {
+                            "id": "7518e6ef-bcb9-4044-8daf-e132b8cb0388",
+                            "type": "point",
+                            "x": 519.5,
+                            "y": 181.5
+                        },
+                        {
+                            "id": "5f58f154-8e89-4d00-9823-22e6b6aec432",
+                            "type": "point",
+                            "x": 608.5,
+                            "y": 245.5
+                        }
+                    ],
+                    "labels": [],
+                    "width": 3,
+                    "color": "gray",
+                    "curvyness": 50,
+                    "selectedColor": "rgb(0,192,255)"
+                },
+                "00fc39aa-2421-4a00-8f89-a76a8592fd88": {
+                    "id": "00fc39aa-2421-4a00-8f89-a76a8592fd88",
+                    "type": "default",
+                    "selected": false,
+                    "source": "3fb5b24d-39ae-4e67-a4f5-f30c8c7b0a99",
+                    "sourcePort": "b953c5bf-c3c0-405b-9a7c-939394f5a6e2",
+                    "target": "82b75ae5-c5c0-43f2-9112-4a12874b8091",
+                    "targetPort": "55091924-0c3d-4463-8a89-a0ab0eb47090",
+                    "points": [
+                        {
+                            "id": "cbd11c66-2bb0-4b49-b135-dea90b0c6e7d",
+                            "type": "point",
+                            "x": 519.5,
+                            "y": 181.5
+                        },
+                        {
+                            "id": "071723f9-9771-4ecb-8acc-b800150f98ae",
+                            "type": "point",
+                            "x": 631.5,
+                            "y": 64.5
+                        }
+                    ],
+                    "labels": [],
+                    "width": 3,
+                    "color": "gray",
+                    "curvyness": 50,
+                    "selectedColor": "rgb(0,192,255)"
+                },
+                "55275cc8-4134-46d7-9995-14287712dcbb": {
+                    "id": "55275cc8-4134-46d7-9995-14287712dcbb",
+                    "type": "default",
+                    "selected": false,
+                    "source": "abffff72-0965-4997-a521-fd8b27c3baf9",
+                    "sourcePort": "f9dd927d-35cc-4ae2-a3db-6197e1b82ebc",
+                    "target": "42f7c829-6c71-4fdd-a8dc-84ec4206b700",
+                    "targetPort": "c76d1a87-8fa1-42dd-92e1-2db266884677",
+                    "points": [
+                        {
+                            "id": "05c87375-00a9-43f8-a97d-5d996f6f6635",
+                            "type": "point",
+                            "x": 789.5,
+                            "y": 245.5
+                        },
+                        {
+                            "id": "1153f3b9-917b-4182-8377-18d7190da4de",
+                            "type": "point",
+                            "x": 937.5,
+                            "y": 123.5
+                        }
+                    ],
+                    "labels": [],
+                    "width": 3,
+                    "color": "gray",
+                    "curvyness": 50,
+                    "selectedColor": "rgb(0,192,255)"
+                },
+                "e3d8f910-9da6-406f-9c81-04ff25e63af2": {
+                    "id": "e3d8f910-9da6-406f-9c81-04ff25e63af2",
+                    "type": "default",
+                    "selected": false,
+                    "source": "8cb72f12-d9d5-4969-b138-f662e59acd97",
+                    "sourcePort": "03a2386a-2cf4-4bc9-915a-65b78d1eeecc",
+                    "target": "3fb5b24d-39ae-4e67-a4f5-f30c8c7b0a99",
+                    "targetPort": "e118480d-9d04-4556-ab16-89c718f7983a",
+                    "points": [
+                        {
+                            "id": "1a417a81-16d2-41df-b9ae-9d456bcaf0aa",
+                            "type": "point",
+                            "x": 242.3125,
+                            "y": 135.5
+                        },
+                        {
+                            "id": "89c5602b-fe9f-46c6-9066-42d3c754a404",
+                            "type": "point",
+                            "x": 338.5,
+                            "y": 181.5
+                        }
+                    ],
+                    "labels": [],
+                    "width": 3,
+                    "color": "gray",
+                    "curvyness": 50,
+                    "selectedColor": "rgb(0,192,255)"
+                },
+                "0337563a-4806-43d3-abd5-642805653c88": {
+                    "id": "0337563a-4806-43d3-abd5-642805653c88",
+                    "type": "default",
+                    "selected": false,
+                    "source": "8cb72f12-d9d5-4969-b138-f662e59acd97",
+                    "sourcePort": "03a2386a-2cf4-4bc9-915a-65b78d1eeecc",
+                    "target": "a68338ce-4913-4bea-a42b-e7d9cd1414fb",
+                    "targetPort": "2e0edd4d-5688-4bdb-8c8d-4979ed8592b9",
+                    "points": [
+                        {
+                            "id": "2af306b1-1b60-4519-8f11-4b12a60bdc8b",
+                            "type": "point",
+                            "x": 242.3125,
+                            "y": 135.5
+                        },
+                        {
+                            "id": "b700d2e2-044d-469b-b675-49f85b15a04c",
+                            "type": "point",
+                            "x": 341.5,
+                            "y": 39.5
+                        }
+                    ],
+                    "labels": [],
+                    "width": 3,
+                    "color": "gray",
+                    "curvyness": 50,
+                    "selectedColor": "rgb(0,192,255)"
+                }
+            }
+        },
+        {
+            "id": "d41ccbb4-ff66-434a-be61-8f252af373c1",
+            "type": "diagram-nodes",
+            "isSvg": false,
+            "transformed": true,
+            "models": {
+                "3fb5b24d-39ae-4e67-a4f5-f30c8c7b0a99": {
+                    "id": "3fb5b24d-39ae-4e67-a4f5-f30c8c7b0a99",
+                    "type": "LabelEncoding",
+                    "selected": false,
+                    "x": 329,
+                    "y": 114,
+                    "ports": [
+                        {
+                            "id": "e118480d-9d04-4556-ab16-89c718f7983a",
+                            "type": "DatasetPort",
+                            "x": 331,
+                            "y": 150,
+                            "name": "Dataset",
+                            "alignment": "left",
+                            "parentNode": "3fb5b24d-39ae-4e67-a4f5-f30c8c7b0a99",
+                            "links": [
+                                "e3d8f910-9da6-406f-9c81-04ff25e63af2"
+                            ],
+                            "in": true,
+                            "label": ""
+                        },
+                        {
+                            "id": "b953c5bf-c3c0-405b-9a7c-939394f5a6e2",
+                            "type": "DatasetPort",
+                            "x": 512,
+                            "y": 150,
+                            "name": "Encoded Dataset",
+                            "alignment": "right",
+                            "parentNode": "3fb5b24d-39ae-4e67-a4f5-f30c8c7b0a99",
+                            "links": [
+                                "de6d1ebe-f5a8-4fb2-98a4-e66881b998d8",
+                                "00fc39aa-2421-4a00-8f89-a76a8592fd88"
+                            ],
+                            "in": false,
+                            "label": ""
+                        }
+                    ],
+                    "portsInOrder": [
+                        "e118480d-9d04-4556-ab16-89c718f7983a"
+                    ],
+                    "portsOutOrder": [
+                        "b953c5bf-c3c0-405b-9a7c-939394f5a6e2"
+                    ],
+                    "title": "Label Encoding 1",
+                    "originalColumn": "col0"
+                },
+                "abffff72-0965-4997-a521-fd8b27c3baf9": {
+                    "id": "abffff72-0965-4997-a521-fd8b27c3baf9",
+                    "type": "LabelDecoding",
+                    "selected": false,
+                    "x": 599,
+                    "y": 178,
+                    "ports": [
+                        {
+                            "id": "b94ca5a1-87f8-4a10-94ae-eb8919e03224",
+                            "type": "DatasetPort",
+                            "x": 601,
+                            "y": 214,
+                            "name": "Dataset",
+                            "alignment": "left",
+                            "parentNode": "abffff72-0965-4997-a521-fd8b27c3baf9",
+                            "links": [
+                                "de6d1ebe-f5a8-4fb2-98a4-e66881b998d8"
+                            ],
+                            "in": true,
+                            "label": ""
+                        },
+                        {
+                            "id": "f9dd927d-35cc-4ae2-a3db-6197e1b82ebc",
+                            "type": "DatasetPort",
+                            "x": 782,
+                            "y": 214,
+                            "name": "Decoded Dataset",
+                            "alignment": "right",
+                            "parentNode": "abffff72-0965-4997-a521-fd8b27c3baf9",
+                            "links": [
+                                "55275cc8-4134-46d7-9995-14287712dcbb"
+                            ],
+                            "in": false,
+                            "label": ""
+                        }
+                    ],
+                    "portsInOrder": [
+                        "b94ca5a1-87f8-4a10-94ae-eb8919e03224"
+                    ],
+                    "portsOutOrder": [
+                        "f9dd927d-35cc-4ae2-a3db-6197e1b82ebc"
+                    ],
+                    "title": "Label Decoding 2",
+                    "encodedColumn": "col0_encoded"
+                },
+                "a68338ce-4913-4bea-a42b-e7d9cd1414fb": {
+                    "id": "a68338ce-4913-4bea-a42b-e7d9cd1414fb",
+                    "type": "VisualizeDataset",
+                    "selected": false,
+                    "x": 332,
+                    "y": -28,
+                    "ports": [
+                        {
+                            "id": "2e0edd4d-5688-4bdb-8c8d-4979ed8592b9",
+                            "type": "DatasetPort",
+                            "x": 334,
+                            "y": 8,
+                            "name": "Dataset",
+                            "alignment": "left",
+                            "parentNode": "a68338ce-4913-4bea-a42b-e7d9cd1414fb",
+                            "links": [
+                                "0337563a-4806-43d3-abd5-642805653c88"
+                            ],
+                            "in": true,
+                            "label": ""
+                        }
+                    ],
+                    "portsInOrder": [
+                        "2e0edd4d-5688-4bdb-8c8d-4979ed8592b9"
+                    ],
+                    "portsOutOrder": [],
+                    "title": "Visualize Dataset 6"
+                },
+                "82b75ae5-c5c0-43f2-9112-4a12874b8091": {
+                    "id": "82b75ae5-c5c0-43f2-9112-4a12874b8091",
+                    "type": "VisualizeDataset",
+                    "selected": false,
+                    "x": 622,
+                    "y": -3,
+                    "ports": [
+                        {
+                            "id": "55091924-0c3d-4463-8a89-a0ab0eb47090",
+                            "type": "DatasetPort",
+                            "x": 624,
+                            "y": 33,
+                            "name": "Dataset",
+                            "alignment": "left",
+                            "parentNode": "82b75ae5-c5c0-43f2-9112-4a12874b8091",
+                            "links": [
+                                "00fc39aa-2421-4a00-8f89-a76a8592fd88"
+                            ],
+                            "in": true,
+                            "label": ""
+                        }
+                    ],
+                    "portsInOrder": [
+                        "55091924-0c3d-4463-8a89-a0ab0eb47090"
+                    ],
+                    "portsOutOrder": [],
+                    "title": "Visualize Dataset 7"
+                },
+                "42f7c829-6c71-4fdd-a8dc-84ec4206b700": {
+                    "id": "42f7c829-6c71-4fdd-a8dc-84ec4206b700",
+                    "type": "VisualizeDataset",
+                    "selected": false,
+                    "x": 928,
+                    "y": 56,
+                    "ports": [
+                        {
+                            "id": "c76d1a87-8fa1-42dd-92e1-2db266884677",
+                            "type": "DatasetPort",
+                            "x": 930,
+                            "y": 92,
+                            "name": "Dataset",
+                            "alignment": "left",
+                            "parentNode": "42f7c829-6c71-4fdd-a8dc-84ec4206b700",
+                            "links": [
+                                "55275cc8-4134-46d7-9995-14287712dcbb"
+                            ],
+                            "in": true,
+                            "label": ""
+                        }
+                    ],
+                    "portsInOrder": [
+                        "c76d1a87-8fa1-42dd-92e1-2db266884677"
+                    ],
+                    "portsOutOrder": [],
+                    "title": "Visualize Dataset 8"
+                },
+                "8cb72f12-d9d5-4969-b138-f662e59acd97": {
+                    "id": "8cb72f12-d9d5-4969-b138-f662e59acd97",
+                    "type": "ImportFromCSV",
+                    "selected": false,
+                    "x": 51.8125,
+                    "y": 68,
+                    "ports": [
+                        {
+                            "id": "03a2386a-2cf4-4bc9-915a-65b78d1eeecc",
+                            "type": "DatasetPort",
+                            "x": 234.8125,
+                            "y": 104,
+                            "name": "Dataset",
+                            "alignment": "right",
+                            "parentNode": "8cb72f12-d9d5-4969-b138-f662e59acd97",
+                            "links": [
+                                "e3d8f910-9da6-406f-9c81-04ff25e63af2",
+                                "0337563a-4806-43d3-abd5-642805653c88"
+                            ],
+                            "in": false,
+                            "label": ""
+                        }
+                    ],
+                    "portsInOrder": [],
+                    "portsOutOrder": [
+                        "03a2386a-2cf4-4bc9-915a-65b78d1eeecc"
+                    ],
+                    "title": "Import from CSV 1",
+                    "numCols": 4,
+                    "numRows": 12,
+                    "timeSeries": false,
+                    "fileName": "test.csv",
+                    "labels": {
+                        "2": 3,
+                        "4": 3,
+                        "5": 3,
+                        "7": 3
+                    },
+                    "columns": [
+                        {
+                            "name": "col0",
+                            "type": "string",
+                            "nullCounter": 0,
+                            "categories": [
+                                "ola",
+                                "adeus",
+                                "batata",
+                                "arroz"
+                            ]
+                        },
+                        {
+                            "name": "col1",
+                            "type": "int",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "col2",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "col3",
+                            "type": "int",
+                            "nullCounter": 0,
+                            "categories": []
+                        }
+                    ],
+                    "targetIndex": 3
+                }
+            }
+        }
+    ]
+}
