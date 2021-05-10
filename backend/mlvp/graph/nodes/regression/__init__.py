@@ -1,1 +1,2 @@
 from .RandomForestRegressor import RandomForestRegressor
+from .LinearRegression import LinearRegression

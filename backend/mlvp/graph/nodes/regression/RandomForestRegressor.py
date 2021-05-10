@@ -27,7 +27,7 @@ class RandomForestRegressor(Node):
         out_file.write(INIT.format(reg=reg, num_trees=self.num_trees, criterion=self.criterion,
                                                  max_depth=self.max_depth))
         out_file.write(FIT.format(reg=reg, x=x, y=y))
-        
+
         out_reg = self.get_port(False, "Regressor")
         emitter.set(out_reg, reg)
 

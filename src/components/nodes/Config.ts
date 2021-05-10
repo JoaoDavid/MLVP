@@ -21,6 +21,7 @@ import {ONE_HOT_DECODING} from "./data-transformation/one-hot-decoding/OneHotDec
 import {SVM_CLASSIFIER} from "./classification/svm-classifier/SVMClassifierModel";
 import {K_NEAREST_NEIGHBORS_CLASSIFIER} from "./classification/k-nearest-neighbors-classifier/KNearestNeighborsClassifierModel";
 import {DECISION_TREE_CLASSIFIER} from "./classification/decision-tree-classifier/DecisionTreeClassifierModel";
+import {LINEAR_REGRESSION} from "./regression/linear-regression/LinearRegressionModel";
 
 /*
 Every node type must be added to the nodes array
@@ -69,7 +70,7 @@ export const CLASSIFIER_CONFIG: CategoryConfig = {
 export const REGRESSOR_CONFIG: CategoryConfig = {
     category: 'Regression',
     color: 'rgb(20,93,160)',
-    nodes: [RANDOM_FOREST_REGRESSOR],
+    nodes: [RANDOM_FOREST_REGRESSOR, LINEAR_REGRESSION],
 }
 
 export const EVALUATE_CLASSIFIER_CONFIG: CategoryConfig = {
