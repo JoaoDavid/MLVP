@@ -36,7 +36,7 @@ class LabelEncoding(Node):
         out_file.write(CONCATENATE.format(df=df, old_x=old_x, old_y=old_y))
         out_file.write(LABEL_ENCODER_INIT.format(le=le))
         out_file.write(TRANSFORM.format(le=le, df=df, original_column=self.original_column))
-        out_file.write(RENAME_COLUMN.format(df=df, original_column=self.original_column, encoded_col=self.encoded_column))
+        out_file.write(RENAME_COLUMN.format(df=df, original_column=self.original_column, encoded_column=self.encoded_column))
         out_file.write(X.format(x=x, df=df, old_y=old_y))
         out_file.write(Y.format(y=y, df=df, old_y=old_y))
 
