@@ -76,6 +76,13 @@ class App extends React.Component<AppProps, AppState> {
                 console.log(event);
                 this.typeChecker.requestTypeCheck();
             },
+            dataSourceUpdated: (event) => {
+                console.log("event: dataSourceUpdated");
+                console.log(event);
+                this.typeChecker.requestTypeCheck().then(() => {
+                    this.typeChecker.requestTypeCheck();
+                });
+            },
             nodesUpdated: (event) => {
                 console.log("event: nodesUpdated");
                 console.log(event);
