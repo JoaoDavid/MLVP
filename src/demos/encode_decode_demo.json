@@ -1,7 +1,7 @@
 {
     "id": "980417ba-c1cb-489c-951c-bf4ca475f7ef",
-    "offsetX": 3,
-    "offsetY": 218,
+    "offsetX": 4,
+    "offsetY": 217,
     "zoom": 100,
     "gridSize": 0,
     "layers": [
@@ -11,34 +11,6 @@
             "isSvg": true,
             "transformed": true,
             "models": {
-                "b6bfb01a-dac9-4c18-a1ff-0c5c072f3f2f": {
-                    "id": "b6bfb01a-dac9-4c18-a1ff-0c5c072f3f2f",
-                    "type": "default",
-                    "selected": false,
-                    "source": "f106c5bc-c014-48f9-8996-9f9d2e0ded27",
-                    "sourcePort": "6e33cb21-2d27-49f2-a8ca-83a68edfb431",
-                    "target": "3fb5b24d-39ae-4e67-a4f5-f30c8c7b0a99",
-                    "targetPort": "e118480d-9d04-4556-ab16-89c718f7983a",
-                    "points": [
-                        {
-                            "id": "c7b7bff1-0d29-4819-be1e-94dd9e026ba4",
-                            "type": "point",
-                            "x": 273.5,
-                            "y": 167.5
-                        },
-                        {
-                            "id": "e68eb6ae-be80-4e6a-811a-3ee59f2fee2a",
-                            "type": "point",
-                            "x": 338.5,
-                            "y": 181.5
-                        }
-                    ],
-                    "labels": [],
-                    "width": 3,
-                    "color": "gray",
-                    "curvyness": 50,
-                    "selectedColor": "rgb(0,192,255)"
-                },
                 "de6d1ebe-f5a8-4fb2-98a4-e66881b998d8": {
                     "id": "de6d1ebe-f5a8-4fb2-98a4-e66881b998d8",
                     "type": "default",
@@ -59,34 +31,6 @@
                             "type": "point",
                             "x": 608.5,
                             "y": 245.5
-                        }
-                    ],
-                    "labels": [],
-                    "width": 3,
-                    "color": "gray",
-                    "curvyness": 50,
-                    "selectedColor": "rgb(0,192,255)"
-                },
-                "103c95e1-3c0d-44c5-b63d-1feb445eb194": {
-                    "id": "103c95e1-3c0d-44c5-b63d-1feb445eb194",
-                    "type": "default",
-                    "selected": false,
-                    "source": "f106c5bc-c014-48f9-8996-9f9d2e0ded27",
-                    "sourcePort": "6e33cb21-2d27-49f2-a8ca-83a68edfb431",
-                    "target": "a68338ce-4913-4bea-a42b-e7d9cd1414fb",
-                    "targetPort": "2e0edd4d-5688-4bdb-8c8d-4979ed8592b9",
-                    "points": [
-                        {
-                            "id": "c52e8799-7690-4af9-b49e-76539dcacddf",
-                            "type": "point",
-                            "x": 273.5,
-                            "y": 167.5
-                        },
-                        {
-                            "id": "969181fd-3a97-43c6-a9a0-54d1ed74fca5",
-                            "type": "point",
-                            "x": 341.5,
-                            "y": 39.5
                         }
                     ],
                     "labels": [],
@@ -150,6 +94,62 @@
                     "color": "gray",
                     "curvyness": 50,
                     "selectedColor": "rgb(0,192,255)"
+                },
+                "e3d8f910-9da6-406f-9c81-04ff25e63af2": {
+                    "id": "e3d8f910-9da6-406f-9c81-04ff25e63af2",
+                    "type": "default",
+                    "selected": false,
+                    "source": "8cb72f12-d9d5-4969-b138-f662e59acd97",
+                    "sourcePort": "03a2386a-2cf4-4bc9-915a-65b78d1eeecc",
+                    "target": "3fb5b24d-39ae-4e67-a4f5-f30c8c7b0a99",
+                    "targetPort": "e118480d-9d04-4556-ab16-89c718f7983a",
+                    "points": [
+                        {
+                            "id": "1a417a81-16d2-41df-b9ae-9d456bcaf0aa",
+                            "type": "point",
+                            "x": 242.3125,
+                            "y": 135.5
+                        },
+                        {
+                            "id": "89c5602b-fe9f-46c6-9066-42d3c754a404",
+                            "type": "point",
+                            "x": 338.5,
+                            "y": 181.5
+                        }
+                    ],
+                    "labels": [],
+                    "width": 3,
+                    "color": "gray",
+                    "curvyness": 50,
+                    "selectedColor": "rgb(0,192,255)"
+                },
+                "0337563a-4806-43d3-abd5-642805653c88": {
+                    "id": "0337563a-4806-43d3-abd5-642805653c88",
+                    "type": "default",
+                    "selected": false,
+                    "source": "8cb72f12-d9d5-4969-b138-f662e59acd97",
+                    "sourcePort": "03a2386a-2cf4-4bc9-915a-65b78d1eeecc",
+                    "target": "a68338ce-4913-4bea-a42b-e7d9cd1414fb",
+                    "targetPort": "2e0edd4d-5688-4bdb-8c8d-4979ed8592b9",
+                    "points": [
+                        {
+                            "id": "2af306b1-1b60-4519-8f11-4b12a60bdc8b",
+                            "type": "point",
+                            "x": 242.3125,
+                            "y": 135.5
+                        },
+                        {
+                            "id": "b700d2e2-044d-469b-b675-49f85b15a04c",
+                            "type": "point",
+                            "x": 341.5,
+                            "y": 39.5
+                        }
+                    ],
+                    "labels": [],
+                    "width": 3,
+                    "color": "gray",
+                    "curvyness": 50,
+                    "selectedColor": "rgb(0,192,255)"
                 }
             }
         },
@@ -175,7 +175,7 @@
                             "alignment": "left",
                             "parentNode": "3fb5b24d-39ae-4e67-a4f5-f30c8c7b0a99",
                             "links": [
-                                "b6bfb01a-dac9-4c18-a1ff-0c5c072f3f2f"
+                                "e3d8f910-9da6-406f-9c81-04ff25e63af2"
                             ],
                             "in": true,
                             "label": ""
@@ -250,71 +250,10 @@
                     "title": "Label Decoding 2",
                     "encodedColumn": "col0_encoded"
                 },
-                "f106c5bc-c014-48f9-8996-9f9d2e0ded27": {
-                    "id": "f106c5bc-c014-48f9-8996-9f9d2e0ded27",
-                    "type": "ImportFromCSV",
-                    "selected": false,
-                    "x": 83,
-                    "y": 100,
-                    "ports": [
-                        {
-                            "id": "6e33cb21-2d27-49f2-a8ca-83a68edfb431",
-                            "type": "DatasetPort",
-                            "x": 266,
-                            "y": 136,
-                            "name": "Dataset",
-                            "alignment": "right",
-                            "parentNode": "f106c5bc-c014-48f9-8996-9f9d2e0ded27",
-                            "links": [
-                                "b6bfb01a-dac9-4c18-a1ff-0c5c072f3f2f",
-                                "103c95e1-3c0d-44c5-b63d-1feb445eb194"
-                            ],
-                            "in": false,
-                            "label": ""
-                        }
-                    ],
-                    "portsInOrder": [],
-                    "portsOutOrder": [
-                        "6e33cb21-2d27-49f2-a8ca-83a68edfb431"
-                    ],
-                    "title": "Import from CSV 3",
-                    "numCols": 4,
-                    "numRows": 4,
-                    "timeSeries": false,
-                    "fileName": "test.csv",
-                    "labels": {
-                        "2": 1,
-                        "4": 1,
-                        "5": 1,
-                        "7": 1
-                    },
-                    "columns": [
-                        {
-                            "name": "col0",
-                            "type": "string",
-                            "nullCounter": 0
-                        },
-                        {
-                            "name": "col1",
-                            "type": "int",
-                            "nullCounter": 0
-                        },
-                        {
-                            "name": "col2",
-                            "type": "float",
-                            "nullCounter": 0
-                        },
-                        {
-                            "name": "col3",
-                            "type": "int",
-                            "nullCounter": 0
-                        }
-                    ],
-                    "targetIndex": 3
-                },
                 "a68338ce-4913-4bea-a42b-e7d9cd1414fb": {
                     "id": "a68338ce-4913-4bea-a42b-e7d9cd1414fb",
                     "type": "VisualizeDataset",
+                    "selected": false,
                     "x": 332,
                     "y": -28,
                     "ports": [
@@ -327,7 +266,7 @@
                             "alignment": "left",
                             "parentNode": "a68338ce-4913-4bea-a42b-e7d9cd1414fb",
                             "links": [
-                                "103c95e1-3c0d-44c5-b63d-1feb445eb194"
+                                "0337563a-4806-43d3-abd5-642805653c88"
                             ],
                             "in": true,
                             "label": ""
@@ -394,6 +333,77 @@
                     ],
                     "portsOutOrder": [],
                     "title": "Visualize Dataset 8"
+                },
+                "8cb72f12-d9d5-4969-b138-f662e59acd97": {
+                    "id": "8cb72f12-d9d5-4969-b138-f662e59acd97",
+                    "type": "ImportFromCSV",
+                    "selected": false,
+                    "x": 51.8125,
+                    "y": 68,
+                    "ports": [
+                        {
+                            "id": "03a2386a-2cf4-4bc9-915a-65b78d1eeecc",
+                            "type": "DatasetPort",
+                            "x": 234.8125,
+                            "y": 104,
+                            "name": "Dataset",
+                            "alignment": "right",
+                            "parentNode": "8cb72f12-d9d5-4969-b138-f662e59acd97",
+                            "links": [
+                                "e3d8f910-9da6-406f-9c81-04ff25e63af2",
+                                "0337563a-4806-43d3-abd5-642805653c88"
+                            ],
+                            "in": false,
+                            "label": ""
+                        }
+                    ],
+                    "portsInOrder": [],
+                    "portsOutOrder": [
+                        "03a2386a-2cf4-4bc9-915a-65b78d1eeecc"
+                    ],
+                    "title": "Import from CSV 1",
+                    "numCols": 4,
+                    "numRows": 12,
+                    "timeSeries": false,
+                    "fileName": "test.csv",
+                    "labels": {
+                        "2": 3,
+                        "4": 3,
+                        "5": 3,
+                        "7": 3
+                    },
+                    "columns": [
+                        {
+                            "name": "col0",
+                            "type": "string",
+                            "nullCounter": 0,
+                            "categories": [
+                                "ola",
+                                "adeus",
+                                "batata",
+                                "arroz"
+                            ]
+                        },
+                        {
+                            "name": "col1",
+                            "type": "int",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "col2",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "col3",
+                            "type": "int",
+                            "nullCounter": 0,
+                            "categories": []
+                        }
+                    ],
+                    "targetIndex": 3
                 }
             }
         }

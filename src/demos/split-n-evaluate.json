@@ -1,6 +1,6 @@
 {
     "id": "036319ea-e866-4a20-9193-4634648b25d1",
-    "offsetX": 0,
+    "offsetX": 1,
     "offsetY": 0,
     "zoom": 100,
     "gridSize": 0,
@@ -11,34 +11,6 @@
             "isSvg": true,
             "transformed": true,
             "models": {
-                "e440386f-ba38-4e2c-989f-6deec17838e5": {
-                    "id": "e440386f-ba38-4e2c-989f-6deec17838e5",
-                    "type": "default",
-                    "selected": false,
-                    "source": "e66537db-3cc5-47c1-869c-ccfb5a3cf7c5",
-                    "sourcePort": "15ab1eac-66a0-4f21-a3e0-16bcb6e5f720",
-                    "target": "8adbf1e0-dfca-413d-b1dd-625d31487ac5",
-                    "targetPort": "2d0380b8-1583-466d-9110-c624cc1673f2",
-                    "points": [
-                        {
-                            "id": "604b68e4-9798-4514-a6ad-40ffd6b4982b",
-                            "type": "point",
-                            "x": 243.3125,
-                            "y": 203.5
-                        },
-                        {
-                            "id": "abf4eba5-5e0c-462c-8896-993eefbf09ae",
-                            "type": "point",
-                            "x": 389.3125,
-                            "y": 224.5
-                        }
-                    ],
-                    "labels": [],
-                    "width": 3,
-                    "color": "gray",
-                    "curvyness": 50,
-                    "selectedColor": "rgb(0,192,255)"
-                },
                 "5256a33c-cd3d-4042-9a09-852da690fb7f": {
                     "id": "5256a33c-cd3d-4042-9a09-852da690fb7f",
                     "type": "default",
@@ -51,8 +23,8 @@
                         {
                             "id": "8cb0fc34-a236-43c3-abc9-8797268c8744",
                             "type": "point",
-                            "x": 570.3125,
-                            "y": 224.5
+                            "x": 561.3125,
+                            "y": 225.5
                         },
                         {
                             "id": "47dd8708-f369-46e6-af17-a5135b429b6f",
@@ -107,8 +79,8 @@
                         {
                             "id": "b912794e-914c-4be8-993d-fe25e04dae97",
                             "type": "point",
-                            "x": 570.3125,
-                            "y": 287.5
+                            "x": 561.3125,
+                            "y": 288.5
                         },
                         {
                             "id": "20335374-0dd7-40a2-9316-30e0cdf4bd63",
@@ -150,6 +122,34 @@
                     "color": "gray",
                     "curvyness": 50,
                     "selectedColor": "rgb(0,192,255)"
+                },
+                "49f3a201-0ebc-4d0a-bac3-862e28e3870f": {
+                    "id": "49f3a201-0ebc-4d0a-bac3-862e28e3870f",
+                    "type": "default",
+                    "selected": false,
+                    "source": "3d891275-d4df-4aca-aa0e-4d9982ce8629",
+                    "sourcePort": "643d7a79-1090-4244-bf71-266111e2aa6f",
+                    "target": "8adbf1e0-dfca-413d-b1dd-625d31487ac5",
+                    "targetPort": "2d0380b8-1583-466d-9110-c624cc1673f2",
+                    "points": [
+                        {
+                            "id": "3dd2c055-cded-47c8-9699-39d61517f3f1",
+                            "type": "point",
+                            "x": 253.3125,
+                            "y": 224.5
+                        },
+                        {
+                            "id": "266aa6b4-22e5-46ed-b6aa-0348e9fadcc0",
+                            "type": "point",
+                            "x": 380.3125,
+                            "y": 225.5
+                        }
+                    ],
+                    "labels": [],
+                    "width": 3,
+                    "color": "gray",
+                    "curvyness": 50,
+                    "selectedColor": "rgb(0,192,255)"
                 }
             }
         },
@@ -159,217 +159,23 @@
             "isSvg": false,
             "transformed": true,
             "models": {
-                "e66537db-3cc5-47c1-869c-ccfb5a3cf7c5": {
-                    "id": "e66537db-3cc5-47c1-869c-ccfb5a3cf7c5",
-                    "type": "ImportFromCSV",
-                    "selected": false,
-                    "x": 52.8125,
-                    "y": 136,
-                    "ports": [
-                        {
-                            "id": "15ab1eac-66a0-4f21-a3e0-16bcb6e5f720",
-                            "type": "DatasetPort",
-                            "x": 235.8125,
-                            "y": 172,
-                            "name": "Dataset",
-                            "alignment": "right",
-                            "parentNode": "e66537db-3cc5-47c1-869c-ccfb5a3cf7c5",
-                            "links": [
-                                "e440386f-ba38-4e2c-989f-6deec17838e5"
-                            ],
-                            "in": false,
-                            "label": ""
-                        }
-                    ],
-                    "portsInOrder": [],
-                    "portsOutOrder": [
-                        "15ab1eac-66a0-4f21-a3e0-16bcb6e5f720"
-                    ],
-                    "title": "Import from CSV",
-                    "numCols": 31,
-                    "numRows": 284807,
-                    "timeSeries": true,
-                    "fileName": "creditcard.csv",
-                    "labels": {
-                        "0": 284315,
-                        "1": 492
-                    },
-                    "columns": [
-                        {
-                            "name": "Time",
-                            "type": "int",
-                            "nullCounter": 0
-                        },
-                        {
-                            "name": "V1",
-                            "type": "float",
-                            "nullCounter": 0
-                        },
-                        {
-                            "name": "V2",
-                            "type": "float",
-                            "nullCounter": 0
-                        },
-                        {
-                            "name": "V3",
-                            "type": "float",
-                            "nullCounter": 0
-                        },
-                        {
-                            "name": "V4",
-                            "type": "float",
-                            "nullCounter": 0
-                        },
-                        {
-                            "name": "V5",
-                            "type": "float",
-                            "nullCounter": 0
-                        },
-                        {
-                            "name": "V6",
-                            "type": "float",
-                            "nullCounter": 0
-                        },
-                        {
-                            "name": "V7",
-                            "type": "float",
-                            "nullCounter": 0
-                        },
-                        {
-                            "name": "V8",
-                            "type": "float",
-                            "nullCounter": 0
-                        },
-                        {
-                            "name": "V9",
-                            "type": "float",
-                            "nullCounter": 0
-                        },
-                        {
-                            "name": "V10",
-                            "type": "float",
-                            "nullCounter": 0
-                        },
-                        {
-                            "name": "V11",
-                            "type": "float",
-                            "nullCounter": 0
-                        },
-                        {
-                            "name": "V12",
-                            "type": "float",
-                            "nullCounter": 0
-                        },
-                        {
-                            "name": "V13",
-                            "type": "float",
-                            "nullCounter": 0
-                        },
-                        {
-                            "name": "V14",
-                            "type": "float",
-                            "nullCounter": 0
-                        },
-                        {
-                            "name": "V15",
-                            "type": "float",
-                            "nullCounter": 0
-                        },
-                        {
-                            "name": "V16",
-                            "type": "float",
-                            "nullCounter": 0
-                        },
-                        {
-                            "name": "V17",
-                            "type": "float",
-                            "nullCounter": 0
-                        },
-                        {
-                            "name": "V18",
-                            "type": "float",
-                            "nullCounter": 0
-                        },
-                        {
-                            "name": "V19",
-                            "type": "float",
-                            "nullCounter": 0
-                        },
-                        {
-                            "name": "V20",
-                            "type": "float",
-                            "nullCounter": 0
-                        },
-                        {
-                            "name": "V21",
-                            "type": "float",
-                            "nullCounter": 0
-                        },
-                        {
-                            "name": "V22",
-                            "type": "float",
-                            "nullCounter": 0
-                        },
-                        {
-                            "name": "V23",
-                            "type": "float",
-                            "nullCounter": 0
-                        },
-                        {
-                            "name": "V24",
-                            "type": "float",
-                            "nullCounter": 0
-                        },
-                        {
-                            "name": "V25",
-                            "type": "float",
-                            "nullCounter": 0
-                        },
-                        {
-                            "name": "V26",
-                            "type": "float",
-                            "nullCounter": 0
-                        },
-                        {
-                            "name": "V27",
-                            "type": "float",
-                            "nullCounter": 0
-                        },
-                        {
-                            "name": "V28",
-                            "type": "float",
-                            "nullCounter": 0
-                        },
-                        {
-                            "name": "Amount",
-                            "type": "float",
-                            "nullCounter": 0
-                        },
-                        {
-                            "name": "Class",
-                            "type": "int",
-                            "nullCounter": 0
-                        }
-                    ],
-                    "targetIndex": 30
-                },
                 "8adbf1e0-dfca-413d-b1dd-625d31487ac5": {
                     "id": "8adbf1e0-dfca-413d-b1dd-625d31487ac5",
                     "type": "SplitDataset",
                     "selected": false,
-                    "x": 379.8125,
-                    "y": 157,
+                    "x": 370.8125,
+                    "y": 158,
                     "ports": [
                         {
                             "id": "2d0380b8-1583-466d-9110-c624cc1673f2",
                             "type": "DatasetPort",
-                            "x": 381.8125,
-                            "y": 193,
+                            "x": 372.8125,
+                            "y": 194,
                             "name": "Dataset",
                             "alignment": "left",
                             "parentNode": "8adbf1e0-dfca-413d-b1dd-625d31487ac5",
                             "links": [
-                                "e440386f-ba38-4e2c-989f-6deec17838e5"
+                                "49f3a201-0ebc-4d0a-bac3-862e28e3870f"
                             ],
                             "in": true,
                             "label": ""
@@ -377,8 +183,8 @@
                         {
                             "id": "fb2e5e00-7cf6-42e0-bbd5-14e99a017842",
                             "type": "DatasetPort",
-                            "x": 562.8125,
-                            "y": 193,
+                            "x": 553.8125,
+                            "y": 194,
                             "name": "Train Dataset",
                             "alignment": "right",
                             "parentNode": "8adbf1e0-dfca-413d-b1dd-625d31487ac5",
@@ -391,8 +197,8 @@
                         {
                             "id": "c37586b3-813d-4ee4-8d23-7241a749a696",
                             "type": "DatasetPort",
-                            "x": 562.8125,
-                            "y": 256,
+                            "x": 553.8125,
+                            "y": 257,
                             "name": "Test Dataset",
                             "alignment": "right",
                             "parentNode": "8adbf1e0-dfca-413d-b1dd-625d31487ac5",
@@ -550,6 +356,231 @@
                     ],
                     "portsOutOrder": [],
                     "title": "Evaluate Classifier"
+                },
+                "3d891275-d4df-4aca-aa0e-4d9982ce8629": {
+                    "id": "3d891275-d4df-4aca-aa0e-4d9982ce8629",
+                    "type": "ImportFromCSV",
+                    "selected": false,
+                    "x": 62.8125,
+                    "y": 157,
+                    "ports": [
+                        {
+                            "id": "643d7a79-1090-4244-bf71-266111e2aa6f",
+                            "type": "DatasetPort",
+                            "x": 245.8125,
+                            "y": 193,
+                            "name": "Dataset",
+                            "alignment": "right",
+                            "parentNode": "3d891275-d4df-4aca-aa0e-4d9982ce8629",
+                            "links": [
+                                "49f3a201-0ebc-4d0a-bac3-862e28e3870f"
+                            ],
+                            "in": false,
+                            "label": ""
+                        }
+                    ],
+                    "portsInOrder": [],
+                    "portsOutOrder": [
+                        "643d7a79-1090-4244-bf71-266111e2aa6f"
+                    ],
+                    "title": "Import from CSV 1",
+                    "numCols": 31,
+                    "numRows": 284807,
+                    "timeSeries": false,
+                    "fileName": "creditcard.csv",
+                    "labels": {
+                        "0": 284315,
+                        "1": 492
+                    },
+                    "columns": [
+                        {
+                            "name": "Time",
+                            "type": "int",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V1",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V2",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V3",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V4",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V5",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V6",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V7",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V8",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V9",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V10",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V11",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V12",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V13",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V14",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V15",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V16",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V17",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V18",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V19",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V20",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V21",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V22",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V23",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V24",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V25",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V26",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V27",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V28",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "Amount",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "Class",
+                            "type": "int",
+                            "nullCounter": 0,
+                            "categories": []
+                        }
+                    ],
+                    "targetIndex": 30
                 }
             }
         }
