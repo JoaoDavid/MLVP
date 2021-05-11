@@ -1,11 +1,16 @@
 import {DiagramEngine, LinkModel} from '@projectstorm/react-diagrams-core';
 import axios from "axios";
+import {BaseNodeModel} from "../../components/core/BaseNode/BaseNodeModel";
 
 export interface TypeCheckResponse {
     canLink: boolean,
     nodeAssertions: Map<string, string[]>,
     linkAssertions: Map<string, string[]>,
     unsatNodeAssertions: Map<string, string[]>,
+    nodeColumns: Map<string, string>,
+}
+
+export interface DataFlowResponse {
     nodeColumns: Map<string, string>,
 }
 
@@ -37,16 +42,32 @@ export class TypeChecker {
         );
     }
 
+    eventDataFlow = (dataFlowResponse: DataFlowResponse) => {
+        this.engine.getModel().fireEvent(
+            {
+                dataFlowResponse: dataFlowResponse,
+            },
+            'dataFlowResponse'
+        );
+    }
+
     requestTypeCheck = async (diagram?) => {
         const data = diagram || this.engine.getModel().serialize();
-        const response = await axios.post('/typeCheck', data)
+        const dataFlowResponse = await axios.post('/dataFlow', data)
+            .then(res => res.data)
+            .catch(error => {
+                console.log(error);
+            });
+        this.eventDataFlow(dataFlowResponse);
+        console.log(JSON.stringify(dataFlowResponse, null, 4));
+        const typeCheckResponse = await axios.post('/typeCheck', data)
             .then(res => res.data)
             .catch(error => {
                 console.log(error);
             });
         // console.log(JSON.stringify(response, null, 4));
-        this.eventTypeChecked(response);
-        return response.canLink;
+        // this.eventTypeChecked(typeCheckResponse);
+        return typeCheckResponse.canLink;
     }
 
 

@@ -80,7 +80,7 @@ class App extends React.Component<AppProps, AppState> {
                 console.log("event: dataSourceUpdated");
                 console.log(event);
                 this.typeChecker.requestTypeCheck().then(() => {
-                    this.typeChecker.requestTypeCheck();
+                    // this.typeChecker.requestTypeCheck();
                 });
             },
             nodesUpdated: (event) => {
@@ -98,6 +98,12 @@ class App extends React.Component<AppProps, AppState> {
                     allNodeAssertions: allNodeAssertions,
                     allLinkAssertions: allLinkAssertions,
                 });
+                this.engine.repaintCanvas();
+            },
+            dataFlowResponse: (event) => {
+                console.log("event: typeCheckResponse");
+                this.processNodeColumns(event.dataFlowResponse.nodeColumns);
+                this.setState({});
                 this.engine.repaintCanvas();
             }
         });
