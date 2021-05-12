@@ -52,21 +52,24 @@ export class TypeChecker {
     }
 
     requestTypeCheck = async (diagram?) => {
-        const data = diagram || this.engine.getModel().serialize();
-        const dataFlowResponse = await axios.post('/dataFlow', data)
+        const modelBeforeDataFlow = diagram || this.engine.getModel().serialize();
+        const dataFlowResponse = await axios.post('/dataFlow', modelBeforeDataFlow)
             .then(res => res.data)
             .catch(error => {
                 console.log(error);
             });
+        console.log(dataFlowResponse);
         this.eventDataFlow(dataFlowResponse);
         console.log(JSON.stringify(dataFlowResponse, null, 4));
-        const typeCheckResponse = await axios.post('/typeCheck', data)
+
+        const modelAfterDataFlow = diagram || this.engine.getModel().serialize();
+        const typeCheckResponse = await axios.post('/typeCheck', modelAfterDataFlow)
             .then(res => res.data)
             .catch(error => {
                 console.log(error);
             });
-        // console.log(JSON.stringify(response, null, 4));
-        // this.eventTypeChecked(typeCheckResponse);
+        console.log(JSON.stringify(typeCheckResponse, null, 4));
+        this.eventTypeChecked(typeCheckResponse);
         return typeCheckResponse.canLink;
     }
 

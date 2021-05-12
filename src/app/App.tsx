@@ -85,7 +85,7 @@ class App extends React.Component<AppProps, AppState> {
                 const allNodeAssertions = this.processNodeAssertions(event.typeCheckResponse.nodeAssertions);
                 const allLinkAssertions = this.processLinkAssertions(event.typeCheckResponse);
                 const unsatNodeAssertions = this.processNodeAssertions(event.typeCheckResponse.unsatNodeAssertions);
-                this.processNodeColumns(event.typeCheckResponse.nodeColumns);
+                // this.processNodeColumns(event.typeCheckResponse.nodeColumns);
                 this.setState({
                     unsatNodeAssertions: unsatNodeAssertions,
                     allNodeAssertions: allNodeAssertions,
