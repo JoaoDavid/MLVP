@@ -1,4 +1,4 @@
-from mlvp import generate_code
+from mlvp import pipeline_compilation
 import json
 import sys
 
@@ -8,4 +8,4 @@ content = file.read()
 
 y = json.loads(content)
 
-generate_code(y)
+pipeline_compilation(y)

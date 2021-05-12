@@ -5,7 +5,7 @@ from mlvp.typecheck.DataFlow import DataFlow
 from mlvp.typecheck.TypeChecker import TypeChecker
 
 
-def generate_code(diagram, file_name="mlvp-code-output"):
+def pipeline_compilation(diagram, file_name="mlvp-code-output"):
     parser = ParseJSON(json_diagram=diagram)
     roots, loose = parser.parse()
     topo_sorter = TopologicalSorter(roots, loose)
