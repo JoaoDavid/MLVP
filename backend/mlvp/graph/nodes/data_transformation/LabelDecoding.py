@@ -8,7 +8,7 @@ RENAME_COLUMN = "{df} = {df}.rename(columns={{'{encoded_column}': '{original_col
 X = "{x} = {df}.drop({old_y}.name, axis=1)\n"
 Y = "{y} = {df}[{old_y}.name]\n"
 
-# NONEXISTENT_COLUMN = "column \"{column_name}\" exists on the dataset"
+NONEXISTENT_COLUMN = "column \"{column_name}\" exists on the dataset"
 DUPLICATE_COLUMN = "column \"{column_name}\" is unique on the dataset"
 
 
@@ -69,15 +69,15 @@ class LabelDecoding(Node):
         self.data_flow(node_columns)
 
         z3_duplicate_column = Bool(DUPLICATE_COLUMN.format(column_name=self.original_column))
-        # z3_nonexistent_column = Bool(NONEXISTENT_COLUMN.format(column_name=self.encoded_column))
+        z3_nonexistent_column = Bool(NONEXISTENT_COLUMN.format(column_name=self.encoded_column))
 
         aux_assertions = []
         if len(input_port.columns) > 0:
             duplicate_column = self.original_column not in input_port.columns
             nonexistent_column = self.encoded_column in input_port.columns
             aux_assertions = [
-                # z3_nonexistent_column == nonexistent_column,
-                # z3_nonexistent_column,
+                z3_nonexistent_column == nonexistent_column,
+                z3_nonexistent_column,
                 z3_duplicate_column == duplicate_column,
                 z3_duplicate_column,
                 column(input_ds.dataset, String(self.encoded_column)) == get_col_type("int"),
