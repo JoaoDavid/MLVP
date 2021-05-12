@@ -36,12 +36,11 @@ class Oversampling(Node):
         output_port.encoded_columns = input_port.encoded_columns
         output_port.columns = input_port.columns
 
-    def assertions(self, node_columns):
+    def assertions(self):
         input_port = self.get_port(True, "Dataset")
         output_port = self.get_port(False, "Balanced Dataset")
         input_ds = Dataset(input_port.port_id)
         output_ds = Dataset(output_port.port_id)
-        self.data_flow(node_columns)
 
         return [
             input_ds.cols == output_ds.cols,

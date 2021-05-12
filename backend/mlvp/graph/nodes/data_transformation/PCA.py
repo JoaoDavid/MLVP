@@ -51,12 +51,11 @@ class PCA(Node):
 
         output_port.columns = this_node_columns
 
-    def assertions(self, node_columns):
+    def assertions(self):
         input_port = self.get_port(True, "Dataset")
         output_port = self.get_port(False, "Reduced Dataset")
         input_ds = Dataset(input_port.port_id)
         output_ds = Dataset(output_port.port_id)
-        self.data_flow(node_columns)
 
         z3_n_components = Int(NODE_PROP.format(name="n_components", node_id=self.node_id))
         features_assertions = no_features_of_type(input_port, "string", input_ds.dataset)

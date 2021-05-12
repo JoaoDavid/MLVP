@@ -34,7 +34,7 @@ class RandomForestClassifier(Node):
     def data_flow(self, node_columns):
         pass
 
-    def assertions(self, node_columns):
+    def assertions(self):
         input_port = self.get_port(True, "Dataset")
         input_ds = Dataset(input_port.port_id)
 

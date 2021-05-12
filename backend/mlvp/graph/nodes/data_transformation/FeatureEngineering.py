@@ -60,12 +60,11 @@ class FeatureEngineering(Node):
             del output_port.columns[last[0]]
             output_port.columns[last[0]] = last[1]
 
-    def assertions(self, node_columns):
+    def assertions(self):
         input_port = self.get_port(True, "Dataset")
         output_port = self.get_port(False, "Engineered Dataset")
         input_ds = Dataset(input_port.port_id)
         output_ds = Dataset(output_port.port_id)
-        self.data_flow(node_columns)
 
         z3_has_errors = Bool(NODE_PROP.format(name="has_no_errors", node_id=self.node_id))
         ast_assertions = self.ast_validator.assertions if self.ast_validator is not None else []

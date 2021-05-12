@@ -61,12 +61,11 @@ class LabelDecoding(Node):
             else:
                 output_port.columns[col_name] = col_type
 
-    def assertions(self, node_columns):
+    def assertions(self):
         input_port = self.get_port(True, "Dataset")
         output_port = self.get_port(False, "Decoded Dataset")
         input_ds = Dataset(input_port.port_id)
         output_ds = Dataset(output_port.port_id)
-        self.data_flow(node_columns)
 
         z3_duplicate_column = Bool(DUPLICATE_COLUMN.format(column_name=self.original_column))
         z3_nonexistent_column = Bool(NONEXISTENT_COLUMN.format(column_name=self.encoded_column))

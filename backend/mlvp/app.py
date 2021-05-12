@@ -12,6 +12,8 @@ def generate_code(diagram, file_name="mlvp-code-output"):
     roots, loose = parser.parse()
     topo_sorter = TopologicalSorter(roots, loose)
     sorted_nodes, sorted_loose_nodes = topo_sorter.topological_sort()
+    data_flow = DataFlow(sorted_nodes, sorted_loose_nodes)
+    response = data_flow.pass_data()
     type_checker = TypeChecker(sorted_nodes, sorted_loose_nodes)
     tc_res = type_checker.verify(strong_type_check=True)
 
@@ -33,6 +35,8 @@ def pipeline_verification(diagram):
     roots, loose = parser.parse()
     topo_sorter = TopologicalSorter(roots, loose)
     sorted_nodes, sorted_loose_nodes = topo_sorter.topological_sort()
+    data_flow = DataFlow(sorted_nodes, sorted_loose_nodes)
+    response = data_flow.pass_data()
     type_checker = TypeChecker(sorted_nodes, sorted_loose_nodes)
     response = type_checker.verify()
     # print(response)

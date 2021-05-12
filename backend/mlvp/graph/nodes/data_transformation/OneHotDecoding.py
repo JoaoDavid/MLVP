@@ -67,12 +67,11 @@ class OneHotDecoding(Node):
             else:
                 output_port.columns[col_name] = col_type
 
-    def assertions(self, node_columns):
+    def assertions(self):
         input_port = self.get_port(True, "Dataset")
         output_port = self.get_port(False, "Decoded Dataset")
         input_ds = Dataset(input_port.port_id)
         output_ds = Dataset(output_port.port_id)
-        self.data_flow(node_columns)
 
         aux_assertions = []
         if len(input_port.columns) > 0:
