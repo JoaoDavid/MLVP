@@ -18,7 +18,7 @@ class LabelEncoding(Node):
     def __init__(self, data):
         super().__init__(data)
         self.original_column = data['originalColumn']
-        self.encoded_column = self.original_column + "_encoded"
+        self.encoded_column = self.original_column + "_label_encoded"
         self.encodable_columns = {}
 
     def import_dependency(self):
