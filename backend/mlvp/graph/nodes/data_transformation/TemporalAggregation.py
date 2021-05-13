@@ -44,7 +44,6 @@ class TemporalAggregation(Node):
     def data_flow(self, node_columns):
         input_port = self.get_port(True, "Dataset")
         output_port = self.get_port(False, "Engineered Dataset")
-        output_port.categories = input_port.categories
         output_port.encoded_columns = input_port.encoded_columns
 
         this_node_columns = {}
@@ -66,7 +65,7 @@ class TemporalAggregation(Node):
 
         z3_len_new_col = Int(NODE_PROP.format(name="len_new_column_name", node_id=self.node_id))
         z3_duplicate_column = Bool(DUPLICATE_COLUMN.format(column_name=self.new_col_name))
-        z3_nonexistent_column = Bool(NONEXISTENT_COLUMN.format(column_name=self.original_column))
+        z3_nonexistent_column = Bool(NONEXISTENT_COLUMN.format(column_name=self.original_col_name))
 
         assert_existent_column = []
         if len(input_port.columns) > 0:

@@ -53,7 +53,6 @@ class OneHotDecoding(Node):
     def data_flow(self, node_columns):
         input_port = self.get_port(True, "Dataset")
         output_port = self.get_port(False, "Decoded Dataset")
-        output_port.categories = input_port.categories.copy()
         output_port.encoded_columns = input_port.encoded_columns.copy()
 
         for col_name, tuple_encoded in input_port.encoded_columns.items():

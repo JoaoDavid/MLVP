@@ -39,6 +39,8 @@ class SplitDataset(Node):
         output_test_port = self.get_port(False, "Test Dataset")
         output_train_port.columns = input_port.columns
         output_test_port.columns = input_port.columns
+        output_train_port.encoded_columns = input_port.encoded_columns
+        output_test_port.encoded_columns = input_port.encoded_columns
 
     def assertions(self):
         input_port = self.get_port(True, "Dataset")

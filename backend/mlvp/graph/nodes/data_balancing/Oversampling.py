@@ -32,7 +32,6 @@ class Oversampling(Node):
     def data_flow(self, node_columns):
         input_port = self.get_port(True, "Dataset")
         output_port = self.get_port(False, "Balanced Dataset")
-        output_port.categories = input_port.categories
         output_port.encoded_columns = input_port.encoded_columns
         output_port.columns = input_port.columns
 

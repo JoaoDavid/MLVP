@@ -44,11 +44,10 @@ class LabelDecoding(Node):
     def data_flow(self, node_columns):
         input_port = self.get_port(True, "Dataset")
         output_port = self.get_port(False, "Decoded Dataset")
-        output_port.categories = input_port.categories.copy()
         output_port.encoded_columns = input_port.encoded_columns.copy()
 
         for col_name, tuple_encoded in input_port.encoded_columns.items():
-            if tuple_encoded[0] == "label-encoded":
+            if tuple_encoded[0] == "label_encoded":
                 self.decodable_columns[col_name] = tuple_encoded[2]
         node_columns[self.node_id] = self.decodable_columns
 

@@ -25,6 +25,5 @@ class DataFlow:
             if isinstance(parent_link.source_port, DatasetPort):
                 parent_link.target_port.columns = parent_link.source_port.columns
                 parent_link.target_port.encoded_columns = parent_link.source_port.encoded_columns
-                parent_link.target_port.categories = parent_link.source_port.categories
         # sent data to current node's output port
         node.data_flow(self.node_columns)

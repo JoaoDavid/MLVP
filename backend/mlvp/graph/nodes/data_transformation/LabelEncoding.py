@@ -47,7 +47,6 @@ class LabelEncoding(Node):
     def data_flow(self, node_columns):
         input_port = self.get_port(True, "Dataset")
         output_port = self.get_port(False, "Encoded Dataset")
-        output_port.categories = input_port.categories.copy()
         output_port.encoded_columns = input_port.encoded_columns.copy()
 
         # get all columns originated by an encoding
@@ -68,7 +67,7 @@ class LabelEncoding(Node):
                 output_port.columns[col_name] = col_type
 
         if self.original_column in input_port.columns:
-            output_port.encoded_columns[self.encoded_column] = ("label-encoded", input_port.columns[self.original_column], [self.encoded_column])
+            output_port.encoded_columns[self.encoded_column] = ("label_encoded", input_port.columns[self.original_column], self.encoded_column)
 
     def assertions(self):
         input_port = self.get_port(True, "Dataset")
