@@ -75,16 +75,12 @@ class OneHotDecoding(Node):
         input_ds = Dataset(input_port.port_id)
         output_ds = Dataset(output_port.port_id)
 
-        z3_duplicate_column = Bool(DUPLICATE_COLUMN.format(column_name=self.original_column))
-        z3_nonexistent_column = Bool(NONEXISTENT_COLUMN.format(column_name=self.encoded_column))
-
         aux_assertions = []
         if len(input_port.columns) > 0:
+            z3_duplicate_column = Bool(DUPLICATE_COLUMN.format(column_name=self.original_column))
             duplicate_column = self.original_column not in input_port.columns
             nonexistent_column = self.encoded_column in input_port.columns
             aux_assertions = [
-                z3_nonexistent_column == nonexistent_column,
-                z3_nonexistent_column,
                 z3_duplicate_column == duplicate_column,
                 z3_duplicate_column,
                 # column(input_ds.dataset, String(self.encoded_column)) == get_col_type("int"),
@@ -93,6 +89,10 @@ class OneHotDecoding(Node):
                 z3_num_encoded_cols = Int(NODE_PROP.format(name="num_encoded_cols", node_id=self.node_id))
                 aux_assertions.append(z3_num_encoded_cols == len(self.decodable_columns))
                 aux_assertions.append(z3_num_encoded_cols > 0)
+            else:
+                z3_nonexistent_column = Bool(NONEXISTENT_COLUMN.format(column_name=self.original_column))
+                aux_assertions.append(z3_nonexistent_column == nonexistent_column)
+                aux_assertions.append(z3_nonexistent_column)
 
         return [
                    output_ds.cols == len(output_port.columns),
