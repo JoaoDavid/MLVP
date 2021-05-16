@@ -3,7 +3,7 @@ from mlvp.codegen import *
 from mlvp.graph.nodes.Node import *
 from mlvp.typecheck import *
 
-INIT = "{clf} = SVC()\n"
+INIT = "{clf} = SVC(C={C}, kernel=\"{kernel}\", degree={degree})\n"
 FIT = "{clf}.fit({x}, {y})\n"
 
 
@@ -11,6 +11,9 @@ class SVMClassifier(Node):
 
     def __init__(self, data):
         super().__init__(data)
+        self.c = data['C']
+        self.kernel = data['kernel']
+        self.degree = data['degree']
 
     def import_dependency(self):
         return FROM_IMPORT.format(package="sklearn.svm", class_to_import="SVC")
@@ -21,7 +24,7 @@ class SVMClassifier(Node):
         clf = "clf" + str(curr_count)
         x, y = emitter.get(parent_port)
 
-        out_file.write(INIT.format(clf=clf))
+        out_file.write(INIT.format(clf=clf, C=self.c, kernel=self.kernel, degree=self.degree))
         out_file.write(FIT.format(clf=clf, x=x, y=y))
 
         out_clf = self.get_port(False, "Classifier")
