@@ -2,7 +2,6 @@ import * as React from 'react';
 import Form from "react-bootstrap/Form";
 import {LogisticRegressionModel, PenaltyEnum} from "./LogisticRegressionModel";
 import Col from "react-bootstrap/Col";
-import InputCheckBox from "../../../UI/modal/input-checkbox/InputCheckBox";
 import Row from "react-bootstrap/Row";
 import ToggleSwitch from "../../../UI/modal/toggle-switch/ToggleSwitch";
 import {FormGroup} from "react-bootstrap";

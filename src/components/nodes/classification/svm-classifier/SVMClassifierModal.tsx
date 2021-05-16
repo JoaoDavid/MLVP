@@ -2,8 +2,6 @@ import * as React from 'react';
 import Form from "react-bootstrap/Form";
 import {KernelEnum, SVMClassifierModel} from "./SVMClassifierModel";
 import Col from "react-bootstrap/Col";
-import InputCheckBox from "../../../UI/modal/input-checkbox/InputCheckBox";
-import {CriterionEnum} from "../random-forest-classifier/RandomForestClassifierModel";
 import Row from "react-bootstrap/Row";
 
 

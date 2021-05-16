@@ -1,6 +1,5 @@
 import {DiagramEngine, LinkModel} from '@projectstorm/react-diagrams-core';
 import axios from "axios";
-import {BaseNodeModel} from "../../components/core/BaseNode/BaseNodeModel";
 
 export interface TypeCheckResponse {
     canLink: boolean,

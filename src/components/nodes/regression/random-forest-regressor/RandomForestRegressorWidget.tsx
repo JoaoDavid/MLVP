@@ -4,7 +4,6 @@ import {RandomForestRegressorModel} from './RandomForestRegressorModel';
 import BaseNodeWidget, {eventNodeUpdated} from '../../../core/BaseNode/BaseNodeWidget';
 import RandomForestRegressorModal from './RandomForestRegressorModal';
 import {REGRESSOR_CONFIG} from "../../Config";
-import RandomForestClassifierModal from "../../classification/random-forest-classifier/RandomForestClassifierModal";
 
 interface RandomForestRegressorProps {
     node: RandomForestRegressorModel;
