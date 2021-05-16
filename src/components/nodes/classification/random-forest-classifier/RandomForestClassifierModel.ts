@@ -2,7 +2,6 @@ import {BaseNodeModel, NodeConfig} from "../../../core/BaseNode/BaseNodeModel";
 import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
 import {ClassifierPortModel} from "../../../ports/model/ClassifierPortModel";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
-import {eventNodeUpdated} from '../../../core/BaseNode/BaseNodeWidget';
 
 export const RANDOM_FOREST_CLASSIFIER: NodeConfig = {
     codeName: "RandomForestClassifier",
@@ -45,7 +44,6 @@ export class RandomForestClassifierModel extends BaseNodeModel {
         } else if (value === CriterionEnum.ENTROPY) {
             this.criterion = CriterionEnum.ENTROPY;
         }
-        console.log(this.criterion);
     }
 
     getMaxDepthChecked (): boolean {
