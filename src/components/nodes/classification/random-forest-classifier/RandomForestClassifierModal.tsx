@@ -2,10 +2,7 @@ import * as React from 'react';
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import InputGroup from "react-bootstrap/InputGroup";
 import {RandomForestClassifierModel, CriterionEnum} from "./RandomForestClassifierModel";
-import classes from "../../../UI/modal/BaseModal.module.css";
-import {useState} from "react";
 import InputCheckBox from "../../../UI/modal/input-checkbox/InputCheckBox";
 
 

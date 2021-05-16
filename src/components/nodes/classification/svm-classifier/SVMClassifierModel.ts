@@ -2,7 +2,6 @@ import {BaseNodeModel, NodeConfig} from "../../../core/BaseNode/BaseNodeModel";
 import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
 import {ClassifierPortModel} from "../../../ports/model/ClassifierPortModel";
-import {CriterionEnum} from "../random-forest-classifier/RandomForestClassifierModel";
 
 export const SVM_CLASSIFIER: NodeConfig = {
     codeName: "SVMClassifier",
