@@ -37,7 +37,6 @@ const SVMClassifierWidget = (props: SVMClassifierProps) => {
             <p>C: {props.node.getC()}</p>
             <p>kernel: {props.node.getKernel().toString()}</p>
             <p>Degree: {props.node.getDegree()}</p>
-
         </BaseNodeWidget>
     )
 
