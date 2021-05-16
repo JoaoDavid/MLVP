@@ -3,7 +3,7 @@ from mlvp.codegen import *
 from mlvp.graph.nodes.Node import *
 from mlvp.typecheck import *
 
-INIT = "{clf} = KNeighborsClassifier()\n"
+INIT = "{clf} = KNeighborsClassifier(n_neighbors={num_neighbors}, weights=\"{weights}\", algorithm=\"{algorithm}\")\n"
 FIT = "{clf}.fit({x}, {y})\n"
 
 
@@ -11,6 +11,9 @@ class KNearestNeighborsClassifier(Node):
 
     def __init__(self, data):
         super().__init__(data)
+        self.num_neighbors = data['numNeighbors']
+        self.weights = data['weights']
+        self.algorithm = data['algorithm']
 
     def import_dependency(self):
         return FROM_IMPORT.format(package="sklearn.neighbors", class_to_import="KNeighborsClassifier")
@@ -21,7 +24,7 @@ class KNearestNeighborsClassifier(Node):
         clf = "clf" + str(curr_count)
         x, y = emitter.get(parent_port)
 
-        out_file.write(INIT.format(clf=clf))
+        out_file.write(INIT.format(clf=clf, num_neighbors=self.num_neighbors, weights=self.weights, algorithm=self.algorithm))
         out_file.write(FIT.format(clf=clf, x=x, y=y))
 
         out_clf = self.get_port(False, "Classifier")

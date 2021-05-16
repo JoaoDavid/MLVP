@@ -12,10 +12,30 @@ interface KNearestNeighborsClassifierProps {
 
 const KNearestNeighborsClassifierWidget = (props: KNearestNeighborsClassifierProps) => {
 
-    const modal = <KNearestNeighborsClassifierModal node={props.node}/>;
+    const numNeighborsChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        props.node.setNumNeighbors(+event.target.value);
+        eventNodeUpdated(props.engine, props.node);
+    }
+
+    const weightsChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        props.node.setWeights(event.target.value);
+        eventNodeUpdated(props.engine, props.node);
+    }
+
+    const algorithmChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        props.node.setAlgorithm(event.target.value);
+        eventNodeUpdated(props.engine, props.node);
+    }
+
+    const modal = <KNearestNeighborsClassifierModal node={props.node} algorithmChanged={algorithmChanged}
+                                                    numNeighborsChanged={numNeighborsChanged}
+                                                    weightsChanged={weightsChanged}/>;
     return (
         <BaseNodeWidget node={props.node} engine={props.engine} color={CLASSIFIER_CONFIG.color}
                         modalChildren={modal}>
+            <p>Neighbors: {props.node.getNumNeighbors()}</p>
+            <p>Weights: {props.node.getWeights().toString()}</p>
+            <p>Algorithm: {props.node.getAlgorithm().toString()}</p>
         </BaseNodeWidget>
     )
 
