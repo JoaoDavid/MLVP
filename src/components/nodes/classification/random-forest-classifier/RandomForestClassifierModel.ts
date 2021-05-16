@@ -80,7 +80,6 @@ export class RandomForestClassifierModel extends BaseNodeModel {
         this.criterion = event.data.criterion;
         let maxDepth = event.data.maxDepth;
         if (maxDepth === "None") {
-            this.maxDepth = 0;
             this.maxDepthChecked = false;
         } else {
             this.maxDepth = maxDepth;

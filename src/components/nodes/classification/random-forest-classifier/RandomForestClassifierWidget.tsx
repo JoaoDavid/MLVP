@@ -39,7 +39,7 @@ const RandomForestClassifierWidget = (props: RandomForestClassifierProps) => {
         <BaseNodeWidget node={props.node} engine={props.engine} color={CLASSIFIER_CONFIG.color}
                         modalChildren={modal}>
             <p>Trees: {props.node.getNumTrees()}</p>
-            <p>Max Depth: {props.node.getMaxDepth() > 0 ? props.node.getMaxDepth() : "None"}</p>
+            <p>Max Depth: {props.node.getMaxDepthChecked()?props.node.getMaxDepth():"None"}</p>
             <p>Criterion: {props.node.getCriterion().toString()}</p>
         </BaseNodeWidget>
     )
