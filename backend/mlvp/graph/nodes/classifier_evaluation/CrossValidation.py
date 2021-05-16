@@ -31,7 +31,7 @@ class CrossValidation(Node):
     def data_flow(self, node_columns):
         pass
 
-    def assertions(self, node_columns):
+    def assertions(self):
         input_ds_port = self.get_port(True, "Dataset")
         input_ds = Dataset(input_ds_port.port_id)
 

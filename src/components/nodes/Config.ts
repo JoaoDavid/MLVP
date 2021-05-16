@@ -23,6 +23,7 @@ import {K_NEAREST_NEIGHBORS_CLASSIFIER} from "./classification/k-nearest-neighbo
 import {DECISION_TREE_CLASSIFIER} from "./classification/decision-tree-classifier/DecisionTreeClassifierModel";
 import {LINEAR_REGRESSION} from "./regression/linear-regression/LinearRegressionModel";
 import {LOGISTIC_REGRESSION} from "./regression/logistic-regression/LogisticRegressionModel";
+import {SVM_REGRESSOR} from "./regression/svm-regressor/SVMRegressorModel";
 
 /*
 Every node type must be added to the nodes array
@@ -71,7 +72,7 @@ export const CLASSIFIER_CONFIG: CategoryConfig = {
 export const REGRESSOR_CONFIG: CategoryConfig = {
     category: 'Regression',
     color: 'rgb(20,93,160)',
-    nodes: [RANDOM_FOREST_REGRESSOR, LINEAR_REGRESSION, LOGISTIC_REGRESSION],
+    nodes: [RANDOM_FOREST_REGRESSOR, LINEAR_REGRESSION, LOGISTIC_REGRESSION, SVM_REGRESSOR],
 }
 
 export const EVALUATE_CLASSIFIER_CONFIG: CategoryConfig = {

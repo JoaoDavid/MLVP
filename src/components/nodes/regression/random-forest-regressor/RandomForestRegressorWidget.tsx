@@ -17,8 +17,13 @@ const RandomForestRegressorWidget = (props: RandomForestRegressorProps) => {
         eventNodeUpdated(props.engine, props.node);
     }
 
-    const setMaxTrees = (value: number) => {
+    const maxDepthChanged = (value: number) => {
         props.node.setMaxDepth(value);
+        eventNodeUpdated(props.engine, props.node);
+    }
+
+    const maxDepthCheckedChanged = (value: boolean) => {
+        props.node.setMaxDepthChecked(value);
         eventNodeUpdated(props.engine, props.node);
     }
 
@@ -28,13 +33,13 @@ const RandomForestRegressorWidget = (props: RandomForestRegressorProps) => {
     }
 
     const modal = <RandomForestRegressorModal node={props.node} numTreesChanged={numTreesChanged}
-                                               setMaxTrees={setMaxTrees}
-                                               criterionChanged={criterionChanged}/>;
+                                              criterionChanged={criterionChanged} maxDepthChanged={maxDepthChanged}
+                                              maxDepthCheckedChanged={maxDepthCheckedChanged}/>;
     return (
         <BaseNodeWidget node={props.node} engine={props.engine} color={REGRESSOR_CONFIG.color}
                         modalChildren={modal}>
             <p>Trees: {props.node.getNumTrees()}</p>
-            <p>Max Depth: {props.node.getMaxDepth() > 0 ? props.node.getMaxDepth() : "None"}</p>
+            <p>Max Depth: {props.node.getMaxDepthChecked()?props.node.getMaxDepth():"None"}</p>
             <p>Criterion: {props.node.getCriterion().toString()}</p>
         </BaseNodeWidget>
     )

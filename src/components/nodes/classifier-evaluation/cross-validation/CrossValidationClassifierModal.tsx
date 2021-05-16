@@ -16,7 +16,7 @@ const CrossValidationClassifierModal = (props: CrossValidationModalProps) => {
             <Form.Group>
                 <Row>
                     <Col>
-                        <Form.Label>Random State</Form.Label>
+                        <Form.Label>Number of folds</Form.Label>
                         <Form.Control type="number" min="2" value={props.node.getNumberFolds()} onChange={props.numberFoldsChanged} />
                     </Col>
                 </Row>

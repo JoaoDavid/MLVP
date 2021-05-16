@@ -27,15 +27,6 @@ export const eventNodeUpdated = (engine: DiagramEngine, node: BaseNodeModel) => 
     );
 }
 
-export const dataSourceUpdated = (engine: DiagramEngine, node: BaseNodeModel) => {
-    engine.getModel().fireEvent(
-        {
-            node: node
-        },
-        'dataSourceUpdated'
-    );
-}
-
 /**
  * Base Node Widget, used to shape every node within the project
  */

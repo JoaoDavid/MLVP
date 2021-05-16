@@ -17,7 +17,8 @@ export class RandomForestRegressorModel extends BaseNodeModel {
 
     private numTrees: number = 100; //int
     private criterion: CriterionEnum = CriterionEnum.MSE;
-    private maxDepth: number = -1; //int
+    private maxDepthChecked: boolean = true;
+    private maxDepth: number = 10; //int
 
     constructor() {
         super(RANDOM_FOREST_REGRESSOR);
@@ -46,6 +47,14 @@ export class RandomForestRegressorModel extends BaseNodeModel {
         console.log(this.criterion);
     }
 
+    getMaxDepthChecked (): boolean {
+        return this.maxDepthChecked;
+    }
+
+    setMaxDepthChecked (value: boolean) {
+        this.maxDepthChecked = value;
+    }
+
     getMaxDepth(): number {
         return this.maxDepth;
     }
@@ -68,15 +77,20 @@ export class RandomForestRegressorModel extends BaseNodeModel {
         super.deserialize(event);
         this.numTrees = event.data.numTrees;
         this.criterion = event.data.criterion;
-        this.maxDepth = event.data.maxDepth === 'None'?-1:event.data.maxDepth;
-    }
+        let maxDepth = event.data.maxDepth;
+        if (maxDepth === "None") {
+            this.maxDepthChecked = false;
+        } else {
+            this.maxDepth = maxDepth;
+            this.maxDepthChecked = true;
+        }    }
 
     serialize(): any {
         return {
             ...super.serialize(),
             numTrees: this.numTrees,
             criterion: this.criterion,
-            maxDepth: this.maxDepth===-1?"None":this.maxDepth,
+            maxDepth: this.maxDepthChecked?this.maxDepth:"None",
         };
     }
 

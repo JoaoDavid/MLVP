@@ -48,7 +48,6 @@ export class OversamplingModel extends BaseNodeModel {
         super.deserialize(event);
         let randomState = event.data.randomState;
         if (randomState === "None") {
-            this.randomState = 0;
             this.randomStateChecked = false;
         } else {
             this.randomState = randomState;

@@ -9,6 +9,10 @@ export interface TypeCheckResponse {
     nodeColumns: Map<string, string>,
 }
 
+export interface DataFlowResponse {
+    nodeColumns: Map<string, string>,
+}
+
 export class TypeChecker {
 
     private engine: DiagramEngine;
@@ -37,16 +41,35 @@ export class TypeChecker {
         );
     }
 
+    eventDataFlow = (dataFlowResponse: DataFlowResponse) => {
+        this.engine.getModel().fireEvent(
+            {
+                dataFlowResponse: dataFlowResponse,
+            },
+            'dataFlowResponse'
+        );
+    }
+
     requestTypeCheck = async (diagram?) => {
-        const data = diagram || this.engine.getModel().serialize();
-        const response = await axios.post('/typeCheck', data)
+        const modelBeforeDataFlow = diagram || this.engine.getModel().serialize();
+        const dataFlowResponse = await axios.post('/dataFlow', modelBeforeDataFlow)
             .then(res => res.data)
             .catch(error => {
                 console.log(error);
             });
-        // console.log(JSON.stringify(response, null, 4));
-        this.eventTypeChecked(response);
-        return response.canLink;
+        console.log(dataFlowResponse);
+        this.eventDataFlow(dataFlowResponse);
+        console.log(JSON.stringify(dataFlowResponse, null, 4));
+
+        const modelAfterDataFlow = diagram || this.engine.getModel().serialize();
+        const typeCheckResponse = await axios.post('/typeCheck', modelAfterDataFlow)
+            .then(res => res.data)
+            .catch(error => {
+                console.log(error);
+            });
+        console.log(JSON.stringify(typeCheckResponse, null, 4));
+        this.eventTypeChecked(typeCheckResponse);
+        return typeCheckResponse.canLink;
     }
 
 

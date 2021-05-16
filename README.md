@@ -25,7 +25,7 @@ You will also see any lint errors in the console.
 Runs the back-end in the development mode.\
 Listening for HTTP requests at localhost:8080
 
-### `python create-node.py "Block Category" "Block Name"`
+### `python create-node.py "Block Category" "Block Name" "template-folder-name"`
 
 Creates the four front-end and single back-end class files for the new block in the respective category directories
 
@@ -41,3 +41,5 @@ Then run it using `serve -s build`
 
 Runs the back-end in the production mode.\
 Listening for HTTP requests at 194.117.20.237:443
+
+### journalctl -u SERVICE_NAME.service --since today

@@ -3,32 +3,32 @@ from mlvp.codegen import *
 from mlvp.graph.nodes.Node import *
 from mlvp.typecheck import *
 
-INIT = "{clf} = SVC(C={C}, kernel=\"{kernel}\", degree={degree})\n"
-FIT = "{clf}.fit({x}, {y})\n"
+INIT = "{reg} = SVR(kernel=\"{kernel}\", degree={degree}, gamma=\"{gamma}\")\n"
+FIT = "{reg}.fit({x}, {y})\n"
 
 
-class SVMClassifier(Node):
+class SVMRegressor(Node):
 
     def __init__(self, data):
         super().__init__(data)
-        self.c = data['C']
         self.kernel = data['kernel']
         self.degree = data['degree']
+        self.gamma = data['gamma']
 
     def import_dependency(self):
-        return FROM_IMPORT.format(package="sklearn.svm", class_to_import="SVC")
+        return FROM_IMPORT.format(package="sklearn.svm", class_to_import="SVR")
 
     def codegen(self, emitter: Emitter, out_file):
         curr_count = emitter.get_count()
         parent_port = self.parent_links[0].source_port
-        clf = "clf" + str(curr_count)
+        reg = "reg" + str(curr_count)
         x, y = emitter.get(parent_port)
 
-        out_file.write(INIT.format(clf=clf, C=self.c, kernel=self.kernel, degree=self.degree))
-        out_file.write(FIT.format(clf=clf, x=x, y=y))
+        out_file.write(INIT.format(reg=reg, kernel=self.kernel, degree=self.degree, gamma=self.gamma))
+        out_file.write(FIT.format(reg=reg, x=x, y=y))
 
-        out_clf = self.get_port(False, "Classifier")
-        emitter.set(out_clf, clf)
+        out_reg = self.get_port(False, "Regressor")
+        emitter.set(out_reg, reg)
 
     def data_flow(self, node_columns):
         pass
@@ -41,7 +41,6 @@ class SVMClassifier(Node):
 
         return [
             # requires
-            input_ds.balanced,
             input_ds.rows > 0,
             input_ds.cols > 1
         ] + features_assertions + categorical_last_column(input_port, input_ds.dataset)

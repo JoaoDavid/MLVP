@@ -24,6 +24,7 @@ ColumnType.declare('float')
 ColumnType.declare('string')
 ColumnType.declare('bool')
 ColumnType.declare('mixed')
+ColumnType.declare('one_hot_encoded')
 ColumnType = ColumnType.create()
 
 # column = Function('column', dataset_id, column_name, column_type)
@@ -50,6 +51,8 @@ def get_col_type(col_str):
         return ColumnType.bool
     elif col_str == "mixed":
         return ColumnType.mixed
+    elif col_str == "one_hot_encoded":
+        return ColumnType.one_hot_encoded
 
 
 class Dataset:

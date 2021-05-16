@@ -39,15 +39,16 @@ class SplitDataset(Node):
         output_test_port = self.get_port(False, "Test Dataset")
         output_train_port.columns = input_port.columns
         output_test_port.columns = input_port.columns
+        output_train_port.encoded_columns = input_port.encoded_columns
+        output_test_port.encoded_columns = input_port.encoded_columns
 
-    def assertions(self, node_columns):
+    def assertions(self):
         input_port = self.get_port(True, "Dataset")
         output_train_port = self.get_port(False, "Train Dataset")
         output_test_port = self.get_port(False, "Test Dataset")
         input_ds = Dataset(input_port.port_id)
         train_ds = Dataset(output_train_port.port_id)
         test_ds = Dataset(output_test_port.port_id)
-        self.data_flow(node_columns)
 
         shuffle_input = Bool(PORT_PROP.format(id_port=input_port.port_id, name="shuffled"))
         shuffle_train = Bool(PORT_PROP.format(id_port=output_train_port.port_id, name="shuffled"))

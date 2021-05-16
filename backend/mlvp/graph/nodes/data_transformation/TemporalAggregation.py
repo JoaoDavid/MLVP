@@ -8,7 +8,7 @@ X = "{x} = {df}.drop({old_y}.name, axis=1)\n"
 Y = "{y} = {df}[{old_y}.name]\n"
 PANDAS_VAR = "pd"
 
-# NONEXISTENT_COLUMN = "column \"{column_name}\" exists on the dataset"
+NONEXISTENT_COLUMN = "column \"{column_name}\" exists on the dataset"
 DUPLICATE_COLUMN = "column \"{column_name}\" is unique on the dataset"
 
 
@@ -44,7 +44,6 @@ class TemporalAggregation(Node):
     def data_flow(self, node_columns):
         input_port = self.get_port(True, "Dataset")
         output_port = self.get_port(False, "Engineered Dataset")
-        output_port.categories = input_port.categories
         output_port.encoded_columns = input_port.encoded_columns
 
         this_node_columns = {}
@@ -58,20 +57,23 @@ class TemporalAggregation(Node):
                 this_node_columns[col_name] = col_type
         node_columns[self.node_id] = this_node_columns
 
-    def assertions(self, node_columns):
+    def assertions(self):
         input_port = self.get_port(True, "Dataset")
         output_port = self.get_port(False, "Engineered Dataset")
         input_ds = Dataset(input_port.port_id)
         output_ds = Dataset(output_port.port_id)
-        self.data_flow(node_columns)
 
         z3_len_new_col = Int(NODE_PROP.format(name="len_new_column_name", node_id=self.node_id))
         z3_duplicate_column = Bool(DUPLICATE_COLUMN.format(column_name=self.new_col_name))
+        z3_nonexistent_column = Bool(NONEXISTENT_COLUMN.format(column_name=self.original_col_name))
 
         assert_existent_column = []
         if len(input_port.columns) > 0:
             duplicate_column = self.new_col_name not in input_port.columns
+            nonexistent_column = self.original_col_name in input_port.columns
             assert_existent_column = [
+                z3_nonexistent_column == nonexistent_column,
+                z3_nonexistent_column,
                 z3_duplicate_column == duplicate_column,
                 z3_duplicate_column,
                 Or(

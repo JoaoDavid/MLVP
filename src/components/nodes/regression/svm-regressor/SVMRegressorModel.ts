@@ -1,11 +1,11 @@
 import {BaseNodeModel, NodeConfig} from "../../../core/BaseNode/BaseNodeModel";
 import {DatasetPortModel} from "../../../ports/dataset/DatasetPortModel";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
-import {ClassifierPortModel} from "../../../ports/model/ClassifierPortModel";
+import {RegressorPortModel} from "../../../ports/model/RegressorPortModel";
 
-export const SVM_CLASSIFIER: NodeConfig = {
-    codeName: "SVMClassifier",
-    name: "SVM Classifier",
+export const SVM_REGRESSOR: NodeConfig = {
+    codeName: "SVMRegressor",
+    name: "SVM Regressor",
 }
 
 export enum KernelEnum {
@@ -15,25 +15,21 @@ export enum KernelEnum {
     SIGMOID = 'sigmoid',
     PRE_COMPUTED = 'precomputed',
 }
+export enum GammaEnum {
+    SCALE = 'scale',
+    AUTO = 'auto',
+}
 
-export class SVMClassifierModel extends BaseNodeModel {
+export class SVMRegressorModel extends BaseNodeModel {
 
-    private C: number = 1.0; //float
     private kernel: KernelEnum = KernelEnum.RBF;
     private degree: number = 3; //int
+    private gamma: GammaEnum = GammaEnum.SCALE;
 
     constructor() {
-        super(SVM_CLASSIFIER);
+        super(SVM_REGRESSOR);
         this.addInPort();
         this.addOutPort();
-    }
-
-    getC(): number {
-        return this.C;
-    }
-
-    setC(value: number) {
-        this.C = value;
     }
 
     getKernel(): KernelEnum {
@@ -62,29 +58,41 @@ export class SVMClassifierModel extends BaseNodeModel {
         this.degree = value;
     }
 
+    getGamma(): GammaEnum {
+        return this.gamma;
+    }
+
+    setGamma(value: string) {
+        if (value === GammaEnum.SCALE) {
+            this.gamma = GammaEnum.SCALE;
+        } else if (value === GammaEnum.AUTO) {
+            this.gamma = GammaEnum.AUTO;
+        }
+    }
+
     protected addInPort(): void {
         const p = new DatasetPortModel(true);
         super.addPort(p);
     }
 
     protected addOutPort(): void {
-        const p = new ClassifierPortModel(false);
+        const p = new RegressorPortModel(false);
         super.addPort(p);
     }
 
     deserialize(event: DeserializeEvent<this>) {
         super.deserialize(event);
-        this.C = event.data.C;
         this.kernel = event.data.kernel;
         this.degree = event.data.degree;
+        this.gamma = event.data.gamma;
     }
 
     serialize(): any {
         return {
             ...super.serialize(),
-            C: this.C,
             kernel: this.kernel,
             degree: this.degree,
+            gamma: this.gamma,
         };
     }
 

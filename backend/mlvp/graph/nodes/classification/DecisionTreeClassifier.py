@@ -3,7 +3,7 @@ from mlvp.codegen import *
 from mlvp.graph.nodes.Node import *
 from mlvp.typecheck import *
 
-INIT = "{clf} = DecisionTreeClassifier()\n"
+INIT = "{clf} = DecisionTreeClassifier(criterion=\"{criterion}\", splitter=\"{splitter}\", max_depth={max_depth})\n"
 FIT = "{clf}.fit({x}, {y})\n"
 
 
@@ -11,6 +11,9 @@ class DecisionTreeClassifier(Node):
 
     def __init__(self, data):
         super().__init__(data)
+        self.splitter = data['splitter']
+        self.criterion = data['criterion']
+        self.max_depth = data['maxDepth']
 
     def import_dependency(self):
         return FROM_IMPORT.format(package="sklearn.tree", class_to_import="DecisionTreeClassifier")
@@ -21,7 +24,7 @@ class DecisionTreeClassifier(Node):
         clf = "clf" + str(curr_count)
         x, y = emitter.get(parent_port)
 
-        out_file.write(INIT.format(clf=clf))
+        out_file.write(INIT.format(clf=clf, criterion=self.criterion, splitter=self.splitter, max_depth=self.max_depth))
         out_file.write(FIT.format(clf=clf, x=x, y=y))
 
         out_clf = self.get_port(False, "Classifier")
@@ -30,7 +33,7 @@ class DecisionTreeClassifier(Node):
     def data_flow(self, node_columns):
         pass
 
-    def assertions(self, node_columns):
+    def assertions(self):
         input_port = self.get_port(True, "Dataset")
         input_ds = Dataset(input_port.port_id)
 

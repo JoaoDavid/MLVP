@@ -76,13 +76,6 @@ class App extends React.Component<AppProps, AppState> {
                 console.log(event);
                 this.typeChecker.requestTypeCheck();
             },
-            dataSourceUpdated: (event) => {
-                console.log("event: dataSourceUpdated");
-                console.log(event);
-                this.typeChecker.requestTypeCheck().then(() => {
-                    this.typeChecker.requestTypeCheck();
-                });
-            },
             nodesUpdated: (event) => {
                 console.log("event: nodesUpdated");
                 console.log(event);
@@ -92,12 +85,18 @@ class App extends React.Component<AppProps, AppState> {
                 const allNodeAssertions = this.processNodeAssertions(event.typeCheckResponse.nodeAssertions);
                 const allLinkAssertions = this.processLinkAssertions(event.typeCheckResponse);
                 const unsatNodeAssertions = this.processNodeAssertions(event.typeCheckResponse.unsatNodeAssertions);
-                this.processNodeColumns(event.typeCheckResponse.nodeColumns);
+                // this.processNodeColumns(event.typeCheckResponse.nodeColumns);
                 this.setState({
                     unsatNodeAssertions: unsatNodeAssertions,
                     allNodeAssertions: allNodeAssertions,
                     allLinkAssertions: allLinkAssertions,
                 });
+                this.engine.repaintCanvas();
+            },
+            dataFlowResponse: (event) => {
+                console.log("event: typeCheckResponse");
+                this.processNodeColumns(event.dataFlowResponse.nodeColumns);
+                this.setState({});
                 this.engine.repaintCanvas();
             }
         });

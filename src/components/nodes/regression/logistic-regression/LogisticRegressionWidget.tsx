@@ -12,10 +12,36 @@ interface LogisticRegressionProps {
 
 const LogisticRegressionWidget = (props: LogisticRegressionProps) => {
 
-    const modal = <LogisticRegressionModal node={props.node}/>;
+    const penaltyChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        props.node.setPenalty(event.target.value);
+        eventNodeUpdated(props.engine, props.node);
+    }
+
+    const dualChanged = () => {
+        props.node.setDual(!props.node.getDual());
+        eventNodeUpdated(props.engine, props.node);
+    }
+
+    const tolChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (+event.target.value > 0) {
+            props.node.setTol(+event.target.value);
+            eventNodeUpdated(props.engine, props.node);
+        }
+    }
+    const cChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (+event.target.value > 0) {
+            props.node.setC(+event.target.value);
+            eventNodeUpdated(props.engine, props.node);
+        }
+    }
+
+    const modal = <LogisticRegressionModal node={props.node} cChanged={cChanged} dualChanged={dualChanged} penaltyChanged={penaltyChanged} tolChanged={tolChanged}/>;
     return (
         <BaseNodeWidget node={props.node} engine={props.engine} color={REGRESSOR_CONFIG.color}
                         modalChildren={modal}>
+            <p>Penalty: {props.node.getPenalty().toString()}</p>
+            <p>Dual: {props.node.getDual().toString()}</p>
+            <p>Tol: {props.node.getTol()}</p>
         </BaseNodeWidget>
     )
 

@@ -43,14 +43,10 @@ class ImportFromCSV(Node):
         # set the columns dict for the output port
         for col in self.columns:
             output_port.columns[col['name']] = col['type']
-            categories = col['categories']
-            if len(categories) > 0:
-                output_port.categories[col['name']] = categories
 
-    def assertions(self, node_columns):
+    def assertions(self):
         output_port = self.get_port(False, "Dataset")
         output = Dataset(output_port.port_id)
-        self.data_flow(node_columns)
 
         z3_unique_col_names = Bool(NODE_PROP.format(name="unique_col_names", node_id=self.node_id))
         unique_col_names = len(self.columns) == len(output_port.columns)
