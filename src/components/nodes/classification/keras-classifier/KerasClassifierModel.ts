@@ -5,6 +5,9 @@ import {ClassifierPortModel} from "../../../ports/model/ClassifierPortModel";
 import createEngine, {DiagramEngine} from "@projectstorm/react-diagrams";
 import {DragEvent} from "react";
 import {MyDiagramModel} from "../../../../app/diagram/MyDiagramModel";
+import {FactoriesManager} from "../../../../app/FactoriesManager";
+import {MyZoomCanvasAction} from "../../../../app/actions/MyZoomCanvasAction";
+import {DiagramStateManager} from "../../../../app/states/DiagramStateManager";
 
 export const KERAS_CLASSIFIER: NodeConfig = {
     codeName: "KerasClassifier",
@@ -14,6 +17,7 @@ export const KERAS_CLASSIFIER: NodeConfig = {
 export class KerasClassifierModel extends BaseNodeModel {
 
     private readonly engine: DiagramEngine = createEngine({registerDefaultZoomCanvasAction: false});
+    private readonly factoriesManager: FactoriesManager;
 
     constructor() {
         super(KERAS_CLASSIFIER);
@@ -21,6 +25,17 @@ export class KerasClassifierModel extends BaseNodeModel {
         this.addOutPort();
         const model = new MyDiagramModel();
         this.engine.setModel(model);
+        this.factoriesManager = new FactoriesManager(this.engine);
+        this.startUp();
+    }
+
+    startUp = () => {
+        this.factoriesManager.registerNodeFactories();
+        this.factoriesManager.registerPortFactories();
+        // this.newCanvas();
+        this.engine.getActionEventBus().registerAction(new MyZoomCanvasAction());
+        // this.engine.getStateMachine().pushState(new DiagramStateManager(this.typeChecker));
+        this.engine.maxNumberPointsPerLink = 0;
     }
 
     getEngine(): DiagramEngine {
