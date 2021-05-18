@@ -24,6 +24,7 @@ import {DECISION_TREE_CLASSIFIER} from "./classification/decision-tree-classifie
 import {LINEAR_REGRESSION} from "./regression/linear-regression/LinearRegressionModel";
 import {LOGISTIC_REGRESSION} from "./regression/logistic-regression/LogisticRegressionModel";
 import {SVM_REGRESSOR} from "./regression/svm-regressor/SVMRegressorModel";
+import {KERAS_CLASSIFIER} from "./classification/keras-classifier/KerasClassifierModel";
 
 /*
 Every node type must be added to the nodes array
@@ -66,7 +67,7 @@ export const VISUALIZATION_CONFIG: CategoryConfig = {
 export const CLASSIFIER_CONFIG: CategoryConfig = {
     category: 'Classification',
     color: 'rgb(46,139,192)',
-    nodes: [DECISION_TREE_CLASSIFIER, RANDOM_FOREST_CLASSIFIER, SVM_CLASSIFIER, K_NEAREST_NEIGHBORS_CLASSIFIER],
+    nodes: [DECISION_TREE_CLASSIFIER, RANDOM_FOREST_CLASSIFIER, SVM_CLASSIFIER, K_NEAREST_NEIGHBORS_CLASSIFIER, KERAS_CLASSIFIER],
 }
 
 export const REGRESSOR_CONFIG: CategoryConfig = {
@@ -88,6 +89,10 @@ export const EVALUATE_REGRESSOR_CONFIG: CategoryConfig = {
 }
 
 export const CATEGORIES = [DATA_SOURCE_CONFIG, DATA_TRANSFORMATION_CONFIG, DATA_BALANCING_CONFIG,
+    VISUALIZATION_CONFIG, CLASSIFIER_CONFIG, REGRESSOR_CONFIG,
+    EVALUATE_CLASSIFIER_CONFIG, EVALUATE_REGRESSOR_CONFIG];
+
+export const NEURAL_NETWORK_CATEGORIES = [DATA_SOURCE_CONFIG, DATA_TRANSFORMATION_CONFIG, DATA_BALANCING_CONFIG,
     VISUALIZATION_CONFIG, CLASSIFIER_CONFIG, REGRESSOR_CONFIG,
     EVALUATE_CLASSIFIER_CONFIG, EVALUATE_REGRESSOR_CONFIG];
 

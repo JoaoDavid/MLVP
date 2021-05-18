@@ -2,3 +2,4 @@ from .RandomForestClassifier import RandomForestClassifier
 from .SVMClassifier import SVMClassifier
 from .KNearestNeighborsClassifier import KNearestNeighborsClassifier
 from .DecisionTreeClassifier import DecisionTreeClassifier
+from .KerasClassifier import KerasClassifier

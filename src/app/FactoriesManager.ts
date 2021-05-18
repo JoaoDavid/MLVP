@@ -27,6 +27,7 @@ import {DecisionTreeClassifierFactory} from "../components/nodes/classification/
 import {LinearRegressionFactory} from "../components/nodes/regression/linear-regression/LinearRegressionFactory";
 import {LogisticRegressionFactory} from "../components/nodes/regression/logistic-regression/LogisticRegressionFactory";
 import {SVMRegressorFactory} from "../components/nodes/regression/svm-regressor/SVMRegressorFactory";
+import {KerasClassifierFactory} from "../components/nodes/classification/keras-classifier/KerasClassifierFactory";
 
 
 export class FactoriesManager {
@@ -63,6 +64,7 @@ export class FactoriesManager {
         this.engine.getNodeFactories().registerFactory(LinearRegressionFactory.getInstance());
         this.engine.getNodeFactories().registerFactory(LogisticRegressionFactory.getInstance());
         this.engine.getNodeFactories().registerFactory(SVMRegressorFactory.getInstance());
+        this.engine.getNodeFactories().registerFactory(KerasClassifierFactory.getInstance());
     }
 
     registerPortFactories = () => {

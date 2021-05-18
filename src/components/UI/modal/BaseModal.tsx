@@ -47,7 +47,7 @@ const BaseModal = (props: BaseModalProps) => {
 
     return (
         <>
-            <Modal animation={false} size="lg" show={props.show} onHide={() => {
+            <Modal animation={false} size="xl" show={props.show} onHide={() => {
                 props.handleClose();
                 finishEditingText()
             }}>

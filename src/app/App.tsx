@@ -17,6 +17,7 @@ import {TypeChecker, TypeCheckResponse} from "./typecheck/TypeChecker";
 import {BaseNodeModel} from "../components/core/BaseNode/BaseNodeModel";
 import {DefaultLinkModel} from "@projectstorm/react-diagrams-defaults";
 import {FactoriesManager} from "./FactoriesManager";
+import {CATEGORIES} from "../components/nodes/Config";
 
 interface AppProps {
 
@@ -244,7 +245,7 @@ class App extends React.Component<AppProps, AppState> {
                 <TopNav newCanvas={this.newCanvas} open={this.openSave} save={this.downloadSave}
                         compile={this.compile} loadDemos={this.loadDemos()}/>
                 <div className={classes.Container}>
-                    <SideBar format={this.dragDropFormat}/>
+                    <SideBar format={this.dragDropFormat} categories={CATEGORIES}/>
                     <Canvas engine={this.engine} onDropCanvas={this.onDropCanvas}/>
                 </div>
                 <BottomNav unsatNodeAssertions={this.state.unsatNodeAssertions}
