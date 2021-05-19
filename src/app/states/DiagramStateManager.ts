@@ -19,20 +19,20 @@ export class DiagramStateManager extends State<DiagramEngine> {
     dragItems: DragDiagramItemsState;
     selectLink: SelectLinkState;
 
-    private validateLinks: TypeChecker;
+    private typeChecker: TypeChecker;
 
-    constructor(validateLinks: TypeChecker) {
+    constructor(typeChecker: TypeChecker) {
         super({
             name: 'default-diagrams'
         });
         this.childStates = [new SelectingState()];
         this.dragCanvas = new DragCanvasState();
-        this.dragNewLink = new MyDragNewLinkState(validateLinks);
+        this.dragNewLink = new MyDragNewLinkState(typeChecker);
         this.dragItems = new DragDiagramItemsState();
 
         // But this is a custom one!
         this.selectLink = new SelectLinkState();
-        this.validateLinks = validateLinks;
+        this.typeChecker = typeChecker;
 
         this.registerClicks();
     }
