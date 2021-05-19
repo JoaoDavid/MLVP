@@ -1,4 +1,4 @@
-from mlvp.graph import DatasetPort
+from mlvp.graph import DatasetPort, LayerPort
 
 
 class DataFlow:
@@ -25,5 +25,8 @@ class DataFlow:
             if isinstance(parent_link.source_port, DatasetPort):
                 parent_link.target_port.columns = parent_link.source_port.columns
                 parent_link.target_port.encoded_columns = parent_link.source_port.encoded_columns
+            elif isinstance(parent_link.source_port, LayerPort):
+                parent_link.target_port.num_layers = parent_link.source_port.num_layers
+
         # sent data to current node's output port
         node.data_flow(self.node_columns)
