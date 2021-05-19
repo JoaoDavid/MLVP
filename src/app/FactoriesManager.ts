@@ -28,6 +28,12 @@ import {LinearRegressionFactory} from "../components/nodes/regression/linear-reg
 import {LogisticRegressionFactory} from "../components/nodes/regression/logistic-regression/LogisticRegressionFactory";
 import {SVMRegressorFactory} from "../components/nodes/regression/svm-regressor/SVMRegressorFactory";
 import {KerasClassifierFactory} from "../components/nodes/classification/keras-classifier/KerasClassifierFactory";
+import {SequentialFactory} from "../components/nodes/neural-network/model/sequential/SequentialFactory";
+import {DenseFactory} from "../components/nodes/neural-network/layer/dense/DenseFactory";
+import {CompilerFactory} from "../components/nodes/neural-network/compiler/CompilerFactory";
+import {StochasticGradientDescentFactory} from "../components/nodes/neural-network/optimizer/stochastic-gradient-descent/StochasticGradientDescentFactory";
+import {OptimizerPortFactory} from "../components/ports/optimizer/OptimizerPortFactory";
+import {LayerPortFactory} from "../components/ports/layer/LayerPortFactory";
 
 
 export class FactoriesManager {
@@ -67,10 +73,19 @@ export class FactoriesManager {
         this.engine.getNodeFactories().registerFactory(KerasClassifierFactory.getInstance());
     }
 
+    registerNeuralNetworkNodes = () => {
+        this.engine.getNodeFactories().registerFactory(SequentialFactory.getInstance());
+        this.engine.getNodeFactories().registerFactory(DenseFactory.getInstance());
+        this.engine.getNodeFactories().registerFactory(CompilerFactory.getInstance());
+        this.engine.getNodeFactories().registerFactory(StochasticGradientDescentFactory.getInstance());
+    }
+
     registerPortFactories = () => {
         this.engine.getPortFactories().registerFactory(DatasetPortFactory.getInstance());
         this.engine.getPortFactories().registerFactory(ClassifierPortFactory.getInstance());
         this.engine.getPortFactories().registerFactory(RegressorPortFactory.getInstance());
+        this.engine.getPortFactories().registerFactory(OptimizerPortFactory.getInstance());
+        this.engine.getPortFactories().registerFactory(LayerPortFactory.getInstance());
     }
 
     delDefaultFactory = () => {
