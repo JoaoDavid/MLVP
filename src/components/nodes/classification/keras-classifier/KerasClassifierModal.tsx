@@ -9,11 +9,12 @@ import {DragEvent} from "react";
 import {BaseNodeModel} from "../../../core/BaseNode/BaseNodeModel";
 import Row from "react-bootstrap/Row";
 import {NEURAL_NETWORK_CATEGORIES} from "../../Config";
+import {Button} from "react-bootstrap";
 
 
 interface KerasClassifierModalProps {
     node: KerasClassifierModel;
-    engine: DiagramEngine
+    hideCanvas: (value: boolean) => void;
 }
 
 const KerasClassifierModal = (props: KerasClassifierModalProps) => {
@@ -23,13 +24,13 @@ const KerasClassifierModal = (props: KerasClassifierModalProps) => {
         try {
             const inJSON = JSON.parse(data);
             // data = {"codeName":"...","name":"..."}
-            const factory = props.engine.getNodeFactories().getFactory(inJSON.codeName);
+            const factory = props.node.getEngine().getNodeFactories().getFactory(inJSON.codeName);
             const node = factory.generateModel({}) as BaseNodeModel;
-            let point = props.engine.getRelativeMousePoint(event);
+            let point = props.node.getEngine().getRelativeMousePoint(event);
             node.setPosition(point);
             // node.setTitle(node.getTitle() + " " + ++this.generated_nodes_counter);
-            props.engine.getModel().addNode(node);
-            props.engine.repaintCanvas();
+            props.node.getEngine().getModel().addNode(node);
+            props.node.getEngine().repaintCanvas();
         } catch (e) {
             console.log(e);
         }
@@ -39,10 +40,15 @@ const KerasClassifierModal = (props: KerasClassifierModalProps) => {
         <Form>
             <Form.Group>
                 <Row>
+                    <Button onClick={() => props.hideCanvas(true)} variant="primary" size="lg">
+                        Primary button
+                    </Button>
+                </Row>
+                <Row>
                     <div className={classes.FrontPage}>
                         <div className={classes.Container}>
                             <SideBar format={"agfasg"} categories={NEURAL_NETWORK_CATEGORIES}/>
-                            <Canvas engine={props.engine} onDropCanvas={onDropCanvas}/>
+                            <Canvas engine={props.node.getEngine()} onDropCanvas={onDropCanvas}/>
                         </div>
                     </div>
                 </Row>

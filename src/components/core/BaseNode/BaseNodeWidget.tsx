@@ -27,6 +27,15 @@ export const eventNodeUpdated = (engine: DiagramEngine, node: BaseNodeModel) => 
     );
 }
 
+export const eventHideCanvas = (engine: DiagramEngine, value: boolean) => {
+    engine.getModel().fireEvent(
+        {
+            bool: value
+        },
+        'hideCanvas'
+    );
+}
+
 /**
  * Base Node Widget, used to shape every node within the project
  */

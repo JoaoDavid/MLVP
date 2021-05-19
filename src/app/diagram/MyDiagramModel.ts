@@ -8,6 +8,7 @@ export interface MyDiagramListener extends BaseEntityListener {
     typeCheckResponse?(event: BaseEntityEvent & { typeCheckResponse: TypeCheckResponse }): void;
     dataFlowResponse?(event: BaseEntityEvent & { dataFlowResponse: DataFlowResponse }): void;
     nodeUpdated?(event: BaseEntityEvent & { node: BaseNodeModel }): void;
+    hideCanvas?(event: BaseEntityEvent & { bool: boolean }): void;
 }
 
 export interface DiagramModelGenerics extends CanvasModelGenerics {
