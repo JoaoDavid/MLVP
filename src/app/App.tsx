@@ -19,7 +19,7 @@ import {DefaultLinkModel} from "@projectstorm/react-diagrams-defaults";
 import {FactoriesManager} from "./FactoriesManager";
 import {CATEGORIES, NEURAL_NETWORK_CATEGORIES} from "../components/nodes/Config";
 import {eventHideCanvas} from "../components/core/BaseNode/BaseNodeWidget";
-import {Button} from "react-bootstrap";
+import {Button, Modal} from "react-bootstrap";
 
 interface AppProps {
 
@@ -67,10 +67,11 @@ class App extends React.Component<AppProps, AppState> {
 
     startUp = () => {
         this.factoriesManager.registerNodeFactories();
+        this.factoriesManager.registerNeuralNetworkNodes();
         this.factoriesManager.registerPortFactories();
         this.newCanvas();
         this.engine.getActionEventBus().registerAction(new MyZoomCanvasAction());
-        this.engine.getStateMachine().pushState(new DiagramStateManager(this.typeChecker));
+        this.engine.getStateMachine().pushState(new DiagramStateManager("app-canvas", this.typeChecker));
         this.engine.maxNumberPointsPerLink = 0;
     }
 
@@ -79,7 +80,7 @@ class App extends React.Component<AppProps, AppState> {
         this.factoriesManager2.registerPortFactories();
         this.newCanvas2();
         this.engine2.getActionEventBus().registerAction(new MyZoomCanvasAction());
-        this.engine2.getStateMachine().pushState(new DiagramStateManager(this.typeChecker2));
+        this.engine2.getStateMachine().pushState(new DiagramStateManager("app-canvas", this.typeChecker2));
         this.engine2.maxNumberPointsPerLink = 0;
     }
 
@@ -89,7 +90,7 @@ class App extends React.Component<AppProps, AppState> {
                 console.log('event: hideCanvas');
                 console.log(event);
                 this.toggleCanvas();
-            },linksUpdated: (event) => {
+            }, linksUpdated: (event) => {
                 console.log('event: linksUpdated');
                 console.log(event);
             },
@@ -298,7 +299,12 @@ class App extends React.Component<AppProps, AppState> {
 
     toggleCanvas = () => {
         let showCanvas = !this.state.showCanvas;
-        this.setState({showCanvas: showCanvas})
+        // this.setState({showCanvas: showCanvas})
+        console.log(this.engine.getModel().isLocked())
+        this.engine.getModel().setLocked();
+        console.log(this.engine.getModel().isLocked())
+
+        this.engine.repaintCanvas();
     }
 
     render() {
@@ -314,18 +320,21 @@ class App extends React.Component<AppProps, AppState> {
                     <SideBar format={this.dragDropFormat} categories={CATEGORIES}/>
                     {canvas}
                 </div>
-                <div className={classes.Container}>
-                    <SideBar format={this.dragDropFormat} categories={NEURAL_NETWORK_CATEGORIES}/>
-                    <Canvas engine={this.engine2} onDropCanvas={this.onDropCanvas2}/>
-                </div>
+
+                {/*<div className={classes.Container}>*/}
+                {/*    <SideBar format={this.dragDropFormat} categories={NEURAL_NETWORK_CATEGORIES}/>*/}
+                {/*    <Canvas engine={this.engine2} onDropCanvas={this.onDropCanvas2}/>*/}
+                {/*</div>*/}
+
+
                 <Button onClick={this.toggleCanvas} variant="primary" size="lg">
                     Primary button
                 </Button>
-{/*                <BottomNav unsatNodeAssertions={this.state.unsatNodeAssertions}
+                <BottomNav unsatNodeAssertions={this.state.unsatNodeAssertions}
                            allNodeAssertions={this.state.allNodeAssertions}
                            allLinkAssertions={this.state.allLinkAssertions}
                            log={this.state.log}
-                />*/}
+                />
             </div>
         );
     }
