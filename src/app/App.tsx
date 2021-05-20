@@ -1,5 +1,6 @@
 import React, {DragEvent} from 'react';
 import classes from './App.module.css';
+import classesModalCanvas from '../components/nodes/classification/keras-classifier/Keras.module.css';
 import createEngine, {DiagramEngine} from '@projectstorm/react-diagrams';
 import TopNav from '../components/UI/top-nav/TopNav';
 import SideBar from "../components/UI/side-bar/SideBar";
@@ -20,6 +21,7 @@ import {FactoriesManager} from "./FactoriesManager";
 import {CATEGORIES, NEURAL_NETWORK_CATEGORIES} from "../components/nodes/Config";
 import {eventHideCanvas} from "../components/core/BaseNode/BaseNodeWidget";
 import {Button, Modal} from "react-bootstrap";
+import ModalFooter from "react-bootstrap/ModalFooter";
 
 interface AppProps {
 
@@ -31,6 +33,7 @@ type AppState = {
     allLinkAssertions: Map<DefaultLinkModel, string[]>,
     log: string[],
     showCanvas: boolean,
+    showModal: boolean
 };
 
 class App extends React.Component<AppProps, AppState> {
@@ -53,6 +56,7 @@ class App extends React.Component<AppProps, AppState> {
             allLinkAssertions: new Map(),
             log: [],
             showCanvas: true,
+            showModal: true,
         }
         this.engine = createEngine({registerDefaultZoomCanvasAction: false});
         this.typeChecker = new TypeChecker(this.engine);
@@ -235,7 +239,7 @@ class App extends React.Component<AppProps, AppState> {
             const node = factory.generateModel({}) as BaseNodeModel;
             let point = this.engine2.getRelativeMousePoint(event);
             node.setPosition(point);
-            node.setTitle(node.getTitle() + " " + ++this.generated_nodes_counter);
+            // node.setTitle(node.getTitle() + " " + ++this.generated_nodes_counter);
             this.engine2.getModel().addNode(node);
             this.engine2.repaintCanvas();
             this.typeChecker2.requestTypeCheck();
@@ -307,34 +311,56 @@ class App extends React.Component<AppProps, AppState> {
         this.engine.repaintCanvas();
     }
 
+    closeModal = () => {
+        this.setState({showModal: false})
+    }
+
+    openModal = () => {
+        this.setState({showModal: true})
+    }
+
     render() {
-        let canvas = null;
+        let innerCanvas = null;
         if (this.state.showCanvas) {
-            canvas = <Canvas engine={this.engine} onDropCanvas={this.onDropCanvas}/>
+            innerCanvas = (
+                <div className={classesModalCanvas.FrontPage}>
+                    <div className={classesModalCanvas.Container}>
+                        <SideBar format={this.dragDropFormat} categories={NEURAL_NETWORK_CATEGORIES}/>
+                        <Canvas engine={this.engine2} onDropCanvas={this.onDropCanvas2}/>
+                    </div>
+                </div>)
         }
+
         return (
             <div className={classes.FrontPage}>
                 <TopNav newCanvas={this.newCanvas} open={this.openSave} save={this.downloadSave}
                         compile={this.compile} loadDemos={this.loadDemos()}/>
+                <>
+                    <Modal animation={false} size="xl" show={this.state.showModal} onHide={this.closeModal}>
+                        <Modal.Header closeButton>
+                        </Modal.Header>
+                        <Modal.Body>
+                            {innerCanvas}
+                        </Modal.Body>
+                        <ModalFooter>{"ageg"}</ModalFooter>
+                    </Modal>
+                </>
+                <Button onClick={this.toggleCanvas} variant="primary" size="sm">
+                    Lock Nodes
+                </Button>
+                <Button onClick={this.openModal} variant="primary" size="sm">
+                    Open Canvas
+                </Button>
                 <div className={classes.Container}>
                     <SideBar format={this.dragDropFormat} categories={CATEGORIES}/>
-                    {canvas}
+                    <Canvas engine={this.engine} onDropCanvas={this.onDropCanvas}/>
                 </div>
 
-                {/*<div className={classes.Container}>*/}
-                {/*    <SideBar format={this.dragDropFormat} categories={NEURAL_NETWORK_CATEGORIES}/>*/}
-                {/*    <Canvas engine={this.engine2} onDropCanvas={this.onDropCanvas2}/>*/}
-                {/*</div>*/}
-
-
-                <Button onClick={this.toggleCanvas} variant="primary" size="lg">
-                    Primary button
-                </Button>
-                <BottomNav unsatNodeAssertions={this.state.unsatNodeAssertions}
+{/*                <BottomNav unsatNodeAssertions={this.state.unsatNodeAssertions}
                            allNodeAssertions={this.state.allNodeAssertions}
                            allLinkAssertions={this.state.allLinkAssertions}
                            log={this.state.log}
-                />
+                />*/}
             </div>
         );
     }
