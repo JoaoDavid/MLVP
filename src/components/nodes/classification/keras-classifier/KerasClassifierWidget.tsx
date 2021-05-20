@@ -13,7 +13,6 @@ interface KerasClassifierProps {
 const KerasClassifierWidget = (props: KerasClassifierProps) => {
 
     const hideCanvas = (value: boolean) => {
-        console.log("call hide canvas")
         eventHideCanvas(props.engine, value);
     }
 
