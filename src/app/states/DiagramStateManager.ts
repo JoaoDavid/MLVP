@@ -9,12 +9,13 @@ import {
 } from '@projectstorm/react-canvas-core';
 import { PortModel, DiagramEngine, DragDiagramItemsState } from '@projectstorm/react-diagrams';
 import {MyDragNewLinkState} from "./MyDragNewLinkState";
+import MyDragCanvasState from "./MyDragCanvasState";
 import {SelectLinkState} from './SelectLinkState';
 import {LinkModel} from "@projectstorm/react-diagrams-core";
 import {TypeChecker} from "../typecheck/TypeChecker";
 
 export class DiagramStateManager extends State<DiagramEngine> {
-    dragCanvas: DragCanvasState;
+    dragCanvas: MyDragCanvasState;
     dragNewLink: MyDragNewLinkState;
     dragItems: DragDiagramItemsState;
     selectLink: SelectLinkState;
@@ -26,7 +27,7 @@ export class DiagramStateManager extends State<DiagramEngine> {
             name: name
         });
         this.childStates = [new SelectingState()];
-        this.dragCanvas = new DragCanvasState();
+        this.dragCanvas = new MyDragCanvasState();
         this.dragNewLink = new MyDragNewLinkState(typeChecker);
         this.dragItems = new DragDiagramItemsState();
 
