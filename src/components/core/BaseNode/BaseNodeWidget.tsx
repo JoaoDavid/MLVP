@@ -44,10 +44,11 @@ const BaseNodeWidget = (props: BaseNodeProps) => {
     const [, setTitle] = useState(props.node.getTitle);
     const [modalOpen, setModal] = useState(false);
 
+
     const sendOpenCanvasEvent = () => {
         props.engine.getModel().fireEvent(
             {
-                modal: props.modalChildren,
+                modal: modal,
             },
             'modalContent'
         );
@@ -75,6 +76,18 @@ const BaseNodeWidget = (props: BaseNodeProps) => {
         nodeClasses.push(classes.NodeSelected);
     }
 
+    const modal = (
+        <BaseModal handleClose={closeModal}
+                   handleShow={openModal}
+                   show={modalOpen}
+                   title={props.node.getTitle()}
+                   footer={props.node.getOptions().name}
+            // footer={props.node.getOptions().id}
+                   saveTitle={updateTitle}
+        >
+            {props.modalChildren}
+        </BaseModal>);
+
     return (
         <div className={nodeClasses.join(' ')}
              data-default-node-name={props.node.getTitle()}
@@ -89,16 +102,6 @@ const BaseNodeWidget = (props: BaseNodeProps) => {
                 </div>
                 <PortContainer generatePort={generatePort} ports={props.node.getOutPorts()}/>
             </div>
-            <BaseModal handleClose={closeModal}
-                       handleShow={openModal}
-                       show={modalOpen}
-                       title={props.node.getTitle()}
-                       footer={props.node.getOptions().name}
-                        // footer={props.node.getOptions().id}
-                       saveTitle={updateTitle}
-            >
-                {props.modalChildren}
-            </BaseModal>
         </div>
     );
 

@@ -57,7 +57,7 @@ class App extends React.Component<AppProps, AppState> {
             allLinkAssertions: new Map(),
             log: [],
             showCanvas: true,
-            showModal: true,
+            showModal: false,
             modal: null,
         }
         this.engine = createEngine({registerDefaultZoomCanvasAction: false});
@@ -94,7 +94,7 @@ class App extends React.Component<AppProps, AppState> {
             hideCanvas: (event) => {
                 console.log('event: hideCanvas');
                 console.log(event);
-                this.toggleCanvas();
+                this.toggleCanvasLock();
             }, linksUpdated: (event) => {
                 console.log('event: linksUpdated');
                 console.log(event);
@@ -309,14 +309,8 @@ class App extends React.Component<AppProps, AppState> {
         this.setState({log: auxLog});
     }
 
-    toggleCanvas = () => {
-        let showCanvas = !this.state.showCanvas;
-        // this.setState({showCanvas: showCanvas})
-        console.log(this.engine.getModel().isLocked())
-        this.engine.getModel().setLocked();
-        console.log(this.engine.getModel().isLocked())
-
-        this.engine.repaintCanvas();
+    toggleCanvasLock = () => {
+        this.engine.getModel().setLocked(!this.engine.getModel().isLocked());
     }
 
     closeModal = () => {
@@ -345,16 +339,10 @@ class App extends React.Component<AppProps, AppState> {
                         compile={this.compile} loadDemos={this.loadDemos()}/>
                 <>
                     <Modal animation={false} size="xl" show={this.state.showModal} onHide={this.closeModal}>
-                        <Modal.Header closeButton>
-                        </Modal.Header>
-                        <Modal.Body>
-                            {/*{innerCanvas}*/}
-                            {this.state.modal}
-                        </Modal.Body>
-                        <ModalFooter>{"ageg"}</ModalFooter>
+                        {this.state.modal}
                     </Modal>
                 </>
-                <Button onClick={this.toggleCanvas} variant="primary" size="sm">
+                <Button onClick={this.toggleCanvasLock} variant="primary" size="sm">
                     Lock Nodes
                 </Button>
                 <Button onClick={this.openModal} variant="primary" size="sm">

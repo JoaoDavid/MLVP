@@ -47,10 +47,7 @@ const BaseModal = (props: BaseModalProps) => {
 
     return (
         <>
-            <Modal animation={false} size="xl" show={props.show} onHide={() => {
-                props.handleClose();
-                finishEditingText()
-            }}>
+
                 <Modal.Header closeButton>
                     <div style={{height: "30px"}} onClick={startEditingText}>
                         {currTitleElement}
@@ -60,7 +57,7 @@ const BaseModal = (props: BaseModalProps) => {
                     {props.children}
                 </Modal.Body>
                 <ModalFooter>{props.footer}</ModalFooter>
-            </Modal>
+
         </>
     )
 }
