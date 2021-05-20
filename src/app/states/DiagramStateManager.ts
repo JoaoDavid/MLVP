@@ -21,9 +21,9 @@ export class DiagramStateManager extends State<DiagramEngine> {
 
     private typeChecker: TypeChecker;
 
-    constructor(typeChecker: TypeChecker) {
+    constructor(name: string, typeChecker: TypeChecker) {
         super({
-            name: 'default-diagrams'
+            name: name
         });
         this.childStates = [new SelectingState()];
         this.dragCanvas = new DragCanvasState();
@@ -43,6 +43,7 @@ export class DiagramStateManager extends State<DiagramEngine> {
             new Action({
                 type: InputType.MOUSE_DOWN,
                 fire: (event: ActionEvent<MouseEvent>) => {
+                    console.log(this.getOptions().name)
                     const element = this.engine.getActionEventBus().getModelForEvent(event);
 
                     // the canvas was clicked on, transition to the dragging canvas state
