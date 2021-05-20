@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {KerasClassifierModel} from './KerasClassifierModel';
-import BaseNodeWidget, {eventNodeUpdated, eventHideCanvas} from '../../../core/BaseNode/BaseNodeWidget';
+import BaseNodeWidget from '../../../core/BaseNode/BaseNodeWidget';
 import KerasClassifierModal from './KerasClassifierModal';
 import {CLASSIFIER_CONFIG} from "../../Config";
 
@@ -12,11 +12,7 @@ interface KerasClassifierProps {
 
 const KerasClassifierWidget = (props: KerasClassifierProps) => {
 
-    const hideCanvas = (value: boolean) => {
-        eventHideCanvas(props.engine, value);
-    }
-
-    const modal = <KerasClassifierModal node={props.node} hideCanvas={hideCanvas}/>;
+    const modal = <KerasClassifierModal node={props.node}/>;
     return (
         <BaseNodeWidget node={props.node} engine={props.engine} color={CLASSIFIER_CONFIG.color}
                         modalChildren={modal}>
