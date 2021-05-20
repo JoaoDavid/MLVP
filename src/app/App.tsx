@@ -33,7 +33,8 @@ type AppState = {
     allLinkAssertions: Map<DefaultLinkModel, string[]>,
     log: string[],
     showCanvas: boolean,
-    showModal: boolean
+    showModal: boolean,
+    modal: React.ReactNode,
 };
 
 class App extends React.Component<AppProps, AppState> {
@@ -57,6 +58,7 @@ class App extends React.Component<AppProps, AppState> {
             log: [],
             showCanvas: true,
             showModal: true,
+            modal: null,
         }
         this.engine = createEngine({registerDefaultZoomCanvasAction: false});
         this.typeChecker = new TypeChecker(this.engine);
@@ -71,7 +73,6 @@ class App extends React.Component<AppProps, AppState> {
 
     startUp = () => {
         this.factoriesManager.registerNodeFactories();
-        this.factoriesManager.registerNeuralNetworkNodes();
         this.factoriesManager.registerPortFactories();
         this.newCanvas();
         this.engine.getActionEventBus().registerAction(new MyZoomCanvasAction());
@@ -114,6 +115,7 @@ class App extends React.Component<AppProps, AppState> {
             },
             typeCheckResponse: (event) => {
                 console.log("event: typeCheckResponse");
+                console.log(event);
                 const allNodeAssertions = this.processNodeAssertions(event.typeCheckResponse.nodeAssertions);
                 const allLinkAssertions = this.processLinkAssertions(event.typeCheckResponse);
                 const unsatNodeAssertions = this.processNodeAssertions(event.typeCheckResponse.unsatNodeAssertions);
@@ -129,6 +131,12 @@ class App extends React.Component<AppProps, AppState> {
                 console.log("event: typeCheckResponse");
                 this.processNodeColumns(event.dataFlowResponse.nodeColumns);
                 this.setState({});
+                this.engine.repaintCanvas();
+            },
+            modalContent: (event) => {
+                console.log("event: modalContent");
+                this.setState({modal: event.modal});
+                this.openModal();
                 this.engine.repaintCanvas();
             }
         });
@@ -201,7 +209,7 @@ class App extends React.Component<AppProps, AppState> {
     newCanvas2 = () => {
         const model = new MyDiagramModel();
         this.engine2.setModel(model);
-        this.registerListeners(model);
+        // this.registerListeners(model);
         this.updateLog("New canvas");
         this.setState({
             unsatNodeAssertions: new Map(),
@@ -340,7 +348,8 @@ class App extends React.Component<AppProps, AppState> {
                         <Modal.Header closeButton>
                         </Modal.Header>
                         <Modal.Body>
-                            {innerCanvas}
+                            {/*{innerCanvas}*/}
+                            {this.state.modal}
                         </Modal.Body>
                         <ModalFooter>{"ageg"}</ModalFooter>
                     </Modal>
@@ -356,11 +365,11 @@ class App extends React.Component<AppProps, AppState> {
                     <Canvas engine={this.engine} onDropCanvas={this.onDropCanvas}/>
                 </div>
 
-{/*                <BottomNav unsatNodeAssertions={this.state.unsatNodeAssertions}
+                <BottomNav unsatNodeAssertions={this.state.unsatNodeAssertions}
                            allNodeAssertions={this.state.allNodeAssertions}
                            allLinkAssertions={this.state.allLinkAssertions}
                            log={this.state.log}
-                />*/}
+                />
             </div>
         );
     }

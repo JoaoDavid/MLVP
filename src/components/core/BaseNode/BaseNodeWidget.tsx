@@ -44,6 +44,14 @@ const BaseNodeWidget = (props: BaseNodeProps) => {
     const [, setTitle] = useState(props.node.getTitle);
     const [modalOpen, setModal] = useState(false);
 
+    const sendOpenCanvasEvent = () => {
+        props.engine.getModel().fireEvent(
+            {
+                modal: props.modalChildren,
+            },
+            'modalContent'
+        );
+    }
 
     const updateTitle = (title: string) => {
         props.node.setTitle(title);
@@ -71,7 +79,7 @@ const BaseNodeWidget = (props: BaseNodeProps) => {
         <div className={nodeClasses.join(' ')}
              data-default-node-name={props.node.getTitle()}
              style={{background: props.color}}
-             onDoubleClick={openModal}
+             onDoubleClick={sendOpenCanvasEvent}
         >
             <Title name={props.node.getTitle()}/>
             <div className={classes.Content}>

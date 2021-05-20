@@ -3,12 +3,14 @@ import {LinkModel} from "@projectstorm/react-diagrams-core";
 import {BaseEntityEvent, BaseEntityListener, CanvasModelGenerics} from "@projectstorm/react-canvas-core";
 import {DataFlowResponse, TypeCheckResponse} from "../typecheck/TypeChecker";
 import {BaseNodeModel} from "../../components/core/BaseNode/BaseNodeModel";
+import * as React from "react";
 
 export interface MyDiagramListener extends BaseEntityListener {
     typeCheckResponse?(event: BaseEntityEvent & { typeCheckResponse: TypeCheckResponse }): void;
     dataFlowResponse?(event: BaseEntityEvent & { dataFlowResponse: DataFlowResponse }): void;
     nodeUpdated?(event: BaseEntityEvent & { node: BaseNodeModel }): void;
     hideCanvas?(event: BaseEntityEvent & { bool: boolean }): void;
+    modalContent?(event: BaseEntityEvent & { modal: React.ReactNode }): void;
 }
 
 export interface DiagramModelGenerics extends CanvasModelGenerics {
