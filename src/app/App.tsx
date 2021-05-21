@@ -21,7 +21,6 @@ import {FactoriesManager} from "./FactoriesManager";
 import {CATEGORIES, NEURAL_NETWORK_CATEGORIES} from "../components/nodes/Config";
 import {eventHideCanvas} from "../components/core/BaseNode/BaseNodeWidget";
 import {Button, Modal} from "react-bootstrap";
-import ModalFooter from "react-bootstrap/ModalFooter";
 
 interface AppProps {
 
@@ -45,10 +44,6 @@ class App extends React.Component<AppProps, AppState> {
     private readonly typeChecker: TypeChecker;
     private generated_nodes_counter = 0;
 
-    private readonly engine2: DiagramEngine;
-    private readonly factoriesManager2: FactoriesManager;
-    private readonly typeChecker2: TypeChecker;
-
     constructor(props: AppProps) {
         super(props);
         this.state = {
@@ -64,11 +59,6 @@ class App extends React.Component<AppProps, AppState> {
         this.typeChecker = new TypeChecker(this.engine);
         this.factoriesManager = new FactoriesManager(this.engine);
         this.startUp();
-
-        this.engine2 = createEngine({registerDefaultZoomCanvasAction: false});
-        this.typeChecker2 = new TypeChecker(this.engine2);
-        this.factoriesManager2 = new FactoriesManager(this.engine2);
-        this.startUp2();
     }
 
     startUp = () => {
@@ -78,15 +68,6 @@ class App extends React.Component<AppProps, AppState> {
         this.engine.getActionEventBus().registerAction(new MyZoomCanvasAction());
         this.engine.getStateMachine().pushState(new DiagramStateManager("app-canvas", this.typeChecker));
         this.engine.maxNumberPointsPerLink = 0;
-    }
-
-    startUp2 = () => {
-        this.factoriesManager2.registerNeuralNetworkNodes();
-        this.factoriesManager2.registerPortFactories();
-        this.newCanvas2();
-        this.engine2.getActionEventBus().registerAction(new MyZoomCanvasAction());
-        this.engine2.getStateMachine().pushState(new DiagramStateManager("app-canvas", this.typeChecker2));
-        this.engine2.maxNumberPointsPerLink = 0;
     }
 
     registerListeners = (model: MyDiagramModel) => {
@@ -206,18 +187,6 @@ class App extends React.Component<AppProps, AppState> {
         });
     }
 
-    newCanvas2 = () => {
-        const model = new MyDiagramModel();
-        this.engine2.setModel(model);
-        // this.registerListeners(model);
-        this.updateLog("New canvas");
-        this.setState({
-            unsatNodeAssertions: new Map(),
-            allNodeAssertions: new Map(),
-            allLinkAssertions: new Map(),
-        });
-    }
-
     onDropCanvas = (event: DragEvent<HTMLDivElement>) => {
         event.preventDefault();
         const data = event.dataTransfer.getData(this.dragDropFormat);
@@ -232,25 +201,6 @@ class App extends React.Component<AppProps, AppState> {
             this.engine.getModel().addNode(node);
             this.engine.repaintCanvas();
             this.typeChecker.requestTypeCheck();
-        } catch (e) {
-            console.log(e);
-        }
-    }
-
-    onDropCanvas2 = (event: DragEvent<HTMLDivElement>) => {
-        event.preventDefault();
-        const data = event.dataTransfer.getData(this.dragDropFormat);
-        try {
-            const inJSON = JSON.parse(data);
-            // data = {"codeName":"...","name":"..."}
-            const factory = this.engine2.getNodeFactories().getFactory(inJSON.codeName);
-            const node = factory.generateModel({}) as BaseNodeModel;
-            let point = this.engine2.getRelativeMousePoint(event);
-            node.setPosition(point);
-            // node.setTitle(node.getTitle() + " " + ++this.generated_nodes_counter);
-            this.engine2.getModel().addNode(node);
-            this.engine2.repaintCanvas();
-            this.typeChecker2.requestTypeCheck();
         } catch (e) {
             console.log(e);
         }
@@ -322,17 +272,6 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     render() {
-        let innerCanvas = null;
-        if (this.state.showCanvas) {
-            innerCanvas = (
-                <div className={classesModalCanvas.FrontPage}>
-                    <div className={classesModalCanvas.Container}>
-                        <SideBar format={this.dragDropFormat} categories={NEURAL_NETWORK_CATEGORIES}/>
-                        <Canvas engine={this.engine2} onDropCanvas={this.onDropCanvas2}/>
-                    </div>
-                </div>)
-        }
-
         return (
             <div className={classes.FrontPage}>
                 <TopNav newCanvas={this.newCanvas} open={this.openSave} save={this.downloadSave}
