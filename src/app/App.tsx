@@ -1,7 +1,5 @@
-import React, {DragEvent} from 'react';
+import React from 'react';
 import classes from './App.module.css';
-import classesModalCanvas from '../components/nodes/classification/keras-classifier/Keras.module.css';
-import createEngine, {DiagramEngine} from '@projectstorm/react-diagrams';
 import TopNav from '../components/UI/top-nav/TopNav';
 import SideBar from "../components/UI/side-bar/SideBar";
 import axios from "axios";
@@ -12,15 +10,11 @@ import {MyDiagramModel} from "./diagram/MyDiagramModel";
 import splitEvaluate from '../demos/split-n-evaluate.json';
 import posterDemo from '../demos/poster-demo.json';
 import encodeDecode from '../demos/encode_decode_demo.json';
-import {MyZoomCanvasAction} from "./actions/MyZoomCanvasAction";
-import {DiagramStateManager} from "./states/DiagramStateManager";
-import {TypeChecker, TypeCheckResponse} from "./typecheck/TypeChecker";
 import {BaseNodeModel} from "../components/core/BaseNode/BaseNodeModel";
 import {DefaultLinkModel} from "@projectstorm/react-diagrams-defaults";
-import {FactoriesManager} from "./FactoriesManager";
-import {CATEGORIES, NEURAL_NETWORK_CATEGORIES} from "../components/nodes/Config";
-import {eventHideCanvas} from "../components/core/BaseNode/BaseNodeWidget";
+import {CATEGORIES} from "../components/nodes/Config";
 import {Button, Modal} from "react-bootstrap";
+import {CanvasManager} from "./CanvasManager";
 
 interface AppProps {
 
@@ -38,11 +32,7 @@ type AppState = {
 
 class App extends React.Component<AppProps, AppState> {
 
-    private readonly dragDropFormat: string = "side-bar-drag-drop";
-    private readonly engine: DiagramEngine;
-    private readonly factoriesManager: FactoriesManager;
-    private readonly typeChecker: TypeChecker;
-    private generated_nodes_counter = 0;
+    private readonly canvasManager = new CanvasManager("app_canvas");
 
     constructor(props: AppProps) {
         super(props);
@@ -55,19 +45,8 @@ class App extends React.Component<AppProps, AppState> {
             showModal: false,
             modal: null,
         }
-        this.engine = createEngine({registerDefaultZoomCanvasAction: false});
-        this.typeChecker = new TypeChecker(this.engine);
-        this.factoriesManager = new FactoriesManager(this.engine);
-        this.startUp();
-    }
-
-    startUp = () => {
-        this.factoriesManager.registerNodeFactories();
-        this.factoriesManager.registerPortFactories();
+        this.canvasManager.registerBasicMLCanvas();
         this.newCanvas();
-        this.engine.getActionEventBus().registerAction(new MyZoomCanvasAction());
-        this.engine.getStateMachine().pushState(new DiagramStateManager("app-canvas", this.typeChecker));
-        this.engine.maxNumberPointsPerLink = 0;
     }
 
     registerListeners = (model: MyDiagramModel) => {
@@ -88,7 +67,7 @@ class App extends React.Component<AppProps, AppState> {
             nodeUpdated: (event) => {
                 console.log("event: nodeUpdated");
                 console.log(event);
-                this.typeChecker.requestTypeCheck();
+                this.canvasManager.getTypeChecker().requestTypeCheck();
             },
             nodesUpdated: (event) => {
                 console.log("event: nodesUpdated");
@@ -97,88 +76,52 @@ class App extends React.Component<AppProps, AppState> {
             typeCheckResponse: (event) => {
                 console.log("event: typeCheckResponse");
                 console.log(event);
-                const allNodeAssertions = this.processNodeAssertions(event.typeCheckResponse.nodeAssertions);
-                const allLinkAssertions = this.processLinkAssertions(event.typeCheckResponse);
-                const unsatNodeAssertions = this.processNodeAssertions(event.typeCheckResponse.unsatNodeAssertions);
+                const allNodeAssertions = this.canvasManager.processNodeAssertions(event.typeCheckResponse.nodeAssertions);
+                const allLinkAssertions = this.canvasManager.processLinkAssertions(event.typeCheckResponse);
+                const unsatNodeAssertions = this.canvasManager.processNodeAssertions(event.typeCheckResponse.unsatNodeAssertions);
                 // this.processNodeColumns(event.typeCheckResponse.nodeColumns);
                 this.setState({
                     unsatNodeAssertions: unsatNodeAssertions,
                     allNodeAssertions: allNodeAssertions,
                     allLinkAssertions: allLinkAssertions,
                 });
-                this.engine.repaintCanvas();
+                this.canvasManager.getEngine().repaintCanvas();
             },
             dataFlowResponse: (event) => {
                 console.log("event: typeCheckResponse");
-                this.processNodeColumns(event.dataFlowResponse.nodeColumns);
+                this.canvasManager.processNodeColumns(event.dataFlowResponse.nodeColumns);
                 this.setState({});
-                this.engine.repaintCanvas();
+                this.canvasManager.getEngine().repaintCanvas();
             },
             modalContent: (event) => {
                 console.log("event: modalContent");
                 this.setState({modal: event.modal});
                 this.openModal();
-                this.engine.repaintCanvas();
+                this.canvasManager.getEngine().repaintCanvas();
             }
         });
-    }
-
-    processNodeAssertions = (mapNodeAssertions) => {
-        const map = new Map<BaseNodeModel, string[]>();
-
-        for (let k of Object.keys(mapNodeAssertions)) {
-            const node = this.engine.getModel().getNode(k) as BaseNodeModel;
-            map.set(node, mapNodeAssertions[k]);
-        }
-        return map;
-    }
-
-    processNodeColumns = (mapNodeColumns) => {
-        for (let k of Object.keys(mapNodeColumns)) {
-            const node = this.engine.getModel().getNode(k) as BaseNodeModel;
-            node.setColumnsAndTypes(mapNodeColumns[k]);
-        }
-    }
-
-    processLinkAssertions = (typeCheckResponse: TypeCheckResponse) => {
-        const map = new Map<DefaultLinkModel, string[]>();
-
-        for (let k of Object.keys(typeCheckResponse.linkAssertions)) {
-            const link = this.engine.getModel().getLink(k) as DefaultLinkModel;
-            console.log(link)
-            map.set(link, typeCheckResponse.linkAssertions[k]);
-        }
-        return map;
     }
 
     loadDemos = () => {
         const map = new Map<String, () => void>();
         map.set("Simple Pipeline", () => {
-            this.canvasLoadDiagram(splitEvaluate);
+            this.canvasManager.loadModel(splitEvaluate);
             this.updateLog("Loaded demo Simple Pipeline");
         });
         map.set("Poster - Balanced Dataset Problem", () => {
-            this.canvasLoadDiagram(posterDemo);
+            this.canvasManager.loadModel(posterDemo);
             this.updateLog("Loaded demo Poster - Balanced Dataset Problem");
         });
         map.set("Encode Decode Demo", () => {
-            this.canvasLoadDiagram(encodeDecode);
+            this.canvasManager.loadModel(encodeDecode);
             this.updateLog("Loaded demo Encode Decode Demo");
         });
         return map;
     }
 
-    canvasLoadDiagram = (diagram: any) => {
-        this.engine.getModel().deserializeModel(diagram, this.engine);
-        this.engine.repaintCanvas();
-        this.typeChecker.requestTypeCheck(diagram);
-    }
-
     newCanvas = () => {
-        const model = new MyDiagramModel();
-        this.engine.setModel(model);
+        let model = this.canvasManager.newCanvas();
         this.registerListeners(model);
-        this.generated_nodes_counter = 0;
         this.updateLog("New canvas");
         this.setState({
             unsatNodeAssertions: new Map(),
@@ -187,30 +130,11 @@ class App extends React.Component<AppProps, AppState> {
         });
     }
 
-    onDropCanvas = (event: DragEvent<HTMLDivElement>) => {
-        event.preventDefault();
-        const data = event.dataTransfer.getData(this.dragDropFormat);
-        try {
-            const inJSON = JSON.parse(data);
-            // data = {"codeName":"...","name":"..."}
-            const factory = this.engine.getNodeFactories().getFactory(inJSON.codeName);
-            const node = factory.generateModel({}) as BaseNodeModel;
-            let point = this.engine.getRelativeMousePoint(event);
-            node.setPosition(point);
-            node.setTitle(node.getTitle() + " " + ++this.generated_nodes_counter);
-            this.engine.getModel().addNode(node);
-            this.engine.repaintCanvas();
-            this.typeChecker.requestTypeCheck();
-        } catch (e) {
-            console.log(e);
-        }
-    }
-
     openSave = (event: React.ChangeEvent<HTMLInputElement>) => {
         const fileList = event.target.files;
         if (fileList.length > 0) {
             event.target.files[0].text().then((text: string) => {
-                this.canvasLoadDiagram(JSON.parse(text));
+                this.canvasManager.loadModel(JSON.parse(text));
             });
             this.updateLog("Loaded save file " + event.target.files[0].name);
         }
@@ -218,12 +142,12 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     downloadSave = () => {
-        const data = this.engine.getModel().serialize();
+        const data = this.canvasManager.getEngine().getModel().serialize();
         download(JSON.stringify(data, null, 4), 'mlvp.json');
     }
 
     requestCompilation = () => {
-        const data = this.engine.getModel().serialize();
+        const data = this.canvasManager.getEngine().getModel().serialize();
         axios.post('/compile', data)
             .then(response => {
                 if (response.data.successful) {
@@ -234,7 +158,7 @@ class App extends React.Component<AppProps, AppState> {
                 } else {
                     this.updateLog("Compiled with errors!");
                     this.updateLog("Make sure that all input ports within the pipeline are connected to another node!");
-                    this.typeChecker.eventTypeChecked(response.data);
+                    this.canvasManager.getTypeChecker().eventTypeChecked(response.data);
                 }
             })
             .catch(error => {
@@ -260,7 +184,7 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     toggleCanvasLock = () => {
-        this.engine.getModel().setLocked(!this.engine.getModel().isLocked());
+        this.canvasManager.getEngine().getModel().setLocked(!this.canvasManager.getEngine().getModel().isLocked());
     }
 
     closeModal = () => {
@@ -288,8 +212,8 @@ class App extends React.Component<AppProps, AppState> {
                     Open Canvas
                 </Button>
                 <div className={classes.Container}>
-                    <SideBar format={this.dragDropFormat} categories={CATEGORIES}/>
-                    <Canvas engine={this.engine} onDropCanvas={this.onDropCanvas}/>
+                    <SideBar format={this.canvasManager.getCanvasName()} categories={CATEGORIES}/>
+                    <Canvas engine={this.canvasManager.getEngine()} onDropCanvas={this.canvasManager.onDropCanvas}/>
                 </div>
 
                 <BottomNav unsatNodeAssertions={this.state.unsatNodeAssertions}
