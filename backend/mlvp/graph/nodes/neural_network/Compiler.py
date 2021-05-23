@@ -35,8 +35,17 @@ class Compiler(Node):
         optimizer_port = self.get_port(True, "Optimizer")
         z3_in_layers = Int(PORT_PROP.format(id_port=layer_port.port_id, name="n_layers"))
 
+
+        for parent_link in self.parent_links:
+            print(parent_link.target_port == layer_port)
+
+        layer_assertions = []
+        if self.all_input_ports_linked():
+            layer_assertions = [
+                z3_in_layers == layer_port.num_layers,
+                z3_in_layers > 0,
+            ]
+
         return [
             # requires
-            z3_in_layers == layer_port.num_layers,
-            z3_in_layers > 0,
-        ]
+        ] + layer_assertions
