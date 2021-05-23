@@ -19,6 +19,7 @@ export class KerasClassifierModel extends BaseNodeModel {
 
     private readonly dragDropFormat: string = "neural_network";
     private readonly engine: DiagramEngine;
+    private model: MyDiagramModel;
     private readonly factoriesManager: FactoriesManager;
     private readonly typeChecker: TypeChecker;
     private generated_nodes_counter = 0;
@@ -45,6 +46,7 @@ export class KerasClassifierModel extends BaseNodeModel {
 
     newCanvas = () => {
         const model = new MyDiagramModel();
+        this.model = model;
         this.engine.setModel(model);
         this.generated_nodes_counter = 0;
     }
@@ -71,6 +73,14 @@ export class KerasClassifierModel extends BaseNodeModel {
 
     getEngine(): DiagramEngine {
         return this.engine;
+    }
+
+    getModel(): MyDiagramModel {
+        return this.model;
+    }
+
+    getTypeChecker(): TypeChecker {
+        return this.typeChecker;
     }
 
     getDragDropFormat(): string {

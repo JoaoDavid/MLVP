@@ -16,6 +16,7 @@ export interface BaseNodeProps {
     children?: React.ReactNode;
     modalChildren?: React.ReactNode;
     color: string;
+    onDoubleClick?: () => void;
 }
 
 export const eventNodeUpdated = (engine: DiagramEngine, node: BaseNodeModel) => {
@@ -46,6 +47,7 @@ const BaseNodeWidget = (props: BaseNodeProps) => {
 
 
     const sendOpenCanvasEvent = () => {
+        console.log("sending event modelContent")
         props.engine.getModel().fireEvent(
             {
                 modal: modal,
@@ -92,7 +94,7 @@ const BaseNodeWidget = (props: BaseNodeProps) => {
         <div className={nodeClasses.join(' ')}
              data-default-node-name={props.node.getTitle()}
              style={{background: props.color}}
-             onDoubleClick={sendOpenCanvasEvent}
+             onDoubleClick={sendOpenCanvasEvent || props.onDoubleClick}
         >
             <Title name={props.node.getTitle()}/>
             <div className={classes.Content}>
@@ -102,6 +104,7 @@ const BaseNodeWidget = (props: BaseNodeProps) => {
                 </div>
                 <PortContainer generatePort={generatePort} ports={props.node.getOutPorts()}/>
             </div>
+            {props.onDoubleClick?modal:null}
         </div>
     );
 
