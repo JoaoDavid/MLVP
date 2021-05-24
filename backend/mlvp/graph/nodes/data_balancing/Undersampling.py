@@ -14,8 +14,8 @@ class UnderSampling(Node):
         super().__init__(data)
         self.random_state = data['randomState']
 
-    def import_dependency(self):
-        return FROM_IMPORT.format(package="imblearn.under_sampling", class_to_import=RANDOM_UNDERSAMPLER)
+    def import_dependency(self, packages):
+        packages.add(FROM_IMPORT.format(package="imblearn.under_sampling", class_to_import=RANDOM_UNDERSAMPLER))
 
     def codegen(self, emitter: Emitter, out_file):
         curr_count = emitter.get_count()

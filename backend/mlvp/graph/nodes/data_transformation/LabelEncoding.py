@@ -21,8 +21,8 @@ class LabelEncoding(Node):
         self.encoded_column = self.original_column + "_label_encoded"
         self.encodable_columns = {}
 
-    def import_dependency(self):
-        return FROM_IMPORT.format(package="sklearn.preprocessing", class_to_import="LabelEncoder")
+    def import_dependency(self, packages):
+        packages.add(FROM_IMPORT.format(package="sklearn.preprocessing", class_to_import="LabelEncoder"))
 
     def codegen(self, emitter: Emitter, out_file):
         curr_count = emitter.get_count()

@@ -17,8 +17,8 @@ class LinearRegression(Node):
         self.num_jobs = data['numJobs']
         self.positive = data['positive']
 
-    def import_dependency(self):
-        return FROM_IMPORT.format(package="sklearn.linear_model", class_to_import="LinearRegression")
+    def import_dependency(self, packages):
+        packages.add(FROM_IMPORT.format(package="sklearn.linear_model", class_to_import="LinearRegression"))
 
     def codegen(self, emitter: Emitter, out_file):
         curr_count = emitter.get_count()

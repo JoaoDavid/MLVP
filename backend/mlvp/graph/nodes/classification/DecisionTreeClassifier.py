@@ -15,8 +15,8 @@ class DecisionTreeClassifier(Node):
         self.criterion = data['criterion']
         self.max_depth = data['maxDepth']
 
-    def import_dependency(self):
-        return FROM_IMPORT.format(package="sklearn.tree", class_to_import="DecisionTreeClassifier")
+    def import_dependency(self, packages):
+        packages.add(FROM_IMPORT.format(package="sklearn.tree", class_to_import="DecisionTreeClassifier"))
 
     def codegen(self, emitter: Emitter, out_file):
         curr_count = emitter.get_count()

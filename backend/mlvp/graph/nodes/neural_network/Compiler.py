@@ -12,8 +12,8 @@ class Compiler(Node):
     def __init__(self, data):
         super().__init__(data)
 
-    def import_dependency(self):
-        return FROM_IMPORT.format(package="sklearn.", class_to_import="RANDOM_OVERSAMPLER")
+    def import_dependency(self, packages):
+        packages.add(FROM_IMPORT.format(package="sklearn.", class_to_import="RANDOM_OVERSAMPLER"))
 
     def codegen(self, emitter: Emitter, out_file):
         curr_count = emitter.get_count()

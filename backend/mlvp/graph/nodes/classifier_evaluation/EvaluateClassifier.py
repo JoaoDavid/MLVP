@@ -12,8 +12,8 @@ class EvaluateClassifier(Node):
     def __init__(self, data):
         super().__init__(data)
 
-    def import_dependency(self):
-        return FROM_IMPORT.format(package="sklearn.metrics", class_to_import="accuracy_score")
+    def import_dependency(self, packages):
+        packages.add(FROM_IMPORT.format(package="sklearn.metrics", class_to_import="accuracy_score"))
 
     def codegen(self, emitter: Emitter, out_file):
         curr_count = emitter.get_count()

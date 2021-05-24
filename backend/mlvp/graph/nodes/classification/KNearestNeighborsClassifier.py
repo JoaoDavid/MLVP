@@ -15,8 +15,8 @@ class KNearestNeighborsClassifier(Node):
         self.weights = data['weights']
         self.algorithm = data['algorithm']
 
-    def import_dependency(self):
-        return FROM_IMPORT.format(package="sklearn.neighbors", class_to_import="KNeighborsClassifier")
+    def import_dependency(self, packages):
+        packages.add(FROM_IMPORT.format(package="sklearn.neighbors", class_to_import="KNeighborsClassifier"))
 
     def codegen(self, emitter: Emitter, out_file):
         curr_count = emitter.get_count()

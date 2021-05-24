@@ -24,8 +24,8 @@ class KerasClassifier(Node):
         data_flow = DataFlow(self.sorted_nodes, self.sorted_loose_nodes)
         data_flow.pass_data()
 
-    def import_dependency(self):
-        return FROM_IMPORT.format(package="keras.wrappers.scikit_learn", class_to_import="KerasClassifier")
+    def import_dependency(self, packages):
+        packages.add(FROM_IMPORT.format(package="keras.wrappers.scikit_learn", class_to_import="KerasClassifier"))
 
     def codegen(self, emitter: Emitter, out_file):
         curr_count = emitter.get_count()

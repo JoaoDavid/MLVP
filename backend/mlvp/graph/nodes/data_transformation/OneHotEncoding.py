@@ -25,8 +25,8 @@ class OneHotEncoding(Node):
         self.encoded_column = self.original_column + "_one_hot_encoded"
         self.encodable_columns = {}
 
-    def import_dependency(self):
-        return IMPORT_AS.format(lib_name="numpy", lib_var="np")
+    def import_dependency(self, packages):
+        packages.add(IMPORT_AS.format(lib_name="numpy", lib_var="np"))
 
     def codegen(self, emitter: Emitter, out_file):
         curr_count = emitter.get_count()
