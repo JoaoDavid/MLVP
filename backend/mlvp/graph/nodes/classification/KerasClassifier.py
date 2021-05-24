@@ -1,7 +1,12 @@
 from mlvp.graph.nodes.AssertionsHelper import no_features_of_type, categorical_last_column
 from mlvp.codegen import *
 from mlvp.graph.nodes.Node import *
+from mlvp.graph.nodes.neural_network import Compiler
 from mlvp.typecheck import *
+from mlvp.typecheck.TypeChecker import TypeChecker
+from mlvp.typecheck.DataFlow import DataFlow
+from mlvp.graph.TopologicalSorter import TopologicalSorter
+from mlvp.graph.ParseJSON import ParseJSON
 
 INIT = "{clf} = RandomForestClassifier()\n"
 FIT = "{clf}.fit({x}, {y})\n"
@@ -11,6 +16,12 @@ class KerasClassifier(Node):
 
     def __init__(self, data):
         super().__init__(data)
+        parser = ParseJSON(json_diagram=data['canvas'])
+        roots, loose = parser.parse()
+        topo_sorter = TopologicalSorter(roots, loose)
+        self.sorted_nodes, self.sorted_loose_nodes = topo_sorter.topological_sort()
+        data_flow = DataFlow(self.sorted_nodes, self.sorted_loose_nodes)
+        data_flow.pass_data()
 
     def import_dependency(self):
         return FROM_IMPORT.format(package="sklearn.", class_to_import="RANDOM_OVERSAMPLER")
@@ -34,11 +45,23 @@ class KerasClassifier(Node):
         input_port = self.get_port(True, "Dataset")
         input_ds = Dataset(input_port.port_id)
 
+        type_checker = TypeChecker(self.sorted_nodes, self.sorted_loose_nodes)
+        tc_res = type_checker.verify(strong_type_check=True)
+        z3_neural_network_well_built = Bool(NODE_PROP.format(name="neural network is well built", node_id=self.node_id))
+        print(self.sorted_nodes)
+
+        count = 0
+        for node in self.sorted_nodes:
+            if isinstance(node, Compiler):
+                count += 1
+        neural_network_well_built = len(self.sorted_nodes) > 0 and count == 1 and tc_res['canLink']
         features_assertions = no_features_of_type(input_port, "string", input_ds.dataset)
 
         return [
             # requires
             input_ds.balanced,
             input_ds.rows > 0,
-            input_ds.cols > 1
+            input_ds.cols > 1,
+            z3_neural_network_well_built == neural_network_well_built,
+            z3_neural_network_well_built,
         ] + features_assertions + categorical_last_column(input_port, input_ds.dataset)

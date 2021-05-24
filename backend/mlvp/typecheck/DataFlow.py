@@ -1,6 +1,3 @@
-from mlvp.graph import DatasetPort, LayerPort
-
-
 class DataFlow:
 
     def __init__(self, sorted_nodes, sorted_loose_nodes):
@@ -19,6 +16,7 @@ class DataFlow:
         return result
 
     def __pass_data_aux(self, node):
+        from mlvp.graph import DatasetPort, LayerPort
         # pass data from parent's output port
         # to the current node's input port
         for parent_link in node.parent_links:
