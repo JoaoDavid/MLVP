@@ -38,7 +38,6 @@ class KerasClassifier(Node):
         out_file.write(BUILD_FN.format(build_fn=build_fn))
 
         for node in self.sorted_nodes:
-            out_file.write('\t' * 1)
             node.codegen(emitter, out_file)
 
         out_file.write(INIT.format(clf=clf, build_fn=build_fn, epochs=10, batch_size=32, verbose=0))

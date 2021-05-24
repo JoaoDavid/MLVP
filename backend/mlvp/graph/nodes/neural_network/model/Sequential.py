@@ -1,7 +1,7 @@
 from mlvp.codegen import *
 from mlvp.graph.nodes.Node import *
 
-INIT = "{clf} = Sequential()\n"
+INIT = "\t{clf} = Sequential()\n"
 
 
 class Sequential(Node):

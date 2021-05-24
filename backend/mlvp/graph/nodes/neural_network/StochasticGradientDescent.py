@@ -1,7 +1,7 @@
 from mlvp.codegen import *
 from mlvp.graph.nodes.Node import *
 
-INIT = "{optimizer} = SGD()\n"
+INIT = "\t{optimizer} = SGD()\n"
 
 
 class StochasticGradientDescent(Node):

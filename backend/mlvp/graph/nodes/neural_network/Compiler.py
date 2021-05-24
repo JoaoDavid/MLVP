@@ -2,8 +2,8 @@ from mlvp.codegen import *
 from mlvp.graph.nodes.Node import *
 from mlvp.typecheck import *
 
-COMPILE = "{clf}.compile(loss={loss}, optimizer={optimizer}, metrics={metrics})\n"
-RET = "return {clf}\n"
+COMPILE = "\t{clf}.compile(loss={loss}, optimizer={optimizer}, metrics={metrics})\n"
+RET = "\treturn {clf}\n"
 
 class Compiler(Node):
 
