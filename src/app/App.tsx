@@ -188,11 +188,13 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     closeModal = () => {
-        this.setState({showModal: false})
+        this.setState({showModal: false});
+        this.canvasManager.getEngine().getModel().setLocked(false);
     }
 
     openModal = () => {
         this.setState({showModal: true})
+        this.canvasManager.getEngine().getModel().setLocked(true);
     }
 
     render() {
