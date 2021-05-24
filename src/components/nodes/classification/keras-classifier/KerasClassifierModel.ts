@@ -57,11 +57,13 @@ export class KerasClassifierModel extends BaseNodeModel {
 
     deserialize(event: DeserializeEvent<this>) {
         super.deserialize(event);
+        this.canvasManager.loadModel(event.data.canvas);
     }
 
     serialize(): any {
         return {
             ...super.serialize(),
+            canvas: this.canvasManager.getEngine().getModel().serialize(),
         };
     }
 

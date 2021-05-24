@@ -19,11 +19,11 @@ export class CanvasManager {
     constructor(canvasName: string) {
         this.canvasName = canvasName;
         this.engine = createEngine({registerDefaultZoomCanvasAction: false});
+        this.typeChecker = new TypeChecker(this.engine);
         this.engine.getActionEventBus().registerAction(new MyZoomCanvasAction());
         this.engine.getStateMachine().pushState(new DiagramStateManager(canvasName, this.typeChecker));
         this.engine.maxNumberPointsPerLink = 0;
         this.factoriesManager = new FactoriesManager(this.engine);
-        this.typeChecker = new TypeChecker(this.engine);
     }
 
     getEngine = (): DiagramEngine => {
