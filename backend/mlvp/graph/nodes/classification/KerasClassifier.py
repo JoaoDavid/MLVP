@@ -8,9 +8,10 @@ from mlvp.typecheck.DataFlow import DataFlow
 from mlvp.graph.TopologicalSorter import TopologicalSorter
 from mlvp.graph.ParseJSON import ParseJSON
 
-INIT = "{clf} = RandomForestClassifier()\n"
+INIT = "{clf} = KerasClassifier(build_fn={build_fn}, epochs={epochs}, batch_size={batch_size}, verbose={verbose})\n"
 FIT = "{clf}.fit({x}, {y})\n"
 
+BUILD_FN = "def {build_fn}():\n"
 
 class KerasClassifier(Node):
 
@@ -24,15 +25,21 @@ class KerasClassifier(Node):
         data_flow.pass_data()
 
     def import_dependency(self):
-        return FROM_IMPORT.format(package="sklearn.", class_to_import="RANDOM_OVERSAMPLER")
+        return FROM_IMPORT.format(package="keras.wrappers.scikit_learn", class_to_import="KerasClassifier")
 
     def codegen(self, emitter: Emitter, out_file):
         curr_count = emitter.get_count()
         parent_port = self.parent_links[0].source_port
+        build_fn = "build_fn" + str(curr_count)
         clf = "clf" + str(curr_count)
         x, y = emitter.get(parent_port)
+        out_file.write(BUILD_FN.format(build_fn=build_fn))
 
-        out_file.write(INIT.format(clf=clf))
+        for node in self.sorted_nodes:
+            out_file.write('\t' * 1)
+            node.codegen(emitter, out_file)
+
+        out_file.write(INIT.format(clf=clf, build_fn=build_fn, epochs=10, batch_size=32, verbose=0))
         out_file.write(FIT.format(clf=clf, x=x, y=y))
 
         out_clf = self.get_port(False, "Classifier")
