@@ -14,6 +14,9 @@ export const KERAS_CLASSIFIER: NodeConfig = {
 
 export class KerasClassifierModel extends BaseNodeModel {
 
+    private epochs: number = 100; //int
+    private batchSize: number = 500; //int
+    private verbose: number = 0; //int
     private readonly canvasManager = new CanvasManager("neural_network");
 
     constructor() {
@@ -23,6 +26,30 @@ export class KerasClassifierModel extends BaseNodeModel {
 
         this.canvasManager.registerNeuralNetworkCanvas();
         this.canvasManager.newCanvas();
+    }
+
+    getEpochs(): number {
+        return this.epochs;
+    }
+
+    setEpochs(value: number) {
+        this.epochs = value;
+    }
+
+    getBatchSize(): number {
+        return this.batchSize;
+    }
+
+    setBatchSize(value: number) {
+        this.batchSize = value;
+    }
+
+    getVerbose(): number {
+        return this.verbose;
+    }
+
+    setVerbose(value: number) {
+        this.verbose = value;
     }
 
     getCanvasManager(): CanvasManager {
@@ -57,12 +84,18 @@ export class KerasClassifierModel extends BaseNodeModel {
 
     deserialize(event: DeserializeEvent<this>) {
         super.deserialize(event);
+        this.epochs = event.data.epochs;
+        this.batchSize = event.data.batchSize;
+        this.verbose = event.data.verbose;
         this.canvasManager.loadModel(event.data.canvas);
     }
 
     serialize(): any {
         return {
             ...super.serialize(),
+            epochs: this.epochs,
+            batchSize: this.batchSize,
+            verbose: this.verbose,
             canvas: this.canvasManager.getEngine().getModel().serialize(),
         };
     }

@@ -13,10 +13,15 @@ FIT = "{clf}.fit({x}, {y})\n"
 
 BUILD_FN = "def {build_fn}():\n"
 
+
 class KerasClassifier(Node):
 
     def __init__(self, data):
         super().__init__(data)
+        self.epochs = data['epochs']
+        self.batch_size = data['batchSize']
+        self.verbose = data['verbose']
+
         parser = ParseJSON(json_diagram=data['canvas'])
         roots, loose = parser.parse()
         topo_sorter = TopologicalSorter(roots, loose)
@@ -40,7 +45,8 @@ class KerasClassifier(Node):
         for node in self.sorted_nodes:
             node.codegen(emitter, out_file)
 
-        out_file.write(INIT.format(clf=clf, build_fn=build_fn, epochs=10, batch_size=32, verbose=0))
+        out_file.write(INIT.format(clf=clf, build_fn=build_fn, epochs=self.epochs, batch_size=self.batch_size,
+                                   verbose=self.verbose))
         out_file.write(FIT.format(clf=clf, x=x, y=y))
 
         out_clf = self.get_port(False, "Classifier")
@@ -66,10 +72,10 @@ class KerasClassifier(Node):
         features_assertions = no_features_of_type(input_port, "string", input_ds.dataset)
 
         return [
-            # requires
-            input_ds.balanced,
-            input_ds.rows > 0,
-            input_ds.cols > 1,
-            z3_neural_network_well_built == neural_network_well_built,
-            z3_neural_network_well_built,
-        ] + features_assertions + categorical_last_column(input_port, input_ds.dataset)
+                   # requires
+                   input_ds.balanced,
+                   input_ds.rows > 0,
+                   input_ds.cols > 1,
+                   z3_neural_network_well_built == neural_network_well_built,
+                   z3_neural_network_well_built,
+               ] + features_assertions + categorical_last_column(input_port, input_ds.dataset)

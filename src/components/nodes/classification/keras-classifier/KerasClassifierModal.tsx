@@ -10,10 +10,14 @@ import BottomNav from "../../../UI/bottom-nav/BottomNav";
 import {BaseNodeModel} from "../../../core/BaseNode/BaseNodeModel";
 import {DefaultLinkModel} from "@projectstorm/react-diagrams-defaults";
 import {MyDiagramModel} from "../../../../app/diagram/MyDiagramModel";
+import Col from "react-bootstrap/Col";
 
 
 interface KerasClassifierModalProps {
     node: KerasClassifierModel;
+    epochsChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    batchSizeChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    verboseChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 type ModalState = {
@@ -77,16 +81,37 @@ class KerasClassifierModal extends React.Component<KerasClassifierModalProps, Mo
             },
         });
     }
+
     render() {
         return (
             <Form>
                 <Form.Group>
                     <Row>
+                        <Col>
+                            <Form.Label>Epochs</Form.Label>
+                            <Form.Control type="number" min="1" value={this.props.node.getEpochs()}
+                                          onChange={this.props.epochsChanged}/>
+                        </Col>
+                        <Col>
+                            <Form.Label>Batch Size</Form.Label>
+                            <Form.Control type="number" min="1" value={this.props.node.getBatchSize()}
+                                          onChange={this.props.batchSizeChanged}/>
+                        </Col>
+                        <Col>
+                            <Form.Label>Verbose</Form.Label>
+                            <Form.Control type="number" min="1" value={this.props.node.getVerbose()}
+                                          onChange={this.props.verboseChanged}/>
+                        </Col>
+                    </Row>
+                    <p></p>
+                    <Row><Col>
+                        <Form.Label>Neural Network</Form.Label>
                         <div className={classes.FrontPage}>
                             <div className={classes.Container}>
                                 <SideBar format={this.props.node.getCanvasManager().getCanvasName()}
                                          categories={NEURAL_NETWORK_CATEGORIES}/>
-                                <Canvas engine={this.props.node.getEngine()} onDropCanvas={this.props.node.getCanvasManager().onDropCanvas}/>
+                                <Canvas engine={this.props.node.getEngine()}
+                                        onDropCanvas={this.props.node.getCanvasManager().onDropCanvas}/>
                             </div>
                             <BottomNav unsatNodeAssertions={this.state.unsatNodeAssertions}
                                        allNodeAssertions={this.state.allNodeAssertions}
@@ -94,7 +119,7 @@ class KerasClassifierModal extends React.Component<KerasClassifierModalProps, Mo
                                        log={this.state.log}
                             />
                         </div>
-                    </Row>
+                    </Col></Row>
                 </Form.Group>
             </Form>
         )
