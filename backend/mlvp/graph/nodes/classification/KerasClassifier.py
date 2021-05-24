@@ -25,6 +25,8 @@ class KerasClassifier(Node):
         data_flow.pass_data()
 
     def import_dependency(self, packages):
+        for node in self.sorted_nodes:
+            node.import_dependency(packages)
         packages.add(FROM_IMPORT.format(package="keras.wrappers.scikit_learn", class_to_import="KerasClassifier"))
 
     def codegen(self, emitter: Emitter, out_file):

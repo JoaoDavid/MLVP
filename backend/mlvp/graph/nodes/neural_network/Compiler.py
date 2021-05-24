@@ -1,11 +1,9 @@
-from mlvp.graph.nodes.AssertionsHelper import no_features_of_type, categorical_last_column
 from mlvp.codegen import *
 from mlvp.graph.nodes.Node import *
 from mlvp.typecheck import *
 
-INIT = "{clf} = RandomForestClassifier()\n"
-FIT = "{clf}.fit({x}, {y})\n"
-
+COMPILE = "{clf}.compile(loss={loss}, optimizer={optimizer}, metrics={metrics})\n"
+RET = "return {clf}\n"
 
 class Compiler(Node):
 
@@ -13,19 +11,16 @@ class Compiler(Node):
         super().__init__(data)
 
     def import_dependency(self, packages):
-        packages.add(FROM_IMPORT.format(package="sklearn.", class_to_import="RANDOM_OVERSAMPLER"))
+        pass
 
     def codegen(self, emitter: Emitter, out_file):
-        curr_count = emitter.get_count()
-        parent_port = self.parent_links[0].source_port
-        clf = "clf" + str(curr_count)
-        x, y = emitter.get(parent_port)
+        in_layer_port = self.parent_links[0].source_port
+        in_optimizer_port = self.parent_links[1].source_port
+        clf = emitter.get(in_layer_port)
+        optimizer = emitter.get(in_optimizer_port)
 
-        out_file.write(INIT.format(clf=clf))
-        out_file.write(FIT.format(clf=clf, x=x, y=y))
-
-        out_clf = self.get_port(False, "Classifier")
-        emitter.set(out_clf, clf)
+        out_file.write(COMPILE.format(clf=clf, loss='\'categorical_crossentropy\'', optimizer=optimizer, metrics=["accuracy"]))
+        out_file.write(RET.format(clf=clf))
 
     def data_flow(self, node_columns):
         pass

@@ -1,10 +1,8 @@
-from mlvp.graph.nodes.AssertionsHelper import no_features_of_type, categorical_last_column
 from mlvp.codegen import *
 from mlvp.graph.nodes.Node import *
 from mlvp.typecheck import *
 
-INIT = "{clf} = RandomForestClassifier()\n"
-FIT = "{clf}.fit({x}, {y})\n"
+ADD_LAYER = "{clf}.add(Dense({output_size}, activation={activation}, input_dim={input_dim}))\n"
 
 
 class Dense(Node):
@@ -13,18 +11,15 @@ class Dense(Node):
         super().__init__(data)
 
     def import_dependency(self, packages):
-        packages.add(FROM_IMPORT.format(package="sklearn.", class_to_import="RANDOM_OVERSAMPLER"))
+        packages.add(FROM_IMPORT.format(package="keras.layers", class_to_import="Dense"))
 
     def codegen(self, emitter: Emitter, out_file):
-        curr_count = emitter.get_count()
         parent_port = self.parent_links[0].source_port
-        clf = "clf" + str(curr_count)
-        x, y = emitter.get(parent_port)
+        clf = emitter.get(parent_port)
 
-        out_file.write(INIT.format(clf=clf))
-        out_file.write(FIT.format(clf=clf, x=x, y=y))
+        out_file.write(ADD_LAYER.format(clf=clf, output_size=9, activation='\'relu\'', input_dim=3))
 
-        out_clf = self.get_port(False, "Classifier")
+        out_clf = self.get_port(False, "Output Layer")
         emitter.set(out_clf, clf)
 
     def data_flow(self, node_columns):
