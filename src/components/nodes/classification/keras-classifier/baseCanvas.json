@@ -1,0 +1,251 @@
+{
+  "id": "f609b724-d126-4f6f-9a48-7ddb5d2b627d",
+  "offsetX": -4,
+  "offsetY": 0,
+  "zoom": 100,
+  "gridSize": 0,
+  "layers": [
+    {
+      "id": "a5e5708f-0370-42c6-8bb3-486f7dab0a48",
+      "type": "diagram-links",
+      "isSvg": true,
+      "transformed": true,
+      "models": {
+        "39300ae6-0b5d-4fc5-8aae-569790381fd5": {
+          "id": "39300ae6-0b5d-4fc5-8aae-569790381fd5",
+          "type": "default",
+          "selected": false,
+          "source": "c270514f-53bb-428e-8622-d6a1353442bf",
+          "sourcePort": "dea5e260-bfd4-4888-83f4-c81361333ddb",
+          "target": "09f8de2d-f6e1-4497-8bcd-0308c31785b6",
+          "targetPort": "2e72376b-f5d7-455b-b03c-65fa00e70874",
+          "points": [
+            {
+              "id": "56313e29-e297-4b3f-b0b9-3becd6e8f953",
+              "type": "point",
+              "x": 278.609375,
+              "y": 154.5
+            },
+            {
+              "id": "ea687327-4ccc-4213-906e-8bb59038b69d",
+              "type": "point",
+              "x": 372.609375,
+              "y": 169.5
+            }
+          ],
+          "labels": [],
+          "width": 3,
+          "color": "gray",
+          "curvyness": 50,
+          "selectedColor": "rgb(0,192,255)"
+        },
+        "5af906a6-be1c-49d0-9bef-fdc088ab62af": {
+          "id": "5af906a6-be1c-49d0-9bef-fdc088ab62af",
+          "type": "default",
+          "selected": false,
+          "source": "09f8de2d-f6e1-4497-8bcd-0308c31785b6",
+          "sourcePort": "d948e792-7aec-44d2-9d4b-fce588145317",
+          "target": "1bf642d4-7fe2-4cd5-9f74-8f4f820c59cd",
+          "targetPort": "9993219b-740c-44d5-adf3-a28e0ab1690c",
+          "points": [
+            {
+              "id": "abe8dd94-6a04-4125-871c-0f7fd3858598",
+              "type": "point",
+              "x": 553.609375,
+              "y": 169.5
+            },
+            {
+              "id": "e24da63d-7cdf-4332-a9c6-58c3ca6e75f1",
+              "type": "point",
+              "x": 668.609375,
+              "y": 235.5
+            }
+          ],
+          "labels": [],
+          "width": 3,
+          "color": "gray",
+          "curvyness": 50,
+          "selectedColor": "rgb(0,192,255)"
+        },
+        "840098f3-6eb2-4d4a-bb65-3166754b4b83": {
+          "id": "840098f3-6eb2-4d4a-bb65-3166754b4b83",
+          "type": "default",
+          "selected": false,
+          "source": "264a90e2-dc2a-427e-8300-a54cdb5fa71e",
+          "sourcePort": "85eca7f6-84cf-42eb-9769-8176b956ad85",
+          "target": "1bf642d4-7fe2-4cd5-9f74-8f4f820c59cd",
+          "targetPort": "7509ca34-fde6-4d3d-a1df-fbc60c5088a0",
+          "points": [
+            {
+              "id": "229fb25a-816d-47fd-aab8-def559288424",
+              "type": "point",
+              "x": 395.609375,
+              "y": 351.5
+            },
+            {
+              "id": "2d5e06af-4436-4aba-9d42-4dcba976f414",
+              "type": "point",
+              "x": 668.609375,
+              "y": 298.5
+            }
+          ],
+          "labels": [],
+          "width": 3,
+          "color": "gray",
+          "curvyness": 50,
+          "selectedColor": "rgb(0,192,255)"
+        }
+      }
+    },
+    {
+      "id": "fd214b2b-4def-41c6-a5c3-6eddd62dd12a",
+      "type": "diagram-nodes",
+      "isSvg": false,
+      "transformed": true,
+      "models": {
+        "c270514f-53bb-428e-8622-d6a1353442bf": {
+          "id": "c270514f-53bb-428e-8622-d6a1353442bf",
+          "type": "Sequential",
+          "x": 88.109375,
+          "y": 87,
+          "ports": [
+            {
+              "id": "dea5e260-bfd4-4888-83f4-c81361333ddb",
+              "type": "LayerPort",
+              "x": 271.109375,
+              "y": 123,
+              "name": "Layer",
+              "alignment": "right",
+              "parentNode": "c270514f-53bb-428e-8622-d6a1353442bf",
+              "links": [
+                "39300ae6-0b5d-4fc5-8aae-569790381fd5"
+              ],
+              "in": false,
+              "label": ""
+            }
+          ],
+          "portsInOrder": [],
+          "portsOutOrder": [
+            "dea5e260-bfd4-4888-83f4-c81361333ddb"
+          ],
+          "title": "Sequential 1"
+        },
+        "09f8de2d-f6e1-4497-8bcd-0308c31785b6": {
+          "id": "09f8de2d-f6e1-4497-8bcd-0308c31785b6",
+          "type": "Dense",
+          "selected": false,
+          "x": 363.109375,
+          "y": 102,
+          "ports": [
+            {
+              "id": "2e72376b-f5d7-455b-b03c-65fa00e70874",
+              "type": "LayerPort",
+              "x": 365.109375,
+              "y": 138,
+              "name": "Layer",
+              "alignment": "left",
+              "parentNode": "09f8de2d-f6e1-4497-8bcd-0308c31785b6",
+              "links": [
+                "39300ae6-0b5d-4fc5-8aae-569790381fd5"
+              ],
+              "in": true,
+              "label": ""
+            },
+            {
+              "id": "d948e792-7aec-44d2-9d4b-fce588145317",
+              "type": "LayerPort",
+              "x": 546.109375,
+              "y": 138,
+              "name": "Output Layer",
+              "alignment": "right",
+              "parentNode": "09f8de2d-f6e1-4497-8bcd-0308c31785b6",
+              "links": [
+                "5af906a6-be1c-49d0-9bef-fdc088ab62af"
+              ],
+              "in": false,
+              "label": ""
+            }
+          ],
+          "portsInOrder": [
+            "2e72376b-f5d7-455b-b03c-65fa00e70874"
+          ],
+          "portsOutOrder": [
+            "d948e792-7aec-44d2-9d4b-fce588145317"
+          ],
+          "title": "Dense 2"
+        },
+        "1bf642d4-7fe2-4cd5-9f74-8f4f820c59cd": {
+          "id": "1bf642d4-7fe2-4cd5-9f74-8f4f820c59cd",
+          "type": "Compiler",
+          "selected": false,
+          "x": 659.109375,
+          "y": 168,
+          "ports": [
+            {
+              "id": "9993219b-740c-44d5-adf3-a28e0ab1690c",
+              "type": "LayerPort",
+              "x": 661.109375,
+              "y": 204,
+              "name": "Layer",
+              "alignment": "left",
+              "parentNode": "1bf642d4-7fe2-4cd5-9f74-8f4f820c59cd",
+              "links": [
+                "5af906a6-be1c-49d0-9bef-fdc088ab62af"
+              ],
+              "in": true,
+              "label": ""
+            },
+            {
+              "id": "7509ca34-fde6-4d3d-a1df-fbc60c5088a0",
+              "type": "OptimizerPort",
+              "x": 661.109375,
+              "y": 267,
+              "name": "Optimizer",
+              "alignment": "left",
+              "parentNode": "1bf642d4-7fe2-4cd5-9f74-8f4f820c59cd",
+              "links": [
+                "840098f3-6eb2-4d4a-bb65-3166754b4b83"
+              ],
+              "in": true,
+              "label": ""
+            }
+          ],
+          "portsInOrder": [
+            "9993219b-740c-44d5-adf3-a28e0ab1690c",
+            "7509ca34-fde6-4d3d-a1df-fbc60c5088a0"
+          ],
+          "portsOutOrder": [],
+          "title": "Compiler 3"
+        },
+        "264a90e2-dc2a-427e-8300-a54cdb5fa71e": {
+          "id": "264a90e2-dc2a-427e-8300-a54cdb5fa71e",
+          "type": "StochasticGradientDescent",
+          "selected": false,
+          "x": 205.109375,
+          "y": 284,
+          "ports": [
+            {
+              "id": "85eca7f6-84cf-42eb-9769-8176b956ad85",
+              "type": "OptimizerPort",
+              "x": 388.109375,
+              "y": 320,
+              "name": "Optimizer",
+              "alignment": "right",
+              "parentNode": "264a90e2-dc2a-427e-8300-a54cdb5fa71e",
+              "links": [
+                "840098f3-6eb2-4d4a-bb65-3166754b4b83"
+              ],
+              "in": false,
+              "label": ""
+            }
+          ],
+          "portsInOrder": [],
+          "portsOutOrder": [
+            "85eca7f6-84cf-42eb-9769-8176b956ad85"
+          ],
+          "title": "Stochastic Gradient Descent 4"
+        }
+      }
+    }
+  ]
+}

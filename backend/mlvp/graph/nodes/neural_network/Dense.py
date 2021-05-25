@@ -9,6 +9,8 @@ class Dense(Node):
 
     def __init__(self, data):
         super().__init__(data)
+        self.units = data['units']
+        self.activation = data['activation']
 
     def import_dependency(self, packages):
         packages.add(FROM_IMPORT.format(package="keras.layers", class_to_import="Dense"))
