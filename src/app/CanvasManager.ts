@@ -30,6 +30,10 @@ export class CanvasManager {
         return this.engine;
     }
 
+    getModel = (): MyDiagramModel => {
+        return this.engine.getModel() as MyDiagramModel;
+    }
+
     getTypeChecker = (): TypeChecker => {
         return this.typeChecker;
     }
