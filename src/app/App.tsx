@@ -9,6 +9,7 @@ import Canvas from "../components/UI/canvas/Canvas";
 import {MyDiagramModel} from "./diagram/MyDiagramModel";
 import splitEvaluate from '../demos/split-n-evaluate.json';
 import posterDemo from '../demos/poster-demo.json';
+import kerasDemo from '../demos/keras_demo.json';
 import encodeDecode from '../demos/encode_decode_demo.json';
 import {BaseNodeModel} from "../components/core/BaseNode/BaseNodeModel";
 import {DefaultLinkModel} from "@projectstorm/react-diagrams-defaults";
@@ -115,6 +116,10 @@ class App extends React.Component<AppProps, AppState> {
         map.set("Encode Decode Demo", () => {
             this.canvasManager.loadModel(encodeDecode);
             this.updateLog("Loaded demo Encode Decode Demo");
+        });
+        map.set("Keras Demo", () => {
+            this.canvasManager.loadModel(kerasDemo);
+            this.updateLog("Loaded demo Keras Demo");
         });
         return map;
     }
