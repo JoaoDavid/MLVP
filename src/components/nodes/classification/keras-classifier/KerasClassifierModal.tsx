@@ -11,6 +11,7 @@ import {BaseNodeModel} from "../../../core/BaseNode/BaseNodeModel";
 import {DefaultLinkModel} from "@projectstorm/react-diagrams-defaults";
 import {MyDiagramModel} from "../../../../app/diagram/MyDiagramModel";
 import Col from "react-bootstrap/Col";
+import {Modal} from "react-bootstrap";
 
 
 interface KerasClassifierModalProps {
@@ -79,7 +80,23 @@ class KerasClassifierModal extends React.Component<KerasClassifierModalProps, Mo
                 });
                 this.props.node.getEngine().repaintCanvas();
             },
+            modalContent: (event) => {
+                console.log("event: modalContent in modal");
+                this.setState({modal: event.modal});
+                this.openModal();
+                this.props.node.getCanvasManager().getEngine().repaintCanvas();
+            }
         });
+    }
+
+    closeModal = () => {
+        this.setState({showModal: false});
+        this.props.node.getCanvasManager().getEngine().getModel().setLocked(false);
+    }
+
+    openModal = () => {
+        this.setState({showModal: true})
+        this.props.node.getCanvasManager().getEngine().getModel().setLocked(true);
     }
 
     render() {
@@ -106,6 +123,11 @@ class KerasClassifierModal extends React.Component<KerasClassifierModalProps, Mo
                     <p></p>
                     <Row><Col>
                         <Form.Label>Neural Network</Form.Label>
+                        <>
+                            <Modal animation={false} size="xl" show={this.state.showModal} onHide={this.closeModal}>
+                                {this.state.modal}
+                            </Modal>
+                        </>
                         <div className={classes.FrontPage}>
                             <div className={classes.Container}>
                                 <SideBar format={this.props.node.getCanvasManager().getCanvasName()}
