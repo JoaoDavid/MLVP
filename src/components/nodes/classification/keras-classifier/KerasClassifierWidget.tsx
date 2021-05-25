@@ -32,6 +32,9 @@ const KerasClassifierWidget = (props: KerasClassifierProps) => {
     return (
         <BaseNodeWidget node={props.node} engine={props.engine} color={CLASSIFIER_CONFIG.color}
                         modalChildren={modal}>
+            <p>Epochs: {props.node.getEpochs()}</p>
+            <p>Batch Size: {props.node.getBatchSize()}</p>
+            <p>Verbose: {props.node.getVerbose()}</p>
         </BaseNodeWidget>
     )
 
