@@ -24,6 +24,11 @@ import {DECISION_TREE_CLASSIFIER} from "./classification/decision-tree-classifie
 import {LINEAR_REGRESSION} from "./regression/linear-regression/LinearRegressionModel";
 import {LOGISTIC_REGRESSION} from "./regression/logistic-regression/LogisticRegressionModel";
 import {SVM_REGRESSOR} from "./regression/svm-regressor/SVMRegressorModel";
+import {KERAS_CLASSIFIER} from "./classification/keras-classifier/KerasClassifierModel";
+import {SEQUENTIAL} from "./neural-network/model/sequential/SequentialModel";
+import {DENSE} from "./neural-network/layer/dense/DenseModel";
+import {COMPILER} from "./neural-network/compiler/CompilerModel";
+import {STOCHASTIC_GRADIENT_DESCENT} from "./neural-network/optimizer/stochastic-gradient-descent/StochasticGradientDescentModel";
 
 /*
 Every node type must be added to the nodes array
@@ -66,7 +71,7 @@ export const VISUALIZATION_CONFIG: CategoryConfig = {
 export const CLASSIFIER_CONFIG: CategoryConfig = {
     category: 'Classification',
     color: 'rgb(46,139,192)',
-    nodes: [DECISION_TREE_CLASSIFIER, RANDOM_FOREST_CLASSIFIER, SVM_CLASSIFIER, K_NEAREST_NEIGHBORS_CLASSIFIER],
+    nodes: [DECISION_TREE_CLASSIFIER, RANDOM_FOREST_CLASSIFIER, SVM_CLASSIFIER, K_NEAREST_NEIGHBORS_CLASSIFIER, KERAS_CLASSIFIER],
 }
 
 export const REGRESSOR_CONFIG: CategoryConfig = {
@@ -90,4 +95,32 @@ export const EVALUATE_REGRESSOR_CONFIG: CategoryConfig = {
 export const CATEGORIES = [DATA_SOURCE_CONFIG, DATA_TRANSFORMATION_CONFIG, DATA_BALANCING_CONFIG,
     VISUALIZATION_CONFIG, CLASSIFIER_CONFIG, REGRESSOR_CONFIG,
     EVALUATE_CLASSIFIER_CONFIG, EVALUATE_REGRESSOR_CONFIG];
+
+
+export const MODEL_CONFIG: CategoryConfig = {
+    category: 'Model',
+    color: 'rgb(56,109,38)',
+    nodes: [SEQUENTIAL],
+}
+
+export const LAYER_CONFIG: CategoryConfig = {
+    category: 'Layer',
+    color: 'rgb(59,72,107)',
+    nodes: [DENSE],
+}
+
+export const COMPILER_CONFIG: CategoryConfig = {
+    category: 'Compiler',
+    color: 'rgb(116,45,83)',
+    nodes: [COMPILER],
+}
+
+export const OPTIMIZER_CONFIG: CategoryConfig = {
+    category: 'Optimizer',
+    color: 'rgb(96,65,113)',
+    nodes: [STOCHASTIC_GRADIENT_DESCENT],
+}
+
+// export const NEURAL_NETWORK_CATEGORIES = CATEGORIES;
+export const NEURAL_NETWORK_CATEGORIES = [MODEL_CONFIG, LAYER_CONFIG, COMPILER_CONFIG, OPTIMIZER_CONFIG];
 

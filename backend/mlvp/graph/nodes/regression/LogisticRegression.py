@@ -16,8 +16,8 @@ class LogisticRegression(Node):
         self.tol = data['tol']
         self.c = data['C']
 
-    def import_dependency(self):
-        return FROM_IMPORT.format(package="sklearn.linear_model", class_to_import="LogisticRegression")
+    def import_dependency(self, packages):
+        packages.add(FROM_IMPORT.format(package="sklearn.linear_model", class_to_import="LogisticRegression"))
 
     def codegen(self, emitter: Emitter, out_file):
         curr_count = emitter.get_count()

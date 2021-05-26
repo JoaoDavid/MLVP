@@ -4,11 +4,12 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {CriterionEnum, RandomForestRegressorModel} from "./RandomForestRegressorModel";
 import InputCheckBox from "../../../UI/modal/input-checkbox/InputCheckBox";
+import InputNumber from "../../../UI/modal/input-number/InputNumber";
 
 
 interface ModalProps {
     node: RandomForestRegressorModel;
-    numTreesChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    numTreesChanged: (value: number) => void;
     maxDepthChanged: (value: number) => void;
     maxDepthCheckedChanged: (value: boolean) => void;
     criterionChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -20,8 +21,7 @@ const RandomForestRegressorModal = (props: ModalProps) => {
             <Form.Group>
                 <Row>
                     <Col>
-                        <Form.Label>Number of Trees</Form.Label>
-                        <Form.Control type="number" min="1" value={props.node.getNumTrees()} onChange={props.numTreesChanged}/>
+                        <InputNumber name={"Number of Trees"} value={props.node.getNumTrees()} setValue={props.numTreesChanged}/>
                     </Col>
                     <Col>
                         <InputCheckBox name={"Max Depth"} checked={props.node.getMaxDepthChecked()}

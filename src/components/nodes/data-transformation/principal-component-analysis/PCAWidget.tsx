@@ -22,17 +22,16 @@ const PCAWidget = (props: PCAProps) => {
         eventNodeUpdated(props.engine, props.node);
     }
 
-    const numComponentsChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        let value: number = +event.target.value;
+    const numComponentsChanged = (value: number) => {
         if (value > 0) {
-            props.node.setNumComponents(+event.target.value);
+            props.node.setNumComponents(value);
             eventNodeUpdated(props.engine, props.node);
         }
     }
 
     const modal = <PCAModal node={props.node} randomStateChanged={randomStateChanged} randomStateCheckedChanged={randomStateCheckedChanged} numComponentsChanged={numComponentsChanged}/>;
     return (
-        <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_TRANSFORMATION_CONFIG.color} modalChildren={modal}>
+        <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_TRANSFORMATION_CONFIG.color} modalContent={modal}>
             <p>Random State: {props.node.getRandomStateChecked()?props.node.getRandomState():"None"}</p>
             <p>Num Components: {props.node.getNumComponents()}</p>
         </BaseNodeWidget>

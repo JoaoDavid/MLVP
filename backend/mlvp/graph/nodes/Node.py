@@ -43,7 +43,7 @@ class Node(ABC):
         return len(self.parent_links) == 0 and not self.is_root
 
     @abstractmethod
-    def import_dependency(self):
+    def import_dependency(self, packages):
         pass
 
     @abstractmethod

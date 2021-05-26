@@ -2,9 +2,8 @@ import React, {useState} from 'react';
 import classes from '../../modal/BaseModal.module.css';
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
-import Col from "react-bootstrap/Col";
 
-interface InputEnableProps {
+interface InputCheckBoxProps {
     name: string;
     checked: boolean;
     setChecked: (value: boolean) => void;
@@ -12,7 +11,7 @@ interface InputEnableProps {
     setValue: (value: number) => void;
 }
 
-const InputCheckBox = (props: InputEnableProps) => {
+const InputCheckBox = (props: InputCheckBoxProps) => {
     const [checked, setCheckState] = useState(props.checked);
     const [value, setValue] = useState(props.value);
 
@@ -30,7 +29,7 @@ const InputCheckBox = (props: InputEnableProps) => {
     }
 
     return (
-        <Col>
+        <>
             <Form.Label>{props.name}</Form.Label>
             <InputGroup className="mb-3">
                 <InputGroup.Prepend>
@@ -40,7 +39,7 @@ const InputCheckBox = (props: InputEnableProps) => {
                 <Form.Control className={classes.Inputs} disabled={!checked} type="number"
                               value={checked?value:""} onChange={valueChanged}/>
             </InputGroup>
-        </Col>
+        </>
     )
 }
 

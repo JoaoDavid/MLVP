@@ -21,8 +21,8 @@ class TemporalAggregation(Node):
         self.metric = data['metric']
         self.window_size = data['windowSize']
 
-    def import_dependency(self):
-        return IMPORT_AS.format(lib_name="pandas", lib_var=PANDAS_VAR)
+    def import_dependency(self, packages):
+        packages.add(IMPORT_AS.format(lib_name="pandas", lib_var=PANDAS_VAR))
 
     def codegen(self, emitter: Emitter, out_file):
         curr_count = emitter.get_count()

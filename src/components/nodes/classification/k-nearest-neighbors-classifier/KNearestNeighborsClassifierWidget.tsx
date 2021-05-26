@@ -32,7 +32,7 @@ const KNearestNeighborsClassifierWidget = (props: KNearestNeighborsClassifierPro
                                                     weightsChanged={weightsChanged}/>;
     return (
         <BaseNodeWidget node={props.node} engine={props.engine} color={CLASSIFIER_CONFIG.color}
-                        modalChildren={modal}>
+                        modalContent={modal}>
             <p>Neighbors: {props.node.getNumNeighbors()}</p>
             <p>Weights: {props.node.getWeights().toString()}</p>
             <p>Algorithm: {props.node.getAlgorithm().toString()}</p>

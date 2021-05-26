@@ -12,13 +12,13 @@ interface CSVNodeProps {
 
 const AbstractDsWidget = (props: CSVNodeProps) => {
 
-    const numColsChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        props.node.setCols(+event.target.value);
+    const numColsChanged = (value: number) => {
+        props.node.setCols(value);
         eventNodeUpdated(props.engine, props.node);
     }
 
-    const numRowsChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        props.node.setRows(+event.target.value);
+    const numRowsChanged = (value: number) => {
+        props.node.setRows(value);
         eventNodeUpdated(props.engine, props.node);
     }
 
@@ -30,7 +30,7 @@ const AbstractDsWidget = (props: CSVNodeProps) => {
     const modal = <AbstractDsModal node={props.node} numColsChanged={numColsChanged} numRowsChanged={numRowsChanged} timeSeriesChanged={timeSeriesChanged}/>;
 
     return (
-            <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_SOURCE_CONFIG.color} modalChildren={modal}>
+            <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_SOURCE_CONFIG.color} modalContent={modal}>
                 <p>Rows: {props.node.getRows()}</p>
                 <p>Columns: {props.node.getCols()}</p>
                 <p>Time Series: {""+props.node.getTimeSeries()}</p>

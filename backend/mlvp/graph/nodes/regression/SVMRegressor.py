@@ -15,8 +15,8 @@ class SVMRegressor(Node):
         self.degree = data['degree']
         self.gamma = data['gamma']
 
-    def import_dependency(self):
-        return FROM_IMPORT.format(package="sklearn.svm", class_to_import="SVR")
+    def import_dependency(self, packages):
+        packages.add(FROM_IMPORT.format(package="sklearn.svm", class_to_import="SVR"))
 
     def codegen(self, emitter: Emitter, out_file):
         curr_count = emitter.get_count()

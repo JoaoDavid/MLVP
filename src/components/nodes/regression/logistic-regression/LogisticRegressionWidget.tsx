@@ -22,15 +22,15 @@ const LogisticRegressionWidget = (props: LogisticRegressionProps) => {
         eventNodeUpdated(props.engine, props.node);
     }
 
-    const tolChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (+event.target.value > 0) {
-            props.node.setTol(+event.target.value);
+    const tolChanged = (value: number) => {
+        if (value > 0) {
+            props.node.setTol(value);
             eventNodeUpdated(props.engine, props.node);
         }
     }
-    const cChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (+event.target.value > 0) {
-            props.node.setC(+event.target.value);
+    const cChanged = (value: number) => {
+        if (value > 0) {
+            props.node.setC(value);
             eventNodeUpdated(props.engine, props.node);
         }
     }
@@ -38,7 +38,7 @@ const LogisticRegressionWidget = (props: LogisticRegressionProps) => {
     const modal = <LogisticRegressionModal node={props.node} cChanged={cChanged} dualChanged={dualChanged} penaltyChanged={penaltyChanged} tolChanged={tolChanged}/>;
     return (
         <BaseNodeWidget node={props.node} engine={props.engine} color={REGRESSOR_CONFIG.color}
-                        modalChildren={modal}>
+                        modalContent={modal}>
             <p>Penalty: {props.node.getPenalty().toString()}</p>
             <p>Dual: {props.node.getDual().toString()}</p>
             <p>Tol: {props.node.getTol()}</p>

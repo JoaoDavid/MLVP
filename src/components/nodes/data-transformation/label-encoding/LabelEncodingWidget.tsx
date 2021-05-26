@@ -21,7 +21,7 @@ const LabelEncodingWidget = (props: LabelEncodingProps) => {
     const modal = <LabelEncodingModal node={props.node} encodedColumnChanged={encodedColumnChanged}/>;
     return (
         <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_TRANSFORMATION_CONFIG.color}
-                        modalChildren={modal}>
+                        modalContent={modal}>
             <p>To encode: {props.node.getOriginalColumn()}</p>
         </BaseNodeWidget>
     )

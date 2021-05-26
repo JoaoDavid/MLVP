@@ -12,8 +12,8 @@ class CrossValidation(Node):
         super().__init__(data)
         self.num_folds = data['numberFolds']
 
-    def import_dependency(self):
-        return FROM_IMPORT.format(package="sklearn.model_selection", class_to_import="cross_val_score")
+    def import_dependency(self, packages):
+        packages.add(FROM_IMPORT.format(package="sklearn.model_selection", class_to_import="cross_val_score"))
 
     def codegen(self, emitter: Emitter, out_file):
         curr_count = emitter.get_count()

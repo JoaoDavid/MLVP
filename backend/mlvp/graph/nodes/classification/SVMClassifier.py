@@ -15,8 +15,8 @@ class SVMClassifier(Node):
         self.kernel = data['kernel']
         self.degree = data['degree']
 
-    def import_dependency(self):
-        return FROM_IMPORT.format(package="sklearn.svm", class_to_import="SVC")
+    def import_dependency(self, packages):
+        packages.add(FROM_IMPORT.format(package="sklearn.svm", class_to_import="SVC"))
 
     def codegen(self, emitter: Emitter, out_file):
         curr_count = emitter.get_count()
