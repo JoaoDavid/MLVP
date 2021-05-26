@@ -89,11 +89,13 @@ export class CompilerModel extends BaseNodeModel {
 
     deserialize(event: DeserializeEvent<this>) {
         super.deserialize(event);
+        this.loss = event.data.loss;
     }
 
     serialize(): any {
         return {
             ...super.serialize(),
+            loss: this.loss,
         };
     }
 
