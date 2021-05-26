@@ -1,7 +1,17 @@
+import sys
+
 from flask import Flask, request
 from flask_cors import CORS
 from waitress import serve
 from mlvp import pipeline_compilation, pipeline_verification, pipeline_data_flow
+
+sys.settrace
+# DEBUG SEG FAULT
+# gdb python
+# (gdb) run ./serverDev.py
+# wait for segfault ##
+# (gdb) backtrace
+# stack trace of the c code
 
 app = Flask(__name__)
 CORS(app)
