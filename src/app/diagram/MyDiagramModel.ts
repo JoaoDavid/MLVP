@@ -10,7 +10,7 @@ export interface MyDiagramListener extends BaseEntityListener {
     dataFlowResponse?(event: BaseEntityEvent & { dataFlowResponse: DataFlowResponse }): void;
     nodeUpdated?(event: BaseEntityEvent & { node: BaseNodeModel }): void;
     hideCanvas?(event: BaseEntityEvent & { bool: boolean }): void;
-    modalContent?(event: BaseEntityEvent & { modal: React.ReactNode }): void;
+    modalContent?(event: BaseEntityEvent & { modal: React.ReactNode, size:'sm' | 'lg' | 'xl' }): void;
 }
 
 export interface DiagramModelGenerics extends CanvasModelGenerics {

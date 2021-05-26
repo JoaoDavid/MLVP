@@ -29,6 +29,7 @@ type AppState = {
     showCanvas: boolean,
     showModal: boolean,
     modal: React.ReactNode,
+    modalSize?: 'sm' | 'lg' | 'xl';
 };
 
 class App extends React.Component<AppProps, AppState> {
@@ -45,6 +46,7 @@ class App extends React.Component<AppProps, AppState> {
             showCanvas: true,
             showModal: false,
             modal: null,
+            modalSize: "lg",
         }
         this.canvasManager.registerBasicMLCanvas();
         this.newCanvas();
@@ -98,7 +100,10 @@ class App extends React.Component<AppProps, AppState> {
             },
             modalContent: (event) => {
                 console.log("event: modalContent");
-                this.setState({modal: event.modal});
+                this.setState({
+                    modal: event.modal,
+                    modalSize: event.size,
+                });
                 this.openModal();
                 this.canvasManager.getEngine().repaintCanvas();
             }
@@ -206,7 +211,7 @@ class App extends React.Component<AppProps, AppState> {
 
     render() {
         let modal = this.state.showModal?(
-            <Modal animation={true} size="xl" show={true} onHide={this.closeModal}>
+            <Modal animation={true} size={this.state.modalSize} show={true} onHide={this.closeModal}>
                 {this.state.modal}
             </Modal>):null;
 

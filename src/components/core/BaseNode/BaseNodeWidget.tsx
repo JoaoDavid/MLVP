@@ -17,6 +17,7 @@ export interface BaseNodeProps {
     modalContent?: React.ReactNode;
     color: string;
     onDoubleClick?: () => void;
+    modalSize?: 'sm' | 'lg' | 'xl';
 }
 
 export const eventNodeUpdated = (engine: DiagramEngine, node: BaseNodeModel) => {
@@ -39,6 +40,7 @@ const BaseNodeWidget = (props: BaseNodeProps) => {
         props.engine.getModel().fireEvent(
             {
                 modal: modal,
+                size: props.modalSize?props.modalSize:"lg"
             },
             'modalContent'
         );

@@ -31,7 +31,7 @@ const KerasClassifierWidget = (props: KerasClassifierProps) => {
                                         batchSizeChanged={batchSizeChanged} verboseChanged={verboseChanged}/>;
     return (
         <BaseNodeWidget node={props.node} engine={props.engine} color={CLASSIFIER_CONFIG.color}
-                        modalContent={modal}>
+                        modalContent={modal} modalSize={"xl"}>
             <p>Epochs: {props.node.getEpochs()}</p>
             <p>Batch Size: {props.node.getBatchSize()}</p>
             <p>Verbose: {props.node.getVerbose()}</p>
