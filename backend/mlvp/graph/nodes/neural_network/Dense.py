@@ -32,7 +32,6 @@ class Dense(Node):
     def assertions(self):
         in_layer_port = self.get_port(True, "Layer")
         out_layer_port = self.get_port(True, "Output Layer")
-        z3_in_layers = Int(PORT_PROP.format(id_port=in_layer_port.port_id, name="n_layers"))
 
         return [
         ]

@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './SideBar.module.css';
 import Category from "./category/Category";
-import {CATEGORIES, CategoryConfig} from "../../nodes/Config";
+import {CategoryConfig} from "../../nodes/Config";
 import Accordion from "react-bootstrap/Accordion";
 
 interface SideBarProps {

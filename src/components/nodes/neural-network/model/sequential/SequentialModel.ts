@@ -1,6 +1,5 @@
 import {BaseNodeModel, NodeConfig} from "../../../../core/BaseNode/BaseNodeModel";
 import {DeserializeEvent} from "@projectstorm/react-canvas-core";
-import {ClassifierPortModel} from "../../../../ports/model/ClassifierPortModel";
 import {LayerPortModel} from "../../../../ports/layer/LayerPortModel";
 
 export const SEQUENTIAL: NodeConfig = {

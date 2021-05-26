@@ -14,7 +14,7 @@ const DenseWidget = (props: DenseProps) => {
 
     const unitsChanged = (value: number) => {
         props.node.setUnits(value);
-        // eventNodeUpdated(props.engine, props.node);
+        eventNodeUpdated(props.engine, props.node);
     }
 
     const activationChanged = (event: React.ChangeEvent<HTMLInputElement>) => {

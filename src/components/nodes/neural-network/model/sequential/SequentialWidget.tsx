@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {SequentialModel} from './SequentialModel';
-import BaseNodeWidget, {eventNodeUpdated} from '../../../../core/BaseNode/BaseNodeWidget';
+import BaseNodeWidget from '../../../../core/BaseNode/BaseNodeWidget';
 import SequentialModal from './SequentialModal';
-import {CLASSIFIER_CONFIG, MODEL_CONFIG} from "../../../Config";
+import {MODEL_CONFIG} from "../../../Config";
 
 interface SequentialProps {
     node: SequentialModel;

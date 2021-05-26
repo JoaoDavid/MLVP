@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
 import classes from '../../modal/BaseModal.module.css';
 import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
-import Col from "react-bootstrap/Col";
 
 interface InputNumberProps {
     name: string;
