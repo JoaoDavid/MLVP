@@ -14,7 +14,7 @@ const VisualizeDatasetWidget = (props: VisualizeDatasetProps) => {
 
     const modal = <VisualizeDatasetModal node={props.node}/>;
     return (
-        <BaseNodeWidget node={props.node} engine={props.engine} color={VISUALIZATION_CONFIG.color} modalChildren={modal}>
+        <BaseNodeWidget node={props.node} engine={props.engine} color={VISUALIZATION_CONFIG.color} modalContent={modal}>
         </BaseNodeWidget>
     );
 

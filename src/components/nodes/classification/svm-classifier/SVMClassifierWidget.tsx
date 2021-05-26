@@ -33,7 +33,7 @@ const SVMClassifierWidget = (props: SVMClassifierProps) => {
                                       kernelChanged={kernelChanged}/>;
     return (
         <BaseNodeWidget node={props.node} engine={props.engine} color={CLASSIFIER_CONFIG.color}
-                        modalChildren={modal}>
+                        modalContent={modal}>
             <p>C: {props.node.getC()}</p>
             <p>kernel: {props.node.getKernel().toString()}</p>
             <p>Degree: {props.node.getDegree()}</p>

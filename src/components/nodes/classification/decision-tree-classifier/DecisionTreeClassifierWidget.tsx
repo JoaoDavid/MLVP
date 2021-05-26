@@ -38,7 +38,7 @@ const DecisionTreeClassifierWidget = (props: DecisionTreeClassifierProps) => {
                                                splitterChanged={splitterChanged}/>;
     return (
         <BaseNodeWidget node={props.node} engine={props.engine} color={CLASSIFIER_CONFIG.color}
-                        modalChildren={modal}>
+                        modalContent={modal}>
             <p>Splitter: {props.node.getSplitter().toString()}</p>
             <p>Max Depth: {props.node.getMaxDepthChecked()?props.node.getMaxDepth():"None"}</p>
             <p>Criterion: {props.node.getCriterion().toString()}</p>

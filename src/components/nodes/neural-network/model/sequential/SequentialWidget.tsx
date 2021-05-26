@@ -15,7 +15,7 @@ const SequentialWidget = (props: SequentialProps) => {
     const modal = <SequentialModal node={props.node}/>;
     return (
         <BaseNodeWidget node={props.node} engine={props.engine} color={MODEL_CONFIG.color}
-                        modalChildren={modal}>
+                        modalContent={modal}>
         </BaseNodeWidget>
     )
 

@@ -15,7 +15,7 @@ const StochasticGradientDescentWidget = (props: StochasticGradientDescentProps) 
     const modal = <StochasticGradientDescentModal node={props.node}/>;
     return (
         <BaseNodeWidget node={props.node} engine={props.engine} color={OPTIMIZER_CONFIG.color}
-                        modalChildren={modal}>
+                        modalContent={modal}>
         </BaseNodeWidget>
     )
 

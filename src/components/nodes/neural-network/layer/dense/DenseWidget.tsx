@@ -25,7 +25,7 @@ const DenseWidget = (props: DenseProps) => {
     const modal = <DenseModal node={props.node} activationChanged={activationChanged} unitsChanged={unitsChanged}/>;
     return (
         <BaseNodeWidget node={props.node} engine={props.engine} color={LAYER_CONFIG.color}
-                        modalChildren={modal}>
+                        modalContent={modal}>
             <p>Units: {props.node.getUnits()}</p>
             <p>Activation: {props.node.getActivation().toString()}</p>
         </BaseNodeWidget>

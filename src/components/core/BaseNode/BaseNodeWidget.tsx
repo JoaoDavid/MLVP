@@ -14,7 +14,7 @@ export interface BaseNodeProps {
     node: BaseNodeModel;
     engine: DiagramEngine;
     children?: React.ReactNode;
-    modalChildren?: React.ReactNode;
+    modalContent?: React.ReactNode;
     color: string;
     onDoubleClick?: () => void;
 }
@@ -28,15 +28,6 @@ export const eventNodeUpdated = (engine: DiagramEngine, node: BaseNodeModel) => 
     );
 }
 
-export const eventHideCanvas = (engine: DiagramEngine, value: boolean) => {
-    engine.getModel().fireEvent(
-        {
-            bool: value
-        },
-        'hideCanvas'
-    );
-}
-
 /**
  * Base Node Widget, used to shape every node within the project
  */
@@ -47,7 +38,6 @@ const BaseNodeWidget = (props: BaseNodeProps) => {
 
 
     const sendOpenCanvasEvent = () => {
-        console.log("sending event modelContent")
         props.engine.getModel().fireEvent(
             {
                 modal: modal,
@@ -87,7 +77,7 @@ const BaseNodeWidget = (props: BaseNodeProps) => {
             // footer={props.node.getOptions().id}
                        saveTitle={updateTitle}
         >
-            {props.modalChildren}
+            {props.modalContent}
         </BaseNodeModal>);
 
     return (

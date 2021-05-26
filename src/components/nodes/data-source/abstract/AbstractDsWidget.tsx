@@ -30,7 +30,7 @@ const AbstractDsWidget = (props: CSVNodeProps) => {
     const modal = <AbstractDsModal node={props.node} numColsChanged={numColsChanged} numRowsChanged={numRowsChanged} timeSeriesChanged={timeSeriesChanged}/>;
 
     return (
-            <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_SOURCE_CONFIG.color} modalChildren={modal}>
+            <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_SOURCE_CONFIG.color} modalContent={modal}>
                 <p>Rows: {props.node.getRows()}</p>
                 <p>Columns: {props.node.getCols()}</p>
                 <p>Time Series: {""+props.node.getTimeSeries()}</p>

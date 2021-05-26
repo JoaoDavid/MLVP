@@ -24,7 +24,7 @@ const UndersamplingWidget = (props: UndersamplingProps) => {
 
     const modal = <UndersamplingModal node={props.node} randomStateChanged={randomStateChanged} randomStateCheckedChanged={randomStateCheckedChanged}/>;
     return (
-        <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_BALANCING_CONFIG.color} modalChildren={modal}>
+        <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_BALANCING_CONFIG.color} modalContent={modal}>
             <p>Random State: {props.node.getRandomStateChecked()?props.node.getRandomState():"None"}</p>
         </BaseNodeWidget>
     );

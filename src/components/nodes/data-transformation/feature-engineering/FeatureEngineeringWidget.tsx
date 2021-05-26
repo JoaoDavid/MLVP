@@ -19,7 +19,7 @@ const FeatureEngineeringWidget = (props: FeatureEngineeringProps) => {
 
     const modal = <FeatureEngineeringModal node={props.node} linesChanged={linesChanged}/>;
     return (
-        <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_TRANSFORMATION_CONFIG.color} modalChildren={modal}>
+        <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_TRANSFORMATION_CONFIG.color} modalContent={modal}>
             <p></p>
         </BaseNodeWidget>
     );

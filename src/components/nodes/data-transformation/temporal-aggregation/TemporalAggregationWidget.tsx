@@ -46,7 +46,7 @@ const TemporalAggregationWidget = (props: TemporalAggregationProps) => {
                                             metricChanged={metricChanged} windowSizeChanged={windowSizeChanged}/>;
     return (
         <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_TRANSFORMATION_CONFIG.color}
-                        modalChildren={modal}>
+                        modalContent={modal}>
             {/*<p>New Column: {props.node.getNewColumnName()}</p>*/}
             {/*<p>Original Column: {props.node.getOriginalColumnName()}</p>*/}
             <p>Window Size: {props.node.getWindowSize()}</p>

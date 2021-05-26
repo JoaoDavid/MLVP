@@ -20,7 +20,7 @@ const CompilerWidget = (props: CompilerProps) => {
     const modal = <CompilerModal node={props.node} lossChanged={lossChanged}/>;
     return (
         <BaseNodeWidget node={props.node} engine={props.engine} color={COMPILER_CONFIG.color}
-                        modalChildren={modal}>
+                        modalContent={modal}>
             <p>Loss: {props.node.getLoss().toString()}</p>
         </BaseNodeWidget>
     )

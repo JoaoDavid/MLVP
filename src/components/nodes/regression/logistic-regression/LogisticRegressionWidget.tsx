@@ -38,7 +38,7 @@ const LogisticRegressionWidget = (props: LogisticRegressionProps) => {
     const modal = <LogisticRegressionModal node={props.node} cChanged={cChanged} dualChanged={dualChanged} penaltyChanged={penaltyChanged} tolChanged={tolChanged}/>;
     return (
         <BaseNodeWidget node={props.node} engine={props.engine} color={REGRESSOR_CONFIG.color}
-                        modalChildren={modal}>
+                        modalContent={modal}>
             <p>Penalty: {props.node.getPenalty().toString()}</p>
             <p>Dual: {props.node.getDual().toString()}</p>
             <p>Tol: {props.node.getTol()}</p>
