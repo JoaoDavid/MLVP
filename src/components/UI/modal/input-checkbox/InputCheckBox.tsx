@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Col from "react-bootstrap/Col";
 
-interface InputEnableProps {
+interface InputCheckBoxProps {
     name: string;
     checked: boolean;
     setChecked: (value: boolean) => void;
@@ -12,7 +12,7 @@ interface InputEnableProps {
     setValue: (value: number) => void;
 }
 
-const InputCheckBox = (props: InputEnableProps) => {
+const InputCheckBox = (props: InputCheckBoxProps) => {
     const [checked, setCheckState] = useState(props.checked);
     const [value, setValue] = useState(props.value);
 
