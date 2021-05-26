@@ -8,9 +8,6 @@ interface BaseNodeModalProps {
     title: string;
     footer: string;
     children?: React.ReactNode;
-    handleClose: () => void;
-    handleShow: () => void;
-    show: boolean;
     saveTitle: (title: string) => void;
 }
 

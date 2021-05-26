@@ -13,7 +13,7 @@ import {useState} from "react";
 export interface BaseNodeProps {
     node: BaseNodeModel;
     engine: DiagramEngine;
-    children?: React.ReactNode;
+    children?: React.ReactNode; //widget displayed information
     modalContent?: React.ReactNode;
     color: string;
     onDoubleClick?: () => void;
@@ -34,8 +34,6 @@ export const eventNodeUpdated = (engine: DiagramEngine, node: BaseNodeModel) => 
 const BaseNodeWidget = (props: BaseNodeProps) => {
 
     const [, setTitle] = useState(props.node.getTitle);
-    const [modalOpen, setModal] = useState(false);
-
 
     const sendOpenCanvasEvent = () => {
         props.engine.getModel().fireEvent(
@@ -55,26 +53,14 @@ const BaseNodeWidget = (props: BaseNodeProps) => {
         return <BasePortWidget engine={props.engine} port={port} key={port.getID()}/>;
     };
 
-    const openModal = () => {
-        setModal(true);
-    }
-
-    const closeModal = () => {
-        setModal(false);
-    }
-
     const nodeClasses = [classes.Node];
     if (props.node.isSelected()) {
         nodeClasses.push(classes.NodeSelected);
     }
 
     const modal = (
-        <BaseNodeModal handleClose={closeModal}
-                       handleShow={openModal}
-                       show={modalOpen}
-                       title={props.node.getTitle()}
+        <BaseNodeModal title={props.node.getTitle()}
                        footer={props.node.getOptions().name}
-            // footer={props.node.getOptions().id}
                        saveTitle={updateTitle}
         >
             {props.modalContent}
