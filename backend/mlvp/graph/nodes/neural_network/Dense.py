@@ -19,7 +19,7 @@ class Dense(Node):
         parent_port = self.parent_links[0].source_port
         clf = emitter.get(parent_port)
 
-        out_file.write(ADD_LAYER.format(clf=clf, output_size=9, activation='\'relu\'', input_dim=3))
+        out_file.write(ADD_LAYER.format(clf=clf, output_size=self.units, activation=self.activation, input_dim=3))
 
         out_clf = self.get_port(False, "Output Layer")
         emitter.set(out_clf, clf)
