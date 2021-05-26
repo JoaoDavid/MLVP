@@ -60,6 +60,7 @@ class KerasClassifierModal extends React.Component<KerasClassifierModalProps, Mo
 
 
     registerListeners = (model: MyDiagramModel) => {
+        model.clearListeners();
         model.registerListener({
             nodeUpdated: (event) => {
                 console.log("event: nodeUpdated");
