@@ -1,23 +1,20 @@
 import React, {useState} from 'react';
 import Modal from 'react-bootstrap/Modal';
 import ModalFooter from 'react-bootstrap/ModalFooter';
-import InputTitle from "./input-title/InputTitle";
-import classes from './BaseModal.module.css';
+import InputTitle from "../../UI/modal/input-title/InputTitle";
+import classes from '../../UI/modal/BaseModal.module.css';
 
-interface BaseModalProps {
+interface BaseNodeModalProps {
     title: string;
     footer: string;
     children?: React.ReactNode;
-    /*
-    receber aqui as variaveis para fazer binding com os inputs que meter no modal
-     */
     handleClose: () => void;
     handleShow: () => void;
     show: boolean;
     saveTitle: (title: string) => void;
 }
 
-const BaseModal = (props: BaseModalProps) => {
+const BaseNodeModal = (props: BaseNodeModalProps) => {
     const [title, setTitle] = useState(props.title);
     const [isEditing, setEdit] = useState(false);
 
@@ -47,19 +44,17 @@ const BaseModal = (props: BaseModalProps) => {
 
     return (
         <>
-
-                <Modal.Header closeButton>
-                    <div style={{height: "30px"}} onClick={startEditingText}>
-                        {currTitleElement}
-                    </div>
-                </Modal.Header>
-                <Modal.Body>
-                    {props.children}
-                </Modal.Body>
-                <ModalFooter>{props.footer}</ModalFooter>
-
+            <Modal.Header closeButton>
+                <div style={{height: "30px"}} onClick={startEditingText}>
+                    {currTitleElement}
+                </div>
+            </Modal.Header>
+            <Modal.Body>
+                {props.children}
+            </Modal.Body>
+            <ModalFooter>{props.footer}</ModalFooter>
         </>
     )
 }
 
-export default BaseModal;
+export default BaseNodeModal;

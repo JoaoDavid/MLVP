@@ -6,7 +6,7 @@ import classes from './BaseNode.module.css';
 import Title from './Title/Title';
 import {BaseNodeModel} from './BaseNodeModel';
 import PortContainer from "../BasePort/PortContainer/PortContainer";
-import BaseModal from "../../UI/modal/BaseModal";
+import BaseNodeModal from "./BaseNodeModal";
 import {useState} from "react";
 
 
@@ -79,16 +79,16 @@ const BaseNodeWidget = (props: BaseNodeProps) => {
     }
 
     const modal = (
-        <BaseModal handleClose={closeModal}
-                   handleShow={openModal}
-                   show={modalOpen}
-                   title={props.node.getTitle()}
-                   footer={props.node.getOptions().name}
+        <BaseNodeModal handleClose={closeModal}
+                       handleShow={openModal}
+                       show={modalOpen}
+                       title={props.node.getTitle()}
+                       footer={props.node.getOptions().name}
             // footer={props.node.getOptions().id}
-                   saveTitle={updateTitle}
+                       saveTitle={updateTitle}
         >
             {props.modalChildren}
-        </BaseModal>);
+        </BaseNodeModal>);
 
     return (
         <div className={nodeClasses.join(' ')}
