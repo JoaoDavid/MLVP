@@ -16,8 +16,9 @@ export class SequentialModel extends BaseNodeModel {
     }
 
     protected addOutPort(): void {
-        const p = new LayerPortModel(false);
+        const p = new LayerPortModel(false, undefined, undefined, 1);
         super.addPort(p);
+        // TODO, only one link per output port
     }
 
     deserialize(event: DeserializeEvent<this>) {
