@@ -10,6 +10,7 @@ interface TopNavProps {
     open: (event: React.ChangeEvent<HTMLInputElement>) => void,
     save: () => void,
     compile: () => void,
+    about: () => void,
     loadDemos: Map<String, ()=>void>,
 }
 
@@ -54,7 +55,7 @@ const topNav = (props: TopNavProps) => {
                     <NavDropdown title="Help" id="collasible-nav-dropdown">
                         <NavDropdown.Item >Help</NavDropdown.Item>
                         <NavDropdown.Divider/>
-                        <NavDropdown.Item>About</NavDropdown.Item>
+                        <NavDropdown.Item className={classes.NavDropdownItem} onClick={props.about}>About</NavDropdown.Item>
                     </NavDropdown>
                 </Nav>
             </Navbar.Collapse>

@@ -16,6 +16,7 @@ import {DefaultLinkModel} from "@projectstorm/react-diagrams-defaults";
 import {CATEGORIES} from "../components/nodes/Config";
 import {Button, Modal} from "react-bootstrap";
 import {CanvasManager} from "./CanvasManager";
+import AboutModal from "../components/UI/modal/AboutModal";
 
 interface AppProps {
 
@@ -187,6 +188,15 @@ class App extends React.Component<AppProps, AppState> {
         }
     }
 
+    openAbout = () => {
+        let aboutModal = (<AboutModal/>);
+        this.setState({
+            showModal: true,
+            modal: aboutModal,
+            modalSize: "lg",
+        })
+    }
+
     updateLog = (message: string) => {
         let currentDate = new Date();
         let time = currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds();
@@ -218,7 +228,7 @@ class App extends React.Component<AppProps, AppState> {
         return (
             <div className={classes.FrontPage}>
                 <TopNav newCanvas={this.newCanvas} open={this.openSave} save={this.downloadSave}
-                        compile={this.compile} loadDemos={this.loadDemos()}/>
+                        compile={this.compile} loadDemos={this.loadDemos()} about={this.openAbout}/>
                 {modal}
 {/*                <Button onClick={this.toggleCanvasLock} variant="primary" size="sm">
                     Lock Nodes
