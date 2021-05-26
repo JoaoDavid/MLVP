@@ -68,7 +68,8 @@ class KerasClassifier(Node):
         for node in self.sorted_nodes:
             if isinstance(node, Compiler):
                 count += 1
-        neural_network_well_built = len(self.sorted_nodes) > 0 and count == 1 and tc_res['canLink']
+        neural_network_well_built = len(self.sorted_nodes) > 0 and count == 1 and tc_res['canLink'] and len(
+            self.sorted_loose_nodes) == 0
         features_assertions = no_features_of_type(input_port, "string", input_ds.dataset)
 
         return [
