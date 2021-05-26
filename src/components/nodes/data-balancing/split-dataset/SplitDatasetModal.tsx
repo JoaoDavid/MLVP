@@ -4,12 +4,13 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {SplitDatasetModel} from "./SplitDatasetModel";
 import ToggleSwitch from "../../../UI/modal/toggle-switch/ToggleSwitch";
+import InputNumber from "../../../UI/modal/input-number/InputNumber";
 
 
 interface SplitDatasetModalProps {
     node: SplitDatasetModel;
-    testSizeChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    trainSizeChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    testSizeChanged: (value: number) => void;
+    trainSizeChanged: (value: number) => void;
     shuffleChanged: () => void;
     stratifyChanged: () => void;
 }
@@ -20,14 +21,10 @@ const SplitDatasetModal = (props: SplitDatasetModalProps) => {
             <Form.Group>
                 <Row>
                     <Col>
-                        <Form.Label>Test Size</Form.Label>
-                        <Form.Control type="number" step="0.01" min="0" max="1" value={props.node.getTestSize()}
-                                      onChange={props.testSizeChanged}/>
+                        <InputNumber name={"Test Size"} decimal={true} value={props.node.getTestSize()} setValue={props.testSizeChanged}/>
                     </Col>
                     <Col>
-                        <Form.Label>Train Size</Form.Label>
-                        <Form.Control type="number" step="0.01" min="0" max="1" value={props.node.getTrainSize()}
-                                      onChange={props.trainSizeChanged}/>
+                        <InputNumber name={"Train Size"} decimal={true} value={props.node.getTrainSize()} setValue={props.trainSizeChanged}/>
                     </Col>
                 </Row>
             </Form.Group>

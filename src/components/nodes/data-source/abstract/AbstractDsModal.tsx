@@ -5,11 +5,12 @@ import Col from "react-bootstrap/Col";
 import {AbstractDsModel} from "./AbstractDsModel";
 import {FormGroup} from "react-bootstrap";
 import ToggleSwitch from "../../../UI/modal/toggle-switch/ToggleSwitch";
+import InputNumber from "../../../UI/modal/input-number/InputNumber";
 
 interface AbstractDsModalProps {
     node: AbstractDsModel;
-    numColsChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    numRowsChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    numColsChanged: (value: number) => void;
+    numRowsChanged: (value: number) => void;
     timeSeriesChanged: () => void;
 }
 
@@ -19,14 +20,10 @@ const AbstractDsModal = (props: AbstractDsModalProps) => {
             <Form.Group>
                 <Row>
                     <Col>
-                        <Form.Label>Rows</Form.Label>
-                        <Form.Control type="number" min={0} value={props.node.getRows()}
-                                      onChange={props.numRowsChanged}/>
+                        <InputNumber name={"Rows"} value={props.node.getRows()} setValue={props.numRowsChanged}/>
                     </Col>
                     <Col>
-                        <Form.Label>Columns</Form.Label>
-                        <Form.Control type="number" min={0} value={props.node.getCols()}
-                                      onChange={props.numColsChanged}/>
+                        <InputNumber name={"Columns"} value={props.node.getCols()} setValue={props.numColsChanged}/>
                     </Col>
                 </Row>
             </Form.Group>

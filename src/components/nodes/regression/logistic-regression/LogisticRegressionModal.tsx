@@ -5,13 +5,14 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import ToggleSwitch from "../../../UI/modal/toggle-switch/ToggleSwitch";
 import {FormGroup} from "react-bootstrap";
+import InputNumber from "../../../UI/modal/input-number/InputNumber";
 
 interface LogisticRegressionModalProps {
     node: LogisticRegressionModel;
     penaltyChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
     dualChanged: () => void;
-    tolChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    cChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    tolChanged: (value: number) => void;
+    cChanged: (value: number) => void;
 }
 
 const LogisticRegressionModal = (props: LogisticRegressionModalProps) => {
@@ -29,14 +30,10 @@ const LogisticRegressionModal = (props: LogisticRegressionModalProps) => {
                         </Form.Control>
                     </Col>
                     <Col>
-                        <Form.Label>Tolerance for stopping criteria</Form.Label>
-                        <Form.Control type="number" min="1" value={props.node.getTol()}
-                                      onChange={props.tolChanged}/>
+                        <InputNumber name={"Tolerance for stopping criteria"} decimal={true} value={props.node.getTol()} setValue={props.tolChanged}/>
                     </Col>
                     <Col>
-                        <Form.Label>C</Form.Label>
-                        <Form.Control type="number" min="1" value={props.node.getC()}
-                                      onChange={props.cChanged}/>
+                        <InputNumber name={"C"} value={props.node.getC()} setValue={props.cChanged}/>
                     </Col>
                 </Row>
             </Form.Group>

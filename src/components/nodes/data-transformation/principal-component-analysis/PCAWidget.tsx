@@ -22,10 +22,9 @@ const PCAWidget = (props: PCAProps) => {
         eventNodeUpdated(props.engine, props.node);
     }
 
-    const numComponentsChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        let value: number = +event.target.value;
+    const numComponentsChanged = (value: number) => {
         if (value > 0) {
-            props.node.setNumComponents(+event.target.value);
+            props.node.setNumComponents(value);
             eventNodeUpdated(props.engine, props.node);
         }
     }

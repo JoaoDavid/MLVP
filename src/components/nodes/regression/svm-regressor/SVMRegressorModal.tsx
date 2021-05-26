@@ -4,12 +4,13 @@ import {GammaEnum, SVMRegressorModel} from "./SVMRegressorModel";
 import Col from "react-bootstrap/Col";
 import {KernelEnum} from "../../classification/svm-classifier/SVMClassifierModel";
 import Row from "react-bootstrap/Row";
+import InputNumber from "../../../UI/modal/input-number/InputNumber";
 
 
 interface SVMRegressorModalProps {
     node: SVMRegressorModel;
     kernelChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    degreeChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    degreeChanged: (value: number) => void;
     gammaChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -28,9 +29,7 @@ const SVMRegressorModal = (props: SVMRegressorModalProps) => {
                         </Form.Control>
                     </Col>
                     <Col>
-                        <Form.Label>Degree</Form.Label>
-                        <Form.Control type="number" min="0" value={props.node.getDegree()}
-                                      onChange={props.degreeChanged}/>
+                        <InputNumber name={"Degree"} value={props.node.getDegree()} setValue={props.degreeChanged}/>
                     </Col>
                     <Col>
                         <Form.Label>Gamma</Form.Label>

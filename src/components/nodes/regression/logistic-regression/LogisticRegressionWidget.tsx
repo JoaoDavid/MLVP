@@ -22,15 +22,15 @@ const LogisticRegressionWidget = (props: LogisticRegressionProps) => {
         eventNodeUpdated(props.engine, props.node);
     }
 
-    const tolChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (+event.target.value > 0) {
-            props.node.setTol(+event.target.value);
+    const tolChanged = (value: number) => {
+        if (value > 0) {
+            props.node.setTol(value);
             eventNodeUpdated(props.engine, props.node);
         }
     }
-    const cChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (+event.target.value > 0) {
-            props.node.setC(+event.target.value);
+    const cChanged = (value: number) => {
+        if (value > 0) {
+            props.node.setC(value);
             eventNodeUpdated(props.engine, props.node);
         }
     }

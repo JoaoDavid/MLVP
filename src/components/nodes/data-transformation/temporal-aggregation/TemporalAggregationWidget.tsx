@@ -34,9 +34,11 @@ const TemporalAggregationWidget = (props: TemporalAggregationProps) => {
         eventNodeUpdated(props.engine, props.node);
     }
 
-    const windowSizeChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        props.node.setWindowSize(+event.target.value);
-        eventNodeUpdated(props.engine, props.node);
+    const windowSizeChanged = (value: number) => {
+        if (value >= 1) {
+            props.node.setWindowSize(value);
+            eventNodeUpdated(props.engine, props.node);
+        }
     }
 
     const modal = <TemporalAggregationModal node={props.node} newColumnNameChanged={newColumnNameChanged}

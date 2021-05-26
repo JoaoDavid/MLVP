@@ -12,13 +12,13 @@ interface SplitDatasetProps {
 
 const SplitDatasetWidget = (props: SplitDatasetProps) => {
 
-    const testSizeChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        props.node.setTestSize(+event.target.value);
+    const testSizeChanged = (value: number) => {
+        props.node.setTestSize(value);
         eventNodeUpdated(props.engine, props.node);
     }
 
-    const trainSizeChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        props.node.setTrainSize(+event.target.value);
+    const trainSizeChanged = (value: number) => {
+        props.node.setTrainSize(value);
         eventNodeUpdated(props.engine, props.node);
     }
 
