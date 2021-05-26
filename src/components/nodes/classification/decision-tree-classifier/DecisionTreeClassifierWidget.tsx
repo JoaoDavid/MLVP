@@ -18,7 +18,7 @@ const DecisionTreeClassifierWidget = (props: DecisionTreeClassifierProps) => {
     }
 
     const splitterChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        props.node.setCriterion(event.target.value);
+        props.node.setSplitter(event.target.value);
         eventNodeUpdated(props.engine, props.node);
     }
 
