@@ -220,12 +220,12 @@ class App extends React.Component<AppProps, AppState> {
                 <TopNav newCanvas={this.newCanvas} open={this.openSave} save={this.downloadSave}
                         compile={this.compile} loadDemos={this.loadDemos()}/>
                 {modal}
-                <Button onClick={this.toggleCanvasLock} variant="primary" size="sm">
+{/*                <Button onClick={this.toggleCanvasLock} variant="primary" size="sm">
                     Lock Nodes
                 </Button>
                 <Button onClick={this.openModal} variant="primary" size="sm">
                     Open Canvas
-                </Button>
+                </Button>*/}
                 <div className={classes.Container}>
                     <SideBar format={this.canvasManager.getCanvasName()} categories={CATEGORIES}/>
                     <Canvas engine={this.canvasManager.getEngine()} onDropCanvas={this.canvasManager.onDropCanvas}/>
