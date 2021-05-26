@@ -12,9 +12,9 @@ interface DenseProps {
 
 const DenseWidget = (props: DenseProps) => {
 
-    const unitsChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        props.node.setUnits(+event.target.value);
-        eventNodeUpdated(props.engine, props.node);
+    const unitsChanged = (value: number) => {
+        props.node.setUnits(value);
+        // eventNodeUpdated(props.engine, props.node);
     }
 
     const activationChanged = (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -12,8 +12,8 @@ interface RandomForestClassifierProps {
 
 const RandomForestClassifierWidget = (props: RandomForestClassifierProps) => {
 
-    const numTreesChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        props.node.setNumTrees(+event.target.value);
+    const numTreesChanged = (value: number) => {
+        props.node.setNumTrees(value);
         eventNodeUpdated(props.engine, props.node);
     }
 
