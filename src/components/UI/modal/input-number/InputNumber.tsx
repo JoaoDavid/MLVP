@@ -1,0 +1,32 @@
+import React, {useState} from 'react';
+import classes from '../../modal/BaseModal.module.css';
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
+import Col from "react-bootstrap/Col";
+
+interface InputNumberProps {
+    name: string;
+    value: number;
+    setValue: (value: number) => void;
+}
+
+const InputNumber = (props: InputNumberProps) => {
+    const [value, setValue] = useState(props.value);
+
+    const valueChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        props.setValue(+event.target.value);
+        setValue(+event.target.value);
+    }
+
+    return (
+        <Col>
+            <Form.Label>{props.name}</Form.Label>
+            <InputGroup className="mb-3">
+                <Form.Control className={classes.Inputs} type="number"
+                              value={value} onChange={valueChanged}/>
+            </InputGroup>
+        </Col>
+    )
+}
+
+export default InputNumber;
