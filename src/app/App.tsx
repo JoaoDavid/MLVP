@@ -69,6 +69,8 @@ class App extends React.Component<AppProps, AppState> {
                 console.log("event: nodeUpdated");
                 console.log(event);
                 this.canvasManager.getTypeChecker().requestTypeCheck();
+                this.closeModal()
+                this.openModal()
             },
             nodesUpdated: (event) => {
                 console.log("event: nodesUpdated");
@@ -203,15 +205,16 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     render() {
+        let modal = this.state.showModal?(
+            <Modal animation={true} size="xl" show={true} onHide={this.closeModal}>
+                {this.state.modal}
+            </Modal>):null;
+
         return (
             <div className={classes.FrontPage}>
                 <TopNav newCanvas={this.newCanvas} open={this.openSave} save={this.downloadSave}
                         compile={this.compile} loadDemos={this.loadDemos()}/>
-                <>
-                    <Modal animation={false} size="xl" show={this.state.showModal} onHide={this.closeModal}>
-                        {this.state.modal}
-                    </Modal>
-                </>
+                {modal}
                 <Button onClick={this.toggleCanvasLock} variant="primary" size="sm">
                     Lock Nodes
                 </Button>
