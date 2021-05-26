@@ -3,7 +3,7 @@ import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {CompilerModel} from './CompilerModel';
 import BaseNodeWidget, {eventNodeUpdated} from '../../../core/BaseNode/BaseNodeWidget';
 import CompilerModal from './CompilerModal';
-import {CLASSIFIER_CONFIG, COMPILER_CONFIG} from "../../Config";
+import {COMPILER_CONFIG} from "../../Config";
 
 interface CompilerProps {
     node: CompilerModel;
@@ -12,10 +12,16 @@ interface CompilerProps {
 
 const CompilerWidget = (props: CompilerProps) => {
 
-    const modal = <CompilerModal node={props.node}/>;
+    const lossChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        props.node.setLoss(event.target.value);
+        eventNodeUpdated(props.engine, props.node);
+    }
+
+    const modal = <CompilerModal node={props.node} lossChanged={lossChanged}/>;
     return (
         <BaseNodeWidget node={props.node} engine={props.engine} color={COMPILER_CONFIG.color}
                         modalChildren={modal}>
+            <p>Loss: {props.node.getLoss().toString()}</p>
         </BaseNodeWidget>
     )
 

@@ -5,10 +5,12 @@ from mlvp.typecheck import *
 COMPILE = "\t{clf}.compile(loss={loss}, optimizer={optimizer}, metrics={metrics})\n"
 RET = "\treturn {clf}\n"
 
+
 class Compiler(Node):
 
     def __init__(self, data):
         super().__init__(data)
+        self.loss = data['loss']
 
     def import_dependency(self, packages):
         pass
@@ -19,7 +21,7 @@ class Compiler(Node):
         clf = emitter.get(in_layer_port)
         optimizer = emitter.get(in_optimizer_port)
 
-        out_file.write(COMPILE.format(clf=clf, loss='\'categorical_crossentropy\'', optimizer=optimizer, metrics=["accuracy"]))
+        out_file.write(COMPILE.format(clf=clf, loss=self.loss, optimizer=optimizer, metrics=["accuracy"]))  # TODO
         out_file.write(RET.format(clf=clf))
 
     def data_flow(self, node_columns):
@@ -29,7 +31,6 @@ class Compiler(Node):
         layer_port = self.get_port(True, "Layer")
         optimizer_port = self.get_port(True, "Optimizer")
         z3_in_layers = Int(PORT_PROP.format(id_port=layer_port.port_id, name="n_layers"))
-
 
         for parent_link in self.parent_links:
             print(parent_link.target_port == layer_port)
@@ -42,5 +43,5 @@ class Compiler(Node):
             ]
 
         return [
-            # requires
-        ] + layer_assertions
+                   # requires
+               ] + layer_assertions

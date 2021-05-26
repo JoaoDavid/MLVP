@@ -22,7 +22,7 @@ const DenseModal = (props: DenseModalProps) => {
                                       onChange={props.unitsChanged}/>
                     </Col>
                     <Col>
-                        <Form.Label>Criterion</Form.Label>
+                        <Form.Label>Activation</Form.Label>
                         <Form.Control as="select" defaultValue={props.node.getActivation().toString()}
                                       onChange={props.activationChanged}>
                             {Object.values(ActivationEnum).map((e) => {
