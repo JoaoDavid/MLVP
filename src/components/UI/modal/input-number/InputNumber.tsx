@@ -6,6 +6,7 @@ interface InputNumberProps {
     name: string;
     value: number;
     setValue: (value: number) => void;
+    decimal?: boolean;
 }
 
 const InputNumber = (props: InputNumberProps) => {
@@ -16,10 +17,12 @@ const InputNumber = (props: InputNumberProps) => {
         setValue(+event.target.value);
     }
 
+    let step = props.decimal?"0.01":"1";
+
     return (
         <>
             <Form.Label>{props.name}</Form.Label>
-            <Form.Control className={classes.Inputs} type="number"
+            <Form.Control className={classes.Inputs} type="number" step={step}
                           value={value} onChange={valueChanged}/>
         </>
     )
