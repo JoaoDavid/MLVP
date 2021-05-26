@@ -17,8 +17,8 @@ class PCA(Node):
         # TODO receber do front-end os nomes das novas colunas
         self.column_names = ['V' + str(i) for i in range(1, self.num_components + 1)]
 
-    def import_dependency(self):
-        return FROM_IMPORT.format(package="sklearn.decomposition", class_to_import="PCA")
+    def import_dependency(self, packages):
+        packages.add(FROM_IMPORT.format(package="sklearn.decomposition", class_to_import="PCA"))
 
     def codegen(self, emitter: Emitter, out_file):
         curr_count = emitter.get_count()

@@ -5,6 +5,7 @@ import Col from "react-bootstrap/Col";
 import InputGroup from "react-bootstrap/InputGroup";
 import {TemporalAggregationModel, MetricEnum} from "./TemporalAggregationModel";
 import classes from "../../../UI/modal/BaseModal.module.css";
+import InputNumber from "../../../UI/modal/input-number/InputNumber";
 
 
 interface ModalProps {
@@ -12,7 +13,7 @@ interface ModalProps {
     newColumnNameChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
     originalColumnNameChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
     metricChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    windowSizeChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    windowSizeChanged: (value: number) => void;
 }
 
 const TemporalAggregationModal = (props: ModalProps) => {
@@ -39,10 +40,7 @@ const TemporalAggregationModal = (props: ModalProps) => {
                         </Form.Control>
                     </Col>
                     <Col>
-                        <Form.Label>Window Size</Form.Label>
-                        <InputGroup className="mb-3">
-                            <Form.Control className={classes.Inputs} type="number" min="1" value={props.node.getWindowSize()} onChange={props.windowSizeChanged} />
-                        </InputGroup>
+                        <InputNumber name={"Window Size"} value={props.node.getWindowSize()} setValue={props.windowSizeChanged}/>
                     </Col>
                     <Col>
                         <Form.Label>Metric</Form.Label>

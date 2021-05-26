@@ -5,34 +5,34 @@ import {
     Action,
     InputType,
     ActionEvent,
-    DragCanvasState
 } from '@projectstorm/react-canvas-core';
 import { PortModel, DiagramEngine, DragDiagramItemsState } from '@projectstorm/react-diagrams';
 import {MyDragNewLinkState} from "./MyDragNewLinkState";
+import MyDragCanvasState from "./MyDragCanvasState";
 import {SelectLinkState} from './SelectLinkState';
 import {LinkModel} from "@projectstorm/react-diagrams-core";
 import {TypeChecker} from "../typecheck/TypeChecker";
 
 export class DiagramStateManager extends State<DiagramEngine> {
-    dragCanvas: DragCanvasState;
+    dragCanvas: MyDragCanvasState;
     dragNewLink: MyDragNewLinkState;
     dragItems: DragDiagramItemsState;
     selectLink: SelectLinkState;
 
-    private validateLinks: TypeChecker;
+    private typeChecker: TypeChecker;
 
-    constructor(validateLinks: TypeChecker) {
+    constructor(name: string, typeChecker: TypeChecker) {
         super({
-            name: 'default-diagrams'
+            name: name
         });
         this.childStates = [new SelectingState()];
-        this.dragCanvas = new DragCanvasState();
-        this.dragNewLink = new MyDragNewLinkState(validateLinks);
+        this.dragCanvas = new MyDragCanvasState();
+        this.dragNewLink = new MyDragNewLinkState(typeChecker);
         this.dragItems = new DragDiagramItemsState();
 
         // But this is a custom one!
         this.selectLink = new SelectLinkState();
-        this.validateLinks = validateLinks;
+        this.typeChecker = typeChecker;
 
         this.registerClicks();
     }
@@ -43,6 +43,7 @@ export class DiagramStateManager extends State<DiagramEngine> {
             new Action({
                 type: InputType.MOUSE_DOWN,
                 fire: (event: ActionEvent<MouseEvent>) => {
+                    console.log(this.getOptions().name)
                     const element = this.engine.getActionEventBus().getModelForEvent(event);
 
                     // the canvas was clicked on, transition to the dragging canvas state

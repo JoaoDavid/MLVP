@@ -12,8 +12,8 @@ interface RandomForestClassifierProps {
 
 const RandomForestClassifierWidget = (props: RandomForestClassifierProps) => {
 
-    const numTreesChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        props.node.setNumTrees(+event.target.value);
+    const numTreesChanged = (value: number) => {
+        props.node.setNumTrees(value);
         eventNodeUpdated(props.engine, props.node);
     }
 
@@ -37,7 +37,7 @@ const RandomForestClassifierWidget = (props: RandomForestClassifierProps) => {
                                                maxDepthCheckedChanged={maxDepthCheckedChanged}/>;
     return (
         <BaseNodeWidget node={props.node} engine={props.engine} color={CLASSIFIER_CONFIG.color}
-                        modalChildren={modal}>
+                        modalContent={modal}>
             <p>Trees: {props.node.getNumTrees()}</p>
             <p>Max Depth: {props.node.getMaxDepthChecked()?props.node.getMaxDepth():"None"}</p>
             <p>Criterion: {props.node.getCriterion().toString()}</p>

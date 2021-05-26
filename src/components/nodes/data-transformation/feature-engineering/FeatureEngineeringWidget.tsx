@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {DiagramEngine} from '@projectstorm/react-diagrams-core';
 import {FeatureEngineeringModel} from './FeatureEngineeringModel';
-import BaseNodeWidget, {eventNodeUpdated} from '../../../core/BaseNode/BaseNodeWidget';
+import BaseNodeWidget from '../../../core/BaseNode/BaseNodeWidget';
 import FeatureEngineeringModal from "./FeatureEngineeringModal";
 import {DATA_TRANSFORMATION_CONFIG} from "../../Config";
 
@@ -19,7 +19,7 @@ const FeatureEngineeringWidget = (props: FeatureEngineeringProps) => {
 
     const modal = <FeatureEngineeringModal node={props.node} linesChanged={linesChanged}/>;
     return (
-        <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_TRANSFORMATION_CONFIG.color} modalChildren={modal}>
+        <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_TRANSFORMATION_CONFIG.color} modalContent={modal}>
             <p></p>
         </BaseNodeWidget>
     );

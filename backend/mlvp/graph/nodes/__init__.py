@@ -8,3 +8,4 @@ from mlvp.graph.nodes.data_transformation import *
 from mlvp.graph.nodes.regression import *
 from mlvp.graph.nodes.regressor_evaluation import *
 from mlvp.graph.nodes.visualization import *
+from mlvp.graph.nodes.neural_network import *

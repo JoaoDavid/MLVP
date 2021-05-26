@@ -1,0 +1,11 @@
+.FrontPage {
+    height: 30vw;
+    width: 100%;
+}
+
+.Container {
+    height: 100%;
+    flex-direction: row;
+    flex-grow: 1;
+    display: flex;
+}

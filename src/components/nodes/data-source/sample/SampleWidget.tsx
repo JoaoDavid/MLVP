@@ -34,7 +34,7 @@ const SampleWidget = (props: SampleNodeProps) => {
 
     const modal = <SampleModal node={props.node} loadCSV={loadCSV} timeSeriesChanged={timeSeriesChanged} balancedChanged={balancedChanged}/>;
     return (
-        <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_SOURCE_CONFIG.color} modalChildren={modal}>
+        <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_SOURCE_CONFIG.color} modalContent={modal}>
             <p>{props.node.getFileName() || "File:"}</p>
             <p>Columns: {props.node.getCols()}</p>
             <p>Time Series: {""+props.node.getTimeSeries()}</p>

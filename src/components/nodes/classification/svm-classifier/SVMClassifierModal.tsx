@@ -3,13 +3,14 @@ import Form from "react-bootstrap/Form";
 import {KernelEnum, SVMClassifierModel} from "./SVMClassifierModel";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import InputNumber from "../../../UI/modal/input-number/InputNumber";
 
 
 interface SVMClassifierModalProps {
     node: SVMClassifierModel;
-    cChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    cChanged: (value: number) => void;
     kernelChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    degreeChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    degreeChanged: (value: number) => void;
 }
 
 const SVMClassifierModal = (props: SVMClassifierModalProps) => {
@@ -18,9 +19,7 @@ const SVMClassifierModal = (props: SVMClassifierModalProps) => {
             <Form.Group>
                 <Row>
                     <Col>
-                        <Form.Label>C</Form.Label>
-                        <Form.Control type="number" min="1.0" step="0.01" value={props.node.getC()}
-                                      onChange={props.cChanged}/>
+                        <InputNumber name={"C"} decimal={true} value={props.node.getC()} setValue={props.cChanged}/>
                     </Col>
                     <Col>
                         <Form.Label>Kernel</Form.Label>
@@ -32,9 +31,7 @@ const SVMClassifierModal = (props: SVMClassifierModalProps) => {
                         </Form.Control>
                     </Col>
                     <Col>
-                        <Form.Label>Degree</Form.Label>
-                        <Form.Control type="number" min="0" value={props.node.getDegree()}
-                                      onChange={props.degreeChanged}/>
+                        <InputNumber name={"Degree"} value={props.node.getDegree()} setValue={props.degreeChanged}/>
                     </Col>
                 </Row>
             </Form.Group>

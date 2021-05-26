@@ -12,9 +12,9 @@ interface SVMClassifierProps {
 
 const SVMClassifierWidget = (props: SVMClassifierProps) => {
 
-    const cChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (+event.target.value > 0) {
-            props.node.setC(+event.target.value);
+    const cChanged = (value: number) => {
+        if (value > 0) {
+            props.node.setC(value);
             eventNodeUpdated(props.engine, props.node);
         }
     }
@@ -24,8 +24,8 @@ const SVMClassifierWidget = (props: SVMClassifierProps) => {
         eventNodeUpdated(props.engine, props.node);
     }
 
-    const degreeChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        props.node.setDegree(+event.target.value);
+    const degreeChanged = (value: number) => {
+        props.node.setDegree(value);
         eventNodeUpdated(props.engine, props.node);
     }
 
@@ -33,7 +33,7 @@ const SVMClassifierWidget = (props: SVMClassifierProps) => {
                                       kernelChanged={kernelChanged}/>;
     return (
         <BaseNodeWidget node={props.node} engine={props.engine} color={CLASSIFIER_CONFIG.color}
-                        modalChildren={modal}>
+                        modalContent={modal}>
             <p>C: {props.node.getC()}</p>
             <p>kernel: {props.node.getKernel().toString()}</p>
             <p>Degree: {props.node.getDegree()}</p>

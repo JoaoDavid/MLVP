@@ -17,8 +17,8 @@ const SVMRegressorWidget = (props: SVMRegressorProps) => {
         eventNodeUpdated(props.engine, props.node);
     }
 
-    const degreeChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        props.node.setDegree(+event.target.value);
+    const degreeChanged = (value: number) => {
+        props.node.setDegree(value);
         eventNodeUpdated(props.engine, props.node);
     }
 
@@ -31,7 +31,7 @@ const SVMRegressorWidget = (props: SVMRegressorProps) => {
                                      kernelChanged={kernelChanged}/>;
     return (
         <BaseNodeWidget node={props.node} engine={props.engine} color={REGRESSOR_CONFIG.color}
-                        modalChildren={modal}>
+                        modalContent={modal}>
             <p>kernel: {props.node.getKernel().toString()}</p>
             <p>Degree: {props.node.getDegree()}</p>
             <p>Gamma: {props.node.getGamma().toString()}</p>

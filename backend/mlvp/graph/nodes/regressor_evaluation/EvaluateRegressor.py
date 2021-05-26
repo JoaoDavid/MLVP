@@ -12,8 +12,8 @@ class EvaluateRegressor(Node):
     def __init__(self, data):
         super().__init__(data)
 
-    def import_dependency(self):
-        return FROM_IMPORT.format(package="sklearn.metrics", class_to_import="explained_variance_score")
+    def import_dependency(self, packages):
+        packages.add(FROM_IMPORT.format(package="sklearn.metrics", class_to_import="explained_variance_score"))
 
     def codegen(self, emitter: Emitter, out_file):
         curr_count = emitter.get_count()

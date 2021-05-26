@@ -14,8 +14,8 @@ class Oversampling(Node):
         super().__init__(data)
         self.random_state = data['randomState']
 
-    def import_dependency(self):
-        return FROM_IMPORT.format(package="imblearn.over_sampling", class_to_import=RANDOM_OVERSAMPLER)
+    def import_dependency(self, packages):
+        packages.add(FROM_IMPORT.format(package="imblearn.over_sampling", class_to_import=RANDOM_OVERSAMPLER))
 
     def codegen(self, emitter: Emitter, out_file):
         curr_count = emitter.get_count()

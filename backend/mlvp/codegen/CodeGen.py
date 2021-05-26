@@ -6,7 +6,7 @@ class CodeGen:
 
     def __init__(self, name, sorted_nodes):
         self.name = name + ".py"
-        self.libraries = set()
+        self.packages = set()
         self.sorted_nodes = sorted_nodes
         self.out_file = open(self.name, "w")
         self.emitter = Emitter()
@@ -24,8 +24,8 @@ class CodeGen:
 
     def __write_imports(self):
         for node in self.sorted_nodes:
-            self.libraries.add(node.import_dependency())
-        for lib in self.libraries:
+            node.import_dependency(self.packages)
+        for lib in self.packages:
             self.out_file.write(lib)
         self.out_file.write("\n\n")
 

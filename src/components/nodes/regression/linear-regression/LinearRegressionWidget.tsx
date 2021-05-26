@@ -48,7 +48,7 @@ const LinearRegressionWidget = (props: LinearRegressionProps) => {
                                          positiveChanged={positiveChanged}/>;
     return (
         <BaseNodeWidget node={props.node} engine={props.engine} color={REGRESSOR_CONFIG.color}
-                        modalChildren={modal}>
+                        modalContent={modal}>
             <p>Fit Intercept: {props.node.getFitIntercept().toString()}</p>
             <p>Normalize: {props.node.getNormalize().toString()}</p>
             <p>Copy X: {props.node.getCopyX().toString()}</p>

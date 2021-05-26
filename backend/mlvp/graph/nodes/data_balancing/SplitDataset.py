@@ -14,8 +14,8 @@ class SplitDataset(Node):
         self.shuffle = data['shuffle']
         self.stratify_by_class = data['stratifyByClass']
 
-    def import_dependency(self):
-        return FROM_IMPORT.format(package="sklearn.model_selection", class_to_import="train_test_split")
+    def import_dependency(self, packages):
+        packages.add(FROM_IMPORT.format(package="sklearn.model_selection", class_to_import="train_test_split"))
 
     def codegen(self, emitter: Emitter, out_file):
         curr_count = emitter.get_count()
