@@ -12,13 +12,14 @@ import {DefaultLinkModel} from "@projectstorm/react-diagrams-defaults";
 import {MyDiagramModel} from "../../../../app/diagram/MyDiagramModel";
 import Col from "react-bootstrap/Col";
 import {Modal} from "react-bootstrap";
+import InputNumber from "../../../UI/modal/input-number/InputNumber";
 
 
 interface KerasClassifierModalProps {
     node: KerasClassifierModel;
-    epochsChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    batchSizeChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    verboseChanged: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    epochsChanged: (value: number) => void;
+    batchSizeChanged: (value: number) => void;
+    verboseChanged: (value: number) => void;
 }
 
 type ModalState = {
@@ -106,19 +107,13 @@ class KerasClassifierModal extends React.Component<KerasClassifierModalProps, Mo
                 <Form.Group>
                     <Row>
                         <Col>
-                            <Form.Label>Epochs</Form.Label>
-                            <Form.Control type="number" min="1" value={this.props.node.getEpochs()}
-                                          onChange={this.props.epochsChanged}/>
+                            <InputNumber name={"Epochs"} value={this.props.node.getEpochs()} setValue={this.props.epochsChanged}/>
                         </Col>
                         <Col>
-                            <Form.Label>Batch Size</Form.Label>
-                            <Form.Control type="number" min="1" value={this.props.node.getBatchSize()}
-                                          onChange={this.props.batchSizeChanged}/>
+                            <InputNumber name={"Batch Size"} value={this.props.node.getBatchSize()} setValue={this.props.batchSizeChanged}/>
                         </Col>
                         <Col>
-                            <Form.Label>Verbose</Form.Label>
-                            <Form.Control type="number" min="1" value={this.props.node.getVerbose()}
-                                          onChange={this.props.verboseChanged}/>
+                            <InputNumber name={"Verbose"} value={this.props.node.getVerbose()} setValue={this.props.verboseChanged}/>
                         </Col>
                     </Row>
                     <p></p>

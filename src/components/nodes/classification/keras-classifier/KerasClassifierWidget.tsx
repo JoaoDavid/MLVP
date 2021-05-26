@@ -12,18 +12,18 @@ interface KerasClassifierProps {
 
 const KerasClassifierWidget = (props: KerasClassifierProps) => {
 
-    const epochsChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        props.node.setEpochs(+event.target.value);
+    const epochsChanged = (value: number) => {
+        props.node.setEpochs(value);
         eventNodeUpdated(props.engine, props.node);
     }
 
-    const batchSizeChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        props.node.setBatchSize(+event.target.value);
+    const batchSizeChanged = (value: number) => {
+        props.node.setBatchSize(value);
         eventNodeUpdated(props.engine, props.node);
     }
 
-    const verboseChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        props.node.setVerbose(+event.target.value);
+    const verboseChanged = (value: number) => {
+        props.node.setVerbose(value);
         eventNodeUpdated(props.engine, props.node);
     }
 
