@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import {OversamplingModel} from "./OversamplingModel";
 import InputCheckBox from "../../../UI/modal/input-checkbox/InputCheckBox";
+import Col from "react-bootstrap/Col";
 
 
 interface OversamplingModalProps {
@@ -17,7 +18,9 @@ const OversamplingModal = (props: OversamplingModalProps) => {
         <Form>
             <Form.Group>
                 <Row>
-                    <InputCheckBox name={"Random State"} checked={props.node.getRandomStateChecked()} setChecked={props.randomStateCheckedChanged} value={props.node.getRandomState()} setValue={props.randomStateChanged}/>
+                    <Col>
+                        <InputCheckBox name={"Random State"} checked={props.node.getRandomStateChecked()} setChecked={props.randomStateCheckedChanged} value={props.node.getRandomState()} setValue={props.randomStateChanged}/>
+                    </Col>
                 </Row>
             </Form.Group>
         </Form>
