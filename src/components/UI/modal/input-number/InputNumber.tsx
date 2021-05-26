@@ -19,13 +19,11 @@ const InputNumber = (props: InputNumberProps) => {
     }
 
     return (
-        <Col>
+        <>
             <Form.Label>{props.name}</Form.Label>
-            <InputGroup className="mb-3">
-                <Form.Control className={classes.Inputs} type="number"
-                              value={value} onChange={valueChanged}/>
-            </InputGroup>
-        </Col>
+            <Form.Control className={classes.Inputs} type="number"
+                          value={value} onChange={valueChanged}/>
+        </>
     )
 }
 
