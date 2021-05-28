@@ -2,7 +2,7 @@ from mlvp.codegen import *
 from mlvp.graph.nodes.Node import *
 from mlvp.typecheck import *
 
-ADD_LAYER = "\t{clf}.add(Dense({output_size}, activation={activation}, input_dim={input_dim}))\n"
+ADD_LAYER = "\t{clf}.add(Dense({output_size}, activation=\"{activation}\", input_dim={input_dim}))\n"
 
 
 class Dense(Node):
