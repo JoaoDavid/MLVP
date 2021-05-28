@@ -1,10 +1,11 @@
 from mlvp.codegen import *
 from mlvp.graph.nodes.Node import *
+from mlvp.graph.nodes.neural_network.model import NNModel
 
 INIT = "\t{clf} = Sequential()\n"
 
 
-class Sequential(Node):
+class Sequential(NNModel):
 
     def __init__(self, data):
         super().__init__(data)
@@ -14,12 +15,13 @@ class Sequential(Node):
 
     def codegen(self, emitter: Emitter, out_file):
         curr_count = emitter.get_count()
+        x, y = emitter.get(self.emitter_key)
         clf = "clf" + str(curr_count)
 
         out_file.write(INIT.format(clf=clf))
 
         out_clf = self.get_port(False, "Layer")
-        emitter.set(out_clf, clf)
+        emitter.set(out_clf, (clf, x))
 
     def data_flow(self, node_columns):
         pass
