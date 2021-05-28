@@ -2,7 +2,7 @@ from importlib import import_module
 from mlvp.graph.ports import ParentLink
 
 
-class ParseJSON:
+class Parser:
 
     def __init__(self, json_diagram):
         # raw information
