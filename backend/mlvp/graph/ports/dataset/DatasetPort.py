@@ -1,7 +1,7 @@
-from mlvp.graph.ports import PortType
+from mlvp.graph.ports import Port
 
 
-class DatasetPort(PortType):
+class DatasetPort(Port):
 
     def __init__(self, data):
         super().__init__(data)

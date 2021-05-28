@@ -1,7 +1,7 @@
-from mlvp.graph.ports import PortType
+from mlvp.graph.ports import Port
 
 
-class OptimizerPort(PortType):
+class OptimizerPort(Port):
 
     def __init__(self, data):
         super().__init__(data)
