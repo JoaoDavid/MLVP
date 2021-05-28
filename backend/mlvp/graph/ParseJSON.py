@@ -1,20 +1,19 @@
-import importlib
-
+from importlib import import_module
 from mlvp.graph.ports import ParentLink
 
 
 class ParseJSON:
 
     def __init__(self, json_diagram):
+        # raw information
         self.json_diagram = json_diagram
         self.json_links = {}
         self.json_nodes = {}
+
         # parsed information
-        self.nodes = {}
-        # array of orphan nodes
-        # nodes that have no parents linked to them
-        self.roots = []
-        self.loose = []
+        self.nodes = {}  # all nodes in the canvas
+        self.roots = []  # nodes without input port
+        self.loose = []  # nodes with input ports
 
     def parse(self):
         for layer in self.json_diagram['layers']:
@@ -29,7 +28,7 @@ class ParseJSON:
     def __parse_nodes(self):
         for node_id, data in self.json_nodes.items():
             # TODO, security, check if class exists
-            node_class = getattr(importlib.import_module("mlvp.graph.nodes"), data['type'])
+            node_class = getattr(import_module("mlvp.graph.nodes"), data['type'])
             # Instantiate the class
             node = node_class(data)
             self.__parse_ports(node, data['ports'])
@@ -40,6 +39,19 @@ class ParseJSON:
             elif node.is_loose():
                 self.loose.append(node)
 
+    def __parse_ports(self, node, json_ports):
+        for data in json_ports:
+            # TODO, security, check if class exists
+            port_class = getattr(import_module("mlvp.graph.ports"), data['type'])
+            # Instantiate the class
+            port = port_class(data)
+            node.ports[data['id']] = port
+            if port.in_port:
+                node.num_in_ports += 1
+                node.is_root = False
+            else:
+                node.num_out_ports += 1
+
     def __parse_links(self):
         for link_id, data in self.json_links.items():
             source_node = self.nodes[data['source']]
@@ -49,16 +61,3 @@ class ParseJSON:
             # add children and parents to the respective arrays
             source_node.children.append(target_node)
             target_node.parent_links.append(ParentLink(link_id, source_node, source_port, target_port))
-
-    def __parse_ports(self, node, json_ports):
-        for data in json_ports:
-            # TODO, security, check if class exists
-            port_class = getattr(importlib.import_module("mlvp.graph.ports"), data['type'])
-            # Instantiate the class
-            port = port_class(data)
-            node.ports[data['id']] = port
-            if port.in_port:
-                node.num_in_ports += 1
-                node.is_root = False
-            else:
-                node.num_out_ports += 1
