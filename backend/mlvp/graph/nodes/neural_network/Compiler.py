@@ -11,6 +11,7 @@ class Compiler(Node):
     def __init__(self, data):
         super().__init__(data)
         self.loss = data['loss']
+        self.metric = data['metric']
 
     def import_dependency(self, packages):
         pass
@@ -21,7 +22,7 @@ class Compiler(Node):
         clf = emitter.get(in_layer_port)
         optimizer = emitter.get(in_optimizer_port)
 
-        out_file.write(COMPILE.format(clf=clf, loss=self.loss, optimizer=optimizer, metrics=["accuracy"]))  # TODO
+        out_file.write(COMPILE.format(clf=clf, loss=self.loss, optimizer=optimizer, metrics=[self.metric]))
         out_file.write(RET.format(clf=clf))
 
     def data_flow(self, node_columns):
