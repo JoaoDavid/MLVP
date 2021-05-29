@@ -9,10 +9,38 @@ export const SAMPLING: NodeConfig = {
 
 export class SamplingModel extends BaseNodeModel {
 
+    private frac: number = 0.5; //float
+    private randomStateChecked: boolean = true;
+    private randomState: number = 0;
+
     constructor() {
         super(SAMPLING);
         this.addInPort();
         this.addOutPort();
+    }
+
+    getFrac(): number {
+        return this.frac;
+    }
+
+    setFrac(value: number) {
+        this.frac = value;
+    }
+
+    getRandomStateChecked (): boolean {
+        return this.randomStateChecked;
+    }
+
+    setRandomStateChecked (value: boolean) {
+        this.randomStateChecked = value;
+    }
+
+    getRandomState(): number {
+        return this.randomState;
+    }
+
+    setRandomState(value: number) {
+        this.randomState = value;
     }
 
     protected addInPort(): void {
@@ -27,15 +55,21 @@ export class SamplingModel extends BaseNodeModel {
 
     deserialize(event: DeserializeEvent<this>) {
         super.deserialize(event);
-        // TODO
-        // this.newColumnName = event.data.column_name;
+        this.frac = event.data.frac;
+        let randomState = event.data.randomState;
+        if (randomState === "None") {
+            this.randomStateChecked = false;
+        } else {
+            this.randomState = randomState;
+            this.randomStateChecked = true;
+        }
     }
 
     serialize(): any {
         return {
             ...super.serialize(),
-            // TODO
-            // newColumnName: this.newColumnName,
+            frac: this.frac,
+            randomState: this.randomStateChecked?this.randomState:"None",
         };
     }
 

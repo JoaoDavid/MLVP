@@ -10,7 +10,8 @@ class Sampling(Node):
 
     def __init__(self, data):
         super().__init__(data)
-        #TODO
+        self.frac = data['frac']
+        self.random_state = data['randomState']
 
     def import_dependency(self, packages):
         packages.add(FROM_IMPORT.format(package="package", class_to_import="class")) #TODO
