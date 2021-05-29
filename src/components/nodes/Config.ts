@@ -29,6 +29,7 @@ import {SEQUENTIAL} from "./neural-network/model/sequential/SequentialModel";
 import {DENSE} from "./neural-network/layer/dense/DenseModel";
 import {COMPILER} from "./neural-network/compiler/CompilerModel";
 import {STOCHASTIC_GRADIENT_DESCENT} from "./neural-network/optimizer/stochastic-gradient-descent/StochasticGradientDescentModel";
+import {SAMPLING} from "./data-balancing/sampling/SamplingModel";
 
 /*
 Every node type must be added to the nodes array
@@ -59,7 +60,7 @@ export const DATA_TRANSFORMATION_CONFIG: CategoryConfig = {
 export const DATA_BALANCING_CONFIG: CategoryConfig = {
     category: 'Data Balancing',
     color: 'rgb(79,132,102)',
-    nodes: [OVERSAMPLING, UNDERSAMPLING, SPLIT_DATASET],
+    nodes: [OVERSAMPLING, UNDERSAMPLING, SPLIT_DATASET, SAMPLING],
 }
 
 export const VISUALIZATION_CONFIG: CategoryConfig = {
