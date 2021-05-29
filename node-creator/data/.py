@@ -6,7 +6,7 @@ SAMPLER_INIT = "{var} = {sampler}(random_state={random_state})\n"
 FIT_RESAMPLE = "{x_res}, {y_res} = {var}.fit_resample({x}, {y})\n"
 # TODO
 
-class Oversampling(Node):
+class TemplateCodeName(Node):
 
     def __init__(self, data):
         super().__init__(data)
