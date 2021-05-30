@@ -115,4 +115,6 @@ class OneHotEncoding(Node):
             output_ds.balanced == input_ds.balanced,
             output_ds.time_series == input_ds.time_series,
             output_ds.dataset == input_ds.dataset,
+            output_ds.reduced == input_ds.reduced,
+            output_ds.increased == True,
         ] + aux_assertions

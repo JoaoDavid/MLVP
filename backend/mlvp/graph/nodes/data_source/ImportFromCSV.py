@@ -29,13 +29,15 @@ class ImportFromCSV(Node):
         df = "df" + str(curr_count)
         x = "x" + str(curr_count)
         y = "y" + str(curr_count)
-        out_ds = self.get_port(False, "Dataset")
-        emitter.set(out_ds, (x, y))
+
         out_file.write(LOAD_CSV.format(df=df, pandas_var=PANDAS_VAR, file_name=self.file_name))
         out_file.write(ASSERT.format(arg1=self.num_rows, arg2=df))
-        out_file.write(ASSERT.format(arg1=self.num_cols, arg2=df+".columns"))
+        out_file.write(ASSERT.format(arg1=self.num_cols, arg2=df + ".columns"))
         out_file.write(X.format(x=x, df=df, target=self.target))
         out_file.write(Y.format(y=y, df=df, target=self.target))
+
+        out_ds = self.get_port(False, "Dataset")
+        emitter.set(out_ds, (x, y))
 
     def data_flow(self, node_columns):
         output_port = self.get_port(False, "Dataset")
@@ -76,14 +78,16 @@ class ImportFromCSV(Node):
         is_balanced = all(list_balanced)
 
         return [
-                   output.cols == self.num_cols,
-                   output.rows == self.num_rows,
-                   output.rows == sum(label_counts),
-                   output.time_series == self.time_series,
-                   # And(labels_values),
-                   output.balanced == is_balanced,
-                   # output.balanced == And(list_balanced),
-                   output.n_labels == len(label_counts),
-                   z3_unique_col_names == unique_col_names,
-                   z3_unique_col_names,
-               ] + col_assertions
+            output.cols == self.num_cols,
+            output.rows == self.num_rows,
+            output.rows == sum(label_counts),
+            output.time_series == self.time_series,
+            output.reduced == False,
+            output.increased == False,
+            # And(labels_values),
+            output.balanced == is_balanced,
+            # output.balanced == And(list_balanced),
+            output.n_labels == len(label_counts),
+            z3_unique_col_names == unique_col_names,
+            z3_unique_col_names,
+        ] + col_assertions

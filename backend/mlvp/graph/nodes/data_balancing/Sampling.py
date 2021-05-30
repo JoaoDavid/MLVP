@@ -49,9 +49,13 @@ class Sampling(Node):
         output_ds = Dataset(output_port.port_id)
 
         return [
+            #requires
+            Not(input_ds.increased),
             output_ds.cols == input_ds.cols,
             output_ds.rows == ToInt(ToReal(input_ds.rows) * self.frac),
             output_ds.balanced == False,
             output_ds.time_series == False,
             output_ds.dataset == input_ds.dataset,
+            output_ds.reduced == True,
+            output_ds.increased == input_ds.increased,
         ]

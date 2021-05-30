@@ -76,4 +76,8 @@ class SplitDataset(Node):
             shuffle_train == output_shuffles,
             shuffle_test == output_shuffles,
             Implies(input_ds.time_series, Not(And(z3_shuffle, z3_stratify_by_class))),
+            train_ds.reduced == True,
+            train_ds.increased == input_ds.increased,
+            test_ds.reduced == True,
+            test_ds.increased == input_ds.increased,
         ]

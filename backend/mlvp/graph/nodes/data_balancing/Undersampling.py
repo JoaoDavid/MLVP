@@ -56,5 +56,7 @@ class UnderSampling(Node):
                 output_ds.max_label_count == input_ds.min_label_count,
                 input_ds.min_label_count == output_ds.min_label_count,
             )),
-            output_ds.balanced
+            output_ds.balanced,
+            output_ds.reduced == True,
+            output_ds.increased == input_ds.increased,
         ]
