@@ -4,7 +4,7 @@ from mlvp.typecheck import *
 
 
 CONCATENATE = "{df} = pd.concat([{old_x},{old_y}], join = 'outer', axis = 1)\n"
-SAMPLE = "{df}.sample(frac={frac}, replace={replace}, random_state={random_state})\n"
+SAMPLE = "{df} = {df}.sample(frac={frac}, replace={replace}, random_state={random_state})\n"
 X = "{x} = {df}.drop({old_y}.name, axis=1)\n"
 Y = "{y} = {df}[{old_y}.name]\n"
 
