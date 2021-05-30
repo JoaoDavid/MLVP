@@ -10,6 +10,7 @@ export const SAMPLING: NodeConfig = {
 export class SamplingModel extends BaseNodeModel {
 
     private frac: number = 0.5; //float
+    private replace: boolean = false;
     private randomStateChecked: boolean = true;
     private randomState: number = 0;
 
@@ -25,6 +26,14 @@ export class SamplingModel extends BaseNodeModel {
 
     setFrac(value: number) {
         this.frac = value;
+    }
+
+    getReplace = (): boolean => {
+        return this.replace;
+    }
+
+    setReplace = (value:boolean) => {
+        this.replace = value;
     }
 
     getRandomStateChecked (): boolean {
@@ -56,6 +65,7 @@ export class SamplingModel extends BaseNodeModel {
     deserialize(event: DeserializeEvent<this>) {
         super.deserialize(event);
         this.frac = event.data.frac;
+        this.replace = event.data.replace;
         let randomState = event.data.randomState;
         if (randomState === "None") {
             this.randomStateChecked = false;
@@ -69,6 +79,7 @@ export class SamplingModel extends BaseNodeModel {
         return {
             ...super.serialize(),
             frac: this.frac,
+            replace: this.replace,
             randomState: this.randomStateChecked?this.randomState:"None",
         };
     }

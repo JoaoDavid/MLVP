@@ -19,6 +19,11 @@ const SamplingWidget = (props: SamplingProps) => {
         }
     }
 
+    const replaceChanged = () => {
+        props.node.setReplace(!props.node.getReplace());
+        eventNodeUpdated(props.engine, props.node);
+    }
+
     const randomStateChanged = (value: number) => {
         props.node.setRandomState(value);
         eventNodeUpdated(props.engine, props.node);
@@ -29,12 +34,13 @@ const SamplingWidget = (props: SamplingProps) => {
         eventNodeUpdated(props.engine, props.node);
     }
 
-    const modal = <SamplingModal node={props.node} fracChanged={fracChanged} randomStateChanged={randomStateChanged}
+    const modal = <SamplingModal node={props.node} fracChanged={fracChanged} replaceChanged={replaceChanged} randomStateChanged={randomStateChanged}
                                  randomStateCheckedChanged={randomStateCheckedChanged}/>;
     return (
         <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_BALANCING_CONFIG.color}
                         modalContent={modal}>
             <p>Fraction: {props.node.getFrac()}</p>
+            <p>Replace: {props.node.getReplace().toString()}</p>
             <p>Random State: {props.node.getRandomStateChecked() ? props.node.getRandomState() : "None"}</p>
         </BaseNodeWidget>
     )

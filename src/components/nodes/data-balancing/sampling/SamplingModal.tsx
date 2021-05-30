@@ -5,11 +5,13 @@ import Col from "react-bootstrap/Col";
 import {SamplingModel} from "./SamplingModel";
 import InputCheckBox from "../../../UI/modal/input-checkbox/InputCheckBox";
 import InputNumber from "../../../UI/modal/input-number/InputNumber";
+import ToggleSwitch from "../../../UI/modal/toggle-switch/ToggleSwitch";
 
 
 interface SamplingModalProps {
     node: SamplingModel;
     fracChanged: (value: number) => void;
+    replaceChanged: () => void;
     randomStateChanged: (value: number) => void;
     randomStateCheckedChanged: (value: boolean) => void;
 }
@@ -28,7 +30,12 @@ const SamplingModal = (props: SamplingModalProps) => {
             <Form.Group>
                 <Row>
                     <Col>
-                        <InputNumber name={"Fraction"} decimal={true} value={props.node.getFrac()} setValue={props.fracChanged}/>
+                        <InputNumber name={"Fraction"} decimal={true} value={props.node.getFrac()}
+                                     setValue={props.fracChanged}/>
+                    </Col>
+                    <Col>
+                        <ToggleSwitch name={"Replace"} bool={props.node.getReplace()}
+                                      changed={props.replaceChanged}/>
                     </Col>
                     <Col>
                         <InputCheckBox name={"Random State"} checked={props.node.getRandomStateChecked()}
