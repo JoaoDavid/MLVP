@@ -35,6 +35,7 @@ import {StochasticGradientDescentFactory} from "../components/nodes/neural-netwo
 import {OptimizerPortFactory} from "../components/ports/optimizer/OptimizerPortFactory";
 import {LayerPortFactory} from "../components/ports/layer/LayerPortFactory";
 import {SamplingFactory} from "../components/nodes/data-balancing/sampling/SamplingFactory";
+import {VerticalConcatenationFactory} from "../components/nodes/data-transformation/vertical-concatenation/VerticalConcatenationFactory";
 
 
 export class FactoriesManager {
@@ -73,6 +74,7 @@ export class FactoriesManager {
         this.engine.getNodeFactories().registerFactory(SVMRegressorFactory.getInstance());
         this.engine.getNodeFactories().registerFactory(KerasClassifierFactory.getInstance());
         this.engine.getNodeFactories().registerFactory(SamplingFactory.getInstance());
+        this.engine.getNodeFactories().registerFactory(VerticalConcatenationFactory.getInstance());
     }
 
     registerNeuralNetworkNodes = () => {
