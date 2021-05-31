@@ -17,7 +17,7 @@ const TemplateCodeNameWidget = (props: TemplateCodeNameProps) => {
     const modal = <TemplateCodeNameModal node={props.node}/>;
     return (
         <BaseNodeWidget node={props.node} engine={props.engine} color={CATEGORY_CONFIG.color}
-                        modalChildren={modal}>
+                        modalContent={modal}>
             <p></p>
             <p></p>
         </BaseNodeWidget>

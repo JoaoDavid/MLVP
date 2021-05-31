@@ -1,7 +1,7 @@
-from mlvp.graph.ports import PortType
+from mlvp.graph.ports import Port
 
 
-class LayerPort(PortType):
+class LayerPort(Port):
 
     def __init__(self, data):
         super().__init__(data)

@@ -57,4 +57,6 @@ class Oversampling(Node):
                 output_ds.min_label_count == output_ds.max_label_count,
             )),
             output_ds.balanced,
+            output_ds.reduced == input_ds.reduced,
+            output_ds.increased == True,
         ]

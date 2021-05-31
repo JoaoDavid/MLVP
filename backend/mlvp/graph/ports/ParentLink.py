@@ -1,10 +1,10 @@
 from mlvp.graph.nodes import Node
-from mlvp.graph.ports import PortType
+from mlvp.graph.ports import Port
 
 
 class ParentLink:
 
-    def __init__(self, link_id: str, parent_node: Node, source_port: PortType, target_port: PortType):
+    def __init__(self, link_id: str, parent_node: Node, source_port: Port, target_port: Port):
         self.link_id = link_id
         self.parent_node = parent_node
         self.source_port = source_port

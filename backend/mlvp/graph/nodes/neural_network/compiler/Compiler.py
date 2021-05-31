@@ -1,8 +1,9 @@
 from mlvp.codegen import *
 from mlvp.graph.nodes.Node import *
+from mlvp.graph.ports import LayerPort, OptimizerPort
 from mlvp.typecheck import *
 
-COMPILE = "\t{clf}.compile(loss={loss}, optimizer={optimizer}, metrics={metrics})\n"
+COMPILE = "\t{clf}.compile(loss=\"{loss}\", optimizer={optimizer}, metrics={metrics})\n"
 RET = "\treturn {clf}\n"
 
 
@@ -11,17 +12,21 @@ class Compiler(Node):
     def __init__(self, data):
         super().__init__(data)
         self.loss = data['loss']
+        self.metric = data['metric']
 
     def import_dependency(self, packages):
         pass
 
     def codegen(self, emitter: Emitter, out_file):
-        in_layer_port = self.parent_links[0].source_port
-        in_optimizer_port = self.parent_links[1].source_port
-        clf = emitter.get(in_layer_port)
-        optimizer = emitter.get(in_optimizer_port)
+        for curr in self.parent_links:
+            parent_port = curr.source_port
+            print(parent_port)
+            if isinstance(parent_port, LayerPort):
+                clf, x = emitter.get(parent_port)
+            elif isinstance(parent_port, OptimizerPort):
+                optimizer = emitter.get(parent_port)
 
-        out_file.write(COMPILE.format(clf=clf, loss=self.loss, optimizer=optimizer, metrics=["accuracy"]))  # TODO
+        out_file.write(COMPILE.format(clf=clf, loss=self.loss, optimizer=optimizer, metrics=[self.metric]))
         out_file.write(RET.format(clf=clf))
 
     def data_flow(self, node_columns):

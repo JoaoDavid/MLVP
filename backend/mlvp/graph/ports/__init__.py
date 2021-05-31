@@ -1,4 +1,4 @@
-from .PortType import PortType
+from .Port import Port
 from .ParentLink import ParentLink
 from .dataset.DatasetPort import DatasetPort
 from .model.ClassifierPort import ClassifierPort

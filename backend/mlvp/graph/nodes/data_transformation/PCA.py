@@ -80,4 +80,6 @@ class PCA(Node):
             output_ds.max_label_count == input_ds.max_label_count,
             output_ds.min_label_count == input_ds.min_label_count,
             input_ds.balanced == output_ds.balanced,
+            output_ds.reduced == input_ds.reduced,
+            output_ds.increased == True,
         ] + features_assertions + new_columns_assertions

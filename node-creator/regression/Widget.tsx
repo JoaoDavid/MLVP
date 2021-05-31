@@ -15,7 +15,7 @@ const TemplateCodeNameWidget = (props: TemplateCodeNameProps) => {
     const modal = <TemplateCodeNameModal node={props.node}/>;
     return (
         <BaseNodeWidget node={props.node} engine={props.engine} color={REGRESSOR_CONFIG.color}
-                        modalChildren={modal}>
+                        modalContent={modal}>
         </BaseNodeWidget>
     )
 

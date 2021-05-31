@@ -3,7 +3,7 @@ from mlvp.codegen import *
 from mlvp.graph.nodes.Node import *
 from mlvp.typecheck import *
 
-INIT = "{reg} = RandomForestClassifier()\n"
+INIT = "{reg} = LinearRegression()\n"
 FIT = "{reg}.fit({x}, {y})\n"
 
 
@@ -11,9 +11,10 @@ class TemplateCodeName(Node):
 
     def __init__(self, data):
         super().__init__(data)
+        #TODO
 
     def import_dependency(self):
-        return FROM_IMPORT.format(package="sklearn", class_to_import="RANDOM_OVERSAMPLER")
+        packages.add(FROM_IMPORT.format(package="package", class_to_import="class")) #TODO
 
     def codegen(self, emitter: Emitter, out_file):
         curr_count = emitter.get_count()
@@ -30,7 +31,7 @@ class TemplateCodeName(Node):
     def data_flow(self, node_columns):
         pass
 
-    def assertions(self):
+    def assertions(self, node_columns):
         input_port = self.get_port(True, "Dataset")
         input_ds = Dataset(input_port.port_id)
 

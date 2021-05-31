@@ -2,11 +2,12 @@ from mlvp.graph.nodes.AssertionsHelper import no_features_of_type, categorical_l
 from mlvp.codegen import *
 from mlvp.graph.nodes.Node import *
 from mlvp.graph.nodes.neural_network import Compiler
+from mlvp.graph.nodes.neural_network.model import NNModel
 from mlvp.typecheck import *
 from mlvp.typecheck.TypeChecker import TypeChecker
 from mlvp.typecheck.DataFlow import DataFlow
 from mlvp.graph.TopologicalSorter import TopologicalSorter
-from mlvp.graph.ParseJSON import ParseJSON
+from mlvp.graph.Parser import Parser
 
 INIT = "{clf} = KerasClassifier(build_fn={build_fn}, epochs={epochs}, batch_size={batch_size}, verbose={verbose})\n"
 FIT = "{clf}.fit({x}, {y})\n"
@@ -22,7 +23,7 @@ class KerasClassifier(Node):
         self.batch_size = data['batchSize']
         self.verbose = data['verbose']
 
-        parser = ParseJSON(json_diagram=data['canvas'])
+        parser = Parser(json_diagram=data['canvas'])
         roots, loose = parser.parse()
         topo_sorter = TopologicalSorter(roots, loose)
         self.sorted_nodes, self.sorted_loose_nodes = topo_sorter.topological_sort()
@@ -53,7 +54,9 @@ class KerasClassifier(Node):
         emitter.set(out_clf, clf)
 
     def data_flow(self, node_columns):
-        pass
+        for node in self.sorted_nodes:
+            if isinstance(node, NNModel):
+                node.emitter_key = self.parent_links[0].source_port
 
     def assertions(self):
         input_port = self.get_port(True, "Dataset")

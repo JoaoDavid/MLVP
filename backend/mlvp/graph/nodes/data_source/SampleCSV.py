@@ -62,6 +62,8 @@ class SampleCSV(Node):
                    output.cols == self.num_cols,
                    output.time_series == self.time_series,
                    output.balanced == self.balanced,
+                   output.reduced == False,
+                   output.increased == False,
                    z3_unique_col_names == unique_col_names,
                    z3_unique_col_names,
                ] + col_assertions

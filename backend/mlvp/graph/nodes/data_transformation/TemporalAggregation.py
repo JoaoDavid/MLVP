@@ -89,4 +89,6 @@ class TemporalAggregation(Node):
             z3_len_new_col == len(self.new_col_name),
             z3_len_new_col > 0,
             input_ds.time_series == output_ds.time_series,
+            output_ds.reduced == input_ds.reduced,
+            output_ds.increased == True,
         ] + assert_existent_column

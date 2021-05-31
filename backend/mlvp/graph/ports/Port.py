@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class PortType(ABC):
+class Port(ABC):
 
     @abstractmethod
     def __init__(self, data):

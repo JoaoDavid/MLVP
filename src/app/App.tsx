@@ -14,7 +14,7 @@ import encodeDecode from '../demos/encode_decode_demo.json';
 import {BaseNodeModel} from "../components/core/BaseNode/BaseNodeModel";
 import {DefaultLinkModel} from "@projectstorm/react-diagrams-defaults";
 import {CATEGORIES} from "../components/nodes/Config";
-import {Button, Modal} from "react-bootstrap";
+import {Modal} from "react-bootstrap";
 import {CanvasManager} from "./CanvasManager";
 import AboutModal from "../components/UI/modal/AboutModal";
 
@@ -230,12 +230,6 @@ class App extends React.Component<AppProps, AppState> {
                 <TopNav newCanvas={this.newCanvas} open={this.openSave} save={this.downloadSave}
                         compile={this.compile} loadDemos={this.loadDemos()} about={this.openAbout}/>
                 {modal}
-{/*                <Button onClick={this.toggleCanvasLock} variant="primary" size="sm">
-                    Lock Nodes
-                </Button>
-                <Button onClick={this.openModal} variant="primary" size="sm">
-                    Open Canvas
-                </Button>*/}
                 <div className={classes.Container}>
                     <SideBar format={this.canvasManager.getCanvasName()} categories={CATEGORIES}/>
                     <Canvas engine={this.canvasManager.getEngine()} onDropCanvas={this.canvasManager.onDropCanvas}/>

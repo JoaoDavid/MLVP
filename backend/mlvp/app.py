@@ -1,4 +1,4 @@
-from mlvp.graph.ParseJSON import ParseJSON
+from mlvp.graph.Parser import Parser
 from mlvp.graph.TopologicalSorter import TopologicalSorter
 from mlvp.codegen.CodeGen import CodeGen
 from mlvp.typecheck.DataFlow import DataFlow
@@ -6,7 +6,7 @@ from mlvp.typecheck.TypeChecker import TypeChecker
 
 
 def pipeline_compilation(diagram, file_name="mlvp-code-output"):
-    parser = ParseJSON(json_diagram=diagram)
+    parser = Parser(json_diagram=diagram)
     roots, loose = parser.parse()
     topo_sorter = TopologicalSorter(roots, loose)
     sorted_nodes, sorted_loose_nodes = topo_sorter.topological_sort()
@@ -27,7 +27,7 @@ def pipeline_compilation(diagram, file_name="mlvp-code-output"):
 
 
 def pipeline_verification(diagram):
-    parser = ParseJSON(json_diagram=diagram)
+    parser = Parser(json_diagram=diagram)
     roots, loose = parser.parse()
     topo_sorter = TopologicalSorter(roots, loose)
     sorted_nodes, sorted_loose_nodes = topo_sorter.topological_sort()
@@ -39,7 +39,7 @@ def pipeline_verification(diagram):
 
 
 def pipeline_data_flow(diagram):
-    parser = ParseJSON(json_diagram=diagram)
+    parser = Parser(json_diagram=diagram)
     roots, loose = parser.parse()
     topo_sorter = TopologicalSorter(roots, loose)
     sorted_nodes, sorted_loose_nodes = topo_sorter.topological_sort()

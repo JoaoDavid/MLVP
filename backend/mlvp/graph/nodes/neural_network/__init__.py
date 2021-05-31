@@ -1,4 +1,4 @@
 from mlvp.graph.nodes.neural_network.model.Sequential import Sequential
-from .Dense import Dense
-from .Compiler import Compiler
-from .StochasticGradientDescent import StochasticGradientDescent
+from mlvp.graph.nodes.neural_network.layer.Dense import Dense
+from mlvp.graph.nodes.neural_network.compiler.Compiler import Compiler
+from mlvp.graph.nodes.neural_network.optimizer.StochasticGradientDescent import StochasticGradientDescent
