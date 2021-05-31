@@ -42,6 +42,9 @@ class UnderSampling(Node):
         output_ds = Dataset(output_port.port_id)
 
         return [
+            # requires
+            Not(input_ds.increased),
+            # ensures
             input_ds.cols == output_ds.cols,
             input_ds.dataset == output_ds.dataset,
             Implies(input_ds.balanced, And(

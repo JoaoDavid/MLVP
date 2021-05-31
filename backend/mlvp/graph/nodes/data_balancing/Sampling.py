@@ -2,7 +2,6 @@ from mlvp.codegen import *
 from mlvp.graph.nodes.Node import *
 from mlvp.typecheck import *
 
-
 CONCATENATE = "{df} = pd.concat([{old_x},{old_y}], join = 'outer', axis = 1)\n"
 SAMPLE = "{df} = {df}.sample(frac={frac}, replace={replace}, random_state={random_state})\n"
 X = "{x} = {df}.drop({old_y}.name, axis=1)\n"
@@ -49,8 +48,9 @@ class Sampling(Node):
         output_ds = Dataset(output_port.port_id)
 
         return [
-            #requires
+            # requires
             Not(input_ds.increased),
+            # ensures
             output_ds.cols == input_ds.cols,
             output_ds.rows == ToInt(ToReal(input_ds.rows) * self.frac),
             output_ds.balanced == False,
