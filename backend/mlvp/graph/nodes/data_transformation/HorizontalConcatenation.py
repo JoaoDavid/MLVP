@@ -58,19 +58,15 @@ class HorizontalConcatenation(Node):
 
         aux_assertions = []
         if len(top_input_port.columns) > 0 and len(bot_input_port.columns) > 0:
-            z3_equal_input_columns = Bool(NODE_PROP.format(name="input_columns are_equal", node_id=self.node_id))
-
-            top_column = [(col_name, col_type) for col_name, col_type in top_input_port.columns.items()]
-            bot_column = [(col_name, col_type) for col_name, col_type in bot_input_port.columns.items()]
-            for i in range(len(top_column)):
-                aux_assertions.append(column(top_input_ds.dataset, String(top_column[i][0])) == get_col_type(bot_column[i][1]))
-                aux_assertions.append(column(bot_input_ds.dataset, String(bot_column[i][0])) == get_col_type(top_column[i][1]))
-                aux_assertions.append(String(top_column[i][0]) == String(bot_column[i][0]))
-            equal_input_columns = len(set(top_column) & set(bot_column)) == len(top_input_port.columns)
-            # aux_assertions = [
-            #     z3_equal_input_columns == equal_input_columns,
-            #     equal_input_columns,
-            # ]
+            if len(top_input_port.columns) == len(bot_input_port.columns):
+                z3_equal_input_columns = Bool(NODE_PROP.format(name="input_columns are_equal", node_id=self.node_id))
+                top_column = [(col_name, col_type) for col_name, col_type in top_input_port.columns.items()]
+                bot_column = [(col_name, col_type) for col_name, col_type in bot_input_port.columns.items()]
+                equal_input_columns = len(set(top_column) - set(bot_column)) == 0
+                aux_assertions = [
+                    z3_equal_input_columns == equal_input_columns,
+                    z3_equal_input_columns,
+                ]
 
         col_assertions = []
         column_names = []
@@ -93,4 +89,4 @@ class HorizontalConcatenation(Node):
             output_ds.time_series == False,
             output_ds.reduced == False,
             output_ds.increased == True,
-        ] #+ col_assertions
+        ] + col_assertions
