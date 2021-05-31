@@ -36,6 +36,7 @@ import {OptimizerPortFactory} from "../components/ports/optimizer/OptimizerPortF
 import {LayerPortFactory} from "../components/ports/layer/LayerPortFactory";
 import {SamplingFactory} from "../components/nodes/data-balancing/sampling/SamplingFactory";
 import {VerticalConcatenationFactory} from "../components/nodes/data-transformation/vertical-concatenation/VerticalConcatenationFactory";
+import {HorizontalConcatenationFactory} from "../components/nodes/data-transformation/horizontal-concatenation/HorizontalConcatenationFactory";
 
 
 export class FactoriesManager {
@@ -75,6 +76,7 @@ export class FactoriesManager {
         this.engine.getNodeFactories().registerFactory(KerasClassifierFactory.getInstance());
         this.engine.getNodeFactories().registerFactory(SamplingFactory.getInstance());
         this.engine.getNodeFactories().registerFactory(VerticalConcatenationFactory.getInstance());
+        this.engine.getNodeFactories().registerFactory(HorizontalConcatenationFactory.getInstance());
     }
 
     registerNeuralNetworkNodes = () => {

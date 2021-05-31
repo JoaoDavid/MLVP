@@ -31,6 +31,7 @@ import {COMPILER} from "./neural-network/compiler/CompilerModel";
 import {STOCHASTIC_GRADIENT_DESCENT} from "./neural-network/optimizer/stochastic-gradient-descent/StochasticGradientDescentModel";
 import {SAMPLING} from "./data-balancing/sampling/SamplingModel";
 import {VERTICAL_CONCATENATION} from "./data-transformation/vertical-concatenation/VerticalConcatenationModel";
+import {HORIZONTAL_CONCATENATION} from "./data-transformation/horizontal-concatenation/HorizontalConcatenationModel";
 
 /*
 Every node type must be added to the nodes array
@@ -55,7 +56,11 @@ export const DATA_SOURCE_CONFIG: CategoryConfig = {
 export const DATA_TRANSFORMATION_CONFIG: CategoryConfig = {
     category: 'Data Transformation',
     color: 'rgb(27,97,72)',
-    nodes: [PCA, FEATURE_ENGINEERING, TEMPORAL_AGGREGATION, LABEL_ENCODING, LABEL_DECODING, ONE_HOT_ENCODING, ONE_HOT_DECODING, VERTICAL_CONCATENATION],
+    nodes: [PCA, FEATURE_ENGINEERING, TEMPORAL_AGGREGATION,
+        LABEL_ENCODING, LABEL_DECODING,
+        ONE_HOT_ENCODING, ONE_HOT_DECODING,
+        VERTICAL_CONCATENATION, HORIZONTAL_CONCATENATION
+    ],
 }
 
 export const DATA_BALANCING_CONFIG: CategoryConfig = {
