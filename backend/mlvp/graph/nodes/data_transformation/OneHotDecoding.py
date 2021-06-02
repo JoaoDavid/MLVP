@@ -104,5 +104,5 @@ class OneHotDecoding(Node):
                    output_ds.time_series == input_ds.time_series,
                    output_ds.dataset == input_ds.dataset,
                    output_ds.reduced == input_ds.reduced,
-                   output_ds.increased == True,
+                   output_ds.processed == True,
                ] + aux_assertions

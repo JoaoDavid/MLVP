@@ -71,15 +71,15 @@ class PCA(Node):
         return [
             # requires
             z3_n_components == self.num_components,
-            z3_n_components < input_ds.cols,
-            z3_n_components > 0,
+                   z3_n_components < input_ds.cols,
+                   z3_n_components > 0,
             # ensures
-            output_ds.cols == z3_n_components + 1,
-            output_ds.rows == input_ds.rows,
-            output_ds.n_labels == input_ds.n_labels,
-            output_ds.max_label_count == input_ds.max_label_count,
-            output_ds.min_label_count == input_ds.min_label_count,
-            input_ds.balanced == output_ds.balanced,
-            output_ds.reduced == input_ds.reduced,
-            output_ds.increased == True,
+                   output_ds.cols == z3_n_components + 1,
+                   output_ds.rows == input_ds.rows,
+                   output_ds.n_labels == input_ds.n_labels,
+                   output_ds.max_label_count == input_ds.max_label_count,
+                   output_ds.min_label_count == input_ds.min_label_count,
+                   input_ds.balanced == output_ds.balanced,
+                   output_ds.reduced == input_ds.reduced,
+                   output_ds.processed == True,
         ] + features_assertions + new_columns_assertions

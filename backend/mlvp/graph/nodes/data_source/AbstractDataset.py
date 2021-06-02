@@ -63,7 +63,7 @@ class AbstractDataset(Node):
             output.rows == self.num_rows,
             output.time_series == self.time_series,
             output.reduced == False,
-            output.increased == False,
+            output.processed == False,
             z3_unique_col_names == unique_col_names,
             z3_unique_col_names,
         ]

@@ -88,5 +88,5 @@ class HorizontalConcatenation(Node):
             # output_ds.balanced == And(top_input_ds.balanced, bot_input_ds.balanced),
             output_ds.time_series == False,
             output_ds.reduced == False,
-            output_ds.increased == True,
+            output_ds.processed == True,
         ] + col_assertions

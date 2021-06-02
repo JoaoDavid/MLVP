@@ -94,6 +94,6 @@ class VerticalConcatenation(Node):
             output_ds.balanced == right_input_ds.balanced,
             output_ds.time_series == And(left_input_ds.time_series, right_input_ds.time_series),
             output_ds.reduced == False,
-            output_ds.increased == True,
+            output_ds.processed == True,
 
         ] + col_assertions

@@ -78,16 +78,16 @@ class ImportFromCSV(Node):
         is_balanced = all(list_balanced)
 
         return [
-            output.cols == self.num_cols,
-            output.rows == self.num_rows,
-            output.rows == sum(label_counts),
-            output.time_series == self.time_series,
-            output.reduced == False,
-            output.increased == False,
+                   output.cols == self.num_cols,
+                   output.rows == self.num_rows,
+                   output.rows == sum(label_counts),
+                   output.time_series == self.time_series,
+                   output.reduced == False,
+                   output.processed == False,
             # And(labels_values),
-            output.balanced == is_balanced,
+                   output.balanced == is_balanced,
             # output.balanced == And(list_balanced),
-            output.n_labels == len(label_counts),
-            z3_unique_col_names == unique_col_names,
+                   output.n_labels == len(label_counts),
+                   z3_unique_col_names == unique_col_names,
             z3_unique_col_names,
         ] + col_assertions

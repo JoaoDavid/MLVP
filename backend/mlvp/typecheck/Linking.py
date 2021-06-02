@@ -15,7 +15,7 @@ def link(id_source_port: str, id_target_port: str):
         id_source_port.max_label_count == port_to.max_label_count,
         id_source_port.min_label_count == port_to.min_label_count,
         id_source_port.reduced == port_to.reduced,
-        id_source_port.increased == port_to.increased,
+        id_source_port.processed == port_to.processed,
     ]
 
 
@@ -69,4 +69,4 @@ class Dataset:
         self.time_series = Bool(PORT_PROP.format(id_port=id_port, name="time_series"))
         self.dataset = String(PORT_PROP.format(id_port=id_port, name="dataset"))
         self.reduced = Bool(PORT_PROP.format(id_port=id_port, name="reduced"))
-        self.increased = Bool(PORT_PROP.format(id_port=id_port, name="increased"))
+        self.processed = Bool(PORT_PROP.format(id_port=id_port, name="processed"))

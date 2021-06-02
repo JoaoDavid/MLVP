@@ -107,14 +107,14 @@ class OneHotEncoding(Node):
                 aux_assertions.append(z3_nonexistent_column)
 
         return [
-            output_ds.cols == len(output_port.columns),
-            output_ds.rows == input_ds.rows,
-            output_ds.n_labels == input_ds.n_labels,
-            output_ds.max_label_count == input_ds.max_label_count,
-            output_ds.min_label_count == input_ds.min_label_count,
-            output_ds.balanced == input_ds.balanced,
-            output_ds.time_series == input_ds.time_series,
-            output_ds.dataset == input_ds.dataset,
-            output_ds.reduced == input_ds.reduced,
-            output_ds.increased == True,
+                   output_ds.cols == len(output_port.columns),
+                   output_ds.rows == input_ds.rows,
+                   output_ds.n_labels == input_ds.n_labels,
+                   output_ds.max_label_count == input_ds.max_label_count,
+                   output_ds.min_label_count == input_ds.min_label_count,
+                   output_ds.balanced == input_ds.balanced,
+                   output_ds.time_series == input_ds.time_series,
+                   output_ds.dataset == input_ds.dataset,
+                   output_ds.reduced == input_ds.reduced,
+                   output_ds.processed == True,
         ] + aux_assertions
