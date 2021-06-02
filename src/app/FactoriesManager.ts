@@ -35,8 +35,8 @@ import {StochasticGradientDescentFactory} from "../components/nodes/neural-netwo
 import {OptimizerPortFactory} from "../components/ports/optimizer/OptimizerPortFactory";
 import {LayerPortFactory} from "../components/ports/layer/LayerPortFactory";
 import {SamplingFactory} from "../components/nodes/data-balancing/sampling/SamplingFactory";
-import {VerticalConcatenationFactory} from "../components/nodes/data-transformation/vertical-concatenation/VerticalConcatenationFactory";
 import {HorizontalConcatenationFactory} from "../components/nodes/data-transformation/horizontal-concatenation/HorizontalConcatenationFactory";
+import {VerticalConcatenationFactory} from "../components/nodes/data-transformation/vertical-concatenation/VerticalConcatenationFactory";
 
 
 export class FactoriesManager {

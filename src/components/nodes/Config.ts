@@ -30,8 +30,8 @@ import {DENSE} from "./neural-network/layer/dense/DenseModel";
 import {COMPILER} from "./neural-network/compiler/CompilerModel";
 import {STOCHASTIC_GRADIENT_DESCENT} from "./neural-network/optimizer/stochastic-gradient-descent/StochasticGradientDescentModel";
 import {SAMPLING} from "./data-balancing/sampling/SamplingModel";
-import {VERTICAL_CONCATENATION} from "./data-transformation/vertical-concatenation/VerticalConcatenationModel";
 import {HORIZONTAL_CONCATENATION} from "./data-transformation/horizontal-concatenation/HorizontalConcatenationModel";
+import {VERTICAL_CONCATENATION} from "./data-transformation/vertical-concatenation/VerticalConcatenationModel";
 
 /*
 Every node type must be added to the nodes array
