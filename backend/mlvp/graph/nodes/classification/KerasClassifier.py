@@ -54,9 +54,10 @@ class KerasClassifier(Node):
         emitter.set(out_clf, clf)
 
     def data_flow(self, node_columns):
-        for node in self.sorted_nodes:
-            if isinstance(node, NNModel):
-                node.emitter_key = self.parent_links[0].source_port
+        if len(self.parent_links) > 0:
+            for node in self.sorted_nodes:
+                if isinstance(node, NNModel):
+                    node.emitter_key = self.parent_links[0].source_port
 
     def assertions(self):
         input_port = self.get_port(True, "Dataset")

@@ -11,6 +11,7 @@ import splitEvaluate from '../demos/split-n-evaluate.json';
 import posterDemo from '../demos/poster-demo.json';
 import kerasDemo from '../demos/keras_demo.json';
 import encodeDecode from '../demos/encode_decode_demo.json';
+import neuralNetworkDebug from '../demos/neural_network_debug.json';
 import {BaseNodeModel} from "../components/core/BaseNode/BaseNodeModel";
 import {DefaultLinkModel} from "@projectstorm/react-diagrams-defaults";
 import {CATEGORIES} from "../components/nodes/Config";
@@ -128,6 +129,10 @@ class App extends React.Component<AppProps, AppState> {
         map.set("Keras Demo", () => {
             this.canvasManager.loadModel(kerasDemo);
             this.updateLog("Loaded demo Keras Demo");
+        });
+        map.set("Neural Network Debug", () => {
+            this.canvasManager.loadModel(neuralNetworkDebug);
+            this.updateLog("Loaded demo Neural Network Debug");
         });
         return map;
     }
