@@ -12,6 +12,7 @@ import posterDemo from '../demos/poster-demo.json';
 import kerasDemo from '../demos/keras_demo.json';
 import encodeDecode from '../demos/encode_decode_demo.json';
 import neuralNetworkDebug from '../demos/neural_network_debug.json';
+import thesisExample from '../demos/thesis_example.json';
 import {BaseNodeModel} from "../components/core/BaseNode/BaseNodeModel";
 import {DefaultLinkModel} from "@projectstorm/react-diagrams-defaults";
 import {CATEGORIES} from "../components/nodes/Config";
@@ -133,6 +134,10 @@ class App extends React.Component<AppProps, AppState> {
         map.set("Neural Network Debug", () => {
             this.canvasManager.loadModel(neuralNetworkDebug);
             this.updateLog("Loaded demo Neural Network Debug");
+        });
+        map.set("Thesis example", () => {
+            this.canvasManager.loadModel(thesisExample);
+            this.updateLog("Loaded demo Thesis Example");
         });
         return map;
     }
