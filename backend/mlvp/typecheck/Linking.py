@@ -32,15 +32,6 @@ ColumnType = ColumnType.create()
 # column = Function('column', dataset_id, column_name, column_type)
 column = Function('column', StringSort(), StringSort(), ColumnType)
 
-# column_unique = Function('column_unique', dataset_id, column_name, boolean)
-column_unique = Function('column_unique', StringSort(), StringSort(), BoolSort())
-
-# column_index = Function('column_index', dataset_id, index, column_type)
-column_index = Function('column_index', StringSort(), IntSort(), ColumnType)
-
-# column_index = Function('column_name', dataset_id, index, column_name)
-get_col_name = Function('get_col_name', StringSort(), IntSort(), StringSort())
-
 
 def get_col_type(col_str):
     if col_str == "int":
