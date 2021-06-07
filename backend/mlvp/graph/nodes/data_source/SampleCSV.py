@@ -32,7 +32,6 @@ class SampleCSV(Node):
         out_ds = self.get_port(False, "Dataset")
         emitter.set(out_ds, (x, y))
         out_file.write(LOAD_CSV.format(df=df, pandas_var=PANDAS_VAR, file_name=self.file_name))
-        out_file.write(ASSERT.format(arg1=self.num_rows, arg2=df))
         out_file.write(ASSERT.format(arg1=self.num_cols, arg2=df + ".columns"))
         out_file.write(X.format(x=x, df=df, target=self.target))
         out_file.write(Y.format(y=y, df=df, target=self.target))
