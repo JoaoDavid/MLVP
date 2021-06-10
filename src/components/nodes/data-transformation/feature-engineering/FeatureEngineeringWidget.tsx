@@ -17,10 +17,16 @@ const FeatureEngineeringWidget = (props: FeatureEngineeringProps) => {
         // eventNodeUpdated(props.engine, props.node); //TODO
     }
 
+    let firstThreeLines = props.node.getLines().split("\n").slice(0, 3);
+    const linesJSX: JSX.Element[] = [];
+    firstThreeLines.forEach((line) => {
+        linesJSX.push(<p>{line}</p>);
+    })
+
     const modal = <FeatureEngineeringModal node={props.node} linesChanged={linesChanged}/>;
     return (
         <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_TRANSFORMATION_CONFIG.color} modalContent={modal}>
-            <p></p>
+            {linesJSX}
         </BaseNodeWidget>
     );
 
