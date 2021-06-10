@@ -10,7 +10,8 @@ from mlvp.graph.TopologicalSorter import TopologicalSorter
 from mlvp.graph.Parser import Parser
 
 INIT = "{clf} = KerasClassifier(build_fn={build_fn}, epochs={epochs}, batch_size={batch_size}, verbose={verbose})\n"
-FIT = "{clf}.fit({x}, {y})\n"
+Y_KERAS = "{y_keras} = {y}.values.reshape({y}.shape[0], 1)\n"
+FIT = "{clf}.fit({x}, {y_keras})\n"
 
 BUILD_FN = "def {build_fn}():\n"
 
@@ -40,6 +41,7 @@ class KerasClassifier(Node):
         parent_port = self.parent_links[0].source_port
         build_fn = "build_fn" + str(curr_count)
         clf = "clf" + str(curr_count)
+        y_keras = "y_keras" + str(curr_count)
         x, y = emitter.get(parent_port)
         out_file.write(BUILD_FN.format(build_fn=build_fn))
 
@@ -48,7 +50,8 @@ class KerasClassifier(Node):
 
         out_file.write(INIT.format(clf=clf, build_fn=build_fn, epochs=self.epochs, batch_size=self.batch_size,
                                    verbose=self.verbose))
-        out_file.write(FIT.format(clf=clf, x=x, y=y))
+        out_file.write(Y_KERAS.format(y_keras=y_keras, y=y))
+        out_file.write(FIT.format(clf=clf, x=x, y_keras=y_keras))
 
         out_clf = self.get_port(False, "Classifier")
         emitter.set(out_clf, clf)
