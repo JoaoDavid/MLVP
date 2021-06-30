@@ -46,8 +46,8 @@ class FeatureEngineering(Node):
         input_port = self.get_port(True, "Dataset")
         output_port = self.get_port(False, "Engineered Dataset")
         input_ds = Dataset(input_port.port_id)
-        output_port.encoded_columns = input_port.encoded_columns
-        output_port.columns = input_port.columns
+        output_port.encoded_columns = input_port.encoded_columns.copy()
+        output_port.columns = input_port.columns.copy()
 
         if self.all_input_ports_linked():
             self.ast_validator = ValidatorAST(self.ast, input_ds.dataset, output_port.columns)
@@ -69,16 +69,16 @@ class FeatureEngineering(Node):
         ast_assertions = self.ast_validator.assertions if self.ast_validator is not None else []
 
         return [
-            input_ds.cols + len(output_port.columns) == output_ds.cols,  # TODO, depends on the number of columns added
-            input_ds.rows == output_ds.rows,
-            input_ds.n_labels == output_ds.n_labels,
-            input_ds.max_label_count == output_ds.max_label_count,
-            input_ds.min_label_count == output_ds.min_label_count,
-            input_ds.balanced == output_ds.balanced,
-            input_ds.time_series == output_ds.time_series,
-            input_ds.dataset == output_ds.dataset,
-            input_ds.reduced == output_ds.reduced,
-            output_ds.increased == True,
-            z3_has_errors == (len(self.error_msg) == 0),
+                   input_ds.cols + len(output_port.columns) == output_ds.cols,  # TODO, depends on the number of columns added
+                   input_ds.rows == output_ds.rows,
+                   input_ds.n_labels == output_ds.n_labels,
+                   input_ds.max_label_count == output_ds.max_label_count,
+                   input_ds.min_label_count == output_ds.min_label_count,
+                   input_ds.balanced == output_ds.balanced,
+                   input_ds.time_series == output_ds.time_series,
+                   input_ds.dataset == output_ds.dataset,
+                   input_ds.reduced == output_ds.reduced,
+                   output_ds.processed == True,
+                   z3_has_errors == (len(self.error_msg) == 0),
             z3_has_errors,
         ] + ast_assertions

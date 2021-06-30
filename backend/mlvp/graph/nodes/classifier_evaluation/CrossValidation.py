@@ -25,7 +25,7 @@ class CrossValidation(Node):
                 model_var = emitter.get(parent_port)
             elif isinstance(parent_port, DatasetPort):
                 x, y = emitter.get(parent_port)
-        out_file.write(CROSS_VAL_SCORE_CALL.format(score=score, model=model_var, x=x, y=y, cv=self.number_folds))
+        out_file.write(CROSS_VAL_SCORE_CALL.format(score=score, model=model_var, x=x, y=y, cv=self.num_folds))
         out_file.write("print(" + score + ")\n")
 
     def data_flow(self, node_columns):

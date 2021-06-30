@@ -68,8 +68,8 @@ class TypeChecker:
         self.solver = Solver()
         self.sorted_nodes = sorted_nodes
         self.sorted_loose_nodes = sorted_loose_nodes
-        self.node_assertions = {}
-        self.link_assertions = {}
+        self.node_assertions = {}  # assertions converted to string
+        self.link_assertions = {}  # assertions converted to string
         self.unsat_node_assertions = {}
         self.all_link_assertions = []  # list of tuples of type: (link, link_assertions)
         self.all_node_assertions = []  # list of tuples of type: (node, node_assertions)

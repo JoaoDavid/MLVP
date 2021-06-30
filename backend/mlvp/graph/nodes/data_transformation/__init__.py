@@ -5,5 +5,5 @@ from .LabelEncoding import LabelEncoding
 from .LabelDecoding import LabelDecoding
 from .OneHotEncoding import OneHotEncoding
 from .OneHotDecoding import OneHotDecoding
-from .VerticalConcatenation import VerticalConcatenation
 from .HorizontalConcatenation import HorizontalConcatenation
+from .VerticalConcatenation import VerticalConcatenation

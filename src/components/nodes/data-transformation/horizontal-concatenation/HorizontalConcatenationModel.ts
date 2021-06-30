@@ -16,8 +16,8 @@ export class HorizontalConcatenationModel extends BaseNodeModel {
     }
 
     protected addInPort(): void {
-        const leftDsPort = new DatasetPortModel(true, "Top Dataset");
-        const rightDsPort = new DatasetPortModel(true, "Bottom Dataset");
+        const leftDsPort = new DatasetPortModel(true, "Left Dataset");
+        const rightDsPort = new DatasetPortModel(true, "Right Dataset");
         super.addPort(leftDsPort);
         super.addPort(rightDsPort);
     }

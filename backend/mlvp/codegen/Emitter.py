@@ -9,8 +9,8 @@ class Emitter:
         self.counter += 1
         return self.counter
 
-    def set(self, node_id, variable):
-        self.variables[node_id] = variable
+    def set(self, port, variable):
+        self.variables[port] = variable
 
-    def get(self, node_id):
-        return self.variables[node_id]
+    def get(self, port):
+        return self.variables[port]

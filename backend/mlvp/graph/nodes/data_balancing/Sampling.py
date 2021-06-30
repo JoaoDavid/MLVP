@@ -49,7 +49,7 @@ class Sampling(Node):
 
         return [
             # requires
-            Not(input_ds.increased),
+            Not(input_ds.processed),
             # ensures
             output_ds.cols == input_ds.cols,
             output_ds.rows == ToInt(ToReal(input_ds.rows) * self.frac),
@@ -57,5 +57,5 @@ class Sampling(Node):
             output_ds.time_series == False,
             output_ds.dataset == input_ds.dataset,
             output_ds.reduced == True,
-            output_ds.increased == input_ds.increased,
+            output_ds.processed == input_ds.processed,
         ]

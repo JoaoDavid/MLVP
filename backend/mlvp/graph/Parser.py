@@ -13,7 +13,7 @@ class Parser:
         # parsed information
         self.nodes = {}  # all nodes in the canvas
         self.roots = []  # nodes without input port
-        self.loose = []  # nodes with input ports
+        self.loose = []  # nodes with input ports without being linked
 
     def parse(self):
         for layer in self.json_diagram['layers']:

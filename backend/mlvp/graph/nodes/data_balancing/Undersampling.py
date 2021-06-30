@@ -43,7 +43,7 @@ class UnderSampling(Node):
 
         return [
             # requires
-            Not(input_ds.increased),
+            Not(input_ds.processed),
             # ensures
             input_ds.cols == output_ds.cols,
             input_ds.dataset == output_ds.dataset,
@@ -61,5 +61,5 @@ class UnderSampling(Node):
             )),
             output_ds.balanced,
             output_ds.reduced == True,
-            output_ds.increased == input_ds.increased,
+            output_ds.processed == input_ds.processed,
         ]

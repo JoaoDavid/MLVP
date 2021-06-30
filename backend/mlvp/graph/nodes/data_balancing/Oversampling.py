@@ -58,5 +58,5 @@ class Oversampling(Node):
             )),
             output_ds.balanced,
             output_ds.reduced == input_ds.reduced,
-            output_ds.increased == True,
+            output_ds.processed == True,
         ]
