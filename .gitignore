@@ -1,7 +1,7 @@
 node_modules
 .eslintcache
 build
-*csv
+*.csv
 
 #output file from mlvp python tool
 mlvp-code-output.py
