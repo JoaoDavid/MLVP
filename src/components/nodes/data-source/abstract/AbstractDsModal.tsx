@@ -12,6 +12,7 @@ interface AbstractDsModalProps {
     numColsChanged: (value: number) => void;
     numRowsChanged: (value: number) => void;
     timeSeriesChanged: () => void;
+    balancedChanged: () => void;
 }
 
 const AbstractDsModal = (props: AbstractDsModalProps) => {
@@ -32,6 +33,8 @@ const AbstractDsModal = (props: AbstractDsModalProps) => {
                 <Col>
                     <ToggleSwitch name={"Time Series"} bool={props.node.getTimeSeries()}
                                   changed={props.timeSeriesChanged}/>
+                    <ToggleSwitch name={"Balanced"} bool={props.node.getBalanced()}
+                                  changed={props.balancedChanged}/>
                 </Col>
             </FormGroup>
         </Form>
