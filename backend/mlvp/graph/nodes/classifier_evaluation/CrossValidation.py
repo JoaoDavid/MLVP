@@ -2,6 +2,7 @@ from mlvp.codegen import *
 from mlvp.graph.nodes.Node import *
 from mlvp.graph.ports import DatasetPort, ClassifierPort
 from mlvp.typecheck import *
+from mlvp.graph.nodes.AssertionsHelper import no_features_of_type, categorical_last_column
 
 CROSS_VAL_SCORE_CALL = "{score} = cross_val_score({model}, {x}, {y}, cv={cv})\n"
 
@@ -37,11 +38,14 @@ class CrossValidation(Node):
 
         z3_n_folds = Int(NODE_PROP.format(name="n_folds", node_id=self.node_id))
 
+        features_assertions = no_features_of_type(input_ds_port, "string", input_ds.dataset)
+
         return [
             # requires
             z3_n_folds == self.num_folds,
             z3_n_folds > 1,
+            input_ds.cols >= 2,
+            input_ds.rows > 0,
             input_ds.balanced,
-            input_ds.cols > 1,
             Not(input_ds.time_series)
-        ]
+        ] + features_assertions + categorical_last_column(input_ds_port, input_ds.dataset)

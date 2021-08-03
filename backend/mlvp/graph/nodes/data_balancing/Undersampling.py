@@ -60,6 +60,7 @@ class UnderSampling(Node):
                 input_ds.min_label_count == output_ds.min_label_count,
             )),
             output_ds.balanced,
+            output_ds.time_series == input_ds.time_series,
             output_ds.reduced == True,
             output_ds.processed == input_ds.processed,
         ]
