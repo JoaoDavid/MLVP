@@ -1,4 +1,4 @@
-from mlvp.graph.nodes.AssertionsHelper import no_features_of_type, categorical_last_column
+from mlvp.graph.nodes.AssertionsHelper import no_features_of_type, continuous_last_column
 from mlvp.codegen import *
 from mlvp.graph.nodes.Node import *
 from mlvp.typecheck import *
@@ -44,4 +44,4 @@ class LogisticRegression(Node):
             # requires
             input_ds.rows > 0,
             input_ds.cols > 1
-        ] + features_assertions + categorical_last_column(input_port, input_ds.dataset)
+        ] + features_assertions + continuous_last_column(input_port, input_ds.dataset)
