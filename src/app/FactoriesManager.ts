@@ -37,6 +37,7 @@ import {LayerPortFactory} from "../components/ports/layer/LayerPortFactory";
 import {SamplingFactory} from "../components/nodes/data-balancing/sampling/SamplingFactory";
 import {HorizontalConcatenationFactory} from "../components/nodes/data-transformation/horizontal-concatenation/HorizontalConcatenationFactory";
 import {VerticalConcatenationFactory} from "../components/nodes/data-transformation/vertical-concatenation/VerticalConcatenationFactory";
+import {KerasRegressorFactory} from "../components/nodes/regression/keras-regressor/KerasRegressorFactory";
 
 
 export class FactoriesManager {
@@ -74,6 +75,7 @@ export class FactoriesManager {
         this.engine.getNodeFactories().registerFactory(LogisticRegressionFactory.getInstance());
         this.engine.getNodeFactories().registerFactory(SVMRegressorFactory.getInstance());
         this.engine.getNodeFactories().registerFactory(KerasClassifierFactory.getInstance());
+        this.engine.getNodeFactories().registerFactory(KerasRegressorFactory.getInstance());
         this.engine.getNodeFactories().registerFactory(SamplingFactory.getInstance());
         this.engine.getNodeFactories().registerFactory(VerticalConcatenationFactory.getInstance());
         this.engine.getNodeFactories().registerFactory(HorizontalConcatenationFactory.getInstance());

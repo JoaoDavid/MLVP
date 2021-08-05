@@ -32,6 +32,7 @@ import {STOCHASTIC_GRADIENT_DESCENT} from "./neural-network/optimizer/stochastic
 import {SAMPLING} from "./data-balancing/sampling/SamplingModel";
 import {HORIZONTAL_CONCATENATION} from "./data-transformation/horizontal-concatenation/HorizontalConcatenationModel";
 import {VERTICAL_CONCATENATION} from "./data-transformation/vertical-concatenation/VerticalConcatenationModel";
+import {KERAS_REGRESSOR} from "./regression/keras-regressor/KerasRegressorModel";
 
 /*
 Every node type must be added to the nodes array
@@ -84,7 +85,7 @@ export const CLASSIFIER_CONFIG: CategoryConfig = {
 export const REGRESSOR_CONFIG: CategoryConfig = {
     category: 'Regression',
     color: 'rgb(20,93,160)',
-    nodes: [RANDOM_FOREST_REGRESSOR, LINEAR_REGRESSION, LOGISTIC_REGRESSION, SVM_REGRESSOR],
+    nodes: [RANDOM_FOREST_REGRESSOR, LINEAR_REGRESSION, LOGISTIC_REGRESSION, SVM_REGRESSOR, KERAS_REGRESSOR],
 }
 
 export const EVALUATE_CLASSIFIER_CONFIG: CategoryConfig = {
