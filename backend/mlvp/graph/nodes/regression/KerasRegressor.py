@@ -1,4 +1,4 @@
-from mlvp.graph.nodes.AssertionsHelper import no_features_of_type, categorical_last_column
+from mlvp.graph.nodes.AssertionsHelper import no_features_of_type, continuous_last_column
 from mlvp.codegen import *
 from mlvp.graph.nodes.Node import *
 from mlvp.graph.nodes.neural_network import Compiler
@@ -53,7 +53,7 @@ class KerasRegressor(Node):
         out_file.write(Y_KERAS.format(y_keras=y_keras, y=y))
         out_file.write(FIT.format(clf=clf, x=x, y_keras=y_keras))
 
-        out_clf = self.get_port(False, "Classifier")
+        out_clf = self.get_port(False, "Regressor")
         emitter.set(out_clf, clf)
 
     def data_flow(self, node_columns):
@@ -85,4 +85,4 @@ class KerasRegressor(Node):
                    input_ds.cols > 1,
                    z3_neural_network_well_built == neural_network_well_built,
                    z3_neural_network_well_built,
-               ] + features_assertions + categorical_last_column(input_port, input_ds.dataset)
+               ] + features_assertions + continuous_last_column(input_port, input_ds.dataset)
