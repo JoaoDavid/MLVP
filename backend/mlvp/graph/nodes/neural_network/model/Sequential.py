@@ -24,6 +24,8 @@ class Sequential(NNModel):
         emitter.set(out_clf, (clf, x))
 
     def data_flow(self, node_columns):
+        out_layer_port = self.get_port(False, "Layer")
+        out_layer_port.num_layers = -1
         pass
 
     def assertions(self):

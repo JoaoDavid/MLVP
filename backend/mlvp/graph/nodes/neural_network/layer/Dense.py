@@ -32,7 +32,7 @@ class Dense(Node):
     def data_flow(self, node_columns):
         in_layer_port = self.get_port(True, "Layer")
         out_layer_port = self.get_port(False, "Output Layer")
-        out_layer_port.num_layers = in_layer_port.num_layers + 1
+        out_layer_port.num_layers = 1 if in_layer_port.num_layers == -1 else in_layer_port.num_layers + 1
 
     def assertions(self):
         in_layer_port = self.get_port(True, "Layer")

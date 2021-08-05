@@ -39,14 +39,11 @@ class Compiler(Node):
 
         for parent_link in self.parent_links:
             print(parent_link.target_port == layer_port)
-
+        print(layer_port.num_layers)
         layer_assertions = []
-        if self.all_input_ports_linked():
-            layer_assertions = [
-                z3_in_layers == layer_port.num_layers,
-                z3_in_layers > 0,
-            ]
 
         return [
+                   z3_in_layers == layer_port.num_layers,
+                   z3_in_layers >= 0,
                    # requires
                ] + layer_assertions
