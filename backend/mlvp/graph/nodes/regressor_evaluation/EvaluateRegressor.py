@@ -2,6 +2,7 @@ from mlvp.codegen import *
 from mlvp.graph.nodes.Node import *
 from mlvp.graph.ports import DatasetPort, RegressorPort
 from mlvp.typecheck import *
+from mlvp.graph.nodes.AssertionsHelper import no_features_of_type, categorical_last_column
 
 MODEL_PREDICT = "{var} = {clf_var}.predict({x})\n"
 EXPLAINED_VARIANCE_CALL = "explained_variance_score({y_true}, {y_pred})\n"
@@ -37,7 +38,10 @@ class EvaluateRegressor(Node):
         input_ds_port = self.get_port(True, "Dataset")
         input_ds = Dataset(input_ds_port.port_id)
 
+        features_assertions = no_features_of_type(input_ds_port, "string", input_ds.dataset)
+
         return [
             # requires
-            input_ds.cols >= 2
-        ]
+            input_ds.cols >= 2,
+            input_ds.rows > 0
+        ] + features_assertions + categorical_last_column(input_ds_port, input_ds.dataset)

@@ -8,6 +8,7 @@ export abstract class ImportDataset extends BaseNodeModel {
     private numCols: number = 0;
     private numRows: number = 0;
     private timeSeries: boolean = false;
+    private balanced: boolean = false;
 
     protected constructor(nodeConfig: NodeConfig) {
         super(nodeConfig);
@@ -44,6 +45,14 @@ export abstract class ImportDataset extends BaseNodeModel {
         this.timeSeries = value;
     }
 
+    getBalanced = (): boolean => {
+        return this.balanced;
+    }
+
+    setBalanced = (value:boolean) => {
+        this.balanced = value;
+    }
+
     protected addOutPort(): void {
         const p = new DatasetPortModel(false);
         super.addPort(p);
@@ -54,6 +63,7 @@ export abstract class ImportDataset extends BaseNodeModel {
         this.numCols = event.data.numCols;
         this.numRows = event.data.numRows;
         this.timeSeries = event.data.timeSeries;
+        this.balanced = event.data.balanced;
     }
 
     serialize(): any {
@@ -62,6 +72,7 @@ export abstract class ImportDataset extends BaseNodeModel {
             numCols: this.numCols,
             numRows: this.numRows,
             timeSeries: this.timeSeries,
+            balanced: this.balanced,
         };
     }
 

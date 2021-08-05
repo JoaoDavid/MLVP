@@ -85,7 +85,7 @@ class VerticalConcatenation(Node):
             output_ds.cols == top_input_ds.cols,
             output_ds.cols == bot_input_ds.cols,
             output_ds.rows == top_input_ds.rows + bot_input_ds.rows,
-            # output_ds.balanced == And(top_input_ds.balanced, bot_input_ds.balanced),
+            output_ds.balanced == False,
             output_ds.time_series == False,
             output_ds.reduced == False,
             output_ds.processed == True,

@@ -27,7 +27,13 @@ const AbstractDsWidget = (props: CSVNodeProps) => {
         eventNodeUpdated(props.engine, props.node);
     }
 
-    const modal = <AbstractDsModal node={props.node} numColsChanged={numColsChanged} numRowsChanged={numRowsChanged} timeSeriesChanged={timeSeriesChanged}/>;
+    const balancedChanged = () => {
+        props.node.setBalanced(!props.node.getBalanced());
+        eventNodeUpdated(props.engine, props.node);
+    }
+
+    const modal = <AbstractDsModal node={props.node} numColsChanged={numColsChanged} numRowsChanged={numRowsChanged}
+                                   timeSeriesChanged={timeSeriesChanged} balancedChanged={balancedChanged}/>;
 
     return (
             <BaseNodeWidget node={props.node} engine={props.engine} color={DATA_SOURCE_CONFIG.color} modalContent={modal}>

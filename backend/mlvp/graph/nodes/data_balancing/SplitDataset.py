@@ -63,21 +63,23 @@ class SplitDataset(Node):
             # falta relacionar os min e max label count
             # ensures
             train_ds.rows == ToInt(ToReal(input_ds.rows) * self.train_size),
-            test_ds.rows == ToInt(ToReal(input_ds.rows) * self.test_size),
-            input_ds.cols == train_ds.cols,
-            train_ds.cols == test_ds.cols,
-            input_ds.dataset == train_ds.dataset,
-            input_ds.dataset == test_ds.dataset,
+            train_ds.cols == input_ds.cols,
+            train_ds.dataset == input_ds.dataset,
             train_ds.n_labels == ToInt(ToReal(input_ds.n_labels) * self.train_size),
+            train_ds.reduced == input_ds.reduced,
+            train_ds.processed == True,
+            shuffle_train == output_shuffles,
+
+            test_ds.rows == ToInt(ToReal(input_ds.rows) * self.test_size),
+            test_ds.cols == input_ds.cols,
+            test_ds.dataset == input_ds.dataset,
             test_ds.n_labels == ToInt(ToReal(input_ds.n_labels) * self.test_size),
+            test_ds.reduced == input_ds.processed,
+            test_ds.processed == True,
+            shuffle_test == output_shuffles,
+
             z3_stratify_by_class == self.stratify_by_class,  # TODO rever
             Implies(z3_stratify_by_class, And(train_ds.balanced, test_ds.balanced)),
             z3_shuffle == self.shuffle,
-            shuffle_train == output_shuffles,
-            shuffle_test == output_shuffles,
             Implies(input_ds.time_series, Not(And(z3_shuffle, z3_stratify_by_class))),
-            train_ds.reduced == input_ds.reduced,
-            train_ds.processed == True,
-            test_ds.reduced == input_ds.processed,
-            test_ds.processed == True,
         ]
