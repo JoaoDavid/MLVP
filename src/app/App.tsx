@@ -13,6 +13,10 @@ import kerasDemo from '../demos/keras_demo.json';
 import encodeDecode from '../demos/encode_decode_demo.json';
 import neuralNetworkDebug from '../demos/neural_network_debug.json';
 import thesisExample from '../demos/thesis_example.json';
+import presentationTc from '../demos/presentation_tc.json';
+import imbalanced from '../demos/imbalanced.json';
+import resourceConsumption from '../demos/resource_consumption.json';
+import invalidTypes from '../demos/invalid_types.json';
 import {BaseNodeModel} from "../components/core/BaseNode/BaseNodeModel";
 import {DefaultLinkModel} from "@projectstorm/react-diagrams-defaults";
 import {CATEGORIES} from "../components/nodes/Config";
@@ -138,6 +142,22 @@ class App extends React.Component<AppProps, AppState> {
         map.set("Thesis example", () => {
             this.canvasManager.loadModel(thesisExample);
             this.updateLog("Loaded demo Thesis Example");
+        });
+        map.set("TypeChecking Demo", () => {
+            this.canvasManager.loadModel(presentationTc);
+            this.updateLog("Loaded demo TypeChecking Demo");
+        });
+        map.set("Imbalanced Demo", () => {
+            this.canvasManager.loadModel(imbalanced);
+            this.updateLog("Loaded demo Imbalanced Demo");
+        });
+        map.set("Resource Consumption Demo", () => {
+            this.canvasManager.loadModel(resourceConsumption);
+            this.updateLog("Loaded demo Resource Consumption Demo");
+        });
+        map.set("Invalid Types Demo", () => {
+            this.canvasManager.loadModel(invalidTypes);
+            this.updateLog("Loaded demo Invalid Types Demo");
         });
         return map;
     }

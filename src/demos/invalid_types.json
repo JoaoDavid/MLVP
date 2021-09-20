@@ -1,0 +1,132 @@
+{
+    "id": "39df332f-4e52-4254-b3f8-fd8a69b819aa",
+    "locked": false,
+    "offsetX": 5.366917619065379,
+    "offsetY": 29.04912922420281,
+    "zoom": 115.89999999999999,
+    "gridSize": 0,
+    "layers": [
+        {
+            "id": "0d1af205-2f10-40bd-a760-230e0b23d9d5",
+            "type": "diagram-links",
+            "isSvg": true,
+            "transformed": true,
+            "models": {}
+        },
+        {
+            "id": "7aa3626d-e97c-4184-9062-b61a04af4d8f",
+            "type": "diagram-nodes",
+            "isSvg": false,
+            "transformed": true,
+            "models": {
+                "155406d5-c4aa-4f5f-ad59-d79dcf483a37": {
+                    "id": "155406d5-c4aa-4f5f-ad59-d79dcf483a37",
+                    "type": "SampleCSV",
+                    "selected": false,
+                    "x": 129.40625,
+                    "y": 102,
+                    "ports": [
+                        {
+                            "id": "8d0ee106-c5f0-471d-bd48-18abec9a9748",
+                            "type": "DatasetPort",
+                            "x": 312.40625,
+                            "y": 138,
+                            "name": "Dataset",
+                            "alignment": "right",
+                            "parentNode": "155406d5-c4aa-4f5f-ad59-d79dcf483a37",
+                            "links": [],
+                            "in": false,
+                            "label": ""
+                        }
+                    ],
+                    "portsInOrder": [],
+                    "portsOutOrder": [
+                        "8d0ee106-c5f0-471d-bd48-18abec9a9748"
+                    ],
+                    "title": "Sample CSV B",
+                    "numCols": 4,
+                    "numRows": 5,
+                    "timeSeries": false,
+                    "balanced": false,
+                    "fileName": "datasetB.csv",
+                    "labels": {
+                        "0": 2,
+                        "1": 3
+                    },
+                    "columns": [
+                        {
+                            "name": "card_number",
+                            "type": "int",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": " \"card_brand\"",
+                            "type": "string",
+                            "nullCounter": 0,
+                            "categories": [
+                                " \"visa\"",
+                                " \"jcb\"",
+                                " \"master card\""
+                            ]
+                        },
+                        {
+                            "name": " \"amount\"",
+                            "type": "int",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": " \"class\"",
+                            "type": "int",
+                            "nullCounter": 0,
+                            "categories": []
+                        }
+                    ],
+                    "targetIndex": 3
+                },
+                "ef992096-35b0-440f-86c1-44ebd332c5a7": {
+                    "id": "ef992096-35b0-440f-86c1-44ebd332c5a7",
+                    "type": "FeatureEngineering",
+                    "selected": false,
+                    "x": 436.4622162090813,
+                    "y": 101.70323067372141,
+                    "ports": [
+                        {
+                            "id": "ee02fdc2-c1df-4313-ab18-dc2937fdde66",
+                            "type": "DatasetPort",
+                            "x": 438.45312197080005,
+                            "y": 137.70271187489328,
+                            "name": "Dataset",
+                            "alignment": "left",
+                            "parentNode": "ef992096-35b0-440f-86c1-44ebd332c5a7",
+                            "links": [],
+                            "in": true,
+                            "label": ""
+                        },
+                        {
+                            "id": "b23c50e0-a9f1-478f-9ff3-fd8ffdd0b5a6",
+                            "type": "DatasetPort",
+                            "x": 619.4531219708001,
+                            "y": 137.70271187489328,
+                            "name": "Engineered Dataset",
+                            "alignment": "right",
+                            "parentNode": "ef992096-35b0-440f-86c1-44ebd332c5a7",
+                            "links": [],
+                            "in": false,
+                            "label": ""
+                        }
+                    ],
+                    "portsInOrder": [
+                        "ee02fdc2-c1df-4313-ab18-dc2937fdde66"
+                    ],
+                    "portsOutOrder": [
+                        "b23c50e0-a9f1-478f-9ff3-fd8ffdd0b5a6"
+                    ],
+                    "title": "Feature Engineering",
+                    "lines": "row1 = card_brand + 4;\nrow2 = col + 4;\namount = 4 * 3;"
+                }
+            }
+        }
+    ]
+}

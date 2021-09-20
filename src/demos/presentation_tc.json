@@ -1,0 +1,620 @@
+{
+    "id": "1d0bf2e3-f855-4cd5-b637-1e40efbf0155",
+    "locked": false,
+    "offsetX": -77.00004662070515,
+    "offsetY": 34.75177075704415,
+    "zoom": 105.3,
+    "gridSize": 0,
+    "layers": [
+        {
+            "id": "763f783b-d5a3-499b-b777-8c9ea11ab8a8",
+            "type": "diagram-links",
+            "isSvg": true,
+            "transformed": true,
+            "models": {
+                "cff4ae75-ad49-4cb0-a5de-76d89b079251": {
+                    "id": "cff4ae75-ad49-4cb0-a5de-76d89b079251",
+                    "type": "default",
+                    "selected": false,
+                    "source": "d4039e6b-831c-40c0-8ebc-954a22ef2c12",
+                    "sourcePort": "a070ce2b-449f-4bf6-bb48-2c7cc9dfa19a",
+                    "target": "d5693943-9b0a-48df-8109-5dec55d68c7a",
+                    "targetPort": "a3ff552c-5242-4ccc-b4a2-29b00dc79152",
+                    "points": [
+                        {
+                            "id": "b3e27fee-cbe8-44b2-92e7-5bfdcbb86c7a",
+                            "type": "point",
+                            "x": 304.90625,
+                            "y": 125.5
+                        },
+                        {
+                            "id": "f3ac33cf-ecd0-4a8c-a538-7dc50a631302",
+                            "type": "point",
+                            "x": 430.25192901234567,
+                            "y": 127.80199430199424
+                        }
+                    ],
+                    "labels": [],
+                    "width": 3,
+                    "color": "gray",
+                    "curvyness": 50,
+                    "selectedColor": "rgb(0,192,255)"
+                },
+                "0f151173-81e3-4cd2-b86c-cfdc18d77d28": {
+                    "id": "0f151173-81e3-4cd2-b86c-cfdc18d77d28",
+                    "type": "default",
+                    "selected": false,
+                    "source": "d5693943-9b0a-48df-8109-5dec55d68c7a",
+                    "sourcePort": "219fbebf-8ef2-4d4e-a295-e27eeecbc5c0",
+                    "target": "27066b1d-3195-44a6-96f9-f10c4d74b910",
+                    "targetPort": "c26c0e8e-0c62-49b8-b2b7-fb6174562714",
+                    "points": [
+                        {
+                            "id": "bcc72f56-0183-44e1-ad1f-fadf8c3355c7",
+                            "type": "point",
+                            "x": 611.251929012346,
+                            "y": 127.80199430199424
+                        },
+                        {
+                            "id": "907150c3-401a-41ae-93db-ac9ddc66ea61",
+                            "type": "point",
+                            "x": 746.7619005223168,
+                            "y": 221.86562203228874
+                        }
+                    ],
+                    "labels": [],
+                    "width": 3,
+                    "color": "gray",
+                    "curvyness": 50,
+                    "selectedColor": "rgb(0,192,255)"
+                }
+            }
+        },
+        {
+            "id": "fe4e72a6-9058-4473-a49a-e9600e297119",
+            "type": "diagram-nodes",
+            "isSvg": false,
+            "transformed": true,
+            "models": {
+                "d4039e6b-831c-40c0-8ebc-954a22ef2c12": {
+                    "id": "d4039e6b-831c-40c0-8ebc-954a22ef2c12",
+                    "type": "SampleCSV",
+                    "selected": false,
+                    "x": 114.40625,
+                    "y": 58,
+                    "ports": [
+                        {
+                            "id": "a070ce2b-449f-4bf6-bb48-2c7cc9dfa19a",
+                            "type": "DatasetPort",
+                            "x": 297.40625,
+                            "y": 94,
+                            "name": "Dataset",
+                            "alignment": "right",
+                            "parentNode": "d4039e6b-831c-40c0-8ebc-954a22ef2c12",
+                            "links": [
+                                "cff4ae75-ad49-4cb0-a5de-76d89b079251"
+                            ],
+                            "in": false,
+                            "label": ""
+                        }
+                    ],
+                    "portsInOrder": [],
+                    "portsOutOrder": [
+                        "a070ce2b-449f-4bf6-bb48-2c7cc9dfa19a"
+                    ],
+                    "title": "Sample CSV",
+                    "numCols": 31,
+                    "numRows": 284807,
+                    "timeSeries": false,
+                    "balanced": true,
+                    "fileName": "creditcard-train.csv",
+                    "labels": {
+                        "0": 284315,
+                        "1": 492
+                    },
+                    "columns": [
+                        {
+                            "name": "Time",
+                            "type": "int",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V1",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V2",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V3",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V4",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V5",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V6",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V7",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V8",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V9",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V10",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V11",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V12",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V13",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V14",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V15",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V16",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V17",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V18",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V19",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V20",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V21",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V22",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V23",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V24",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V25",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V26",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V27",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V28",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "Amount",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "Class",
+                            "type": "int",
+                            "nullCounter": 0,
+                            "categories": []
+                        }
+                    ],
+                    "targetIndex": 30
+                },
+                "d5693943-9b0a-48df-8109-5dec55d68c7a": {
+                    "id": "d5693943-9b0a-48df-8109-5dec55d68c7a",
+                    "type": "RandomForestClassifier",
+                    "selected": false,
+                    "x": 420.75192901234567,
+                    "y": 60.3019943019943,
+                    "ports": [
+                        {
+                            "id": "a3ff552c-5242-4ccc-b4a2-29b00dc79152",
+                            "type": "DatasetPort",
+                            "x": 422.7519290123458,
+                            "y": 96.30199430199427,
+                            "name": "Dataset",
+                            "alignment": "left",
+                            "parentNode": "d5693943-9b0a-48df-8109-5dec55d68c7a",
+                            "links": [
+                                "cff4ae75-ad49-4cb0-a5de-76d89b079251"
+                            ],
+                            "in": true,
+                            "label": ""
+                        },
+                        {
+                            "id": "219fbebf-8ef2-4d4e-a295-e27eeecbc5c0",
+                            "type": "ClassifierPort",
+                            "x": 603.7519290123457,
+                            "y": 96.30199430199427,
+                            "name": "Classifier",
+                            "alignment": "right",
+                            "parentNode": "d5693943-9b0a-48df-8109-5dec55d68c7a",
+                            "links": [
+                                "0f151173-81e3-4cd2-b86c-cfdc18d77d28"
+                            ],
+                            "in": false,
+                            "label": ""
+                        }
+                    ],
+                    "portsInOrder": [
+                        "a3ff552c-5242-4ccc-b4a2-29b00dc79152"
+                    ],
+                    "portsOutOrder": [
+                        "219fbebf-8ef2-4d4e-a295-e27eeecbc5c0"
+                    ],
+                    "title": "Random Forest Classifier",
+                    "numTrees": 100,
+                    "criterion": "gini",
+                    "maxDepth": 21
+                },
+                "27066b1d-3195-44a6-96f9-f10c4d74b910": {
+                    "id": "27066b1d-3195-44a6-96f9-f10c4d74b910",
+                    "type": "EvaluateClassifier",
+                    "selected": false,
+                    "x": 737.2619005223172,
+                    "y": 91.36562203228871,
+                    "ports": [
+                        {
+                            "id": "fd06ed11-6edb-4773-904a-636eb847d477",
+                            "type": "DatasetPort",
+                            "x": 739.2619005223152,
+                            "y": 127.36562203228866,
+                            "name": "Dataset",
+                            "alignment": "left",
+                            "parentNode": "27066b1d-3195-44a6-96f9-f10c4d74b910",
+                            "links": [],
+                            "in": true,
+                            "label": ""
+                        },
+                        {
+                            "id": "c26c0e8e-0c62-49b8-b2b7-fb6174562714",
+                            "type": "ClassifierPort",
+                            "x": 739.2619005223152,
+                            "y": 190.36562203228868,
+                            "name": "Classifier",
+                            "alignment": "left",
+                            "parentNode": "27066b1d-3195-44a6-96f9-f10c4d74b910",
+                            "links": [
+                                "0f151173-81e3-4cd2-b86c-cfdc18d77d28"
+                            ],
+                            "in": true,
+                            "label": ""
+                        }
+                    ],
+                    "portsInOrder": [
+                        "fd06ed11-6edb-4773-904a-636eb847d477",
+                        "c26c0e8e-0c62-49b8-b2b7-fb6174562714"
+                    ],
+                    "portsOutOrder": [],
+                    "title": "Evaluate Classifier"
+                },
+                "f95991e9-55fc-4f62-8bf1-8d87a78fb532": {
+                    "id": "f95991e9-55fc-4f62-8bf1-8d87a78fb532",
+                    "type": "ImportFromCSV",
+                    "selected": false,
+                    "x": 296.8022613960114,
+                    "y": 206.5536562203229,
+                    "ports": [
+                        {
+                            "id": "7fda3306-f422-4233-8912-3b9356cf54f9",
+                            "type": "DatasetPort",
+                            "x": 479.80226139601126,
+                            "y": 242.55365622032264,
+                            "name": "Dataset",
+                            "alignment": "right",
+                            "parentNode": "f95991e9-55fc-4f62-8bf1-8d87a78fb532",
+                            "links": [],
+                            "in": false,
+                            "label": ""
+                        }
+                    ],
+                    "portsInOrder": [],
+                    "portsOutOrder": [
+                        "7fda3306-f422-4233-8912-3b9356cf54f9"
+                    ],
+                    "title": "Import from CSV",
+                    "numCols": 31,
+                    "numRows": 284807,
+                    "timeSeries": false,
+                    "balanced": false,
+                    "fileName": "creditcard.csv",
+                    "labels": {
+                        "0": 284315,
+                        "1": 492
+                    },
+                    "columns": [
+                        {
+                            "name": "Time",
+                            "type": "int",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V1",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V2",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V3",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V4",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V5",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V6",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V7",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V8",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V9",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V10",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V11",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V12",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V13",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V14",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V15",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V16",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V17",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V18",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V19",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V20",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V21",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V22",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V23",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V24",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V25",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V26",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V27",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "V28",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "Amount",
+                            "type": "float",
+                            "nullCounter": 0,
+                            "categories": []
+                        },
+                        {
+                            "name": "Class",
+                            "type": "int",
+                            "nullCounter": 0,
+                            "categories": []
+                        }
+                    ],
+                    "targetIndex": 30
+                }
+            }
+        }
+    ]
+}
