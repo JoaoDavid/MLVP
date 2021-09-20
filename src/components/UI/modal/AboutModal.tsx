@@ -12,15 +12,14 @@ const AboutModal = (props: AboutModalProps) => {
                 <p/>
                 <h5>Motivation</h5>
                 <p>
-                    The need to detect not only semantic
-                    problems with a Machine Learning pipeline,
-                    but also practical mistakes before run time
-                    motivated the design of MLVP, a tool for data
-                    scientists where pipelines are created by
-                    dragging and linking nodes together, each
-                    node performing a specific operation over
-                    the data, forwarding the result to the output
-                    port/s.
+                    Existing Visual Programming tools for building Machine Learning pipelines approach pipeline creation from a dynamic point of
+                    view. Datasets are fully loaded into the tool so that the pipeline re-executes as the data scientist modifies it.
+                    <br/>
+                    MLVP improves over existing said tools by separating the pipeline’s creation and execution environments.
+                    Instead of having a dynamic execution of the pipeline as it changes and
+                    requiring it to execute inside the tool, our approach features a compiler that translates the pipeline
+                    into an executable code. The code can then execute in a cluster for increased performance and
+                    better handling of big data.
                 </p>
             </Col>
         </AppModal>
