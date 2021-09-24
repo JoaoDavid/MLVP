@@ -93,7 +93,7 @@ export class TemporalAggregationModel extends BaseNodeModel {
 
     deserialize(event: DeserializeEvent<this>) {
         super.deserialize(event);
-        this.newColumnName = event.data.column_name;
+        this.newColumnName = event.data.newColumnName;
         this.originalColumnName = event.data.originalColumnName;
         this.metric = event.data.metric;
         this.windowSize = event.data.windowSize;

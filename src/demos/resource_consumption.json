@@ -12,26 +12,26 @@
             "isSvg": true,
             "transformed": true,
             "models": {
-                "28f505d5-4650-463e-a0c1-e6229f66550b": {
-                    "id": "28f505d5-4650-463e-a0c1-e6229f66550b",
+                "3844cd65-0208-4c98-94ad-293db77a6a9b": {
+                    "id": "3844cd65-0208-4c98-94ad-293db77a6a9b",
                     "type": "default",
                     "selected": false,
                     "source": "8d75fcfb-c127-408a-ab09-0bad26a41439",
                     "sourcePort": "4b84be59-5b59-434d-8f9a-00cb9b23cebd",
-                    "target": "46500418-f5bf-431f-82b3-75434049818d",
-                    "targetPort": "a55d2aeb-4454-4011-a078-28f2d2ea26b1",
+                    "target": "af393a9d-4769-4f4f-968a-e4903e16281f",
+                    "targetPort": "aa9496ef-f306-459d-91a2-362f947809a3",
                     "points": [
                         {
-                            "id": "2c85c562-86cf-4637-82e5-db38fced953d",
+                            "id": "bf32a3fa-1c61-4e90-88e5-8fc8f23b0fb6",
                             "type": "point",
-                            "x": 316.90622966431215,
-                            "y": 146.49999308091037
+                            "x": 316.90626260149753,
+                            "y": 146.49999372245787
                         },
                         {
-                            "id": "7916c729-bce0-4054-9f9d-18f2aba277ed",
+                            "id": "42b1107e-f432-4a86-819a-d52ee7538215",
                             "type": "point",
-                            "x": 388.6227125811569,
-                            "y": 152.55762160532095
+                            "x": 389.3269430850733,
+                            "y": 156.6284052452507
                         }
                     ],
                     "labels": [],
@@ -58,13 +58,13 @@
                         {
                             "id": "4b84be59-5b59-434d-8f9a-00cb9b23cebd",
                             "type": "DatasetPort",
-                            "x": 309.40622545135915,
-                            "y": 115.00000040091618,
+                            "x": 309.4062656230399,
+                            "y": 114.99999885907994,
                             "name": "Dataset",
                             "alignment": "right",
                             "parentNode": "8d75fcfb-c127-408a-ab09-0bad26a41439",
                             "links": [
-                                "28f505d5-4650-463e-a0c1-e6229f66550b"
+                                "3844cd65-0208-4c98-94ad-293db77a6a9b"
                             ],
                             "in": false,
                             "label": ""
@@ -274,52 +274,6 @@
                     ],
                     "targetIndex": 30
                 },
-                "46500418-f5bf-431f-82b3-75434049818d": {
-                    "id": "46500418-f5bf-431f-82b3-75434049818d",
-                    "type": "TemporalAggregation",
-                    "selected": false,
-                    "x": 379.1264532621057,
-                    "y": 85.0695774392496,
-                    "ports": [
-                        {
-                            "id": "a55d2aeb-4454-4011-a078-28f2d2ea26b1",
-                            "type": "DatasetPort",
-                            "x": 381.12270836820386,
-                            "y": 121.0576223425877,
-                            "name": "Dataset",
-                            "alignment": "left",
-                            "parentNode": "46500418-f5bf-431f-82b3-75434049818d",
-                            "links": [
-                                "28f505d5-4650-463e-a0c1-e6229f66550b"
-                            ],
-                            "in": true,
-                            "label": ""
-                        },
-                        {
-                            "id": "348b4a94-56cb-4473-95c2-ae3499597542",
-                            "type": "DatasetPort",
-                            "x": 562.1227012061838,
-                            "y": 121.0576223425877,
-                            "name": "Engineered Dataset",
-                            "alignment": "right",
-                            "parentNode": "46500418-f5bf-431f-82b3-75434049818d",
-                            "links": [],
-                            "in": false,
-                            "label": ""
-                        }
-                    ],
-                    "portsInOrder": [
-                        "a55d2aeb-4454-4011-a078-28f2d2ea26b1"
-                    ],
-                    "portsOutOrder": [
-                        "348b4a94-56cb-4473-95c2-ae3499597542"
-                    ],
-                    "title": "Temporal Aggregation",
-                    "newColumnName": "new_column",
-                    "originalColumnName": "Amount",
-                    "metric": "mean",
-                    "windowSize": 11
-                },
                 "266aee80-9429-4e35-8d4e-de9f33448520": {
                     "id": "266aee80-9429-4e35-8d4e-de9f33448520",
                     "type": "UnderSampling",
@@ -330,8 +284,8 @@
                         {
                             "id": "151ee213-0826-459c-abb8-78bf7a00a7d6",
                             "type": "DatasetPort",
-                            "x": 640.7931489606062,
-                            "y": 124.62862061330819,
+                            "x": 640.7812366162331,
+                            "y": 124.62499624040987,
                             "name": "Dataset",
                             "alignment": "left",
                             "parentNode": "266aee80-9429-4e35-8d4e-de9f33448520",
@@ -342,8 +296,8 @@
                         {
                             "id": "3deac879-9709-4b38-b801-40bab3feeac3",
                             "type": "DatasetPort",
-                            "x": 821.7930891366741,
-                            "y": 124.62862061330819,
+                            "x": 821.7812442708071,
+                            "y": 124.62499624040987,
                             "name": "Balanced Dataset",
                             "alignment": "right",
                             "parentNode": "266aee80-9429-4e35-8d4e-de9f33448520",
@@ -360,6 +314,52 @@
                     ],
                     "title": "Undersampling",
                     "randomState": 0
+                },
+                "af393a9d-4769-4f4f-968a-e4903e16281f": {
+                    "id": "af393a9d-4769-4f4f-968a-e4903e16281f",
+                    "type": "TemporalAggregation",
+                    "selected": true,
+                    "x": 379.8341381832452,
+                    "y": 89.13113923752206,
+                    "ports": [
+                        {
+                            "id": "aa9496ef-f306-459d-91a2-362f947809a3",
+                            "type": "DatasetPort",
+                            "x": 381.8269461066157,
+                            "y": 125.1284103818728,
+                            "name": "Dataset",
+                            "alignment": "left",
+                            "parentNode": "af393a9d-4769-4f4f-968a-e4903e16281f",
+                            "links": [
+                                "3844cd65-0208-4c98-94ad-293db77a6a9b"
+                            ],
+                            "in": true,
+                            "label": ""
+                        },
+                        {
+                            "id": "50263759-6602-48ba-aa89-9f1b20c51615",
+                            "type": "DatasetPort",
+                            "x": 562.8269537611902,
+                            "y": 125.1284103818728,
+                            "name": "Engineered Dataset",
+                            "alignment": "right",
+                            "parentNode": "af393a9d-4769-4f4f-968a-e4903e16281f",
+                            "links": [],
+                            "in": false,
+                            "label": ""
+                        }
+                    ],
+                    "portsInOrder": [
+                        "aa9496ef-f306-459d-91a2-362f947809a3"
+                    ],
+                    "portsOutOrder": [
+                        "50263759-6602-48ba-aa89-9f1b20c51615"
+                    ],
+                    "title": "Temporal Aggregation",
+                    "newColumnName": "new_column",
+                    "originalColumnName": "Amount",
+                    "metric": "mean",
+                    "windowSize": 11
                 }
             }
         }
