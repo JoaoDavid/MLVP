@@ -61,7 +61,7 @@
                             "categories": []
                         },
                         {
-                            "name": " \"card_brand\"",
+                            "name": "card_brand",
                             "type": "string",
                             "nullCounter": 0,
                             "categories": [
@@ -71,13 +71,13 @@
                             ]
                         },
                         {
-                            "name": " \"amount\"",
+                            "name": "amount",
                             "type": "int",
                             "nullCounter": 0,
                             "categories": []
                         },
                         {
-                            "name": " \"class\"",
+                            "name": "class",
                             "type": "int",
                             "nullCounter": 0,
                             "categories": []

@@ -151,13 +151,13 @@ class App extends React.Component<AppProps, AppState> {
             this.canvasManager.loadModel(imbalanced);
             this.updateLog("Loaded demo Imbalanced Demo");
         });
-        map.set("Resource Consumption Demo", () => {
-            this.canvasManager.loadModel(resourceConsumption);
-            this.updateLog("Loaded demo Resource Consumption Demo");
-        });
         map.set("Invalid Types Demo", () => {
             this.canvasManager.loadModel(invalidTypes);
             this.updateLog("Loaded demo Invalid Types Demo");
+        });
+        map.set("Resource Consumption Demo", () => {
+            this.canvasManager.loadModel(resourceConsumption);
+            this.updateLog("Loaded demo Resource Consumption Demo");
         });
         return map;
     }
