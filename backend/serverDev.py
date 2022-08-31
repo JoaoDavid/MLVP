@@ -17,6 +17,12 @@ app = Flask(__name__)
 CORS(app)
 
 
+@app.route('/', methods=['GET'])
+def root():
+    print("root req")
+    return "serverDev running"
+
+
 @app.route('/compile', methods=['POST'])
 def codegen():
     print("compile req")
@@ -41,4 +47,4 @@ def data_flow():
     return response
 
 
-serve(app, host="127.0.0.1", port=8080)
+serve(app, host="0.0.0.0", port=8000)
